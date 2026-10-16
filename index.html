@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>HomeViewOS v27.0 - Cobster Core</title>
+    <title>HomeViewOS v27.0 - Cobster Master Core</title>
     
     <style>
         /* CORE RESET FOR LEGACY iOS 9 WEBKIT */
@@ -27,7 +27,7 @@
             color: #fff;
         }
 
-        /* HINTERGRUNDBILD FÜR REALISTISCHE BRECHUNG DES LIQUID GLASS EFFECT */
+        /* LIQUID GLASS SURFACE WIDGETS */
         .hardware-screen {
             position: relative;
             width: 100%;
@@ -76,7 +76,7 @@
             box-shadow: 0 0 8px #34c759;
         }
 
-        /* STATUS BAR STYLE */
+        /* NATIVE KIOSK STATUS BAR */
         .status-bar {
             position: absolute;
             top: 0;
@@ -95,15 +95,16 @@
 
         .status-bar-right {
             display: flex;
+            align-items: center;
             gap: 12px;
-        }/* GRID MANAGEMENT */
+        }/* HOMEVIEW INTERFACE GRID LAYOUT */
         .home-view-container {
             position: absolute; top: 65px; left: 0; right: 0; bottom: 0;
             padding: 15px 25px 25px 25px; display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(3, 1fr); gap: 20px;
         }
-        /* REAL LIQUID GLASS CARD EFFECT */
+        /* REAL LIQUID GLASS SURFACE STRUCTURE */
         .apple-home-card {
             background: rgba(255, 255, 255, 0.08);
             -webkit-backdrop-filter: blur(35px) saturate(220%);
@@ -115,13 +116,14 @@
             overflow: hidden; display: flex; flex-direction: column;
             justify-content: space-between;
             box-shadow: inset 0 1px 1px rgba(255,255,255,0.15), 0 12px 35px rgba(0,0,0,0.4);
+            transition: transform 0.1s ease, background 0.2s ease;
         }
         .apple-home-card:active {
             transform: scale(0.97); background: rgba(255, 255, 255, 0.15);
         }
         .span-2-rows { grid-row: span 2; }
         .span-2-cols { grid-column: span 2; }
-        /* IMAGE WIDGET CONTEXT */
+        /* MEDIATHEK PREVIEW PANEL */
         .photo-widget-inner {
             width: calc(100% + 40px); height: calc(100% + 40px);
             background: url('https://unsplash.com') no-repeat center center;
@@ -129,34 +131,9 @@
             flex-direction: column; justify-content: flex-end; padding: 20px;
             margin: -20px; box-shadow: inset 0 -60px 40px rgba(0,0,0,0.75);
         }
-        .photo-title {
-            font-size: 16px; font-weight: 700; text-shadow: 0 1px 4px rgba(0,0,0,0.8);
-        }
-        .photo-sub {
-            font-size: 12px; opacity: 0.8; text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-        }
-        /* VOLUME AND BRIGHTNESS SLIDERS */
-        .slider-card-content {
-            display: flex; flex-direction: column; justify-content: space-between;
-            height: 100%; width: 100%;
-        }
-        .slider-header {
-            display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700;
-        }
-        .slider-wrapper {
-            position: relative; width: 100%; height: 48px;
-            background: rgba(255, 255, 255, 0.15); border-radius: 14px;
-            overflow: hidden; border: 0.5px solid rgba(255,255,255,0.2);
-        }
-        .slider-fill {
-            position: absolute; top: 0; left: 0; bottom: 0;
-            background: rgba(255, 255, 255, 0.95); width: 50%; pointer-events: none;
-        }
-        .slider-wrapper input[type="range"] {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0; cursor: pointer;
-        }
-        /* TYPOGRAPHY FOR TILES */
+        .photo-title { font-size: 16px; font-weight: 700; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+        .photo-sub { font-size: 12px; opacity: 0.8; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        /* CARD TYPOGRAPHY & APPS */
         .card-icon { font-size: 42px; margin-bottom: 4px; display: block; }
         .card-title { font-size: 15px; font-weight: 700; letter-spacing: -0.1px; }
         .card-subtitle { font-size: 12px; opacity: 0.6; margin-top: 2px; }/* NBA BASKETBALL WIDGET */
@@ -184,8 +161,7 @@
         .clock-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.08); padding: 16px 25px; border-radius: 16px; font-size: 18px; border: 0.5px solid rgba(255,255,255,0.05); }
         .alarm-info { display: flex; flex-direction: column; }
         .alarm-time { font-size: 24px; font-weight: 700; }
-        .alarm-days { font-size: 12px; opacity: 0.6; }
-        /* CORE SETTINGS PROFILE WINDOW */
+        .alarm-days { font-size: 12px; opacity: 0.6; }/* CORE SETTINGS PROFILE WINDOW */
         .settings-frame { display: flex; height: calc(100% - 85px); }
         .settings-nav-pane { width: 300px; border-right: 0.5px solid rgba(255,255,255,0.15); padding: 20px; }
         .apple-id-box { display: flex; align-items: center; gap: 15px; background: rgba(255, 255, 255, 0.06); padding: 15px; border-radius: 18px; margin-bottom: 25px; border: 0.5px solid rgba(255,255,255,0.1); }
@@ -210,10 +186,28 @@
         .kiosk-shield { font-size: 80px; margin-bottom: 24px; display: block; text-shadow: 0 0 20px rgba(255,149,0,0.4); }
         .kiosk-alert-content h2 { font-size: 26px; margin-bottom: 12px; font-weight: 700; color: #fff; }
         .kiosk-alert-content p { font-size: 16px; opacity: 0.8; max-width: 480px; margin: 0 auto; line-height: 1.6; }
+        /* HARDWARE SLIDERS (IN EINSTELLUNGEN) */
+        .settings-slider-wrapper { display: flex; align-items: center; gap: 15px; width: 200px; }
+        .settings-slider { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.2); outline: none; }
+        .settings-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+        /* ECO RUHEMODUS BLACKOUT OVERLAY */
+        #eco-blackout-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99999; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .eco-wake-text { font-size: 14px; color: rgba(255,255,255,0.3); font-weight: 500; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 20px; }
+        /* PHOTO MEDIA APP GRID & QR CODE */
+        .photo-app-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 20px; }
+        .photo-app-item { width: 100%; height: 120px; border-radius: 14px; background-size: cover; background-position: center; border: 0.5px solid rgba(255,255,255,0.1); }
+        .photo-upload-zone { background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.2); border-radius: 18px; padding: 30px; text-align: center; margin-bottom: 20px; }
+        .qr-placeholder-box { background: #fff; width: 140px; height: 140px; margin: 15px auto; padding: 10px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        /* SETTINGS TIME INTERFACE FIELDS */
+        .time-picker-input { background: rgba(255,255,255,0.1); border: 0.5px solid rgba(255,255,255,0.2); color: #fff; padding: 5px; border-radius: 6px; font-size: 14px; width: 70px; text-align: center; }
     </style>
 </head>
 <body>
-    <div class="hardware-screen" id="screen-root"><!-- DYNAMIC ISLAND -->
+    <div class="hardware-screen" id="screen-root">
+        <!-- ECO RUHEMODUS PANEL -->
+        <div id="eco-blackout-screen">
+            <div class="eco-wake-text" onclick="temporaryWakeScreen()">[ Bildschirmschoner aktiv - Tippen zum Aufwachen ]</div>
+        </div><!-- DYNAMIC ISLAND (Permanent integriert) -->
         <div class="dynamic-island-container">
             <div class="dynamic-island">
                 <div class="dynamic-island-content">
@@ -227,24 +221,24 @@
         <!-- STATUS BAR -->
         <div class="status-bar">
             <div class="status-bar-left">
-                <span class="status-time" id="status-time">19:43</span>
+                <span class="status-time" id="status-time">20:00</span>
                 <span class="status-location">Wien</span>
             </div>
             <div class="status-bar-right">
                 <span class="status-icon">📶</span>
-                <span class="status-icon">🔋 100%</span>
+                <span id="system-battery-display" style="font-weight:700;">🔋 --%</span>
             </div>
         </div>
 
-        <!-- HOMEVIEW INTERFACE GRID -->
+        <!-- HOMEVIEW MAIN GRID INTERFACE -->
         <div class="home-view-container">
-            <!-- FOTO-WIDGET -->
-            <div class="apple-home-card span-2-rows span-2-cols">
-                <div class="photo-widget-inner">
+            <!-- GROSSES FOTO-WIDGET (Verknüpft mit der neuen Foto-App) -->
+            <div class="apple-home-card span-2-rows span-2-cols" onclick="openAppleOverlay('photo-app')">
+                <div class="photo-widget-inner" id="main-widget-photo-bg">
                     <h3 class="photo-title">Fotomediathek</h3>
-                    <p class="photo-sub">Zuletzt aktualisiert: Heute</p>
+                    <p class="photo-sub" id="widget-photo-count">0 Fotos</p>
                 </div>
-            </div><!-- NBA LIVE-WIDGET -->
+            </div><!-- NBA LIVE-WIDGET (Echte Daten vom 16. Oktober 2026) -->
             <div class="apple-home-card span-2-cols">
                 <div class="nba-header">
                     <span class="nba-badge">🏀 NBA Live</span>
@@ -264,29 +258,7 @@
                 </div>
             </div>
 
-            <!-- BRIGHTNESS SLIDER -->
-            <div class="apple-home-card">
-                <div class="slider-card-content">
-                    <div class="slider-header"><span>☀️</span><span>Helligkeit</span></div>
-                    <div class="slider-wrapper">
-                        <div class="slider-fill" id="brightness-fill" style="width:80%;"></div>
-                        <input type="range" min="10" max="100" value="80" id="brightness-slider" oninput="updateSystemSlider('brightness',this.value)">
-                    </div>
-                </div>
-            </div>
-
-            <!-- VOLUME SLIDER -->
-            <div class="apple-home-card">
-                <div class="slider-card-content">
-                    <div class="slider-header"><span>🔊</span><span>Lautstärke</span></div>
-                    <div class="slider-wrapper">
-                        <div class="slider-fill" id="volume-fill" style="width:50%;"></div>
-                        <input type="range" min="0" max="100" value="50" id="volume-slider" oninput="updateSystemSlider('volume',this.value)">
-                    </div>
-                </div>
-            </div>
-
-            <!-- CLOCK APP -->
+            <!-- ALL-IN-ONE UHR ZENTRALE -->
             <div class="apple-home-card" onclick="openAppleOverlay('clock-app')">
                 <div><span class="card-icon">🕒</span></div>
                 <div>
@@ -295,43 +267,43 @@
                 </div>
             </div>
 
-            <!-- FACETIME -->
+            <!-- FACETIME KACHEL -->
             <div class="apple-home-card" onclick="triggerKioskProtection('FaceTime')">
                 <div><span class="card-icon">📹</span></div>
                 <div>
                     <div class="card-title">FaceTime</div>
-                    <div class="card-subtitle">Kiosk-Modus aktiv</div>
+                    <div class="card-subtitle">Kiosk Call mode</div>
                 </div>
             </div>
 
-            <!-- GOOGLE SEARCH -->
-            <div class="apple-home-card" onclick="triggerKioskProtection('Google Suche')">
+            <!-- GOOGLE REAL SEARCH KACHEL -->
+            <div class="apple-home-card" onclick="openAppleOverlay('google-app')">
                 <div><span class="card-icon">🔍</span></div>
                 <div>
                     <div class="card-title">Google</div>
-                    <div class="card-subtitle">HomeOS Kiosk</div>
+                    <div class="card-subtitle">Echte Direktsuche</div>
                 </div>
             </div>
 
-            <!-- AMAZON MUSIC -->
+            <!-- AMAZON MUSIC KACHEL -->
             <div class="apple-home-card" onclick="triggerKioskProtection('Amazon Music')">
                 <div><span class="card-icon">🎵</span></div>
                 <div>
                     <div class="card-title">Amazon Music</div>
-                    <div class="card-subtitle">Geschützter Stream</div>
+                    <div class="card-subtitle">Echte Playlists</div>
                 </div>
             </div>
 
-            <!-- AIRDROP & MEDIA -->
-            <div class="apple-home-card" onclick="openAppleOverlay('airdrop-app')">
-                <div><span class="card-icon">💧</span></div>
+            <!-- CHATGPT REAL KACHEL -->
+            <div class="apple-home-card" onclick="openAppleOverlay('chatgpt-app')">
+                <div><span class="card-icon">🤖</span></div>
                 <div>
-                    <div class="card-title">AirDrop</div>
-                    <div class="card-subtitle">Bereit zum Empfangen</div>
+                    <div class="card-title">ChatGPT</div>
+                    <div class="card-subtitle">Echter KI-Assistent</div>
                 </div>
             </div>
 
-            <!-- SYSTEM SETTINGS -->
+            <!-- NATIVE SYSTEM-EINSTELLUNGEN KACHEL -->
             <div class="apple-home-card" onclick="openAppleOverlay('settings-app')">
                 <div><span class="card-icon">⚙️</span></div>
                 <div>
@@ -339,7 +311,7 @@
                     <div class="card-subtitle">System v27.0</div>
                 </div>
             </div>
-        </div><!-- FULLSCREEN OVERLAYS -->
+        </div><!-- FULLSCREEN OVERLAYS: UHR ZENTRALE -->
         <div class="apple-overlay" id="clock-app">
             <div class="overlay-nav">
                 <h2>Uhr-Zentrale</h2>
@@ -353,11 +325,11 @@
                     <button class="clock-tab-trigger" onclick="switchClockPane('timer')">⏳ Timer</button>
                 </div>
                 <div class="clock-pane active" id="pane-weltuhr">
-                    <div class="big-time" id="weltuhr-time">19:44:00</div>
+                    <div class="big-time" id="weltuhr-time">20:02:00</div>
                     <div class="clock-list">
-                        <div class="clock-item"><span>Wien (Lokal)</span><strong>19:44</strong></div>
-                        <div class="clock-item"><span>New York</span><strong>13:44</strong></div>
-                        <div class="clock-item"><span>Tokyo</span><strong>02:44</strong></div>
+                        <div class="clock-item"><span>Wien (Lokal)</span><strong>20:02</strong></div>
+                        <div class="clock-item"><span>New York</span><strong>14:02</strong></div>
+                        <div class="clock-item"><span>Tokyo</span><strong>03:02</strong></div>
                     </div>
                 </div>
                 <div class="clock-pane" id="pane-wecker">
@@ -384,20 +356,99 @@
                     </div>
                 </div>
             </div>
-        </div><!-- AIRDROP OVERLAY -->
-        <div class="apple-overlay" id="airdrop-app">
+        </div>
+
+        <!-- ECHTE FOTO APP MIT NETZWERK UPLOADER & AIRDROP QR CODES -->
+        <div class="apple-overlay" id="photo-app">
             <div class="overlay-nav">
-                <h2>AirDrop &amp; Medien</h2>
-                <button class="apple-btn" onclick="closeAppleOverlay('airdrop-app')">Fertig</button>
+                <h2>Fotos &amp; AirDrop Empfang</h2>
+                <button class="apple-btn" onclick="closeAppleOverlay('photo-app')">Fertig</button>
             </div>
-            <div class="clock-container" style="text-align:center;padding-top:60px;">
-                <span style="font-size:60px;display:block;margin-bottom:20px;">💧</span>
-                <h3>AirDrop ist aktiv</h3>
-                <p style="opacity:0.6;margin-top:8px;font-size:14px;">Sichtbar für alle im Netzwerk als "Cobster Labs Display"</p>
+            <div class="clock-container">
+                <div class="photo-upload-zone">
+                    <h3>Bilder vom iPhone übertragen</h3>
+                    <p style="font-size:13px;opacity:0.6;margin-top:4px;">Scanne diesen QR-Code oder nutze das Feld unten, um Fotos direkt in deine Kiosk-Mediathek zu streamen.</p>
+                    <div class="qr-placeholder-box">
+                        <img src="https://qrserver.com" alt="AirDrop QR Link" style="width:120px;height:120px;">
+                    </div>
+                    <input type="file" id="iphone-photo-input" accept="image/*" multiple style="display:none;" onchange="handleIphonePhotoUpload(this.files)">
+                    <button class="apple-btn" onclick="document.getElementById('iphone-photo-input').click()" style="background:#007aff;border-color:#007aff;">📷 Fotos vom iPhone wählen</button>
+                </div>
+                <h3>Deine Alben</h3>
+                <div class="photo-app-grid" id="system-photo-gallery-grid">
+                    <!-- Dynamische Medien-Kacheln landen hier -->
+                </div>
+            </div>
+        </div><!-- GOOGLE INTERACTIVE APP -->
+        <div class="apple-overlay" id="google-app">
+            <div class="overlay-nav">
+                <h2>Google Direktsuche</h2>
+                <button class="apple-btn" onclick="closeAppleOverlay('google-app')">Fertig</button>
+            </div>
+            <div class="clock-container" style="max-width:600px;margin:0 auto;text-align:center;padding-top:40px;">
+                <h1 style="font-size:48px;font-weight:700;letter-spacing:-1px;margin-bottom:20px;"><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span></h1>
+                <form action="https://google.com" method="get" target="_blank" style="display:flex;gap:10px;width:100%;">
+                    <input type="text" name="q" placeholder="Suchen oder URL eingeben" style="flex:1;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:15px 20px;border-radius:14px;font-size:16px;outline:none;">
+                    <button type="submit" class="apple-btn" style="background:#007aff;border-color:#007aff;padding:0 25px;">Suchen</button>
+                </form>
+                <p style="font-size:12px;opacity:0.5;margin-top:15px;">Suchanfragen werden direkt über ein sicheres Kiosk-Formular ohne Iframe-Blockaden ausgeführt.</p>
             </div>
         </div>
 
-        <!-- SETTINGS OVERLAY -->
+        <!-- CHATGPT INTERACTIVE APP -->
+        <div class="apple-overlay" id="chatgpt-app">
+            <div class="overlay-nav">
+                <h2>ChatGPT Assistent</h2>
+                <button class="apple-btn" onclick="closeAppleOverlay('chatgpt-app')">Fertig</button>
+            </div>
+            <div class="clock-container" style="max-width:600px;margin:0 auto;display:flex;flex-direction:column;height:calc(100% - 40px);">
+                <div id="chatgpt-history-pane" style="flex:1;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.1);border-radius:16px;padding:15px;overflow-y:auto;text-align:left;font-size:14px;line-height:1.5;">
+                    <div style="color:#30d158;font-weight:700;margin-bottom:5px;">🤖 ChatGPT:</div>
+                    <div style="opacity:0.8;margin-bottom:15px;">Hallo Cobster! Wie kann ich dir heute auf HomeViewOS helfen?</div>
+                </div>
+                <div style="display:flex;gap:10px;margin-top:15px;">
+                    <input type="text" id="chatgpt-input-field" placeholder="Frage ChatGPT..." style="flex:1;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:14px;border-radius:12px;font-size:15px;outline:none;">
+                    <button class="apple-btn" onclick="executeLocalAIRequest()" style="background:#30d158;border-color:#30d158;color:#fff;">Senden</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FACETIME AD-SHIELD SAFE KIOSK OVERLAY -->
+        <div class="apple-overlay" id="facetime-app">
+            <div class="overlay-nav">
+                <h2>FaceTime Kiosk</h2>
+                <button class="apple-btn" onclick="closeAppleOverlay('facetime-app')">Fertig</button>
+            </div>
+            <div class="clock-container" style="max-width:500px;margin:0 auto;text-align:center;padding-top:40px;">
+                <span style="font-size:60px;display:block;margin-bottom:15px;">📹</span>
+                <h3>FaceTime Verbindung</h3>
+                <form action="https://apple.com" method="get" target="_blank" style="margin-top:20px;display:flex;flex-direction:column;gap:12px;">
+                    <input type="text" placeholder="Apple-ID oder Link eingeben" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:14px;border-radius:12px;font-size:15px;outline:none;text-align:center;">
+                    <button type="submit" class="apple-btn" style="background:#34c759;border-color:#34c759;padding:12px;border-radius:12px;font-size:16px;">Anruf starten</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- AMAZON MUSIC INTERACTIVE OVERLAY -->
+        <div class="apple-overlay" id="amazon-music-app">
+            <div class="overlay-nav">
+                <h2>Amazon Music Playlists</h2>
+                <button class="apple-btn" onclick="closeAppleOverlay('amazon-music-app')">Fertig</button>
+            </div>
+            <div class="clock-container" style="max-width:550px;margin:0 auto;text-align:center;padding-top:20px;">
+                <span style="font-size:50px;display:block;margin-bottom:10px;">🎵</span>
+                <h3>Deine Musik-Bibliothek</h3>
+                <p style="font-size:13px;opacity:0.6;margin-bottom:20px;">Nutze den direkten Login-Pfad, um deine echten Playlists im AdBlocker-Safe Modus zu laden.</p>
+                <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:25px;">
+                    <a href="https://amazon.com" target="_blank" class="apple-btn" style="background:#1399a2;border-color:#1399a2;text-decoration:none;display:block;padding:12px;border-radius:12px;font-size:15px;">🌐 Echten Web Player öffnen (Login)</a>
+                </div>
+                <div class="clock-list">
+                    <div class="clock-item" onclick="window.open('https://amazon.com/my/playlists','_blank')" style="cursor:pointer;"><span>Cobster Labs Haupt-Playlist</span><strong>▶️ Abspielen</strong></div>
+                    <div class="clock-item" onclick="window.open('https://amazon.com/my/playlists','_blank')" style="cursor:pointer;"><span>Chillout Mix</span><strong>▶️ Abspielen</strong></div>
+                </div>
+            </div>
+        </div>
+    </div><!-- SETTINGS APP OVERLAY -->
         <div class="apple-overlay" id="settings-app">
             <div class="overlay-nav">
                 <h2>Einstellungen</h2>
@@ -412,23 +463,35 @@
                             <p>gregorycobe@icloud.com</p>
                         </div>
                     </div>
-                    <div style="background:rgba(255,255,255,0.05);border-radius:14px;padding:5px;">
-                        <div style="padding:12px 15px;background:rgba(255,255,255,0.1);border-radius:10px;font-weight:600;font-size:14px;">⚙️ Allgemein</div>
+                    <div style="background:rgba(255,255,255,0.05);border-radius:14px;padding:5px;display:flex;flex-direction:column;gap:4px;">
+                        <div class="settings-menu-item active" id="menu-btn-allgemein" onclick="switchSettingsTab('allgemein')" style="padding:12px 15px;background:rgba(255,255,255,0.1);border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;">⚙️ Allgemein</div>
+                        <div class="settings-menu-item" id="menu-btn-sound" onclick="switchSettingsTab('sound')" style="padding:12px 15px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;opacity:0.7;">🔊 Töne &amp; Haptik</div>
+                        <div class="settings-menu-item" id="menu-btn-ruhemodus" onclick="switchSettingsTab('ruhemodus')" style="padding:12px 15px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;opacity:0.7;">🌙 Ruhemodus</div>
                     </div>
                 </div>
-                <div class="settings-view-pane">
+                <div class="settings-view-pane" id="settings-tab-allgemein">
                     <h3>Allgemeine System-Info</h3>
                     <div class="settings-card">
                         <div class="settings-row"><span>Gerätename</span><strong>iPad mini (Legacy Core)</strong></div>
                         <div class="settings-row"><span>Plattform</span><strong>HomeViewOS v27.0</strong></div>
                         <div class="settings-row"><span>Entwickler</span><strong>Cobster Labs</strong></div>
                     </div>
+                    <h3>Display-Anpassung</h3>
+                    <div class="settings-card">
+                        <div class="settings-row">
+                            <span>Helligkeit</span>
+                            <div class="settings-slider-wrapper">
+                                <span style="font-size:14px;">☀️</span>
+                                <input type="range" min="10" max="100" value="80" class="settings-slider" id="settings-brightness" oninput="updateSystemSlider('brightness',this.value)">
+                            </div>
+                        </div>
+                    </div>
                     <h3>Software-Update</h3>
                     <div class="settings-card">
                         <div class="settings-row">
                             <div>
                                 <span style="display:block;font-weight:600;">Automatisches Update</span>
-                                <span style="font-size:11px;opacity:0.5;">Sucht nach GitHub-Releases</span>
+                                <span style="font-size:11px;opacity:0.5;">Prüft im Hintergrund auf GitHub-Releases</span>
                             </div>
                             <label class="ios-toggle">
                                 <input type="checkbox" id="software-update-toggle" checked onchange="toggleUpdateSwitch(this.checked)">
@@ -441,35 +504,220 @@
                         </div>
                     </div>
                 </div>
+                <div class="settings-view-pane" id="settings-tab-sound" style="display:none;">
+                    <h3>Töne &amp; System-Haptik</h3>
+                    <div class="settings-card">
+                        <div class="settings-row">
+                            <span>Gesamtlautstärke</span>
+                            <div class="settings-slider-wrapper">
+                                <span style="font-size:14px;">🔊</span>
+                                <input type="range" min="0" max="100" value="50" class="settings-slider" id="settings-volume" oninput="updateSystemSlider('volume',this.value)">
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div>
+                                <span style="display:block;font-weight:600;">Klick-Töne</span>
+                                <span style="font-size:11px;opacity:0.5;">Akustisches Feedback bei Kachelklick</span>
+                            </div>
+                            <label class="ios-toggle"><input type="checkbox" checked><span class="ios-switch-slider"></span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-view-pane" id="settings-tab-ruhemodus" style="display:none;">
+                    <h3>Zeitgesteuerter Ruhemodus (Eco)</h3>
+                    <div class="settings-card">
+                        <div class="settings-row">
+                            <div>
+                                <span style="display:block;font-weight:600;">Zeitplan aktivieren</span>
+                                <span style="font-size:11px;opacity:0.5;">Automatischer Blackout zum Energiesparen</span>
+                            </div>
+                            <label class="ios-toggle"><input type="checkbox" id="eco-schedule-enabled" checked><span class="ios-switch-slider"></span></label>
+                        </div>
+                    </div>
+                    <h3>Wochentage (Mo - Do)</h3>
+                    <div class="settings-card">
+                        <div class="settings-row"><span>Aufdrehen (Start)</span><input type="time" class="time-picker-input" id="eco-time-modo-start" value="07:00"></div>
+                        <div class="settings-row"><span>Abdrehen (Ende)</span><input type="time" class="time-picker-input" id="eco-time-modo-end" value="20:00"></div>
+                    </div>
+                    <h3>Freitag</h3>
+                    <div class="settings-card">
+                        <div class="settings-row"><span>Aufdrehen (Start)</span><input type="time" class="time-picker-input" id="eco-time-fr-start" value="07:00"></div>
+                        <div class="settings-row"><span>Abdrehen (Ende)</span><input type="time" class="time-picker-input" id="eco-time-fr-end" value="21:00"></div>
+                    </div>
+                    <h3>Samstag</h3>
+                    <div class="settings-card">
+                        <div class="settings-row"><span>Aufdrehen (Start)</span><input type="time" class="time-picker-input" id="eco-time-sa-start" value="09:00"></div>
+                        <div class="settings-row"><span>Abdrehen (Ende)</span><input type="time" class="time-picker-input" id="eco-time-sa-end" value="21:00"></div>
+                    </div>
+                    <h3>Sonntag</h3>
+                    <div class="settings-card">
+                        <div class="settings-row"><span>Aufdrehen (Start)</span><input type="time" class="time-picker-input" id="eco-time-so-start" value="09:00"></div>
+                        <div class="settings-row"><span>Abdrehen (Ende)</span><input type="time" class="time-picker-input" id="eco-time-so-end" value="20:00"></div>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <!-- KIOSK WARNING OVERLAY -->
-        <div class="apple-overlay" id="kiosk-alert-overlay">
-            <div class="overlay-nav">
-                <h2 id="kiosk-target-app">Application</h2>
-                <button class="apple-btn" onclick="closeAppleOverlay('kiosk-alert-overlay')">Zurück</button>
-            </div>
-            <div class="kiosk-alert-content">
-                <span class="kiosk-shield">🛡️</span>
-                <h2>Auf homeos gelöst!</h2>
-                <p>Der kiosk modus dchützt dich vor weiterleitungen.</p>
-            </div>
-        </div>
-    </div><script>
+        </div><script>
+        var systemPhotos = [];
         function openAppleOverlay(id){document.getElementById(id).style.display='flex';}
         function closeAppleOverlay(id){document.getElementById(id).style.display='none';}
-        function triggerKioskProtection(appName){document.getElementById('kiosk-target-app').innerText=appName;openAppleOverlay('kiosk-alert-overlay');}
-        function updateSystemSlider(type,val){document.getElementById(type+'-fill').style.width=val+'%';if(type==='brightness'){document.getElementById('screen-root').style.filter='brightness('+(0.3+(val/142))+')';}}
-        function switchClockPane(paneId){var trgs=document.querySelectorAll('.clock-tab-trigger');for(var i=0;i<trgs.length;i++){trgs[i].classList.remove('active');}var panes=document.querySelectorAll('.clock-pane');for(var j=0;j<panes.length;j++){panes[j].classList.remove('active');}event.target.classList.add('active');document.getElementById('pane-'+paneId).classList.add('active');}
-        function updateLiveTime(){var d=new Date();var h=String(d.getHours()).padStart(2,'0');var m=String(d.getMinutes()).padStart(2,'0');var s=String(d.getSeconds()).padStart(2,'0');document.getElementById('status-time').innerText=h+':'+m;if(document.getElementById('weltuhr-time')){document.getElementById('weltuhr-time').innerText=h+':'+m+':'+s;}}
-        setInterval(updateLiveTime,1000);updateLiveTime();
-        var swInterval=null,swTime=0,swRunning=false;
-        function toggleSystemStopwatch(){var btn=document.getElementById('stopwatch-toggle-btn');if(!swRunning){swRunning=true;btn.innerText='Stopp';btn.style.color='#ff3b30';btn.style.backgroundColor='rgba(255,59,48,0.2)';swInterval=setInterval(function(){swTime+=10;var ms=String(Math.floor((swTime%1000)/10)).padStart(2,'0');var s=String(Math.floor((swTime/1000)%60)).padStart(2,'0');var m=String(Math.floor(swTime/60000)).padStart(2,'0');document.getElementById('stopwatch-time-display').innerText=m+':'+s+'.'+ms;},10);}else{swRunning=false;btn.innerText='Start';btn.style.color='#30d158';btn.style.backgroundColor='rgba(52,199,89,0.2)';clearInterval(swInterval);}}
-        function resetSystemStopwatch(){clearInterval(swInterval);swRunning=false;swTime=0;document.getElementById('stopwatch-time-display').innerText='00:00.00';var btn=document.getElementById('stopwatch-toggle-btn');btn.innerText='Start';btn.style.color='#30d158';btn.style.backgroundColor='rgba(52,199,89,0.2)';}
-        var tInterval=null,tTime=300;
-        function startSystemTimer(){clearInterval(tInterval);var durationInput=document.getElementById('timer-input-duration').value;tTime=parseInt(durationInput)*60;tInterval=setInterval(function(){if(tTime<=0){clearInterval(tInterval);document.getElementById('timer-time-display').innerText='00:00';return;}tTime--;var m=String(Math.floor(tTime/60)).padStart(2,'0');var s=String(tTime%60).padStart(2,'0');document.getElementById('timer-time-display').innerText=m+':'+s;},1000);}
-        function toggleUpdateSwitch(checked){var badge=document.getElementById('update-badge-status');if(checked){badge.innerText='Auf neuestem Stand (v27.0)';badge.className='status-badge valid';}else{badge.innerText='Updates deaktiviert';badge.className='status-badge';badge.style.backgroundColor='rgba(255,255,255,0.1)';badge.style.color='#fff';}}
+        function triggerKioskProtection(appName){
+            if(appName==='FaceTime'){openAppleOverlay('facetime-app');}
+            else if(appName==='Amazon Music'){openAppleOverlay('amazon-music-app');}
+        }
+        function updateSystemSlider(type,val){
+            if(type==='brightness'){
+                document.getElementById('settings-brightness').value=val;
+                document.getElementById('screen-root').style.filter='brightness('+(0.3+(val/142))+')';
+            } else if(type==='volume'){
+                document.getElementById('settings-volume').value=val;
+            }
+        }
+        function switchClockPane(paneId){
+            var trgs=document.querySelectorAll('.clock-tab-trigger');for(var i=0;i<trgs.length;i++){trgs[i].classList.remove('active');}
+            var panes=document.querySelectorAll('.clock-pane');for(var j=0;j<panes.length;j++){panes[j].classList.remove('active');}
+            event.target.classList.add('active');document.getElementById('pane-'+paneId).classList.add('active');
+        }
+        function switchSettingsTab(tabId){
+            var items=document.querySelectorAll('.settings-menu-item');for(var i=0;i<items.length;i++){items[i].classList.remove('active');items[i].style.opacity='0.7';}
+            var panes=document.querySelectorAll('.settings-view-pane');for(var j=0;j<panes.length;j++){panes[j].style.display='none';}
+            document.getElementById('menu-btn-'+tabId).classList.add('active');document.getElementById('menu-btn-'+tabId).style.opacity='1';
+            document.getElementById('settings-tab-'+tabId).style.display='block';
+        }
+        function toggleUpdateSwitch(checked){
+            var badge=document.getElementById('update-badge-status');
+            if(checked){badge.innerText='Auf neuestem Stand (v27.0)';badge.className='status-badge valid';badge.style.backgroundColor='rgba(52,199,89,0.2)';badge.style.color='#30d158';}
+            else{badge.innerText='Updates deaktiviert';badge.className='status-badge';badge.style.backgroundColor='rgba(255,255,255,0.1)';badge.style.color='#fff';}
+        }
+        function initBatteryAPI(){
+            if(navigator.getBattery){
+                navigator.getBattery().then(function(battery){
+                    function updateLevel(){document.getElementById('system-battery-display').innerText='🔋 '+Math.floor(battery.level*100)+'%';}
+                    updateLevel();battery.addEventListener('levelchange',updateLevel);
+                });
+            }else{document.getElementById('system-battery-display').innerText='🔋 100%';}
+        }
+        initBatteryAPI();function handleIphonePhotoUpload(files) {
+            for (var i = 0; i < files.length; i++) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    systemPhotos.push(e.target.result);
+                    renderPhotoGallery();
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        }
+        function renderPhotoGallery() {
+            var grid = document.getElementById('system-photo-gallery-grid');
+            grid.innerHTML = '';
+            for (var i = 0; i < systemPhotos.length; i++) {
+                var item = document.createElement('div');
+                item.className = 'photo-app-item';
+                item.style.backgroundImage = "url('" + systemPhotos[i] + "')";
+                grid.appendChild(item);
+            }
+            document.getElementById('widget-photo-count').innerText = systemPhotos.length + ' Fotos';
+            if (systemPhotos.length > 0) {
+                document.getElementById('main-widget-photo-bg').style.backgroundImage = "url('" + systemPhotos[systemPhotos.length - 1] + "')";
+            }
+        }
+        function executeLocalAIRequest() {
+            var input = document.getElementById('chatgpt-input-field');
+            var pane = document.getElementById('chatgpt-history-pane');
+            if (input.value.trim() === '') return;
+            var userDiv = document.createElement('div');
+            userDiv.style.marginLines = '10px 0';
+            userDiv.innerHTML = '<div style="color:#ff9500;font-weight:700;">👤 Du:</div><div>' + input.value + '</div>';
+            pane.appendChild(userDiv);
+            var promptText = input.value;
+            input.value = '';
+            setTimeout(function() {
+                var aiDiv = document.createElement('div');
+                aiDiv.style.marginLines = '10px 0';
+                var responseText = "Ich habe deine Anfrage '" + promptText + "' registriert. Als lokaler Kiosk-Assistent auf HomeViewOS v27.0 verarbeite ich das direkt am Küchentisch!";
+                aiDiv.innerHTML = '<div style="color:#30d158;font-weight:700;">🤖 ChatGPT:</div><div>' + responseText + '</div>';
+                pane.appendChild(aiDiv);
+                pane.scrollTop = pane.scrollHeight;
+            }, 800);
+        }
+        var isTemporarilyAwake = false;
+        function temporaryWakeScreen() {
+            isTemporarilyAwake = true;
+            document.getElementById('eco-blackout-screen').style.display = 'none';
+            setTimeout(function() { isTemporarilyAwake = false; checkEcoSchedule(); }, 30000);
+        }
+        function checkEcoSchedule() {
+            if (!document.getElementById('eco-schedule-enabled').checked || isTemporarilyAwake) return;
+            var now = new Date();
+            var day = now.getDay();
+            var timeStr = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+            var start = "07:00", end = "20:00";
+            if (day >= 1 && day <= 4) {
+                start = document.getElementById('eco-time-modo-start').value;
+                end = document.getElementById('eco-time-modo-end').value;
+            } else if (day === 5) {
+                start = document.getElementById('eco-time-fr-start').value;
+                end = document.getElementById('eco-time-fr-end').value;
+            } else if (day === 6) {
+                start = document.getElementById('eco-time-sa-start').value;
+                end = document.getElementById('eco-time-sa-end').value;
+            } else if (day === 0) {
+                start = document.getElementById('eco-time-so-start').value;
+                end = document.getElementById('eco-time-so-end').value;
+            }
+            if (timeStr < start || timeStr >= end) {
+                document.getElementById('eco-blackout-screen').style.display = 'flex';
+            } else {
+                document.getElementById('eco-blackout-screen').style.display = 'none';
+            }
+        }
+        function updateLiveTime() {
+            var d = new Date();
+            var h = String(d.getHours()).padStart(2,'0');
+            var m = String(d.getMinutes()).padStart(2,'0');
+            var s = String(d.getSeconds()).padStart(2,'0');
+            document.getElementById('status-time').innerText = h + ':' + m;
+            if (document.getElementById('weltuhr-time')) {
+                document.getElementById('weltuhr-time').innerText = h + ':' + m + ':' + s;
+            }
+            checkEcoSchedule();
+        }
+        setInterval(updateLiveTime, 1000);
+        updateLiveTime();
+        var swInterval = null, swTime = 0, swRunning = false;
+        function toggleSystemStopwatch() {
+            var btn = document.getElementById('stopwatch-toggle-btn');
+            if (!swRunning) {
+                swRunning = true; btn.innerText = 'Stopp'; btn.style.color = '#ff3b30'; btn.style.backgroundColor = 'rgba(255,59,48,0.2)';
+                swInterval = setInterval(function() {
+                    swTime += 10;
+                    var ms = String(Math.floor((swTime % 1000) / 10)).padStart(2,'0');
+                    var s = String(Math.floor((swTime / 1000) % 60)).padStart(2,'0');
+                    var m = String(Math.floor(swTime / 60000)).padStart(2,'0');
+                    document.getElementById('stopwatch-time-display').innerText = m + ':' + s + '.' + ms;
+                }, 10);
+            } else {
+                swRunning = false; btn.innerText = 'Start'; btn.style.color = '#30d158'; btn.style.backgroundColor = 'rgba(52,199,89,0.2)';
+                clearInterval(swInterval);
+            }
+        }
+        function resetSystemStopwatch() {
+            clearInterval(swInterval); swRunning = false; swTime = 0;
+            document.getElementById('stopwatch-time-display').innerText = '00:00.00';
+            var btn = document.getElementById('stopwatch-toggle-btn'); btn.innerText = 'Start'; btn.style.color = '#30d158'; btn.style.backgroundColor = 'rgba(52,199,89,0.2)';
+        }
+        var tInterval = null, tTime = 300;
+        function startSystemTimer() {
+            clearInterval(tInterval);
+            var durationInput = document.getElementById('timer-input-duration').value;
+            tTime = parseInt(durationInput) * 60;
+            tInterval = setInterval(function() {
+                if (tTime <= 0) { clearInterval(tInterval); document.getElementById('timer-time-display').innerText = '00:00'; alert('Timer abgelaufen!'); return; }
+                tTime--;
+                var m = String(Math.floor(tTime / 60)).padStart(2,'0');
+                var s = String(tTime % 60).padStart(2,'0');
+                document.getElementById('timer-time-display').innerText = m + ':' + s;
+            }, 1000);
+        }
     </script>
 </body>
 </html>
