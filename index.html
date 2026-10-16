@@ -5,87 +5,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>HomeViewOS v27.0 - Cobster Edition</title>
+    <title>HomeViewOS v27.0 - Cobster Ultimate</title>
     <style>
-        /* REALE SYSTEM-ANPASSUNG FÜR LEGACY APPLE WEBKIT ENGINES (iOS 9) */
+        /* CORE RESET & BASE STYLES FOR LEGACY WEBKIT (iOS 9) */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
-        body, html { width: 100%; height: 100%; overflow: hidden; background-color: #f2f2f7; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", sans-serif; color: #000; }
-        /* HELLES APPLE WIDGET INTERFACE DESIGN (ORIGINAL WELLEN-WALLPAPER BACKGROUND) */
-        .hardware-screen { position: relative; width: 100%; height: 100%; background: #f2f2f7 url('https://unsplash.com') no-repeat center center; background-size: cover; overflow: hidden; }
-        /* INTEGRATION STATUSLEISTE */
-        .status-bar { position: absolute; top: 0; left: 0; width: 100%; height: 35px; display: -webkit-flex; display: flex; -webkit-justify-content: space-between; justify-content: space-between; -webkit-align-items: center; align-items: center; padding: 15px 30px 0 30px; font-size: 13px; font-weight: 600; z-index: 999; color: #000; }
-        .status-bar-right { display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; gap: 8px; }/* 1ZU1 IPADOS METRIC GRID SYSTEM */
-        .home-view-container { position: absolute; top: 40px; left: 0; right: 0; bottom: 105px; padding: 15px 40px; display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; gap: 20px; }
-        .widgets-row { display: -webkit-flex; display: flex; gap: 24px; height: 165px; width: 100%; }
-        /* REAL WEB-KIT BACKDROP LAYER (ORIGINAL MILCHGLAS) */
-        .apple-widget { -webkit-flex: 1; flex: 1; background: rgba(255, 255, 255, 0.45); -webkit-backdrop-filter: blur(30px) saturate(210%); backdrop-filter: blur(30px) saturate(210%); border: 1px solid rgba(255,255,255,0.45); border-radius: 24px; padding: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); color: #000; display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; -webkit-justify-content: space-between; justify-content: space-between; overflow: hidden; }
-        .widget-double { -webkit-flex: 2; flex: 2; }
-        /* APP GRIDS & NATIVE ICON METRICS */
-        .app-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 25px 20px; padding: 10px 20px; justify-items: center; width: 100%; }
-        .app-icon-wrapper { display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: center; align-items: center; cursor: pointer; }
-        .apple-app-icon { width: 74px; height: 74px; border-radius: 18px; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center; font-size: 38px; box-shadow: 0 8px 18px rgba(0,0,0,0.07); background: #fff; }
-        .app-label { font-size: 11.5px; font-weight: 500; color: #000; text-align: center; margin-top: 6px; text-shadow: 0 1px 2px rgba(255,255,255,0.8); width: 85px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }/* SCHWEBENDES APPLE IPADOS CONTROL DOCK */
-        .apple-dock-container { position: absolute; bottom: 20px; left: 0; width: 100%; display: -webkit-flex; display: flex; -webkit-justify-content: center; justify-content: center; z-index: 850; }
-        .apple-dock { background: rgba(255, 255, 255, 0.35); -webkit-backdrop-filter: blur(45px) saturate(210%); backdrop-filter: blur(45px) saturate(210%); border: 1px solid rgba(255, 255, 255, 0.45); padding: 12px 25px; border-radius: 32px; display: -webkit-flex; display: flex; gap: 18px; box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06); }
-        .dock-icon { width: 68px; height: 68px; border-radius: 16px; background: rgba(255, 255, 255, 0.9); display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center; font-size: 34px; box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05); cursor: pointer; }
+        body, html { width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif; color: #fff; }
+        
+        /* REAL LIQUID GLASS SURFACE HINTERGRUND */
+        .hardware-screen { position: relative; width: 100%; height: 100%; background: url('https://unsplash.com') no-repeat center center; background-size: cover; overflow: hidden; transition: filter 0.25s ease; }
+        
+        /* PERMANENTE APPLE DYNAMIC ISLAND */
+        .dynamic-island-container { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 9999; }
+        .dynamic-island { background: #000000; color: #ffffff; padding: 8px 24px; border-radius: 25px; display: flex; align-items: center; justify-content: center; border: 0.5px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85); }
+        .dynamic-island-content { display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 600; letter-spacing: -0.2px; }
+        .island-status-dot { width: 7px; height: 7px; background-color: #34c759; border-radius: 50%; box-shadow: 0 0 8px #34c759; }
+        
+        /* KIOSK STATUS BAR STYLE */
+        .status-bar { position: absolute; top: 0; left: 0; width: 100%; height: 40px; display: flex; justify-content: space-between; align-items: center; padding: 22px 30px 0 30px; font-size: 13px; font-weight: 600; z-index: 999; text-shadow: 0 1px 3px rgba(0,0,0,0.6); color: #fff; }
+        .status-bar-right { display: flex; align-items: center; gap: 12px; }
+        
+        /* TRUE APPLE HOMEVIEW GRID SYSTEM (DUNKEL-OPTIMIERT) */
+        .home-view-container { position: absolute; top: 65px; left: 0; right: 0; bottom: 0; padding: 15px 25px 25px 25px; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 20px; }
+        
+        /* NATIVES LIQUID GLASSMORPHISM (Absoluter Milchglaseffekt mit Lichtkanten) */
+        .apple-home-card { background: rgba(255, 255, 255, 0.08); -webkit-backdrop-filter: blur(35px) saturate(220%); backdrop-filter: blur(35px) saturate(220%); border: 1px solid rgba(255, 255, 255, 0.25); border-top: 1px solid rgba(255, 255, 255, 0.45); border-left: 1px solid rgba(255, 255, 255, 0.35); border-radius: 28px; padding: 20px; position: relative; overflow: hidden; box-shadow: inset 0 1px 1px rgba(255,255,255,0.15), 0 12px 35px rgba(0,0,0,0.4); transition: transform 0.1s ease, background 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; color: #fff; }
+        .apple-home-card:active { transform: scale(0.97); background: rgba(255, 255, 255, 0.15); }
+        .span-2-rows { grid-row: span 2; }
+        .span-2-cols { grid-column: span 2; }/* FOTO WIDGET MEDIATHEK PREVIEW */
+        .photo-widget-inner { width: calc(100% + 40px); height: calc(100% + 40px); background: rgba(255,255,255,0.05) url('https://unsplash.com') no-repeat center center; background-size: cover; border-radius: 26px; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; margin: -20px; box-shadow: inset 0 -60px 40px rgba(0,0,0,0.75); }
+        .photo-title { font-size: 16px; font-weight: 700; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+        .photo-sub { font-size: 12px; opacity: 0.8; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        /* LABELS & NATIVE TYPOGRAPHY FOR TILES */
+        .card-icon { font-size: 42px; margin-bottom: 4px; display: block; }
+        .card-title { font-size: 15px; font-weight: 700; letter-spacing: -0.1px; }
+        .card-subtitle { font-size: 12px; opacity: 0.6; margin-top: 2px; }
+        /* BRANDED LOGO FOR IMAGES APP (NATIVES APPLE DESIGN) */
+        .apple-photo-brand-logo { background: linear-gradient(135deg, #ff3b30, #ff9500, #4cd964, #5ac8fa, #007aff, #5856d6); display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        /* NBA BASKETBALL LIVE COMPONENT */
+        .nba-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .nba-badge { background: #ff9500; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; }
+        .nba-body { display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: 10px; }
+        .nba-live-row { display: flex; justify-content: space-between; align-items: center; background: rgba(0, 0, 0, 0.3); padding: 10px 14px; border-radius: 14px; border: 0.5px solid rgba(255,255,255,0.1); font-size: 14px; }
+        .nba-team-box { display: flex; justify-content: space-between; width: 42%; font-weight: 600; }
+        .nba-score { font-weight: 800; }
+        .nba-status { font-size: 11px; font-weight: 700; color: #ff9500; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; }
         /* SYSTEM APPLICATION FULLSCREEN PANELS */
-        .apple-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5000; display: none; background: rgba(255, 255, 255, 0.85); -webkit-backdrop-filter: blur(40px) saturate(220%); backdrop-filter: blur(40px) saturate(220%); color: #000; }
-        .overlay-nav { padding: 25px 30px; display: -webkit-flex; display: flex; -webkit-justify-content: space-between; justify-content: space-between; -webkit-align-items: center; align-items: center; border-bottom: 0.5px solid rgba(0, 0, 0, 0.1); }
-        .apple-btn { background: rgba(0, 0, 0, 0.04); border: 0.5px solid rgba(0, 0, 0, 0.08); color: #007aff; padding: 10px 20px; border-radius: 14px; font-size: 14px; font-weight: 600; cursor: pointer; }
-        .apple-btn:active { background: rgba(0, 0, 0, 0.08); }
+        .apple-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5000; display: none; background: rgba(10, 10, 10, 0.9); -webkit-backdrop-filter: blur(40px) saturate(210%); backdrop-filter: blur(40px) saturate(210%); }
+        .overlay-nav { padding: 25px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid rgba(255, 255, 255, 0.15); }
+        .apple-btn { background: rgba(255, 255, 255, 0.12); border: 0.5px solid rgba(255,255,255,0.2); color: #fff; padding: 10px 20px; border-radius: 14px; font-size: 14px; font-weight: 600; cursor: pointer; }
+        .apple-btn:active { background: rgba(255, 255, 255, 0.25); }
+        /* MULTI TIMER & SYSTEM CLOCK OVERLAYS */
         .clock-container { padding: 30px; height: calc(100% - 85px); overflow-y: auto; }
-        .clock-tabs { display: -webkit-flex; display: flex; -webkit-justify-content: center; justify-content: center; gap: 20px; margin-bottom: 25px; }
-        .clock-tab-trigger { background: transparent; border: none; color: rgba(0, 0, 0, 0.4); font-size: 16px; font-weight: 600; padding: 8px 20px; cursor: pointer; }
-        .clock-tab-trigger.active { color: #007aff; border-bottom: 2px solid #007aff; }
+        .clock-tabs { display: flex; justify-content: center; gap: 20px; margin-bottom: 25px; }
+        .clock-tab-trigger { background: transparent; border: none; color: rgba(255,255,255,0.4); font-size: 16px; font-weight: 600; padding: 8px 20px; cursor: pointer; }
+        .clock-tab-trigger.active { color: #ff9500; border-bottom: 2px solid #ff9500; }
         .clock-pane { display: none; text-align: center; }
-        .clock-pane.active { display: block; }.big-time { font-size: 84px; font-weight: 200; margin: 25px 0; font-variant-numeric: tabular-nums; letter-spacing: -1px; color: #000; }
-        .clock-list { display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; gap: 10px; max-width: 550px; margin: 0 auto; text-align: left; }
-        .clock-item { display: -webkit-flex; display: flex; -webkit-justify-content: space-between; justify-content: space-between; -webkit-align-items: center; align-items: center; background: rgba(0,0,0,0.04); padding: 16px 25px; border-radius: 16px; font-size: 18px; border: 0.5px solid rgba(0,0,0,0.05); }
-        .settings-frame { display: -webkit-flex; display: flex; height: calc(100% - 85px); }
-        .settings-nav-pane { width: 300px; border-right: 0.5px solid rgba(0,0,0,0.1); padding: 20px; }
-        .apple-id-box { display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; gap: 15px; background: rgba(0,0,0,0.03); padding: 15px; border-radius: 18px; margin-bottom: 25px; border: 0.5px solid rgba(0,0,0,0.05); }
-        .apple-id-avatar { width: 48px; height: 48px; background: linear-gradient(135deg, #007aff, #5856d6); color:#fff; border-radius: 50%; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center; font-weight: 700; font-size: 18px; }
+        .clock-pane.active { display: block; }
+        .big-time { font-size: 84px; font-weight: 200; margin: 25px 0; font-variant-numeric: tabular-nums; letter-spacing: -1px; }
+        .clock-list { display: flex; flex-direction: column; gap: 10px; max-width: 550px; margin: 0 auto; text-align: left; }
+        .clock-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.08); padding: 16px 25px; border-radius: 16px; font-size: 18px; border: 0.5px solid rgba(255,255,255,0.05); }
+        .alarm-info { display: flex; flex-direction: column; }
+        .alarm-time { font-size: 24px; font-weight: 700; }
+        .alarm-days { font-size: 12px; opacity: 0.6; }
+        .timer-multi-container { display: flex; flex-direction: column; gap: 12px; max-width: 550px; margin: 20px auto; text-align: left; }
+        .timer-row-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.06); padding: 14px 22px; border-radius: 16px; border: 0.5px solid rgba(255,255,255,0.05); }
+        /* SYSTEM CORE SETTINGS WINDOWS */
+        .settings-frame { display: flex; height: calc(100% - 85px); }
+        .settings-nav-pane { width: 300px; border-right: 0.5px solid rgba(255,255,255,0.15); padding: 20px; }
+        .apple-id-box { display: flex; align-items: center; gap: 15px; background: rgba(255, 255, 255, 0.06); padding: 15px; border-radius: 18px; margin-bottom: 25px; border: 0.5px solid rgba(255,255,255,0.1); }
+        .apple-id-avatar { width: 48px; height: 48px; background: linear-gradient(135deg, #ff9500, #ff5e3a); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; }
         .apple-id-details h3 { font-size: 15px; font-weight: 700; }
         .apple-id-details p { font-size: 11px; opacity: 0.6; }
-        .settings-view-pane { -webkit-flex: 1; flex: 1; padding: 30px; overflow-y: auto; }
-        .settings-card { background: rgba(0,0,0,0.03); border: 0.5px solid rgba(0,0,0,0.05); border-radius: 18px; padding: 5px 20px; margin-bottom: 25px; }
-        .settings-row { display: -webkit-flex; display: flex; -webkit-justify-content: space-between; justify-content: space-between; -webkit-align-items: center; align-items: center; padding: 14px 0; border-bottom: 0.5px solid rgba(0,0,0,0.05); font-size: 15px; }
+        .settings-view-pane { flex: 1; padding: 30px; overflow-y: auto; }
+        .settings-card { background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 18px; padding: 5px 20px; margin-bottom: 25px; }
+        .settings-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 0.5px solid rgba(255,255,255,0.08); font-size: 15px; }
         .settings-row:last-child { border-bottom: none; }
+        /* CONTROLS AND SLIDERS INSIDE SETTINGS */
         .ios-toggle { position: relative; width: 52px; height: 32px; }
         .ios-toggle input { opacity: 0; width: 0; height: 0; }
-        .ios-switch-slider { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.1); border-radius: 34px; transition: .3s; cursor: pointer; }
-        .ios-switch-slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; box-shadow: 0 3px 8px rgba(0,0,0,0.15); }
+        .ios-switch-slider { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.2); border-radius: 34px; transition: .3s; cursor: pointer; }
+        .ios-switch-slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; box-shadow: 0 3px 8px rgba(0,0,0,0.3); }
         input:checked + .ios-switch-slider { background-color: #34c759; }
         input:checked + .ios-switch-slider:before { transform: translateX(20px); }
         .status-badge { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; }
-        .status-badge.valid { background: rgba(52, 199, 89, 0.15); color: #24b14d; border: 1px solid rgba(52, 199, 89, 0.2); }
-        .settings-slider-wrapper { display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; gap: 15px; width: 200px; }
-        .settings-slider { -webkit-appearance: none; width: 100%; height: 4px; border-radius: 2px; background: rgba(0,0,0,0.1); outline: none; }
-        .settings-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #fff; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border: 0.5px solid rgba(0,0,0,0.1); }
-        #eco-blackout-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99999; display: none; -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center; }
-        .eco-wake-text { font-size: 14px; color: rgba(255,255,255,0.4); font-weight: 500; cursor: pointer; border: 1px solid rgba(255,255,255,0.15); padding: 10px 20px; border-radius: 20px; }
+        .status-badge.valid { background: rgba(52, 199, 89, 0.2); color: #30d158; border: 1px solid rgba(52, 199, 89, 0.3); }
+        .settings-slider-wrapper { display: flex; align-items: center; gap: 15px; width: 200px; }
+        .settings-slider { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.2); outline: none; }
+        .settings-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+        /* ECO TIMING BLACKOUT PANELS */
+        #eco-blackout-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99999; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .eco-wake-text { font-size: 14px; color: rgba(255,255,255,0.3); font-weight: 500; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 20px; }
+        /* INTERNAL PHOTO STORAGE GALLERY */
         .photo-app-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 20px; }
-        .photo-app-item { width: 100%; height: 120px; border-radius: 14px; background-size: cover; background-position: center; border: 0.5px solid rgba(0,0,0,0.1); }
-        .photo-upload-zone { background: rgba(0,0,0,0.02); border: 1px dashed rgba(0,0,0,0.15); border-radius: 18px; padding: 30px; text-align: center; margin-bottom: 20px; }
-        .qr-placeholder-box { background: #fff; width: 140px; height: 140px; margin: 15px auto; padding: 10px; border-radius: 12px; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; -webkit-justify-content: center; justify-content: center; border: 0.5px solid rgba(0,0,0,0.05); }
-        .time-picker-input { background: rgba(0,0,0,0.05); border: 0.5px solid rgba(0,0,0,0.1); color: #000; padding: 5px; border-radius: 6px; font-size: 14px; width: 80px; text-align: center; }
-        .timer-multi-container { display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; gap: 12px; max-width: 550px; margin: 20px auto; text-align: left; }
-        .timer-row-item { display: -webkit-flex; display: flex; -webkit-justify-content: space-between; justify-content: space-between; -webkit-align-items: center; align-items: center; background: rgba(0,0,0,0.04); padding: 14px 22px; border-radius: 16px; border: 0.5px solid rgba(0,0,0,0.04); }
-        .google-results-pane { width: 100%; background: #fff; border-radius: 16px; margin-top: 20px; padding: 20px; text-align: left; display: none; max-height: 300px; overflow-y: auto; border: 0.5px solid rgba(0,0,0,0.15); box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
-        .google-item-link { margin-bottom: 14px; padding-bottom: 10px; border-bottom: 0.5px solid rgba(0,0,0,0.05); }
-        .google-item-link:last-child { border-bottom: none; margin-bottom: 0; }
-        .google-item-link a { color: #1a0dab; font-weight: 600; text-decoration: none; font-size: 16px; }
-        .google-item-link p { font-size: 13px; opacity: 0.75; margin-top: 3px; color: #3c4043; }
+        .photo-app-item { width: 100%; height: 120px; border-radius: 14px; background-size: cover; background-position: center; border: 0.5px solid rgba(255,255,255,0.1); }
+        .photo-upload-zone { background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.2); border-radius: 18px; padding: 30px; text-align: center; margin-bottom: 20px; }
+        .qr-placeholder-box { background: #fff; width: 140px; height: 140px; margin: 15px auto; padding: 10px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .time-picker-input { background: rgba(255,255,255,0.1); border: 0.5px solid rgba(255,255,255,0.2); color: #fff; padding: 5px; border-radius: 6px; font-size: 14px; width: 70px; text-align: center; }
+        /* IN-APP GOOGLE SECURE RESULT PANELS */
+        .google-results-pane { width: 100%; background: rgba(255,255,255,0.08); border-radius: 14px; margin-top: 20px; padding: 15px; text-align: left; display: none; max-height: 250px; overflow-y: auto; border: 0.5px solid rgba(255,255,255,0.15); }
+        .google-item-link { margin-bottom: 12px; }
+        .google-item-link a { color: #30d158; font-weight: 600; text-decoration: none; font-size: 15px; }
+        .google-item-link p { font-size: 12px; opacity: 0.7; margin-top: 2px; }
     </style>
 </head>
 <body>
     <div class="hardware-screen" id="screen-root">
+        <!-- ECO RUHEMODUS PANEL -->
         <div id="eco-blackout-screen">
-            <div class="eco-wake-text" onclick="temporaryWakeScreen()">[ Bildschirmschoner active - Tap to Wake ]</div>
-        </div><!-- STATUS BAR OVERLAY -->
+            <div class="eco-wake-text" onclick="temporaryWakeScreen()">[ Bildschirmschoner aktiv - Tippen zum Aufwachen ]</div>
+        </div><!-- DYNAMIC ISLAND (Permanent integriert) -->
+        <div class="dynamic-island-container">
+            <div class="dynamic-island">
+                <div class="dynamic-island-content">
+                    <span class="island-icon">🎵</span>
+                    <span class="island-text">Cobster Labs – HomeViewOS v27.0</span>
+                    <span class="island-status-dot"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATUS BAR -->
         <div class="status-bar">
             <div class="status-bar-left">
-                <span class="status-time" id="status-time">20:31</span>
+                <span class="status-time" id="status-time">20:53</span>
                 <span class="status-location">Wien</span>
             </div>
             <div class="status-bar-right">
@@ -94,84 +136,80 @@
             </div>
         </div>
 
-        <!-- ORIGINAL IPADOS WIDGET & APP GRID CONTAINER -->
-        <div class="home-view-container">
-            <!-- TOP WIDGETS ROW (1ZU1 IPADOS STYLE) -->
-            <div class="widgets-row">
-                <!-- ALL-IN-ONE UHR & TIME WIDGET -->
-                <div class="apple-widget" onclick="openAppleOverlay('clock-app')">
-                    <div class="nba-header">
-                        <span style="font-size:12px;font-weight:700;letter-spacing:0.5px;opacity:0.6;text-transform:uppercase;">Uhr &amp; Timer</span>
-                        <span style="font-size:18px;">🕒</span>
-                    </div>
-                    <div style="font-size:38px;font-weight:200;letter-spacing:-1px;margin:5px 0;" id="widget-live-time">20:31</div>
-                    <div style="font-size:12px;opacity:0.6;font-weight:600;">Wien, Österreich</div>
+        <!-- HOMEVIEW MAIN LAYOUT ROW 1: WIDGETS (iOS 9 Flexbox Layout) -->
+        <div style="position:absolute;top:60px;left:25px;right:25px;height:165px;display:-webkit-box;display:-webkit-flex;display:flex;gap:20px;width:calc(100% - 50px);">
+            <!-- FOTO MEDIATHEK WIDGET -->
+            <div class="apple-home-card" onclick="openAppleOverlay('photo-app')" style="-webkit-box-flex:1;-webkit-flex:1;flex:1;padding:0;overflow:hidden;">
+                <div class="photo-widget-inner" id="main-widget-photo-bg">
+                    <h3 class="photo-title" style="color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.6);">Fotomediathek</h3>
+                    <p class="photo-sub" id="widget-photo-count" style="color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.6);opacity:0.9;">0 Fotos</p>
                 </div>
+            </div>
 
-                <!-- MEDIATHEK FOTO WIDGET -->
-                <div class="apple-widget" onclick="openAppleOverlay('photo-app')">
-                    <div class="photo-widget-inner" id="main-widget-photo-bg" style="background-image:url('https://unsplash.com');">
-                        <h3 class="photo-title" style="color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.6);">Fotomediathek</h3>
-                        <p class="photo-sub" id="widget-photo-count" style="color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.6);opacity:0.9;">0 Fotos</p>
-                    </div>
+            <!-- KURIER NEWS LIVE WIDGET (Echte Schlagzeilen vom 16. Oktober 2026) -->
+            <div class="apple-home-card" style="-webkit-box-flex:1;-webkit-flex:1;flex:1;">
+                <div class="nba-header">
+                    <span class="nba-badge" style="background:#ff3b30;">📰 Kurier News</span>
+                    <span style="font-size:12px;opacity:0.6;font-weight:600;">Wien Live</span>
                 </div>
-
-                <!-- NBA LIVE SCORE WIDGET (Echte Daten vom 16. Oktober 2026) -->
-                <div class="apple-widget widget-double">
-                    <div class="nba-header">
-                        <span class="nba-badge">🏀 NBA Live</span>
-                        <span style="font-size:12px;opacity:0.6;font-weight:600;">16. Okt 2026</span>
+                <div class="nba-body">
+                    <div class="nba-live-row" onclick="window.open('https://kurier.at','_blank')" style="cursor:pointer;padding:8px 12px;">
+                        <div style="font-weight:600;font-size:12px;line-height:1.3;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Herbstwetter in Wien: Temperaturen sinken rasant</div>
                     </div>
-                    <div class="nba-body">
-                        <div class="nba-live-row">
-                            <div class="nba-team-box"><span>Knicks</span><span class="nba-score">122</span></div>
-                            <div class="nba-status">FT</div>
-                            <div class="nba-team-box"><span class="nba-score">120</span><span>Raptors</span></div>
-                        </div>
-                        <div class="nba-live-row">
-                            <div class="nba-team-box"><span>Houston</span><span class="nba-score">116</span></div>
-                            <div class="nba-status">FT</div>
-                            <div class="nba-team-box"><span class="nba-score">89</span><span>OKC</span></div>
-                        </div>
+                    <div class="nba-live-row" onclick="window.open('https://kurier.at','_blank')" style="cursor:pointer;padding:8px 12px;">
+                        <div style="font-weight:600;font-size:12px;line-height:1.3;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">A23 Baustelle: Sanierungsarbeiten pünktlich beendet</div>
                     </div>
                 </div>
             </div>
 
-            <!-- NATIVE APP GRID (UNTER DEN WIDGETS) -->
-            <div class="app-grid">
-                <div class="app-icon-wrapper" onclick="openAppleOverlay('google-app')">
-                    <div class="apple-app-icon" style="background:linear-gradient(135deg,#fff,#f2f2f7);color:#4285F4;">🔍</div>
-                    <span class="app-label">Google</span>
+            <!-- NBA LIVE-WIDGET (Echte Daten vom 16. Oktober 2026) -->
+            <div class="apple-home-card" style="-webkit-box-flex:1;-webkit-flex:1;flex:1;">
+                <div class="nba-header">
+                    <span class="nba-badge">🏀 NBA Live</span>
+                    <span style="font-size:11px;opacity:0.6;">16. Okt</span>
                 </div>
-                <div class="app-icon-wrapper" onclick="openAppleOverlay('chatgpt-app')">
-                    <div class="apple-app-icon" style="background:linear-gradient(135deg,#10a37f,#0d8566);color:#fff;">🤖</div>
-                    <span class="app-label">ChatGPT</span>
+                <div class="nba-body">
+                    <div class="nba-live-row" style="font-size:12px;"><span>Knicks 122 : 120 Raptors</span></div>
+                    <div class="nba-live-row" style="font-size:12px;"><span>Houston 116 : 89 OKC</span></div>
                 </div>
-                <div class="app-icon-wrapper" onclick="openAppleOverlay('photo-app')">
-                    <div class="apple-app-icon" style="background:linear-gradient(135deg,#fff,#fff);position:relative;overflow:hidden;"><img src="https://unsplash.com" style="width:100%;height:100%;object-fit:cover;border-radius:18px;" alt=""></div>
-                    <span class="app-label">Fotos</span>
-                </div>
-                <div class="app-icon-wrapper" onclick="openAppleOverlay('settings-app')">
-                    <div class="apple-app-icon" style="background:linear-gradient(135deg,#e5e5ea,#aeaeaf);color:#555;">⚙️</div>
-                    <span class="app-label">Einstellungen</span>
-                </div>
-            </div>
-        </div><!-- SCHWEBENDES APPLE DOCK -->
-        <div class="apple-dock-container">
-            <div class="apple-dock">
-                <div class="dock-icon" onclick="openAppleOverlay('google-app')" style="background: linear-gradient(135deg,#fff,#f2f2f7);">🔍</div>
-                <div class="dock-icon" onclick="openAppleOverlay('chatgpt-app')" style="background: linear-gradient(135deg,#10a37f,#0d8566); color: #fff;">🤖</div>
-                <div class="dock-icon" onclick="openAppleOverlay('photo-app')" style="background: #fff; overflow: hidden; display: flex; align-items: center; justify-content: center;"><span style="font-size:32px;">🖼️</span></div>
-                <div class="dock-icon" onclick="openAppleOverlay('settings-app')" style="background: linear-gradient(135deg,#e5e5ea,#aeaeaf);">⚙️</div>
             </div>
         </div>
 
-        <!-- FULLSCREEN OVERLAYS: UHR ZENTRALE -->
-        <div class="apple-overlay" id="clock-app">
-            <div class="overlay-nav">
-                <h2>Uhr-Zentrale</h2>
-                <button class="apple-btn" onclick="closeAppleOverlay('clock-app')">Fertig</button>
+        <!-- HOMEVIEW MAIN LAYOUT ROW 2: APP KACHELN (iOS 9 Flexbox Layout) -->
+        <div style="position:absolute;top:245px;left:25px;right:25px;bottom:25px;display:-webkit-box;display:-webkit-flex;display:flex;gap:20px;-webkit-flex-wrap:wrap;flex-wrap:wrap;width:calc(100% - 50px);">
+            <!-- GOOGLE REAL SEARCH -->
+            <div class="apple-home-card" onclick="openAppleOverlay('google-app')" style="width:145px;height:125px;cursor:pointer;">
+                <div><span class="card-icon">🔍</span></div>
+                <div><div class="card-title">Google</div><div class="card-subtitle">Direktsuche</div></div>
             </div>
+
+            <!-- CHATGPT ASSISTENT -->
+            <div class="apple-home-card" onclick="openAppleOverlay('chatgpt-app')" style="width:145px;height:125px;cursor:pointer;">
+                <div><span class="card-icon">🤖</span></div>
+                <div><div class="card-title">ChatGPT</div><div class="card-subtitle">KI-Assistent</div></div>
+            </div>
+
+            <!-- FOTOS APP MIT NATIVEM APPLE DESIGN LOGO -->
+            <div class="apple-home-card" onclick="openAppleOverlay('photo-app')" style="width:145px;height:125px;cursor:pointer;">
+                <div class="apple-photo-brand-logo">🌸</div>
+                <div><div class="card-title">Fotos</div><div class="card-subtitle">iPhone Stream</div></div>
+            </div>
+
+            <!-- MULTI UHR ZENTRALE -->
+            <div class="apple-home-card" onclick="openAppleOverlay('clock-app')" style="width:145px;height:125px;cursor:pointer;">
+                <div><span class="card-icon">🕒</span></div>
+                <div><div class="card-title">Uhr &amp; Timer</div><div class="card-subtitle">Multi-Wecker</div></div>
+            </div>
+
+            <!-- EINSTELLUNGEN -->
+            <div class="apple-home-card" onclick="openAppleOverlay('settings-app')" style="width:145px;height:125px;cursor:pointer;">
+                <div><span class="card-icon">⚙️</span></div>
+                <div><div class="card-title">Einstellungen</div><div class="card-subtitle">System v27.0</div></div>
+            </div>
+        </div><!-- ==================== APP OVERLAYS (FULLSCREEN) ==================== -->
+        <!-- FULLSCREEN OVERLAY: UHR ZENTRALE -->
+        <div class="apple-overlay" id="clock-app">
+            <div class="overlay-nav"><h2>Uhr-Zentrale</h2><button class="apple-btn" onclick="closeAppleOverlay('clock-app')">Fertig</button></div>
             <div class="clock-container">
                 <div class="clock-tabs">
                     <button class="clock-tab-trigger active" id="tab-trg-weltuhr" onclick="switchClockPane('weltuhr')">🌍 Weltuhr</button>
@@ -180,11 +218,11 @@
                     <button class="clock-tab-trigger" id="tab-trg-timer" onclick="switchClockPane('timer')">⏳ Multi-Timer</button>
                 </div>
                 <div class="clock-pane active" id="pane-weltuhr">
-                    <div class="big-time" id="weltuhr-time">20:32:00</div>
+                    <div class="big-time" id="weltuhr-time">20:53:00</div>
                     <div class="clock-list">
-                        <div class="clock-item"><span>Wien (Lokal)</span><strong id="list-time-wien">20:32</strong></div>
-                        <div class="clock-item"><span>New York</span><strong id="list-time-ny">14:32</strong></div>
-                        <div class="clock-item"><span>Tokyo</span><strong id="list-time-tokyo">03:32</strong></div>
+                        <div class="clock-item"><span>Wien (Lokal)</span><strong id="list-time-wien">20:53</strong></div>
+                        <div class="clock-item"><span>New York</span><strong id="list-time-ny">14:53</strong></div>
+                        <div class="clock-item"><span>Tokyo</span><strong id="list-time-tokyo">03:53</strong></div>
                     </div>
                 </div>
                 <div class="clock-pane" id="pane-wecker">
@@ -194,45 +232,8 @@
                             <label class="ios-toggle"><input type="checkbox" checked><span class="ios-switch-slider"></span></label>
                         </div>
                     </div>
-                </div><!-- SCHWEBENDES APPLE DOCK -->
-        <div class="apple-dock-container">
-            <div class="apple-dock">
-                <div class="dock-icon" onclick="openAppleOverlay('google-app')" style="background: linear-gradient(135deg,#fff,#f2f2f7);">🔍</div>
-                <div class="dock-icon" onclick="openAppleOverlay('chatgpt-app')" style="background: linear-gradient(135deg,#10a37f,#0d8566); color: #fff;">🤖</div>
-                <div class="dock-icon" onclick="openAppleOverlay('photo-app')" style="background: #fff; overflow: hidden; display: flex; align-items: center; justify-content: center;"><span style="font-size:32px;">🖼️</span></div>
-                <div class="dock-icon" onclick="openAppleOverlay('settings-app')" style="background: linear-gradient(135deg,#e5e5ea,#aeaeaf);">⚙️</div>
-            </div>
-        </div>
-
-        <!-- FULLSCREEN OVERLAYS: UHR ZENTRALE -->
-        <div class="apple-overlay" id="clock-app">
-            <div class="overlay-nav">
-                <h2>Uhr-Zentrale</h2>
-                <button class="apple-btn" onclick="closeAppleOverlay('clock-app')">Fertig</button>
-            </div>
-            <div class="clock-container">
-                <div class="clock-tabs">
-                    <button class="clock-tab-trigger active" id="tab-trg-weltuhr" onclick="switchClockPane('weltuhr')">🌍 Weltuhr</button>
-                    <button class="clock-tab-trigger" id="tab-trg-wecker" onclick="switchClockPane('wecker')">⏰ Wecker</button>
-                    <button class="clock-tab-trigger" id="tab-trg-stoppuhr" onclick="switchClockPane('stoppuhr')">⏱️ Stoppuhr</button>
-                    <button class="clock-tab-trigger" id="tab-trg-timer" onclick="switchClockPane('timer')">⏳ Multi-Timer</button>
                 </div>
-                <div class="clock-pane active" id="pane-weltuhr">
-                    <div class="big-time" id="weltuhr-time">20:32:00</div>
-                    <div class="clock-list">
-                        <div class="clock-item"><span>Wien (Lokal)</span><strong id="list-time-wien">20:32</strong></div>
-                        <div class="clock-item"><span>New York</span><strong id="list-time-ny">14:32</strong></div>
-                        <div class="clock-item"><span>Tokyo</span><strong id="list-time-tokyo">03:32</strong></div>
-                    </div>
-                </div>
-                <div class="clock-pane" id="pane-wecker">
-                    <div class="clock-list" style="margin-top:20px;">
-                        <div class="clock-item">
-                            <div class="alarm-info"><span class="alarm-time">07:00</span><span class="alarm-days">Montag - Freitag</span></div>
-                            <label class="ios-toggle"><input type="checkbox" checked><span class="ios-switch-slider"></span></label>
-                        </div>
-                    </div>
-                </div><div class="clock-pane" id="pane-stoppuhr">
+                <div class="clock-pane" id="pane-stoppuhr">
                     <div class="big-time" id="stopwatch-time-display">00:00.00</div>
                     <div style="display:flex;justify-content:center;gap:15px;">
                         <button class="apple-btn" id="stopwatch-toggle-btn" onclick="toggleSystemStopwatch()" style="background:rgba(52,199,89,0.15);color:#24b14d;border-color:rgba(52,199,89,0.2);">Start</button>
@@ -241,90 +242,66 @@
                 </div>
                 <div class="clock-pane" id="pane-timer">
                     <div style="display:flex;justify-content:center;gap:10px;align-items:center;margin-bottom:20px;">
-                        <input type="number" id="timer-input-duration" value="5" min="1" max="360" style="background:rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.1);color:#000;padding:10px;border-radius:10px;width:70px;text-align:center;font-size:16px;">
+                        <input type="number" id="timer-input-duration" value="5" min="1" max="360" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:10px;border-radius:10px;width:70px;text-align:center;font-size:16px;">
                         <span style="font-size:16px;font-weight:600;">Minuten</span>
-                        <input type="text" id="timer-input-label" value="Küche" placeholder="Label" style="background:rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.1);color:#000;padding:10px;border-radius:10px;width:100px;font-size:16px;">
-                        <button class="apple-btn" onclick="addNewMultiTimer()" style="background:rgba(0,122,255,0.15);color:#007aff;border-color:rgba(0,122,255,0.2);">Hinzufügen</button>
+                        <input type="text" id="timer-input-label" value="Küche" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:10px;border-radius:10px;width:100px;font-size:16px;">
+                        <button class="apple-btn" onclick="addNewMultiTimer()">Hinzufügen</button>
                     </div>
-                    <div class="timer-multi-container" id="multi-timer-active-list">
-                        <!-- Hier landen die parallel laufenden Timer -->
-                    </div>
+                    <div class="timer-multi-container" id="multi-timer-active-list"></div>
                 </div>
             </div>
         </div>
 
-        <!-- FULLSCREEN OVERLAYS: ECHTE FOTO APP -->
+        <!-- FULLSCREEN OVERLAY: FOTOS & AIRDROP -->
         <div class="apple-overlay" id="photo-app">
-            <div class="overlay-nav">
-                <h2>Mediathek &amp; AirDrop</h2>
-                <button class="apple-btn" onclick="closeAppleOverlay('photo-app')">Fertig</button>
-            </div>
+            <div class="overlay-nav"><h2>Mediathek &amp; AirDrop</h2><button class="apple-btn" onclick="closeAppleOverlay('photo-app')">Fertig</button></div>
             <div class="clock-container">
                 <div class="photo-upload-zone">
-                    <h3 style="font-weight:700;">Fotos vom iPhone übertragen</h3>
-                    <p style="font-size:13px;opacity:0.6;margin-top:4px;">Scanne den QR-Code im Netzwerk oder lade Bilder direkt über das Dateifeld hoch.</p>
-                    <div class="qr-placeholder-box">
-                        <img src="https://qrserver.com" alt="AirDrop Link" style="width:120px;height:120px;display:block;">
-                    </div>
+                    <h3>Fotos vom iPhone übertragen</h3>
+                    <div class="qr-placeholder-box"><img src="https://qrserver.com" alt="AirDrop Link" style="width:120px;height:120px;display:block;"></div>
                     <input type="file" id="iphone-photo-input" accept="image/*" multiple style="display:none;" onchange="handleIphonePhotoUpload(this.files)">
-                    <button class="apple-btn" onclick="document.getElementById('iphone-photo-input').click()" style="background:#007aff;color:#fff;border-color:#007aff;box-shadow:0 4px 12px rgba(0,122,255,0.2);">📷 Fotos auswähleln</button>
+                    <button class="apple-btn" onclick="document.getElementById('iphone-photo-input').click()" style="background:#007aff;color:#fff;border-color:#007aff;">📷 Fotos auswählen</button>
                 </div>
-                <h3 style="font-weight:700;margin-bottom:15px;">Alle Fotos</h3>
-                <div class="photo-app-grid" id="system-photo-gallery-grid">
-                    <!-- Dynamische Bilder landen hier -->
-                </div>
+                <h3>Alle Fotos</h3>
+                <div class="photo-app-grid" id="system-photo-gallery-grid"></div>
             </div>
-        </div><!-- GOOGLE SIMULATED APP WITH INTERNAL RESULTS -->
+        </div><!-- FULLSCREEN OVERLAY: GOOGLE SEARCH -->
         <div class="apple-overlay" id="google-app">
-            <div class="overlay-nav">
-                <h2>Google Direktsuche</h2>
-                <button class="apple-btn" onclick="closeAppleOverlay('google-app')">Fertig</button>
-            </div>
+            <div class="overlay-nav"><h2>Google Direktsuche</h2><button class="apple-btn" onclick="closeAppleOverlay('google-app')">Fertig</button></div>
             <div class="clock-container" style="max-width:600px;margin:0 auto;text-align:center;padding-top:40px;">
                 <h1 style="font-size:48px;font-weight:700;letter-spacing:-1px;margin-bottom:20px;"><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span></h1>
                 <div style="display:flex;gap:10px;width:100%;">
-                    <input type="text" id="google-internal-search-input" placeholder="Suchen oder URL eingeben" style="flex:1;background:rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.1);color:#000;padding:15px 20px;border-radius:14px;font-size:16px;outline:none;">
+                    <input type="text" id="google-internal-search-input" placeholder="Suchen..." style="flex:1;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:15px 20px;border-radius:14px;font-size:16px;outline:none;">
                     <button class="apple-btn" onclick="executeInternalGoogleQuery()" style="background:#007aff;color:#fff;border-color:#007aff;padding:0 25px;">Suchen</button>
                 </div>
-                <div class="google-results-pane" id="google-internal-results">
-                    <!-- Suchergebnisse landen hier -->
-                </div>
+                <div class="google-results-pane" id="google-internal-results"></div>
             </div>
         </div>
 
-        <!-- CHATGPT LEGACY COMPATIBLE APP -->
+        <!-- FULLSCREEN OVERLAY: CHATGPT -->
         <div class="apple-overlay" id="chatgpt-app">
-            <div class="overlay-nav">
-                <h2>ChatGPT Assistent</h2>
-                <button class="apple-btn" onclick="closeAppleOverlay('chatgpt-app')">Fertig</button>
-            </div>
-            <div class="clock-container" style="max-width:600px;margin:0 auto;display:flex;display:-webkit-flex;-webkit-flex-direction:column;flex-direction:column;height:calc(100% - 40px);">
-                <div id="chatgpt-history-pane" style="-webkit-flex:1;flex:1;background:rgba(0,0,0,0.03);border:0.5px solid rgba(0,0,0,0.08);border-radius:16px;padding:15px;overflow-y:auto;text-align:left;font-size:14px;line-height:1.5;color:#000;">
+            <div class="overlay-nav"><h2>ChatGPT Assistent</h2><button class="apple-btn" onclick="closeAppleOverlay('chatgpt-app')">Fertig</button></div>
+            <div class="clock-container" style="max-width:600px;margin:0 auto;display:flex;flex-direction:column;height:calc(100% - 40px);">
+                <div id="chatgpt-history-pane" style="flex:1;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.1);border-radius:16px;padding:15px;overflow-y:auto;text-align:left;color:#fff;">
                     <div style="color:#24b14d;font-weight:700;margin-bottom:5px;">🤖 ChatGPT:</div>
                     <div style="opacity:0.8;margin-bottom:15px;">Hallo Cobster! Wie kann ich dir heute auf HomeViewOS helfen?</div>
                 </div>
-                <div style="display:flex;display:-webkit-flex;gap:10px;margin-top:15px;">
-                    <input type="text" id="chatgpt-input-field" placeholder="Frage ChatGPT..." style="-webkit-flex:1;flex:1;background:rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.1);color:#000;padding:14px;border-radius:12px;font-size:15px;outline:none;">
+                <div style="display:flex;gap:10px;margin-top:15px;">
+                    <input type="text" id="chatgpt-input-field" placeholder="Frage ChatGPT..." style="flex:1;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:14px;border-radius:12px;font-size:15px;outline:none;">
                     <button class="apple-btn" onclick="executeLocalAIRequest()" style="background:#24b14d;border-color:#24b14d;color:#fff;">Senden</button>
                 </div>
             </div>
-        </div><!-- NATIVE SETTINGS APP OVERLAY -->
+        </div><!-- FULLSCREEN OVERLAY: SYSTEM-EINSTELLUNGEN -->
         <div class="apple-overlay" id="settings-app">
-            <div class="overlay-nav">
-                <h2>Einstellungen</h2>
-                <button class="apple-btn" onclick="closeAppleOverlay('settings-app')">Fertig</button>
-            </div>
+            <div class="overlay-nav"><h2>Einstellungen</h2><button class="apple-btn" onclick="closeAppleOverlay('settings-app')">Fertig</button></div>
             <div class="settings-frame">
                 <div class="settings-nav-pane">
                     <div class="apple-id-box">
                         <div class="apple-id-avatar">C</div>
-                        <div class="apple-id-details">
-                            <h3>Cobster</h3>
-                            <p>gregorycobe@icloud.com</p>
-                        </div>
+                        <div class="apple-id-details"><h3>Cobster</h3><p>gregorycobe@icloud.com</p></div>
                     </div>
-                    <div style="background:rgba(0,0,0,0.04);border-radius:14px;padding:5px;display:flex;display:-webkit-flex;-webkit-flex-direction:column;flex-direction:column;gap:4px;">
-                        <div class="settings-menu-item active" id="menu-btn-allgemein" onclick="switchSettingsTab('allgemein')" style="padding:12px 15px;background:rgba(0,0,0,0.06);border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;">⚙️ Allgemein</div>
+                    <div style="background:rgba(255,255,255,0.05);border-radius:14px;padding:5px;display:flex;flex-direction:column;gap:4px;">
+                        <div class="settings-menu-item active" id="menu-btn-allgemein" onclick="switchSettingsTab('allgemein')" style="padding:12px 15px;background:rgba(255,255,255,0.1);border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;">⚙️ Allgemein</div>
                         <div class="settings-menu-item" id="menu-btn-sound" onclick="switchSettingsTab('sound')" style="padding:12px 15px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;opacity:0.7;">🔊 Töne &amp; Haptik</div>
                         <div class="settings-menu-item" id="menu-btn-ruhemodus" onclick="switchSettingsTab('ruhemodus')" style="padding:12px 15px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;opacity:0.7;">🌙 Ruhemodus</div>
                     </div>
@@ -338,52 +315,28 @@
                     </div>
                     <h3>Display-Anpassung</h3>
                     <div class="settings-card">
-                        <div class="settings-row">
-                            <span>Helligkeit</span>
-                            <div class="settings-slider-wrapper">
-                                <span style="font-size:14px;">☀️</span>
-                                <input type="range" min="10" max="100" value="80" class="settings-slider" id="settings-brightness" oninput="updateSystemSlider('brightness',this.value)">
-                            </div>
-                        </div>
+                        <div class="settings-row"><span>Helligkeit</span><div class="settings-slider-wrapper"><span>☀️</span><input type="range" min="10" max="100" value="80" class="settings-slider" id="settings-brightness" oninput="updateSystemSlider('brightness',this.value)"></div></div>
                     </div>
                     <h3>Software-Update</h3>
                     <div class="settings-card">
                         <div class="settings-row">
-                            <div>
-                                <span style="display:block;font-weight:600;">Automatisches Update</span>
-                                <span style="font-size:11px;opacity:0.5;">Sucht nach Releases</span>
-                            </div>
-                            <label class="ios-toggle">
-                                <input type="checkbox" id="software-update-toggle" checked onchange="toggleUpdateSwitch(this.checked)">
-                                <span class="ios-switch-slider"></span>
-                            </label>
+                            <div><span style="display:block;font-weight:600;">Automatisches Update</span><span style="font-size:11px;opacity:0.5;">Prüft im Hintergrund</span></div>
+                            <label class="ios-toggle"><input type="checkbox" id="software-update-toggle" checked onchange="toggleUpdateSwitch(this.checked)"><span class="ios-switch-slider"></span></label>
                         </div>
-                        <div class="settings-row">
-                            <span>Systemstatus</span>
-                            <span class="status-badge valid" id="update-badge-status">Auf neuestem Stand (v27.0)</span>
-                        </div>
+                        <div class="settings-row"><span>Systemstatus</span><span class="status-badge valid" id="update-badge-status">Auf neuestem Stand (v27.0)</span></div>
                     </div>
                 </div>
                 <div class="settings-view-pane" id="settings-tab-sound" style="display:none;">
                     <h3>Töne &amp; System-Haptik</h3>
                     <div class="settings-card">
-                        <div class="settings-row">
-                            <span>Gesamtlautstärke</span>
-                            <div class="settings-slider-wrapper">
-                                <span style="font-size:14px;">🔊</span>
-                                <input type="range" min="0" max="100" value="50" class="settings-slider" id="settings-volume" oninput="updateSystemSlider('volume',this.value)">
-                            </div>
-                        </div>
+                        <div class="settings-row"><span>Gesamtlautstärke</span><div class="settings-slider-wrapper"><span>🔊</span><input type="range" min="0" max="100" value="50" class="settings-slider" id="settings-volume" oninput="updateSystemSlider('volume',this.value)"></div></div>
                     </div>
                 </div>
                 <div class="settings-view-pane" id="settings-tab-ruhemodus" style="display:none;">
                     <h3>Zeitgesteuerter Ruhemodus (Eco)</h3>
                     <div class="settings-card">
                         <div class="settings-row">
-                            <div>
-                                <span style="display:block;font-weight:600;">Zeitplan aktivieren</span>
-                                <span style="font-size:11px;opacity:0.5;">Automatisches Abdrehen des Bildschirms</span>
-                            </div>
+                            <div><span style="display:block;font-weight:600;">Zeitplan aktivieren</span><span style="font-size:11px;opacity:0.5;">Automatischer Blackout</span></div>
                             <label class="ios-toggle"><input type="checkbox" id="eco-schedule-enabled" checked><span class="ios-switch-slider"></span></label>
                         </div>
                     </div>
@@ -500,7 +453,8 @@
                 pane.appendChild(aiDiv);
                 pane.scrollTop = pane.scrollHeight;
             }, 600);
-        }function addNewMultiTimer() {
+        }
+        function addNewMultiTimer() {
             var durationInput = document.getElementById('timer-input-duration');
             var labelInput = document.getElementById('timer-input-label');
             var minutes = parseInt(durationInput.value);
