@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HomeViewOS Beta 27.2</title>
     <style>
-        /* Modernes Mandarinen-Pastellorange mit klarem Wellen-Hintergrundbild */
+        /* Modernes Mandarinen-Pastellorange mit klarem originalen Wellen-Hintergrundbild */
         body {
             background-color: #FA8E4B;
             background-image: url('https://macrumors.com');
@@ -33,7 +33,7 @@
             z-index: 9998;
         }
 
-        /* Der Apple Update-Bildschirm (10 Sekunden Animation) */
+        /* Der Apple Update-Bildschirm (Reines Logo auf Schwarz für 10 Sekunden) */
         #update-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -44,31 +44,10 @@
         }
 
         .apple-logo-white {
-            font-size: 80px;
+            font-size: 85px;
             color: #FFFFFF;
-            margin-top: 30vh;
+            margin-top: 35vh;
             display: block;
-        }
-
-        .update-progress-bar {
-            width: 200px;
-            height: 4px;
-            background: #333333;
-            margin: 40px auto 0 auto;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .update-progress-fill {
-            width: 0%;
-            height: 100%;
-            background: #FFFFFF;
-            animation: ladeBalken 10s linear forwards;
-        }
-
-        @keyframes ladeBalken {
-            0% { width: 0%; }
-            100% { width: 100%; }
         }
 
         /* Rote Beta-Produktplakette oben rechts */
@@ -96,7 +75,7 @@
             text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
         }
 
-        /* Das mathematische Tabellen-Layout erzwingt absolute Symmetrie */
+        /* Das mathematische Tabellen-Layout erzwingt absolute Symmetrie auf iOS 9 */
         .dashboard-table {
             width: 100%; max-width: 850px;
             margin: 0 auto;
@@ -257,9 +236,6 @@
     
     <div id="update-screen">
         <span class="apple-logo-white"></span>
-        <div class="update-progress-bar">
-            <div class="update-progress-fill"></div>
-        </div>
     </div>
 
     <div class="beta-badge">Beta Product</div>
@@ -503,10 +479,10 @@
             }
         }
 
-        // Aktiviert das Audio-System beim ersten Klick des Nutzers auf dem Display
+        // Aktiviert das Audio-System bei Interaktion, um die iOS 9 Sperre aufzuheben
         window.addEventListener('click', function() {
             initialisiereSound();
-        });// 5. ECHTE LIVE-DATEN ENGINE (Wetter, ORF News & Sport-Ergebnisse)
+        });// 5. MAX-STABILITY LIVE-DATA ENGINE (iOS 9.3.5 sicher via AllOrigins-Text-Tunnel)
         function holeLiveDatenAusDemNetz() {
             var proxy = "https://allorigins.win";
 
@@ -553,12 +529,12 @@
                             var max = matches.length > 3 ? 3 : matches.length;
                             for (var i = 0; i < max; i++) {
                                 var titelMatch = matches[i].match(/<title>([\s\S]*?)<\/title>/);
-                                if (titelMatch && titelMatch) {
-                                    var titel = titelMatch.replace("<![CDATA[", "").replace("]]>", "").trim();
+                                if (titelMatch && titelMatch[1]) {
+                                    var titel = titelMatch[1].replace("<![CDATA[", "").replace("]]>", "").trim();
                                     html += "<div class='news-item'><span>🔴 ORF:</span> " + titel + "</div>";
                                 }
                             }
-                            html += "<div class='news-item'><span>🌐 Welt:</span> Internationale Raumstation meldet erfolgreiches Andockmanöver.</div>";
+                            html += "<div class='news-item'><span>🌐 Welt:</span> UN-Vollversammlung berät über neue Abkommen.</div>";
                             document.getElementById('news-inhalt').innerHTML = html;
                         }
                     } catch(e) { }
@@ -578,9 +554,8 @@
                         var ev = daten.events; var html = "";
                         if (ev && ev.length > 0) {
                             for (var i = 0; i < Math.min(ev.length, 4); i++) {
-                                var comp = ev[i].competitions.competitors;
-                                var t1 = comp; var t2 = comp;
-                                html += "<div class='sport-match'><span>" + t2.team.shortDisplayName + " @ " + t1.team.shortDisplayName + "</span> <span style='color:#E65100;'>" + t2.score + ":" + t1.score + "</span></div>";
+                                var comp = ev[i].competitions[0].competitors;
+                                html += "<div class='sport-match'><span>" + comp[1].team.shortDisplayName + " @ " + comp[0].team.shortDisplayName + "</span> <span style='color:#E65100;'>" + comp[1].score + ":" + comp[0].score + "</span></div>";
                             }
                             document.getElementById('nba-ticker').innerHTML = html;
                         } else {
@@ -603,9 +578,8 @@
                         var ev = daten.events; var html = "";
                         if (ev && ev.length > 0) {
                             for (var i = 0; i < Math.min(ev.length, 3); i++) {
-                                var comp = ev[i].competitions.competitors;
-                                var t1 = comp; var t2 = comp;
-                                html += "<div class='sport-match'><span>" + t2.team.shortDisplayName + " @ " + t1.team.shortDisplayName + "</span> <span style='color:#E65100;'>" + t2.score + ":" + t1.score + "</span></div>";
+                                var comp = ev[i].competitions[0].competitors;
+                                html += "<div class='sport-match'><span>" + comp[1].team.shortDisplayName + " @ " + comp[0].team.shortDisplayName + "</span> <span style='color:#E65100;'>" + comp[1].score + ":" + comp[0].score + "</span></div>";
                             }
                             document.getElementById('wnba-ticker').innerHTML = html;
                         } else {
@@ -624,11 +598,12 @@
         function wechsleSpruch() {
             var jetzt = new Date();
             var start = new Date(jetzt.getFullYear(), 0, 0);
-            var tagDesJahres = Math.floor((jetzt - start) / (1000 * 60 * 60 * 24));
+            var diff = jetzt - start;
+            var tagDesJahres = Math.floor(diff / (1000 * 60 * 60 * 24));
             document.getElementById('zitat-text').innerHTML = zitate[tagDesJahres % zitate.length];
         }
 
-        // 7. RUHEMODUS STEUERUNG
+        // 7. RUHEMODUS STEUERUNG (Fokus)
         var ruhePlan = {};
         if (typeof(Storage) !== "undefined" && localStorage.getItem("ruhePlan")) {
             ruhePlan = JSON.parse(localStorage.getItem("ruhePlan"));
@@ -654,16 +629,24 @@
 
         // 8. TIMER & WECKER PROCESSOR
         function starteTimer() {
+            initialisiereSound();
             var sek = parseInt(document.getElementById('timer-sec').value);
             if (isNaN(sek) || sek <= 0) return;
             var countdown = setInterval(function() {
-                if (sek <= 0) { clearInterval(countdown); document.getElementById('timer-liste').innerHTML = "⏰ Zeit um!"; spieleAlarm(); }
-                else { document.getElementById('timer-liste').innerHTML = "Noch: " + sek + " Sek"; sek--; }
+                if (sek <= 0) { 
+                    clearInterval(countdown); 
+                    document.getElementById('timer-liste').innerHTML = "⏰ Zeit um!"; 
+                    spieleAlarm(); 
+                } else { 
+                    document.getElementById('timer-liste').innerHTML = "Noch: " + sek + " Sek"; 
+                    sek--; 
+                }
             }, 1000);
         }
 
         var weckerListe = [];
         function addWecker() {
+            initialisiereSound();
             var zeit = document.getElementById('wecker-zeit').value;
             if (zeit) { weckerListe.push(zeit); renderWeckerView(); }
         }
@@ -678,34 +661,25 @@
             }
         }
 
-        // 9. COOLS APPLE SOFTWARE-UPDATE MIT ORIGINAL MAC-SOUND
+        // 9. CLEANES APPLE SOFTWARE-UPDATE (Schwarzbild + Weißes Logo – 10 Sek)
         function ausloeserSoftwareUpdate() {
-            var konfirmation = confirm("Softwareupdate auf HomeViewOS 28.0 durchführen?\n\nDer Vorgang dauert ca. 10 Sekunden.");
+            var konfirmation = confirm("Softwareupdate auf HomeViewOS 28.0 durchführen?");
             if (konfirmation) {
-                // Erzeugt den legendären, fetten Mac-Startsound (Startup Chime)
-                initialisiereSound();
-                if (audioCtx) {
-                    var osc1 = audioCtx.createOscillator(); var osc2 = audioCtx.createOscillator();
-                    var gain = audioCtx.createGain();
-                    osc1.type = "sawtooth"; osc1.frequency.setValueAtTime(220, audioCtx.currentTime);
-                    osc2.type = "sine"; osc2.frequency.setValueAtTime(440, audioCtx.currentTime);
-                    gain.gain.setValueAtTime(0.7, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 3.0);
-                    osc1.connect(gain); osc2.connect(gain); gain.connect(audioCtx.destination);
-                    osc1.start(); osc2.start(); osc1.stop(audioCtx.currentTime + 3.0); osc2.stop(audioCtx.currentTime + 3.0);
-                }
-                
-                // Schaltet den schwarzen Installations-Bildschirm an
+                // Zeigt das Apple Logo auf schwarzem Grund an
                 document.getElementById('update-screen').style.display = "block";
                 
-                // Wartet exakt 10 Sekunden (10000ms), bevor die Seite frisch geladen wird
+                // Nach exakt 10 Sekunden sauber und ohne Einfrieren neu laden
                 setTimeout(function() {
                     window.location.reload(true);
                 }, 10000);
             }
         }
 
-        // AUTOMATISCHE STEUERUNG
+        // Umgeht die iOS 9 Sound-Sperre beim Öffnen der Kacheln
+        document.getElementById('menu-einstellungen').addEventListener('click', initialisiereSound);
+        document.getElementById('menu-uhr').addEventListener('click', initialisiereSound);
+
+        // AUTOMATISCHE INTERVALL-STEUERUNG
         setInterval(aktualisiereSystemUhr, 1000);
         setInterval(holeLiveDatenAusDemNetz, 180000); // Erneuert alle Live-Daten im Hintergrund alle 3 Minuten
         
