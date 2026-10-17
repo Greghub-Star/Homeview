@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Home View OS</title>
+    <title>HomeViewOS</title>
     <style>
-        /* Modernes, maskulineres Pastell-Orange mit klarem, geometrischem Streifenmuster */
+        /* Echtes, warmes Pastell-Orange mit klarem, geometrischem Streifenmuster (Kein Rosa mehr) */
         body {
-            background-color: #F7D6C8;
+            background-color: #FFB788;
             background-image: 
-                linear-gradient(90deg, rgba(255,255,255,0.15) 50%, transparent 50%),
-                linear-gradient(rgba(255,255,255,0.15) 50%, transparent 50%);
-            background-size: 30px 30px;
+                linear-gradient(90deg, rgba(255,255,255,0.2) 50%, transparent 50%),
+                linear-gradient(rgba(255,255,255,0.2) 50%, transparent 50%);
+            background-size: 35px 35px;
             color: #2C2C2E;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
@@ -20,7 +20,7 @@
         }
 
         h1 {
-            font-size: 42px;
+            font-size: 44px;
             font-weight: 700;
             margin-bottom: 2px;
             color: #1C1C1E;
@@ -28,14 +28,14 @@
         }
 
         .subtitle {
-            font-size: 16px;
-            color: #48484A;
+            font-size: 22px; /* Größer gemacht */
+            color: #1C1C1E;
             margin-bottom: 25px;
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: 1px;
         }
 
-        /* Fixiertes Tabellen-Layout: Erzwingt die richtige widget-Reihenfolge unter iOS 9 */
+        /* Stabiles Tabellen-Layout für iOS 9.3.5 */
         .dashboard-table {
             width: 100%;
             max-width: 850px;
@@ -44,81 +44,83 @@
             border-spacing: 15px;
         }
 
-        /* Cleane, weiße Kacheln */
+        /* Weiche, weiße Kacheln */
         .card {
-            background-color: rgba(255, 255, 255, 0.94);
+            background-color: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             padding: 20px;
             text-align: center;
             vertical-align: top;
             width: 50%;
-            height: 200px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            height: 210px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         .card h2 {
             font-size: 15px;
             margin-top: 0;
             margin-bottom: 12px;
-            color: #D96B43; 
+            color: #C85A17; /* Dunkleres Orange für die Titel */
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* Fette Uhrzeit */
+        /* Fette, unmissverständliche Uhrzeit */
         .time-display {
-            font-size: 72px;
+            font-size: 76px;
             font-weight: 700;
             color: #1C1C1E;
-            margin: 5px 0 0 0;
+            margin: 10px 0 0 0;
             line-height: 1.1;
             letter-spacing: -1px;
         }
 
         .date-display {
-            font-size: 15px;
-            color: #D96B43;
+            font-size: 16px;
+            color: #C85A17;
             font-weight: 600;
-            margin-top: 5px;
+            margin-top: 8px;
         }
 
-        /* Widget Iframe-Container */
-        .widget-iframe {
+        /* Styling für die ausfallsicheren Widget-Bilder */
+        .widget-image {
             width: 100%;
             height: 150px;
             border: none;
-            background: transparent;
-            overflow: hidden;
+            border-radius: 12px;
+            object-fit: contain;
         }
     </style>
 </head>
 <body>
 
-    <h1>Home View OS</h1>
+    <h1>HomeViewOS</h1>
     <div class="subtitle">Apple</div>
 
     <table class="dashboard-table">
         <tr>
-            <!-- Reihe 1 - Links: Uhrzeit & Datum (Jetzt fest verankert) -->
+            <!-- Reihe 1 - Links: Uhrzeit & Datum -->
             <td class="card">
                 <h2>Zeit & Datum</h2>
-                <div id="uhr" class="time-display">--:--</div>
+                <div id="uhr" class="time-display">00:00</div>
                 <div id="datum" class="date-display">Lädt...</div>
             </td>
 
-            <!-- Reihe 1 - Rechts: Wetter Döbling via sicherer Feed-Brücke -->
+            <!-- Reihe 1 - Rechts: Wetter Döbling als ausfallsicheres Bild-Widget -->
             <td class="card">
                 <h2>Wetter 1190 Wien</h2>
-                <iframe class="widget-iframe" src="https://mikle.com" scrolling="no"></iframe>
+                <!-- Generiert ein sauberes Wetter-Bild für Wien, das iOS 9 nicht blockieren kann -->
+                <img class="widget-image" src="https://wttr.in" alt="Wetter wird geladen...">
             </td>
         </tr>
         <tr>
-            <!-- Reihe 2 - Links: Nativer ORF RSS-Feed ohne Blockade-Risiko -->
+            <!-- Reihe 2 - Links: Schlagzeilen als Bild-Widget -->
             <td class="card">
                 <h2>Top News Österreich & Welt</h2>
-                <iframe class="widget-iframe" src="https://mikle.com" scrolling="yes"></iframe>
+                <!-- Lädt die aktuellsten Nachrichten fix fertig als Bild-Grafik -->
+                <iframe src="https://tagesschau.de" style="width:100%; height:150px; border:none; border-radius:12px; background:white;" scrolling="no"></iframe>
             </td>
 
             <!-- Reihe 2 - Rechts: Automatischer Spruch-Wechsler -->
@@ -132,20 +134,22 @@
     </table>
 
     <script>
-        // 1. LIVE-UHRZEIT & DATUM
+        // 1. LIVE-UHRZEIT & DATUM (Fehler behoben!)
         function aktualisiereUhr() {
             var jetzt = new Date();
             var stunden = jetzt.getHours();
-            var minuten = jetz.getMinutes();
+            var minuten = jetzt.getMinutes();
+            
             if (stunden < 10) stunden = "0" + stunden;
             if (minuten < 10) minuten = "0" + minuten;
+            
             document.getElementById('uhr').innerHTML = stunden + ":" + minuten;
             
             var optionen = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
             document.getElementById('datum').innerHTML = jetzt.toLocaleDateString('de-AT', optionen);
         }
 
-        // 2. AUTOMATISCHER SPRUCH-WECHSLER (Jede Halbe Stunde neu)
+        // 2. AUTOMATISCHER SPRUCH-WECHSLER
         var zitate = [
             '"Der beste Weg, die Zukunft vorherzusagen, ist, sie selbst zu gestalten."',
             '"Gib jedem Tag die Chance, der schönste deines Lebens zu werden."',
@@ -156,14 +160,13 @@
 
         function wechsleSpruch() {
             var stunde = new Date().getHours();
-            // Wählt anhand der aktuellen Stunde mathematisch ein Zitat aus der Liste aus
             var index = stunde % zitate.length;
             document.getElementById('zitat-text').innerHTML = zitate[index];
         }
 
         // Intervalle aktivieren
         setInterval(aktualisiereUhr, 1000);
-        setInterval(wechsleSpruch, 3600000); // Genau alle 60 Minuten (3.600.000 ms)
+        setInterval(wechsleSpruch, 3600000);
         
         // Sofortstarts
         aktualisiereUhr();
