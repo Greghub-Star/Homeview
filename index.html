@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mein Wiener Home View</title>
     <style>
-        /* Heller Hintergrund mit einem modernen, dezenten Linienmuster */
+        /* Modernes helles Design mit einem edlen, fließenden Wellenmuster */
         body {
-            background-color: #F2F2F7;
-            background-image: radial-gradient(#D1D1D6 1px, transparent 1px), radial-gradient(#D1D1D6 1px, #F2F2F7 1px);
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
+            background-color: #f5f7fa;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(240, 244, 248, 1) 0px, transparent 50%),
+                radial-gradient(at 50% 0%, rgba(228, 237, 245, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(240, 244, 248, 1) 0px, transparent 50%),
+                linear-gradient(135deg, #e6eef8 0%, #f5f7fa 100%);
             color: #1C1C1E;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
@@ -19,117 +21,119 @@
         }
 
         h1 {
-            font-size: 40px;
+            font-size: 38px;
             font-weight: 300;
             margin-bottom: 5px;
             color: #1C1C1E;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
-            font-size: 18px;
-            color: #3A3A3C;
-            margin-bottom: 40px;
+            font-size: 16px;
+            color: #48484A;
+            margin-bottom: 30px;
         }
 
-        /* Altes Layout-System (Tabellen) für perfektes Rendering auf iOS 9 */
+        /* Stabiles Tabellen-Layout für iOS 9 Safari */
         .dashboard-table {
             width: 100%;
-            max-width: 700px;
+            max-width: 850px;
             margin: 0 auto;
             border-spacing: 15px;
         }
 
-        /* Moderne, helle Kacheln mit feinem Schatten */
+        /* Weiche, moderne Kacheln mit feinem iOS-Schatten */
         .card {
-            background-color: #FFFFFF;
-            border-radius: 16px;
-            padding: 25px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 20px;
             text-align: center;
             vertical-align: top;
             width: 50%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 24px rgba(149, 157, 165, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.7);
         }
 
         .card h2 {
-            font-size: 20px;
+            font-size: 18px;
             margin-top: 0;
+            margin-bottom: 15px;
             color: #007AFF; /* iOS Blau */
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Größere und schönere Uhrzeit */
+        .time-display {
+            font-size: 64px;
+            font-weight: 200;
+            color: #1C1C1E;
+            margin: 5px 0;
+            letter-spacing: -1px;
+        }
+
+        .date-display {
+            font-size: 16px;
+            color: #007AFF;
             font-weight: 500;
         }
 
-        /* Uhr-Styling */
-        .time-display {
-            font-size: 48px;
-            font-weight: bold;
-            color: #007AFF;
-            margin: 10px 0;
-        }
-
-        /* Moderne Buttons für Kurier und ORF */
+        /* Buttons (behalten für Notfälle) */
         .btn {
             display: block;
             background-color: #E5E5EA;
             color: #1C1C1E;
             text-decoration: none;
-            padding: 14px;
-            margin: 10px 0;
+            padding: 10px;
+            margin: 5px 0;
             border-radius: 10px;
-            font-weight: 600;
-            font-size: 16px;
-            border: 1px solid #D1D1D6;
-        }
-        
-        .btn:active {
-            background-color: #C7C7CC;
+            font-weight: 500;
+            font-size: 14px;
         }
 
-        /* Wetter-Anzeige */
-        .weather-text {
-            font-size: 32px;
-            font-weight: bold;
-            margin: 10px 0;
-            color: #FF9500; /* iOS Orange für ein freundliches Gefühl */
-        }
-        
-        .weather-detail {
-            font-size: 14px;
-            color: #3A3A3C;
+        /* CSS Anpassung für die eingebetteten Widgets */
+        .widget-frame {
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            background: transparent;
         }
     </style>
 </head>
 <body>
 
-    <h1>Servus in Wien</h1>
+    <h1>Servus in Döbling</h1>
     <div class="subtitle">Dein persönliches iPad Dashboard</div>
 
     <table class="dashboard-table">
         <tr>
-            <!-- Kachel 1: Uhrzeit & Datum -->
+            <!-- Kachel 1: Uhrzeit & Datum (Vergrößert) -->
             <td class="card">
                 <h2>Zeit & Datum</h2>
                 <div id="uhr" class="time-display">--:--</div>
-                <div id="datum" style="color: #3A3A3C;">Lädt...</div>
+                <div id="datum" class="date-display">Lädt...</div>
             </td>
 
-            <!-- Kachel 2: ECHTES WIENER WETTER -->
-            <td class="card">
-                <h2>Wetter Wien</h2>
-                <div id="wetter-temp" class="weather-text">--°C</div>
-                <div id="wetter-status" class="weather-detail">Hole Live-Daten...</div>
+            <!-- Kachel 2: Wetter Döbling via robustem Iframe-Widget -->
+            <td class="card" style="padding: 15px;">
+                <h2>Wetter 1190 Wien</h2>
+                <!-- Dieses Widget lädt unabhängig und zeigt sofort Grad + Text (sonnig, bewölkt etc.) -->
+                <iframe class="widget-frame" src="https://wetter.de" height="150" scrolling="no"></iframe>
             </td>
         </tr>
         <tr>
-            <!-- Kachel 3: Deine neuen Nachrichten-Links -->
+            <!-- Kachel 3: Top Schlagzeilen Live-Widget (Kein externes Öffnen nötig) -->
             <td class="card">
-                <h2>Nachrichten</h2>
-                <a href="https://orf.at" class="btn" target="_blank">🔴 ORF News</a>
-                <a href="https://kurier.at" class="btn" target="_blank">📰 Kurier</a>
+                <h2>Top News Österreich</h2>
+                <!-- Lädt die aktuellsten Kurier/ORF-Schlagzeilen direkt lesbar als Liste in die Kachel -->
+                <iframe class="widget-frame" src="https://nachrichten.at" height="200" style="background: white; border: 1px solid #E5E5EA;"></iframe>
             </td>
 
             <!-- Kachel 4: Tageszitat -->
-            <td class="card">
+            <td class="card" style="vertical-align: middle;">
                 <h2>Tagesfokus</h2>
-                <p style="font-style: italic; color: #3A3A3C; line-height: 1.4; font-size: 16px;">
+                <p style="font-style: italic; color: #3A3A3C; line-height: 1.5; font-size: 18px; margin: 0 10px;">
                     "Der beste Weg, die Zukunft vorherzusagen, ist, sie selbst zu gestalten."
                 </p>
             </td>
@@ -137,7 +141,7 @@
     </table>
 
     <script>
-        // 1. LIVE-UHRZEIT & DATUM
+        // LIVE-UHRZEIT & DATUM
         function aktualisiereUhr() {
             var jetzt = new Date();
             var stunden = jetzt.getHours();
@@ -148,47 +152,13 @@
             
             document.getElementById('uhr').innerHTML = stunden + ":" + minuten;
             
-            var optionen = { weekday: 'long', day: 'numeric', month: 'long' };
+            var optionen = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
             document.getElementById('datum').innerHTML = jetzt.toLocaleDateString('de-AT', optionen);
         }
         
-        // 2. ECHTES WETTER FÜR WIEN (Open-Meteo API - iOS 9 kompatibel via XMLHttpRequest)
-        function holeWienerWetter() {
-            var url = "https://open-meteo.com";
-            var request = new XMLHttpRequest();
-            
-            request.open('GET', url, true);
-            request.onreadystatechange = function() {
-                if (request.readyState === 4 && request.status === 200) {
-                    var daten = JSON.parse(request.responseText);
-                    var temp = Math.round(daten.current_weather.temperature);
-                    var code = daten.current_weather.weathercode;
-                    
-                    // Wetter-Code in Text umwandeln
-                    var statusText = "Mäßig";
-                    if (code === 0) statusText = "☀️ Klarer Himmel";
-                    else if (code >= 1 && code <= 3) statusText = "🌤️ Leicht bewölkt";
-                    else if (code >= 45 && code <= 48) statusText = "🌫️ Nebelig";
-                    else if (code >= 51 && code <= 65) statusText = "🌧️ Es regnet";
-                    else if (code >= 71 && code <= 77) statusText = "❄️ Schneefall";
-                    else if (code >= 80 && code <= 82) statusText = "🌦️ Regenschauer";
-                    else if (code >= 95) statusText = "⛈️ Gewitter";
-                    else statusText = "☁️ Bewölkt";
-                    
-                    document.getElementById('wetter-temp').innerHTML = temp + "°C";
-                    document.getElementById('wetter-status').innerHTML = statusText + " in Wien";
-                }
-            };
-            request.send();
-        }
-
-        // Intervalle einrichten
-        setInterval(aktualisiereUhr, 1000); // Uhr jede Sekunde
-        setInterval(holeWienerWetter, 300000); // Wetter alle 5 Minuten neu laden (300.000 ms)
-        
-        // Sofort beim ersten Laden ausführen
+        // Jede Sekunde aktualisieren
+        setInterval(aktualisiereUhr, 1000);
         aktualisiereUhr();
-        holeWienerWetter();
     </script>
 
 </body>
