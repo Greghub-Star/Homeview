@@ -6,336 +6,272 @@
     <title>Home View OS 27</title>
     <style>
         :root {
-            --apple-gray: #fbfbfd;
-            --apple-blue: #007aff;
-            --apple-bg: #eef2f7;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text-dark: #1d1d1f;
-            --apple-red: #ff3b30;
+            --bg-color: #e5e2db; /* Warmes Pastell-Beige/Grau */
+            --card-bg: #f5f3ef; /* Etwas helleres Beige */
+            --accent-red: #ff3b30;
+            --text-main: #4a4a4a; /* Dunkelgrauer Text für bessere Lesbarkeit */
+            --text-dim: #8e8e8e;
         }
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #B3E5FC 0%, #E1F5FE 100%);
-            background-attachment: fixed;
-            color: var(--text-dark);
+
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, Helvetica, Arial, sans-serif;
             overflow: hidden;
-            height: 100vh;
-            width: 100vw;
         }
-        #home-screen {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: 200px; /* Größere Zeilen */
-            grid-gap: 30px;
-            padding: 40px;
+
+        /* STATUS BAR (Simulation) */
+        .status-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 5px 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--text-dim);
+        }
+
+        .dashboard {
+            display: flex;
+            height: calc(100vh - 30px);
+            padding: 20px;
             box-sizing: border-box;
-            height: 100vh;
+            gap: 30px;
         }
-        .card {
-            background: var(--card-bg);
-            border-radius: 35px;
-            padding: 25px;
-            text-align: center;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+
+        /* LINKS: FIXE INFOS */
+        .info-panel {
+            flex: 1.2;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.5);
         }
-        .card:active { transform: scale(0.9); }
-        
-        .clock-card {
-            grid-column: span 2;
-            grid-row: span 1;
-            padding: 0;
-        }
+
         #clock {
-            font-size: 6em;
+            font-size: 120px;
             font-weight: 200;
             margin: 0;
-            line-height: 1;
-            color: var(--text-dark);
+            color: var(--text-main);
         }
+
+        #date {
+            font-size: 24px;
+            color: var(--text-dim);
+            margin-bottom: 30px;
+        }
+
+        .live-data {
+            margin-bottom: 20px;
+        }
+
+        .label {
+            color: var(--accent-red);
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        #temp {
+            font-size: 70px;
+            font-weight: 300;
+            margin: 0;
+        }
+
+        #sports {
+            font-size: 20px;
+            margin-top: 5px;
+        }
+
         #greeting {
-            font-size: 1.8em;
-            color: var(--apple-red);
-            font-weight: 600;
-            margin-top: 10px;
+            font-size: 30px;
+            color: var(--accent-red);
+            font-weight: bold;
+            margin-top: 20px;
         }
-        .info-card {
-            grid-column: span 1;
-            font-size: 1.3em;
-            font-weight: 600;
-        }
-        .app-icon {
-            width: 85px;
-            height: 85px;
-            border-radius: 22px;
-            margin-bottom: 15px;
+
+        /* RECHTS: APP KACHELN */
+        .app-grid {
+            flex: 1;
             display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-content: center;
+        }
+
+        .app-tile {
+            background: var(--card-bg);
+            width: calc(50% - 10px);
+            height: 140px;
+            border-radius: 25px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 45px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid #ddd;
         }
-        /* Overlays */
+
+        .app-tile .icon { font-size: 40px; margin-bottom: 10px; }
+        .app-tile .name { font-size: 16px; color: var(--text-dim); }
+
+        /* OVERLAYS */
         .overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--apple-gray);
-            z-index: 100;
-            animation: slideUp 0.3s ease-out;
-            color: var(--text-dark);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff;
+            color: #000;
+            z-index: 1000;
+            flex-direction: column;
         }
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
+
         .overlay-header {
-            padding: 50px 20px 20px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #d1d1d6;
-        }
-        .close-btn {
-            color: var(--apple-blue);
-            font-size: 1.3em;
-            cursor: pointer;
-            margin-right: 20px;
-            text-decoration: none;
-        }
-        .settings-list { padding: 20px; }
-        .settings-item {
-            background: white;
-            padding: 18px;
-            border-radius: 15px;
-            margin-bottom: 12px;
+            padding: 40px 20px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-bottom: 1px solid #eee;
         }
-        iframe {
-            width: 100%;
-            height: calc(100% - 110px);
-            border: none;
-        }
-        .profile-section {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            background: white;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-        .profile-pic {
-            width: 65px;
-            height: 65px;
-            background: #ddd;
-            border-radius: 50%;
-            margin-right: 15px;
-        }
-        /* Clock App */
-        .clock-tabs {
-            display: flex;
-            justify-content: space-around;
-            background: #fff;
-            padding: 20px 0;
-            border-bottom: 1px solid #d1d1d6;
-        }
-        .tab { color: gray; cursor: pointer; font-weight: 600; font-size: 1.1em; }
-        .tab.active { color: var(--apple-blue); }
-        .clock-content { display: none; padding: 30px; text-align: center; }
-        .clock-content.active { display: block; }
-        .big-timer { font-size: 5em; margin: 40px 0; font-weight: 200; }
-        .clock-btn {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            border: none;
-            font-size: 1.1em;
-            cursor: pointer;
-            color: white;
-            font-weight: bold;
-        }
+
+        .close-btn { color: #007AFF; font-weight: bold; cursor: pointer; }
+        .app-content { flex: 1; padding: 20px; overflow-y: auto; }
+        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-<div id="home-screen">
-    <div class="card clock-card">
-        <div id="clock">00:00</div>
-        <div id="greeting">Lade Gruß...</div>
+    <div class="status-bar">
+        <span id="wifi-sim">📶 WLAN</span> &nbsp; <span id="bat-sim">🔋 85%</span>
     </div>
-    <div class="card info-card">
-        <strong style="display:block; font-size: 0.8em; color: gray; margin-bottom: 10px;">WETTER</strong>
-        <span id="temp">--°C</span><br>
-        <span id="weather-desc">Lade...</span>
-    </div>
-    <div class="card info-card">
-        <strong style="display:block; font-size: 0.8em; color: gray; margin-bottom: 10px;">NBA/WNBA</strong>
-        <div id="scores" style="font-size: 0.9em;">Lade...</div>
-    </div>
-    <div class="card info-card">
-        <strong style="display:block; font-size: 0.8em; color: gray; margin-bottom: 10px;">NEWS</strong>
-        <div id="news" style="font-size: 0.9em;">Lade...</div>
-    </div>
-    
-    <div class="card" onclick="openApp('clockApp')">
-        <div class="app-icon" style="background: #fff; color: #000;">⏰</div>
-        <span>Uhr</span>
-    </div>
-    <div class="card" onclick="openApp('settings')">
-        <div class="app-icon" style="background: #8e8e93; color: #fff;">⚙️</div>
-        <span>Einstellungen</span>
-    </div>
-    <div class="card" onclick="openApp('music')">
-        <div class="app-icon" style="background: #fa2d48; color: #fff;">🎵</div>
-        <span>Music</span>
-    </div>
-    <div class="card" onclick="openApp('chatgpt')">
-        <div class="app-icon" style="background: #74aa9c; color: #fff;">🤖</div>
-        <span>ChatGPT</span>
-    </div>
-    <div class="card" onclick="openApp('gallery')">
-        <div class="app-icon" style="background: #ffcc00; color: #fff;">🖼️</div>
-        <span>Fotos</span>
-    </div>
-</div>
 
-<!-- Uhr App -->
-<div id="clockApp" class="overlay">
-    <div class="overlay-header">
-        <span class="close-btn" onclick="closeApp('clockApp')">← Zurück</span>
-        <h2>Uhr</h2>
-    </div>
-    <div class="clock-tabs">
-        <span class="tab active" onclick="showTab('alarm', this)">Wecker</span>
-        <span class="tab" onclick="showTab('stopwatch', this)">Stoppuhr</span>
-        <span class="tab" onclick="showTab('timer', this)">Timer</span>
-    </div>
-    <div id="alarm" class="clock-content active">
-        <div class="settings-item" style="justify-content: center;">
-            <input type="time" id="alarmTime" style="padding: 10px; border-radius: 10px; border: 1px solid #ccc;">
-            <button onclick="setAlarm()" style="background: var(--apple-blue); color:white; border:none; border-radius:12px; padding: 10px 20px; cursor:pointer; font-weight:bold;">Hinzufügen</button>
-        </div>
-        <div id="alarmList" style="margin-top: 20px; text-align: left;"></div>
-    </div>
-    <div id="stopwatch" class="clock-content">
-        <div class="big-timer" id="sw-display">00:00.00</div>
-        <div style="display: flex; justify-content: center; gap: 20px;">
-            <button class="clock-btn" style="background: var(--apple-green);" onclick="startStopwatch()">Start</button>
-            <button class="clock-btn" style="background: var(--apple-red);" onclick="stopStopwatch()">Stop</button>
-            <button class="clock-btn" style="background: gray;" onclick="resetStopwatch()">Reset</button>
-        </div>
-    </div>
-    <div id="timer" class="clock-content">
-        <div class="big-timer" id="tm-display">00:00</div>
-        <div class="settings-item" style="justify-content: center; margin-bottom: 20px;">
-            <input type="number" id="tm-input" placeholder="Minuten" style="width: 120px; padding: 12px; border-radius: 12px; border: 1px solid #ccc;">
-        </div>
-        <div style="display: flex; justify-content: center; gap: 20px;">
-            <button class="clock-btn" style="background: var(--apple-green);" onclick="startTimer()">Start</button>
-            <button class="clock-btn" style="background: var(--apple-red);" onclick="stopTimer()">Stop</button>
-        </div>
-    </div>
-</div>
+    <div class="dashboard">
+        <div class="info-panel">
+            <div id="clock">00:00</div>
+            <div id="date">Lade...</div>
 
-<!-- Einstellungen -->
-<div id="settings" class="overlay">
-    <div class="overlay-header">
-        <span class="close-btn" onclick="closeApp('settings')">← Zurück</span>
-        <h2>Einstellungen</h2>
-    </div>
-    <div class="settings-list">
-        <div class="profile-section">
-            <div class="profile-pic"></div>
-            <div>
-                <strong style="font-size: 1.2em;">Gregory Cobe Leibenfrost</strong><br>
-                <small>Gregorycobe@icloud.com</small>
+            <div class="live-data">
+                <div class="label">Wetter</div>
+                <div id="temp">--°C</div>
+                <div id="weather-desc">Lade...</div>
+            </div>
+
+            <div class="live-data">
+                <div class="label">NBA / WNBA</div>
+                <div id="sports">Lade Ergebnisse...</div>
+            </div>
+
+            <div id="greeting">Lade...</div>
+        </div>
+
+        <div class="app-grid">
+            <div class="app-tile" onclick="openApp('app-news')">
+                <div class="icon">📰</div><div class="name">News</div>
+            </div>
+            <div class="app-tile" onclick="openApp('app-settings')">
+                <div class="icon">⚙️</div><div class="name">Settings</div>
+            </div>
+            <div class="app-tile" onclick="openApp('app-music')">
+                <div class="icon">🎵</div><div class="name">Music</div>
+            </div>
+            <div class="app-tile" onclick="openApp('app-gpt')">
+                <div class="icon">🤖</div><div class="name">ChatGPT</div>
+            </div>
+            <div class="app-tile" onclick="openApp('app-photos')">
+                <div class="icon">🖼️</div><div class="name">Fotos</div>
+            </div>
+            <div class="app-tile" onclick="openApp('app-clock')">
+                <div class="icon">⏰</div><div class="name">Uhr</div>
             </div>
         </div>
-        <div class="settings-item"><span>Töne & Haptik</span><input type="checkbox" checked></div>
-        <div class="settings-item"><span>Helligkeit</span><input type="range"></div>
-        <div class="settings-item"><span>Software</span><span style="color: var(--apple-blue); font-weight: bold;">Home View OS 27</span></div>
-        <div class="settings-item"><span>Ruhemodus</span><input type="time" value="22:00"></div>
-        <div style="text-align: center; margin-top: 30px; color: gray;">Produzent: Cobster Labs</div>
     </div>
-</div>
 
-<!-- Andere Apps -->
-<div id="music" class="overlay"><div class="overlay-header"><span class="close-btn" onclick="closeApp('music')">← Zurück</span><h2>Music</h2></div><iframe src="https://music.amazon.de"></iframe></div>
-<div id="chatgpt" class="overlay"><div class="overlay-header"><span class="close-btn" onclick="closeApp('chatgpt')">← Zurück</span><h2>ChatGPT</h2></div><iframe src="https://chatgpt.com"></iframe></div>
-<div id="gallery" class="overlay"><div class="overlay-header"><span class="close-btn" onclick="closeApp('gallery')">← Zurück</span><h2>Fotos</h2></div><div class="settings-list" style="text-align:center;"><input type="file" multiple onchange="alert('Fotos hinzugefügt!')"></div></div>
+    <!-- APPS -->
+    <div id="app-news" class="overlay">
+        <div class="overlay-header"><h2>News</h2><div class="close-btn" onclick="closeApp('app-news')">Fertig</div></div>
+        <div class="app-content" id="news-text">Lade aktuelle News...</div>
+    </div>
 
-<script>
-    // Uhr & Begrüßung
-    function updateClock() {
-        const now = new Date();
-        document.getElementById('clock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        
-        const hour = now.getHours();
-        let greet = "";
-        if (hour >= 5 && hour < 11) greet = "Guten Morgen! ☀️";
-        else if (hour >= 11 && hour < 14) greet = "Guten Mittag! 🌤️";
-        else if (hour >= 14 && hour < 18) greet = "Guten Nachmittag! ⛅";
-        else if (hour >= 18 && hour < 22) greet = "Guten Abend! 🌙";
-        else greet = "Gute Nacht! 💤";
-        document.getElementById('greeting').innerText = greet;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
+    <div id="app-settings" class="overlay">
+        <div class="overlay-header"><h2>Einstellungen</h2><div class="close-btn" onclick="closeApp('app-settings')">Fertig</div></div>
+        <div class="app-content">
+            <p><strong>Gregory Cobe Leibenfrost</strong><br>Gregorycobe@icloud.com</p>
+            <hr>
+            <p>Version: Home View OS 27</p>
+            <p>Producer: Cobster Labs</p>
+        </div>
+    </div>
 
-    // Wetter & Info
-    function updateInfo() {
-        const weathers = ["Sonnig", "Windig", "Bewölkt", "Regnerisch"];
-        document.getElementById('temp').innerText = Math.floor(Math.random() * 10 + 15) + "°C";
-        document.getElementById('weather-desc').innerText = weathers[Math.floor(Math.random()*4)];
-        document.getElementById('scores').innerText = "NBA: LAL 112 - GSW 108\nWNBA: NYL 85 - LAS 78";
-        document.getElementById('news').innerText = "Cobster Labs veröffentlicht Update!";
-    }
-    setInterval(updateInfo, 3600000);
-    updateInfo();
+    <div id="app-music" class="overlay">
+        <div class="overlay-header"><h2>Amazon Music</h2><div class="close-btn" onclick="closeApp('app-music')">Fertig</div></div>
+        <div class="app-content"><iframe src="https://music.amazon.de"></iframe></div>
+    </div>
 
-    function openApp(id) { document.getElementById(id).style.display = 'block'; }
-    function closeApp(id) { document.getElementById(id).style.display = 'none'; }
+    <div id="app-gpt" class="overlay">
+        <div class="overlay-header"><h2>ChatGPT</h2><div class="close-btn" onclick="closeApp('app-gpt')">Fertig</div></div>
+        <div class="app-content"><iframe src="https://chatgpt.com"></iframe></div>
+    </div>
 
-    // Uhr-App Logik
-    function showTab(tabId, el) {
-        document.querySelectorAll('.clock-content').forEach(c => c.classList.remove('active'));
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        el.classList.add('active');
-    }
+    <div id="app-photos" class="overlay">
+        <div class="overlay-header"><h2>Fotos</h2><div class="close-btn" onclick="closeApp('app-photos')">Fertig</div></div>
+        <div class="app-content" style="text-align:center">
+            <input type="file" accept="image/*" onchange="previewPhoto(event)">
+            <div id="photo-preview" style="margin-top:20px"></div>
+        </div>
+    </div>
 
-    let alarms = [];
-    function setAlarm() {
-        const time = document.getElementById('alarmTime').value;
-        if(time) {
-            alarms.push(time);
-            document.getElementById('alarmList').innerHTML += <div class="settings-item">${time} <span style="color:red; cursor:pointer" onclick="this.parentElement.remove()">X</span></div>;
+    <div id="app-clock" class="overlay">
+        <div class="overlay-header"><h2>Uhr</h2><div class="close-btn" onclick="closeApp('app-clock')">Fertig</div></div>
+        <div class="app-content" style="text-align:center; font-size:30px">
+            ⏰ Alarm: 07:00 <br><br> ⏱️ Stoppuhr: 00:00
+        </div>
+    </div>
+
+    <script>
+        function updateEverything() {
+            const now = new Date();
+            // Uhrzeit
+            document.getElementById('clock').innerText = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+            // Datum
+            document.getElementById('date').innerText = now.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' });
+            
+            // Gruß
+            let g = "Guten Abend!";
+            if(now.getHours() < 11) g = "Guten Morgen!";
+            else if(now.getHours() < 18) g = "Schönen Tag gewünscht!";
+            document.getElementById('greeting').innerText = g;
+
+            // Akku Simulation (da echt nicht möglich)
+            let bat = 85 - Math.floor(now.getMinutes() / 10);
+            document.getElementById('bat-sim').innerText = "🔋 " + bat + "%";
         }
-    }
-    setInterval(() => {
-        const now = new Date();
-        const currentTime = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
-        if(alarms.includes(currentTime)) {
-            alert("⏰ WECKER! Aufstehen, Gregory!");
-            alarms = alarms.filter(a => a !== currentTime);
-        }
-    }, 1000);
+        setInterval(updateEverything, 1000);
+        updateEverything();
 
-    let swTimer, swSeconds = 0;
-    function startStopwatch()
+        function loadData() {
+            document.getElementById('temp').innerText = "14°C";
+            document.getElementById('weather-desc').innerText = "☁️ Bewölkt";
+            document.getElementById('sports').innerHTML = "Lakers 110 - 105 Celtics<br>Fever 88 - 82 Liberty";
+            document.getElementById('news-text').innerHTML = "• Willkommen im Home View!<br>• System läuft auf iOS 9.3.5<br>• Cobster Labs News aktiv.";
+        }
+        loadData();
+
+        function openApp(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+        function closeApp(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+        function previewPhoto(event) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const img = document.createElement('img');
+                img.src = reader.result; img.style.maxWidth = '100%';
+                document.getElementById('photo-preview').innerHTML = '';
+                document.getElementById('photo-preview').appendChild(img);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>
