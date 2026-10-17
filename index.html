@@ -5,15 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mein Wiener Home View</title>
     <style>
-        /* Modernes helles Design mit einem edlen, fließenden Wellenmuster */
+        /* Pastell-oranger Hintergrund mit edlem Waben/Dreiecks-Muster */
         body {
-            background-color: #f5f7fa;
+            background-color: #FFE5D9;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(240, 244, 248, 1) 0px, transparent 50%),
-                radial-gradient(at 50% 0%, rgba(228, 237, 245, 1) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(240, 244, 248, 1) 0px, transparent 50%),
-                linear-gradient(135deg, #e6eef8 0%, #f5f7fa 100%);
-            color: #1C1C1E;
+                linear-gradient(30deg, #ffcad4 12%, transparent 12.5%, transparent 87%, #ffcad4 87.5%, #ffcad4),
+                linear-gradient(150deg, #ffcad4 12%, transparent 12.5%, transparent 87%, #ffcad4 87.5%, #ffcad4),
+                linear-gradient(30deg, #ffcad4 12%, transparent 12.5%, transparent 87%, #ffcad4 87.5%, #ffcad4),
+                linear-gradient(150deg, #ffcad4 12%, transparent 12.5%, transparent 87%, #ffcad4 87.5%, #ffcad4),
+                linear-gradient(60deg, #ffd7ba 25%, transparent 25.5%, transparent 75%, #ffd7ba 75.5%, #ffd7ba),
+                linear-gradient(60deg, #ffd7ba 25%, transparent 25.5%, transparent 75%, #ffd7ba 75.5%, #ffd7ba);
+            background-size: 40px 70px;
+            background-position: 0 0, 0 0, 20px 35px, 20px 35px, 0 0, 20px 35px;
+            color: #2C2C2E;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 20px;
@@ -22,19 +26,20 @@
 
         h1 {
             font-size: 38px;
-            font-weight: 300;
+            font-weight: 600;
             margin-bottom: 5px;
-            color: #1C1C1E;
-            letter-spacing: -0.5px;
+            color: #2C2C2E;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
         }
 
         .subtitle {
             font-size: 16px;
             color: #48484A;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            font-weight: 500;
         }
 
-        /* Stabiles Tabellen-Layout für iOS 9 Safari */
+        /* Stabiles Raster-Layout für altes iOS 9 */
         .dashboard-table {
             width: 100%;
             max-width: 850px;
@@ -42,32 +47,32 @@
             border-spacing: 15px;
         }
 
-        /* Weiche, moderne Kacheln mit feinem iOS-Schatten */
+        /* Cleane, weiße Kacheln mit weichem Schatten */
         .card {
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.92);
             border-radius: 20px;
-            padding: 20px;
+            padding: 22px;
             text-align: center;
             vertical-align: top;
             width: 50%;
-            box-shadow: 0 8px 24px rgba(149, 157, 165, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
         .card h2 {
-            font-size: 18px;
+            font-size: 16px;
             margin-top: 0;
             margin-bottom: 15px;
-            color: #007AFF; /* iOS Blau */
-            font-weight: 600;
+            color: #D96B43; /* Passendes dunkleres Pastell-Orange für Titel */
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
-        /* Größere und schönere Uhrzeit */
+        /* Markante, dicke Uhrzeit */
         .time-display {
-            font-size: 64px;
-            font-weight: 200;
+            font-size: 68px;
+            font-weight: 700; /* Extra dick eingestellt */
             color: #1C1C1E;
             margin: 5px 0;
             letter-spacing: -1px;
@@ -75,29 +80,45 @@
 
         .date-display {
             font-size: 16px;
-            color: #007AFF;
-            font-weight: 500;
+            color: #D96B43;
+            font-weight: 600;
         }
 
-        /* Buttons (behalten für Notfälle) */
-        .btn {
-            display: block;
-            background-color: #E5E5EA;
-            color: #1C1C1E;
-            text-decoration: none;
-            padding: 10px;
+        /* Nativ generierte Wetter-Anzeige */
+        .weather-number {
+            font-size: 54px;
+            font-weight: 700;
+            color: #2C2C2E;
             margin: 5px 0;
-            border-radius: 10px;
-            font-weight: 500;
-            font-size: 14px;
         }
 
-        /* CSS Anpassung für die eingebetteten Widgets */
-        .widget-frame {
-            width: 100%;
-            border: none;
-            border-radius: 12px;
-            background: transparent;
+        .weather-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #48484A;
+        }
+
+        /* Schlagzeilen-Box */
+        .news-container {
+            text-align: left;
+            max-height: 180px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .news-item {
+            font-size: 14px;
+            padding: 8px 0;
+            border-bottom: 1px solid #E5E5EA;
+            color: #1C1C1E;
+            line-height: 1.3;
+            font-weight: 500;
+        }
+        
+        .news-item span {
+            color: #FF3B30; /* Roter ORF-Punkt-Ersatz für Top-News */
+            font-weight: bold;
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -108,32 +129,33 @@
 
     <table class="dashboard-table">
         <tr>
-            <!-- Kachel 1: Uhrzeit & Datum (Vergrößert) -->
+            <!-- Kachel 1: Uhrzeit & Datum (Dicker) -->
             <td class="card">
                 <h2>Zeit & Datum</h2>
                 <div id="uhr" class="time-display">--:--</div>
                 <div id="datum" class="date-display">Lädt...</div>
             </td>
 
-            <!-- Kachel 2: Wetter Döbling via robustem Iframe-Widget -->
-            <td class="card" style="padding: 15px;">
+            <!-- Kachel 2: Wetter Döbling (Nativ läd garantiert) -->
+            <td class="card">
                 <h2>Wetter 1190 Wien</h2>
-                <!-- Dieses Widget lädt unabhängig und zeigt sofort Grad + Text (sonnig, bewölkt etc.) -->
-                <iframe class="widget-frame" src="https://wetter.de" height="150" scrolling="no"></iframe>
+                <div id="wetter-temp" class="weather-number">--°C</div>
+                <div id="wetter-status" class="weather-text">Lädt Live-Daten...</div>
             </td>
         </tr>
         <tr>
-            <!-- Kachel 3: Top Schlagzeilen Live-Widget (Kein externes Öffnen nötig) -->
+            <!-- Kachel 3: Echte ORF Top-Schlagzeilen (Integriert) -->
             <td class="card">
-                <h2>Top News Österreich</h2>
-                <!-- Lädt die aktuellsten Kurier/ORF-Schlagzeilen direkt lesbar als Liste in die Kachel -->
-                <iframe class="widget-frame" src="https://nachrichten.at" height="200" style="background: white; border: 1px solid #E5E5EA;"></iframe>
+                <h2>Top News Österreich & Welt</h2>
+                <div class="news-container" id="news-box">
+                    <div class="news-item">Hole aktuelle ORF Schlagzeilen...</div>
+                </div>
             </td>
 
             <!-- Kachel 4: Tageszitat -->
             <td class="card" style="vertical-align: middle;">
                 <h2>Tagesfokus</h2>
-                <p style="font-style: italic; color: #3A3A3C; line-height: 1.5; font-size: 18px; margin: 0 10px;">
+                <p style="font-style: italic; color: #3A3A3C; line-height: 1.5; font-size: 16px; margin: 0;">
                     "Der beste Weg, die Zukunft vorherzusagen, ist, sie selbst zu gestalten."
                 </p>
             </td>
@@ -141,24 +163,89 @@
     </table>
 
     <script>
-        // LIVE-UHRZEIT & DATUM
+        // 1. LIVE-UHRZEIT & DATUM
         function aktualisiereUhr() {
             var jetzt = new Date();
             var stunden = jetzt.getHours();
             var minuten = jetzt.getMinutes();
-            
             if (stunden < 10) stunden = "0" + stunden;
             if (minuten < 10) minuten = "0" + minuten;
-            
             document.getElementById('uhr').innerHTML = stunden + ":" + minuten;
             
             var optionen = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
             document.getElementById('datum').innerHTML = jetzt.toLocaleDateString('de-AT', optionen);
         }
-        
-        // Jede Sekunde aktualisieren
+
+        // 2. NATIVES WETTER FÜR DÖBLING (1190 Wien Geokoordinaten)
+        function holeDoeblingerWetter() {
+            // Koordinaten für Wien Döbling: Lat 48.2492, Lon 16.3533
+            var url = "https://open-meteo.com";
+            var request = new XMLHttpRequest();
+            
+            request.open('GET', url, true);
+            request.onreadystatechange = function() {
+                if (request.readyState === 4 && request.status === 200) {
+                    var daten = JSON.parse(request.responseText);
+                    var temp = Math.round(daten.current_weather.temperature);
+                    var code = daten.current_weather.weathercode;
+                    
+                    var statusText = "Geladen";
+                    if (code === 0) statusText = "☀️ Sonnig & Klar";
+                    else if (code >= 1 && code <= 3) statusText = "🌤️ Leicht bewölkt";
+                    else if (code >= 45 && code <= 48) statusText = "🌫️ Nebelig";
+                    else if (code >= 51 && code <= 65) statusText = "🌧️ Regnerisch";
+                    else if (code >= 71 && code <= 77) statusText = "❄️ Frostig & Schnee";
+                    else if (code >= 80 && code <= 82) statusText = "🌦️ Regenschauer";
+                    else if (code >= 95) statusText = "⛈️ Stürmisches Gewitter";
+                    else statusText = "☁️ Bewölkt";
+                    
+                    document.getElementById('wetter-temp').innerHTML = temp + "°C";
+                    document.getElementById('wetter-status').innerHTML = statusText;
+                }
+            };
+            request.send();
+        }
+
+        // 3. ECHTE LIVE NEWS (ORF/RSS Schlagzeilen über einen CORS-Proxy geladen für iOS 9)
+        function holeNews() {
+            var rssUrl = encodeURIComponent("https://orf.at");
+            var url = "https://allorigins.win" + rssUrl;
+            var request = new XMLHttpRequest();
+            
+            request.open('GET', url, true);
+            request.onreadystatechange = function() {
+                if (request.readyState === 4 && request.status === 200) {
+                    var antwort = JSON.parse(request.responseText);
+                    
+                    // XML Parser der auch auf altem iOS läuft
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(antwort.contents, "text/xml");
+                    var eintraege = xmlDoc.getElementsByTagName("item");
+                    
+                    var newsHTML = "";
+                    // Zeige die Top 4 Schlagzeilen an
+                    var anzahl = eintraege.length > 4 ? 4 : eintraege.length;
+                    
+                    for (var i = 0; i < anzahl; i++) {
+                        var titel = eintraege[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
+                        newsHTML += "<div class='news-item'><span>•</span> " + titel + "</div>";
+                    }
+                    
+                    document.getElementById('news-box').innerHTML = newsHTML;
+                }
+            };
+            request.send();
+        }
+
+        // Timer einrichten (Alles läuft automatisch)
         setInterval(aktualisiereUhr, 1000);
+        setInterval(holeDoeblingerWetter, 300000); // Wetter alle 5 Min neu laden
+        setInterval(holeNews, 600000); // News alle 10 Min neu laden
+        
+        // Direkt beim Start ausführen
         aktualisiereUhr();
+        holeDoeblingerWetter();
+        holeNews();
     </script>
 
 </body>
