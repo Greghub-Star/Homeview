@@ -7,9 +7,9 @@
     <style>
         :root {
             --bg-color: #e5e2db; /* Warmes Pastell-Beige/Grau */
-            --card-bg: #f5f3ef; /* Etwas helleres Beige */
+            --card-bg: #f5f3ef; /* Hellere Kachel-Farbe */
             --accent-red: #ff3b30;
-            --text-main: #4a4a4a; /* Dunkelgrauer Text für bessere Lesbarkeit */
+            --text-main: #4a4a4a; 
             --text-dim: #8e8e8e;
         }
 
@@ -22,7 +22,7 @@
             overflow: hidden;
         }
 
-        /* STATUS BAR (Simulation) */
+        /* STATUS BAR (Simulation oben rechts) */
         .status-bar {
             display: flex;
             justify-content: flex-end;
@@ -40,7 +40,7 @@
             gap: 30px;
         }
 
-        /* LINKS: FIXE INFOS */
+        /* LINKS: DASHBOARD INFOS */
         .info-panel {
             flex: 1.2;
             display: flex;
@@ -53,6 +53,7 @@
             font-weight: 200;
             margin: 0;
             color: var(--text-main);
+            line-height: 1;
         }
 
         #date {
@@ -110,12 +111,13 @@
             justify-content: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             border: 1px solid #ddd;
+            cursor: pointer;
         }
 
         .app-tile .icon { font-size: 40px; margin-bottom: 10px; }
         .app-tile .name { font-size: 16px; color: var(--text-dim); }
 
-        /* OVERLAYS */
+        /* OVERLAYS FÜR INTERNE APPS */
         .overlay {
             display: none;
             position: fixed;
@@ -136,7 +138,6 @@
 
         .close-btn { color: #007AFF; font-weight: bold; cursor: pointer; }
         .app-content { flex: 1; padding: 20px; overflow-y: auto; }
-        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
@@ -165,17 +166,12 @@
         </div>
 
         <div class="app-grid">
+            <!-- Interne Apps (Overlays) -->
             <div class="app-tile" onclick="openApp('app-news')">
                 <div class="icon">📰</div><div class="name">News</div>
             </div>
             <div class="app-tile" onclick="openApp('app-settings')">
                 <div class="icon">⚙️</div><div class="name">Settings</div>
-            </div>
-            <div class="app-tile" onclick="openApp('app-music')">
-                <div class="icon">🎵</div><div class="name">Music</div>
-            </div>
-            <div class="app-tile" onclick="openApp('app-gpt')">
-                <div class="icon">🤖</div><div class="name">ChatGPT</div>
             </div>
             <div class="app-tile" onclick="openApp('app-photos')">
                 <div class="icon">🖼️</div><div class="name">Fotos</div>
@@ -183,33 +179,31 @@
             <div class="app-tile" onclick="openApp('app-clock')">
                 <div class="icon">⏰</div><div class="name">Uhr</div>
             </div>
+            
+            <!-- Externe Apps (Öffnen neue Tabs) -->
+            <div class="app-tile" onclick="window.open('https://music.amazon.de', '_blank')">
+                <div class="icon">🎵</div><div class="name">Music</div>
+            </div>
+            <div class="app-tile" onclick="window.open('https://chatgpt.com', '_blank')">
+                <div class="icon">🤖</div><div class="name">ChatGPT</div>
+            </div>
         </div>
     </div>
 
-    <!-- APPS -->
+    <!-- OVERLAYS -->
     <div id="app-news" class="overlay">
         <div class="overlay-header"><h2>News</h2><div class="close-btn" onclick="closeApp('app-news')">Fertig</div></div>
-        <div class="app-content" id="news-text">Lade aktuelle News...</div>
+        <div class="app-content" id="news-text">Lade News...</div>
     </div>
 
     <div id="app-settings" class="overlay">
         <div class="overlay-header"><h2>Einstellungen</h2><div class="close-btn" onclick="closeApp('app-settings')">Fertig</div></div>
         <div class="app-content">
-            <p><strong>Gregory Cobe Leibenfrost</strong><br>Gregorycobe@icloud.com</p>
+            <p><strong style="font-size:20px">Gregory Cobe Leibenfrost</strong><br>Gregorycobe@icloud.com</p>
             <hr>
             <p>Version: Home View OS 27</p>
             <p>Producer: Cobster Labs</p>
         </div>
-    </div>
-
-    <div id="app-music" class="overlay">
-        <div class="overlay-header"><h2>Amazon Music</h2><div class="close-btn" onclick="closeApp('app-music')">Fertig</div></div>
-        <div class="app-content"><iframe src="https://music.amazon.de"></iframe></div>
-    </div>
-
-    <div id="app-gpt" class="overlay">
-        <div class="overlay-header"><h2>ChatGPT</h2><div class="close-btn" onclick="closeApp('app-gpt')">Fertig</div></div>
-        <div class="app-content"><iframe src="https://chatgpt.com"></iframe></div>
     </div>
 
     <div id="app-photos" class="overlay">
@@ -228,7 +222,7 @@
     </div>
 
     <script>
-        function updateEverything() {
+        function updateClock() {
             const now = new Date();
             // Uhrzeit
             document.getElementById('clock').innerText = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
@@ -241,12 +235,12 @@
             else if(now.getHours() < 18) g = "Schönen Tag gewünscht!";
             document.getElementById('greeting').innerText = g;
 
-            // Akku Simulation (da echt nicht möglich)
+            // Akku Sim (ändert sich leicht alle Minuten)
             let bat = 85 - Math.floor(now.getMinutes() / 10);
             document.getElementById('bat-sim').innerText = "🔋 " + bat + "%";
         }
-        setInterval(updateEverything, 1000);
-        updateEverything();
+        setInterval(updateClock, 1000);
+        updateClock();
 
         function loadData() {
             document.getElementById('temp').innerText = "14°C";
@@ -256,17 +250,17 @@
         }
         loadData();
 
-        function openApp(id) {
-            document.getElementById(id).style.display = 'flex';
+        function openApp(id) { 
+            document.getElementById(id).style.display = 'flex'; 
         }
-        function closeApp(id) {
-            document.getElementById(id).style.display = 'none';
+        function closeApp(id) { 
+            document.getElementById(id).style.display = 'none'; 
         }
         function previewPhoto(event) {
             const reader = new FileReader();
             reader.onload = function(){
                 const img = document.createElement('img');
-                img.src = reader.result; img.style.maxWidth = '100%';
+                img.src = reader.result; img.style.maxWidth = '100%'; img.style.borderRadius = '10px';
                 document.getElementById('photo-preview').innerHTML = '';
                 document.getElementById('photo-preview').appendChild(img);
             };
