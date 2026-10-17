@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mein Home View</title>
+    <title>Mein Wiener Home View</title>
     <style>
-        /* Modernes, dunkles Design (schont das alte Display) */
+        /* Heller Hintergrund mit einem modernen, dezenten Linienmuster */
         body {
-            background-color: #121212;
-            color: #FFFFFF;
+            background-color: #F2F2F7;
+            background-image: radial-gradient(#D1D1D6 1px, transparent 1px), radial-gradient(#D1D1D6 1px, #F2F2F7 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            color: #1C1C1E;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 20px;
@@ -19,37 +22,38 @@
             font-size: 40px;
             font-weight: 300;
             margin-bottom: 5px;
-            color: #E5E5EA;
+            color: #1C1C1E;
         }
 
         .subtitle {
             font-size: 18px;
-            color: #8E8E93;
+            color: #3A3A3C;
             margin-bottom: 40px;
         }
 
-        /* Altes Layout-System (Tabellen), das auf iOS 9 perfekt funktioniert */
+        /* Altes Layout-System (Tabellen) für perfektes Rendering auf iOS 9 */
         .dashboard-table {
             width: 100%;
             max-width: 700px;
             margin: 0 auto;
-            border-spacing: 15px; /* Abstand zwischen den Kacheln */
+            border-spacing: 15px;
         }
 
-        /* Stylische, moderne Kacheln */
+        /* Moderne, helle Kacheln mit feinem Schatten */
         .card {
-            background-color: #1C1C1E;
-            border-radius: 16px; /* Abgerundete Ecken wie bei modernen iOS-Widgets */
+            background-color: #FFFFFF;
+            border-radius: 16px;
             padding: 25px;
             text-align: center;
             vertical-align: top;
             width: 50%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .card h2 {
             font-size: 20px;
             margin-top: 0;
-            color: #0A84FF; /* iOS Blau */
+            color: #007AFF; /* iOS Blau */
             font-weight: 500;
         }
 
@@ -57,92 +61,134 @@
         .time-display {
             font-size: 48px;
             font-weight: bold;
-            color: #30D158; /* iOS Grün */
+            color: #007AFF;
             margin: 10px 0;
         }
 
-        /* Buttons im Widget */
+        /* Moderne Buttons für Kurier und ORF */
         .btn {
             display: block;
-            background-color: #2C2C2E;
-            color: #FFFFFF;
+            background-color: #E5E5EA;
+            color: #1C1C1E;
             text-decoration: none;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 8px;
-            font-weight: 500;
+            padding: 14px;
+            margin: 10px 0;
+            border-radius: 10px;
+            font-weight: 600;
             font-size: 16px;
+            border: 1px solid #D1D1D6;
+        }
+        
+        .btn:active {
+            background-color: #C7C7CC;
         }
 
-        /* Wetter-Dummy-Text */
+        /* Wetter-Anzeige */
         .weather-text {
-            font-size: 24px;
-            margin: 15px 0;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #FF9500; /* iOS Orange für ein freundliches Gefühl */
+        }
+        
+        .weather-detail {
+            font-size: 14px;
+            color: #3A3A3C;
         }
     </style>
 </head>
 <body>
 
-    <h1>Guten Morgen</h1>
-    <div class="subtitle">Willkommen auf deinem iPad Home View</div>
+    <h1>Servus in Wien</h1>
+    <div class="subtitle">Dein persönliches iPad Dashboard</div>
 
-    <!-- Haupt-Dashboard -->
     <table class="dashboard-table">
         <tr>
             <!-- Kachel 1: Uhrzeit & Datum -->
             <td class="card">
                 <h2>Zeit & Datum</h2>
-                <!-- Das iPad Mini 1 aktualisiert diese Uhr jede Sekunde automatisch -->
-                <div id="uhr" class="time-display">00:00</div>
-                <div id="datum" style="color: #8E8E93;">1. Jänner 2026</div>
+                <div id="uhr" class="time-display">--:--</div>
+                <div id="datum" style="color: #3A3A3C;">Lädt...</div>
             </td>
 
-            <!-- Kachel 2: Wetter-Station -->
+            <!-- Kachel 2: ECHTES WIENER WETTER -->
             <td class="card">
-                <h2>Wetter</h2>
-                <div class="weather-text">☀️ 22°C</div>
-                <div style="color: #8E8E93;">Sonnig in Wien</div>
+                <h2>Wetter Wien</h2>
+                <div id="wetter-temp" class="weather-text">--°C</div>
+                <div id="wetter-status" class="weather-detail">Hole Live-Daten...</div>
             </td>
         </tr>
         <tr>
-            <!-- Kachel 3: Deine Favoriten -->
+            <!-- Kachel 3: Deine neuen Nachrichten-Links -->
             <td class="card">
-                <h2>Schnellstart</h2>
-                <a href="https://youtube.com" class="btn" target="_blank">📺 YouTube</a>
-                <a href="https://wikipedia.org" class="btn" target="_blank">🌐 Wikipedia</a>
+                <h2>Nachrichten</h2>
+                <a href="https://orf.at" class="btn" target="_blank">🔴 ORF News</a>
+                <a href="https://kurier.at" class="btn" target="_blank">📰 Kurier</a>
             </td>
 
-            <!-- Kachel 4: Tageszitat / Notiz -->
+            <!-- Kachel 4: Tageszitat -->
             <td class="card">
                 <h2>Tagesfokus</h2>
-                <p style="font-style: italic; color: #AEAEB2; line-height: 1.4;">
+                <p style="font-style: italic; color: #3A3A3C; line-height: 1.4; font-size: 16px;">
                     "Der beste Weg, die Zukunft vorherzusagen, ist, sie selbst zu gestalten."
                 </p>
             </td>
         </tr>
     </table>
 
-    <!-- Einfaches, altes JavaScript für die Live-Uhrzeit (läuft super auf iOS 9) -->
     <script>
+        // 1. LIVE-UHRZEIT & DATUM
         function aktualisiereUhr() {
             var jetzt = new Date();
             var stunden = jetzt.getHours();
             var minuten = jetzt.getMinutes();
             
-            // Führende Null hinzufügen, wenn einstellig
             if (stunden < 10) stunden = "0" + stunden;
             if (minuten < 10) minuten = "0" + minuten;
             
             document.getElementById('uhr').innerHTML = stunden + ":" + minuten;
             
-            // Datum anzeigen
             var optionen = { weekday: 'long', day: 'numeric', month: 'long' };
-            document.getElementById('datum').innerHTML = jetzt.toLocaleDateString('de-DE', optionen);
+            document.getElementById('datum').innerHTML = jetzt.toLocaleDateString('de-AT', optionen);
         }
         
-        // Jede Sekunde aktualisieren
-        setInterval(aktualisiereUhr, 1000);
-        aktualisiereUhr(); // Sofort beim Start ausführen
+        // 2. ECHTES WETTER FÜR WIEN (Open-Meteo API - iOS 9 kompatibel via XMLHttpRequest)
+        function holeWienerWetter() {
+            var url = "https://open-meteo.com";
+            var request = new XMLHttpRequest();
+            
+            request.open('GET', url, true);
+            request.onreadystatechange = function() {
+                if (request.readyState === 4 && request.status === 200) {
+                    var daten = JSON.parse(request.responseText);
+                    var temp = Math.round(daten.current_weather.temperature);
+                    var code = daten.current_weather.weathercode;
+                    
+                    // Wetter-Code in Text umwandeln
+                    var statusText = "Mäßig";
+                    if (code === 0) statusText = "☀️ Klarer Himmel";
+                    else if (code >= 1 && code <= 3) statusText = "🌤️ Leicht bewölkt";
+                    else if (code >= 45 && code <= 48) statusText = "🌫️ Nebelig";
+                    else if (code >= 51 && code <= 65) statusText = "🌧️ Es regnet";
+                    else if (code >= 71 && code <= 77) statusText = "❄️ Schneefall";
+                    else if (code >= 80 && code <= 82) statusText = "🌦️ Regenschauer";
+                    else if (code >= 95) statusText = "⛈️ Gewitter";
+                    else statusText = "☁️ Bewölkt";
+                    
+                    document.getElementById('wetter-temp').innerHTML = temp + "°C";
+                    document.getElementById('wetter-status').innerHTML = statusText + " in Wien";
+                }
+            };
+            request.send();
+        }
+
+        // Intervalle einrichten
+        setInterval(aktualisiereUhr, 1000); // Uhr jede Sekunde
+        setInterval(holeWienerWetter, 300000); // Wetter alle 5 Minuten neu laden (300.000 ms)
+        
+        // Sofort beim ersten Laden ausführen
+        aktualisiereUhr();
+        holeWienerWetter();
     </script>
 
 </body>
