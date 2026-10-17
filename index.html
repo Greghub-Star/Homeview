@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HomeViewOS 28 Beta</title>
     <style>
-        /* Eleganter Apple-Wellenhintergrund in Pastell-Orange ohne die 27 */
+        /* Orangefarbener Apple-Wellenhintergrund - perfekt skaliert ohne die 27 */
         body {
             background-color: #FA8E4B;
             background-image: url('https://macrumors.com');
@@ -14,14 +14,13 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             color: #1C1C1E;
-            font-family: -apple-system-headline, -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
             margin: 0;
             padding: 20px;
             text-align: center;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Rote Beta-Produktplakette */
         .beta-badge {
             position: absolute;
             top: 20px;
@@ -34,130 +33,157 @@
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
         h1 {
             font-size: 46px;
             font-weight: 700;
             margin-bottom: 2px;
-            color: #1C1C1E;
-            letter-spacing: -0.5px;
             text-shadow: 0 2px 4px rgba(255, 255, 255, 0.4);
         }
 
         .subtitle {
             font-size: 24px;
-            color: #1C1C1E;
-            margin-bottom: 25px;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            margin-bottom: 25px;
             text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
         }
 
         .dashboard-table {
             width: 100%;
-            max-width: 850px;
+            max-width: 900px;
             margin: 0 auto;
             border-collapse: separate;
             border-spacing: 15px;
         }
 
-        /* Schneeweiße, abgerundete Apple-Widgets */
+        /* Apple-Style weiße Widgets */
         .card {
-            background-color: rgba(255, 255, 255, 0.94);
+            background-color: rgba(255, 255, 255, 0.95);
             border-radius: 26px;
-            padding: 24px;
+            padding: 20px;
             text-align: center;
             vertical-align: top;
-            width: 50%;
-            height: 265px; 
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.7);
             box-sizing: border-box;
         }
 
-        /* Massive Überschriften */
+        /* EXTRA GROSSE ÜBERSCHRIFTEN */
         .card h2 {
             font-size: 24px; 
             margin-top: 0;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: #D35400; 
             font-weight: 900; 
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
 
-        /* Große Zeitanzeige */
         .time-display {
-            font-size: 82px;
+            font-size: 76px;
             font-weight: 600;
-            color: #1C1C1E;
             margin: 0;
             line-height: 1.05;
             letter-spacing: -2px;
         }
 
-        /* Deutlich größeres Datum */
         .date-display {
-            font-size: 21px; 
+            font-size: 22px; 
             color: #D35400;
             font-weight: 700;
-            margin-top: 10px;
+            margin-top: 6px;
         }
 
-        /* Neue Begrüßungszeile */
         .greeting-display {
-            font-size: 17px;
+            font-size: 18px;
             color: #48484A;
             font-weight: 600;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
-        /* ECHTE, riesige Gradanzeige beim Wetter */
         .giant-temp {
             font-size: 68px; 
             font-weight: 700;
-            color: #1C1C1E;
             display: block;
             margin-top: 5px;
-            letter-spacing: -1px;
         }
 
         .weather-status-text {
             font-size: 18px;
             color: #48484A;
             font-weight: 700;
-            margin-top: 5px;
-            display: block;
         }
 
-        /* Styling für die echten Text-Schlagzeilen */
-        .news-box {
+        /* Steuerelemente für Helligkeit und Sound */
+        .slider-container {
+            text-align: left;
+            margin-top: 10px;
+        }
+        .slider-label {
             font-size: 14px;
-            color: #1C1C1E;
+            font-weight: 700;
+            color: #48484A;
+            margin-bottom: 2px;
+        }
+        .apple-slider {
+            width: 100%;
+            margin-bottom: 12px;
+            -webkit-appearance: none;
+            background: #E5E5EA;
+            height: 8px;
+            border-radius: 4px;
+            outline: none;
+        }
+        .apple-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #D35400;
+            cursor: pointer;
+        }
+
+        /* App-Bereiche */
+        .live-text-box {
+            font-size: 14px;
+            color: #2C2C2E;
             line-height: 1.4;
             text-align: left;
             font-weight: 600;
-            margin-top: 5px;
         }
-
         .news-item {
-            padding: 7px 0;
+            padding: 5px 0;
             border-bottom: 1px solid rgba(0,0,0,0.06);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        .news-item span { color: #FF3B30; font-weight: bold; }
 
-        .news-item span {
-            color: #FF3B30;
-            font-weight: bold;
-            margin-right: 6px;
+        /* Eingabefelder im Apple-Stil */
+        .apple-input, .apple-select {
+            background: #F2F2F7;
+            border: 1px solid #D1D1D6;
+            padding: 6px 10px;
+            font-size: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            outline: none;
+            margin: 4px;
+        }
+        .apple-btn {
+            background: #D35400;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
         }
     </style>
-</head>
-<body>
+</head><body>
 
     <div class="beta-badge">Beta Product</div>
 
@@ -166,45 +192,100 @@
 
     <table class="dashboard-table">
         <tr>
-            <!-- Kachel 1: Uhrzeit, vergrößertes Datum & Gruß -->
-            <td class="card">
+            <!-- Kachel 1: Zeit, Datum, Gruß -->
+            <td class="card" style="height: 250px;">
                 <h2>Zeit & Datum</h2>
                 <div id="uhr" class="time-display">00:00</div>
-                <div id="datum" class="date-display">Lädt...</div>
+                <div id="datum" class="date-display">17. Oktober 2026</div>
                 <div id="begruessung" class="greeting-display">Servus</div>
             </td>
 
             <!-- Kachel 2: ECHTES LIVE WETTER DÖBLING -->
-            <td class="card">
+            <td class="card" style="height: 250px;">
                 <h2>Wetter 1190 Wien</h2>
-                <span id="wetter-grad" class="giant-temp">--°C</span>
-                <span id="wetter-text" class="weather-status-text">Wird geladen...</span>
+                <span id="wetter-grad" class="giant-temp">18°C</span>
+                <span id="wetter-text" class="weather-status-text">☁️ Bewölkt</span>
             </td>
         </tr>
         <tr>
             <!-- Kachel 3: ECHTE LIVE NEWS (ORF) -->
-            <td class="card">
+            <td class="card" style="height: 230px;">
                 <h2>Top News Österreich & Welt</h2>
-                <div class="news-box" id="news-inhalt">
+                <div class="live-text-box" id="news-inhalt">
                     <div class="news-item"><span>🔴 ORF:</span> Schlagzeilen werden geladen...</div>
                 </div>
             </td>
 
-            <!-- Kachel 4: Automatisches Spruch-Archiv -->
-            <td class="card" style="vertical-align: middle;">
+            <!-- Kachel 4: Automatisches 365-Tage Spruch-Archiv -->
+            <td class="card" style="vertical-align: middle; height: 230px;">
                 <h2>Tagesfokus</h2>
                 <p id="zitat-text" style="font-style: italic; color: #2C2C2E; line-height: 1.5; font-size: 18px; margin: 0 10px; font-weight: 500; letter-spacing: -0.2px;">
                     "Der beste Weg, die Zukunft vorherzusagen, ist, sie selbst zu gestalten."
                 </p>
             </td>
         </tr>
+        <tr>
+            <!-- Kachel 5: Einstellungen (Helligkeit, Töne, Ruhemodus je Wochentag) -->
+            <td class="card" style="height: 310px;">
+                <h2>Einstellungen</h2>
+                <div class="slider-container">
+                    <div class="slider-label">Bildschirmhelligkeit</div>
+                    <input type="range" class="apple-slider" min="0" max="100" value="75">
+                    <div class="slider-label">Töne & Haptik (Lautstärke)</div>
+                    <input type="range" class="apple-slider" min="0" max="100" value="60">
+                </div>
+                <div style="text-align: left; margin-top: 5px; font-size: 13px; font-weight: 600;">
+                    <div class="slider-label" style="margin-bottom: 4px;">📅 Ruhemodus Planer</div>
+                    <select id="ruhe-tag" class="apple-select">
+                        <option value="0">Montag</option><option value="1">Dienstag</option>
+                        <option value="2">Mittwoch</option><option value="3">Donnerstag</option>
+                        <option value="4">Freitag</option><option value="5">Samstag</option>
+                        <option value="6">Sonntag</option>
+                    </select>
+                    von <input type="time" id="ruhe-von" class="apple-input" value="22:00"> 
+                    bis <input type="time" id="ruhe-bis" class="apple-input" value="07:00">
+                    <button class="apple-btn" onclick="speichereRuhemodus()" style="padding: 4px 8px; font-size: 12px;">Sichern</button>
+                    <div id="ruhe-status" style="color: #D35400; margin-top: 4px; font-size: 11px;">Plan active</div>
+                </div>
+            </td>
+
+            <!-- Kachel 6: Uhr App (Timer, Wecker & anpassbare Weltuhr) -->
+            <td class="card" style="height: 310px; text-align: left; overflow-y: auto;">
+                <h2>Uhr App</h2>
+                <!-- Timer -->
+                <div style="border-bottom: 1px solid rgba(0,0,0,0.08); padding-bottom: 8px; margin-bottom: 8px;">
+                    <span style="font-size: 14px; font-weight: 800; color: #48484A;">⏱️ Multi-Timer:</span>
+                    <input type="number" id="timer-sec" class="apple-input" style="width: 50px;" placeholder="Sek">
+                    <button class="apple-btn" onclick="starteTimer()">Start</button>
+                    <div id="timer-liste" style="font-size: 13px; font-weight: 700; color: #D35400; margin-top: 4px;">Keine aktiven Timer</div>
+                </div>
+                <!-- Wecker -->
+                <div style="border-bottom: 1px solid rgba(0,0,0,0.08); padding-bottom: 8px; margin-bottom: 8px;">
+                    <span style="font-size: 14px; font-weight: 800; color: #48484A;">⏰ Wecker stellen:</span>
+                    <input type="time" id="wecker-zeit" class="apple-input">
+                    <button class="apple-btn" onclick="addWecker()">+ Hinzufügen</button>
+                    <div id="wecker-liste" style="font-size: 12px; font-weight: 600; margin-top: 4px;"></div>
+                </div>
+                <div>
+                    <span style="font-size: 14px; font-weight: 800; color: #48484A;">🌐 Weltuhren:</span>
+                    <select id="welt-stadt" class="apple-select" onchange="addWeltuhr()">
+                        <option value="">-- Stadt wählen --</option>
+                        <option value="Europe/London">London</option>
+                        <option value="America/New_York">New York</option>
+                        <option value="Asia/Tokyo">Tokyo</option>
+                        <option value="Australia/Sydney">Sydney</option>
+                        <option value="Asia/Dubai">Dubai</option>
+                    </select>
+                    <div id="weltuhr-liste" style="font-size: 13px; font-weight: 700; margin-top: 4px; color: #48484A;"></div>
+                </div>
+            </td>
+        </tr>
     </table><script>
-        // 1. LIVE-UHRZEIT, DATUM & AUTOMATISCHE BEGRÜSSUNG
+        // 1. UHRZEIT, BEGRÜSSUNG & DATUM
         function aktualisiereUhrUndGruss() {
             var jetzt = new Date();
             var stunden = jetzt.getHours();
             var minuten = jetzt.getMinutes();
-            
             if (stunden < 10) stunden = "0" + stunden;
             if (minuten < 10) minuten = "0" + minuten;
             document.getElementById('uhr').innerHTML = stunden + ":" + minuten;
@@ -218,24 +299,24 @@
             else if (stunden >= 14 && stunden < 18) gruss = "☕ Guten Nachmittag";
             else if (stunden >= 18 && stunden < 22) gruss = "🌆 Guten Abend";
             else gruss = "🌙 Gute Nacht";
-            
             document.getElementById('begruessung').innerHTML = gruss;
+            
+            pruefeWecker(stunden + ":" + minuten);
         }
 
         // 2. 365-TAGE SPRUCH-ARCHIV
         var zitate = [
-            '"Der beste Weg, die Zukunft vorherzusagen, ist, sie selbst zu gestalten."',
             '"Gib jedem Tag die Chance, der schönste deines Lebens zu werden."',
+            '"Der beste Weg, die Zukunft vorherzusagen, ist, sie selbst zu gestalten."',
             '"Wer kämpft, kann verlieren. Wer nicht kämpft, hat schon verloren."',
-            '"Die reinste Form des Wahnsinns ist es, alles beim Alten zu belassen und zu hoffen, dass sich etwas ändert."',
-            '"Es ist nicht zu wenig Zeit, die wir haben, sondern es ist zu viel Zeit, die wir nicht nutzen."',
-            '"Man verliert niemals seine Stärke, man vergisst manchmal nur, dass man sie hat."',
-            '"Wege entstehen dadurch, dass man sie geht."',
-            '"Ziele im Leben erreicht man nicht durch Wünschen, sondern durch Handeln."',
             '"Auch aus Steinen, die einem in den Weg gelegt werden, kann man Schönes bauen."',
-            '"Das Geheimnis des Vorwärtskommens besteht darin, den ersten Schritt zu tun."'
+            '"Es ist nicht zu wenig Zeit, die wir haben, sondern es ist zu viel Zeit, die wir nicht nutzen."',
+            '"Das Geheimnis des Vorwärtskommens besteht darin, den ersten Schritt zu tun."',
+            '"Wege entstehen dadurch, dass man sie geht."',
+            '"Die Kunst ist, einmal mehr aufzustehen, als man umgeworfen wurde."',
+            '"Glaube daran, dass du es kannst, und du hast die Hälfte des Weges geschafft."',
+            '"Wer die Welt bewegen will, sollte erst sich selbst bewegen."'
         ];
-
         function wechsleSpruch() {
             var jetzt = new Date();
             var start = new Date(jetzt.getFullYear(), 0, 0);
@@ -245,11 +326,10 @@
             document.getElementById('zitat-text').innerHTML = zitate[index];
         }
 
-        // 3. TUNNEL-ABFRAGE FÜR LIVE-WETTER (iOS 9 sicher via open-meteo & Proxy)
-        function holeEchtesWetter() {
+        // 3. ECHTES LIVE-WETTER DÖBLING VIA PROXY (Aktualisiert alle 5 Minuten)
+        function holeLiveWetter() {
             var apiWetter = "https://open-meteo.com";
             var url = "https://corsproxy.io?" + encodeURIComponent(apiWetter);
-            
             var req = new XMLHttpRequest();
             req.open('GET', url, true);
             req.onreadystatechange = function() {
@@ -257,49 +337,43 @@
                     var daten = JSON.parse(req.responseText);
                     var temp = Math.round(daten.current_weather.temperature);
                     var code = daten.current_weather.weathercode;
-                    
-                    var statusText = "Heiter";
-                    if (code === 0) statusText = "☀️ Sonnig & Klar";
-                    else if (code >= 1 && code <= 3) statusText = "🌤️ Leicht bewölkt";
-                    else if (code >= 45 && code <= 48) statusText = "🌫️ Nebelig";
-                    else if (code >= 51 && code <= 65) statusText = "🌧️ Regnerisch";
-                    else if (code >= 71 && code <= 77) statusText = "❄️ Schneefall";
-                    else if (code >= 80 && code <= 82) statusText = "🌦️ Regenschauer";
-                    else if (code >= 95) statusText = "⛈️ Gewittersturm";
-                    
+                    var status = "Bewölkt";
+                    if (code === 0) status = "☀️ Sonnig & Klar";
+                    else if (code >= 1 && code <= 3) status = "🌤️ Leicht bewölkt";
+                    else if (code >= 45 && code <= 48) status = "🌫️ Nebelig";
+                    else if (code >= 51 && code <= 65) status = "🌧️ Regnerisch";
+                    else if (code >= 71 && code <= 77) status = "❄️ Schneefall";
+                    else if (code >= 80 && code <= 82) status = "🌦️ Regenschauer";
+                    else if (code >= 95) status = "⛈️ Gewittersturm";
                     document.getElementById('wetter-grad').innerHTML = temp + "°C";
-                    document.getElementById('wetter-text').innerHTML = statusText;
+                    document.getElementById('wetter-text').innerHTML = status;
                 }
             };
             req.send();
         }
 
-        // 4. ECHTE ORF LIVE SCHLAGZEILEN (Bricht die iOS 9 Sperre über Text-Tunnel)
-        function holeEchteNews() {
+        // 4. ECHTE ORF LIVE-NEWS VIA PROXY (Aktualisiert alle 10 Minuten)
+        function holeLiveNews() {
             var rssUrl = "https://orf.at";
             var url = "https://corsproxy.io?" + encodeURIComponent(rssUrl);
-            
             var req = new XMLHttpRequest();
             req.open('GET', url, true);
             req.onreadystatechange = function() {
                 if (req.readyState === 4 && req.status === 200) {
                     var xmlText = req.responseText;
-                    
-                    // Super-kompatibler Regex-Parser für das alte iOS 9 XML
                     var matches = xmlText.match(/<item>[\s\S]?<title>([\s\S]?)<\/title>/g);
                     var html = "";
-                    
                     if (matches) {
-                        var max = matches.length > 3 ? 3 : matches.length;
+                        var max = matches.length > 4 ? 4 : matches.length;
                         for (var i = 0; i < max; i++) {
                             var titelMatch = matches[i].match(/<title>([\s\S]*?)<\/title>/);
-                            if (titelMatch && titelMatch[1]) {
+                            if (titelMatch) {
                                 var titel = titelMatch[1].replace("<![CDATA[", "").replace("]]>", "").trim();
-                                html += "<div class='news-item'><span>🔴 ORF:</span> " + titel + "</div>";
+                                html += "<div class='news-item'><span>•</span> " + titel + "</div>";
                             }
                         }
                     } else {
-                        html = "<div class='news-item'>Keine aktuellen Schlagzeilen gefunden.</div>";
+                        html = "<div class='news-item'>Meldungen aktualisieren...</div>";
                     }
                     document.getElementById('news-inhalt').innerHTML = html;
                 }
@@ -307,16 +381,85 @@
             req.send();
         }
 
-        // Automatische Aktualisierungs-Intervalle
+        // 5. RUHEMODUS SPEICHERUNG
+        var ruheZeiten = {};
+        function speichereRuhemodus() {
+            var tag = document.getElementById('ruhe-tag').value;
+            var von = document.getElementById('ruhe-von').value;
+            var bis = document.getElementById('ruhe-bis').value;
+            ruheZeiten[tag] = { von: von, bis: bis };
+            document.getElementById('ruhe-status').innerHTML = "Gesichert für gewählten Tag!";
+            setTimeout(function(){ document.getElementById('ruhe-status').innerHTML = "Plan aktiv"; }, 3000);
+        }
+
+        // 6. TIMER & CO-APPS
+        function starteTimer() {
+            var sek = parseInt(document.getElementById('timer-sec').value);
+            if (isNaN(sek) || sek <= 0) return;
+            var countdown = setInterval(function() {
+                if (sek <= 0) {
+                    clearInterval(countdown);
+                    document.getElementById('timer-liste').innerHTML = "⏰ Zeit abgelaufen!";
+                } else {
+                    document.getElementById('timer-liste').innerHTML = "Noch: " + sek + " Sek";
+                    sek--;
+                }
+            }, 1000);
+        }
+
+        var weckerListe = [];
+        function addWecker() {
+            var zeit = document.getElementById('wecker-zeit').value;
+            if (!zeit) return;
+            weckerListe.push(zeit);
+            renderWecker();
+        }
+        function renderWecker() {
+            var html = "";
+            for(var i=0; i<weckerListe.length; i++) {
+                html += "• " + weckerListe[i] + " 🔔 <br>";
+            }
+            document.getElementById('wecker-liste').innerHTML = html;
+        }
+        function pruefeWecker(aktuelleZeit) {
+            for(var i=0; i<weckerListe.length; i++) {
+                if(weckerListe[i] === aktuelleZeit) {
+                    alert("⏰ WECKER KLINGELT: " + aktuelleZeit);
+                    weckerListe.splice(i, 1);
+                    renderWecker();
+                }
+            }
+        }
+
+        var aktiveStaedte = [];
+        function addWeltuhr() {
+            var zone = document.getElementById('welt-stadt').value;
+            if (!zone || aktiveStaedte.indexOf(zone) !== -1) return;
+            aktiveStaedte.push(zone);
+            aktualisiereWeltuhren();
+        }
+        function aktualisiereWeltuhren() {
+            var html = "";
+            var jetzt = new Date();
+            for (var i = 0; i < aktiveStaedte.length; i++) {
+                var stadtName = aktiveStaedte[i].split('/')[1];
+                var zeitStr = jetzt.toLocaleTimeString('de-AT', { timeZone: aktiveStaedte[i], hour: '2-digit', minute: '2-digit' });
+                html += "📍 " + stadtName + ": " + zeitStr + "<br>";
+            }
+            document.getElementById('weltuhr-liste').innerHTML = html;
+        }
+
+        // Automatische Zyklen aktivieren
         setInterval(aktualisiereUhrUndGruss, 1000);
-        setInterval(holeEchtesWetter, 300000); // Alle 5 Minuten echtes Wetter live laden
-        setInterval(holeEchteNews, 600000);   // Alle 10 Minuten echte ORF-News live laden
-        
-        // Sofortstarts beim ersten Aufrufen der Seite
+        setInterval(aktualisiereWeltuhren, 30000);
+        setInterval(holeLiveWetter, 300000);
+        setInterval(holeLiveNews, 600000);
+
+        // Direktstarts
         aktualisiereUhrUndGruss();
         wechsleSpruch();
-        holeEchtesWetter();
-        holeEchteNews();
+        holeLiveWetter();
+        holeLiveNews();
     </script>
 </body>
 </html>
