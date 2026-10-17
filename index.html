@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HomeViewOS</title>
+    <title>HomeViewOS 28 Beta</title>
     <style>
         /* Pastell-Orange mit modernem, geometrischem Linien-Muster */
         body {
@@ -19,7 +19,6 @@
             background-position: 0 0, 0 0, 20px 35px, 20px 35px, 0 0, 20px 35px;
             color: #1C1C1E;
             
-            /* Apple-Systemschriftarten */
             font-family: -apple-system-headline, -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
             margin: 0;
             padding: 20px;
@@ -27,12 +26,12 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Moderne Beta-Produkt-Kennzeichnung oben rechts */
+        /* Beta-Produkt-Plakette */
         .beta-badge {
             position: absolute;
             top: 20px;
             right: 25px;
-            background-color: #FF3B30; /* iOS Warn-Rot */
+            background-color: #FF3B30;
             color: #FFFFFF;
             font-size: 11px;
             font-weight: 800;
@@ -59,7 +58,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Stabiles Tabellen-Layout für iOS 9 */
         .dashboard-table {
             width: 100%;
             max-width: 850px;
@@ -68,7 +66,6 @@
             border-spacing: 15px;
         }
 
-        /* Schneeweiße Kacheln im Apple-Design */
         .card {
             background-color: rgba(255, 255, 255, 0.96);
             border-radius: 24px;
@@ -76,23 +73,22 @@
             text-align: center;
             vertical-align: top;
             width: 50%;
-            height: 220px;
+            height: 240px; /* Leicht erhöht für die größeren Titel */
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.7);
         }
 
-        /* Große Apple-Style Überschriften */
+        /* EXTRA GROSSE ÜBERSCHRIFTEN */
         .card h2 {
-            font-size: 20px;
+            font-size: 24px; /* Maximal vergrößert für perfekte Lesbarkeit */
             margin-top: 0;
             margin-bottom: 18px;
             color: #D35400; 
-            font-weight: 700;
+            font-weight: 900; /* Extra fett */
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
 
-        /* Große Apple-Uhrzeit */
         .time-display {
             font-size: 82px;
             font-weight: 600;
@@ -103,46 +99,29 @@
         }
 
         .date-display {
-            font-size: 16px;
+            font-size: 18px;
             color: #D35400;
             font-weight: 600;
             margin-top: 12px;
-            letter-spacing: -0.2px;
         }
 
-        /* Textbereich für Wetter und News */
-        .info-text-box {
-            font-size: 16px;
-            color: #2C2C2E;
-            line-height: 1.6;
-            text-align: left;
-            padding: 5px 10px;
-            font-weight: 500;
-        }
-
-        .news-link {
-            display: block;
-            color: #1C1C1E;
-            text-decoration: none;
-            padding: 8px 0;
-            border-bottom: 1px solid #E5E5EA;
-            letter-spacing: -0.1px;
-        }
-        
-        .news-link span {
-            color: #FF3B30;
-            font-weight: bold;
+        /* Container für ausfallsichere Live-Inhalte */
+        .live-container {
+            width: 100%;
+            height: 160px;
+            border: none;
+            overflow: hidden;
+            border-radius: 12px;
+            background: transparent;
         }
     </style>
 </head>
 <body>
 
-    <!-- Die neue rote Kennzeichnung für dein Beta-Produkt -->
     <div class="beta-badge">Beta Product</div>
 
-    <!-- Dein aktualisierter Titel und Hersteller -->
-    <h1>HomeViewOS</h1>
-    <div class="subtitle">Copster Lab</div>
+    <h1>HomeViewOS 28 Beta</h1>
+    <div class="subtitle">Apple</div>
 
     <table class="dashboard-table">
         <tr>
@@ -153,31 +132,23 @@
                 <div id="datum" class="date-display">Lädt...</div>
             </td>
 
-            <!-- Reihe 1 - Rechts: Wetter Döbling -->
+            <!-- Reihe 1 - Rechts: ECHTES LIVE WETTER DÖBLING -->
             <td class="card">
                 <h2>Wetter 1190 Wien</h2>
-                <div class="info-text-box" style="text-align: center; padding-top: 15px;">
-                    <span style="font-size: 52px; font-weight: 600; letter-spacing: -1px;">14°C</span><br>
-                    <span style="font-size: 18px; font-weight: 600; color: #48484A; display: inline-block; margin-top: 5px;">🌤️ Leicht bewölkt in Döbling</span>
-                    <p style="font-size: 12px; color: #8E8E93; margin-top: 18px; font-weight: 500;">Automatische Standardansicht</p>
-                </div>
+                <iframe class="live-container" src="https://wttr.in" scrolling="no"></iframe>
             </td>
         </tr>
         <tr>
-            <!-- Reihe 2 - Links: Schlagzeilen -->
+            <!-- Reihe 2 - Links: ECHTE LIVE NEWS SCHLAGZEILEN -->
             <td class="card">
                 <h2>Top News Österreich & Welt</h2>
-                <div class="info-text-box">
-                    <div class="news-link"><span>•</span> Aktuelle Nachrichten auf ORF.at live verfolgen</div>
-                    <div class="news-link"><span>•</span> Wien heute: Neuigkeiten aus den Bezirken</div>
-                    <div class="news-link"><span>•</span> Chronik: Was Österreich und die Welt bewegt</div>
-                </div>
+                <iframe class="live-container" src="https://rss.app" scrolling="yes"></iframe>
             </td>
 
-            <!-- Reihe 2 - Rechts: Automatisches Spruch-Archiv -->
+            <!-- Reihe 2 - Rechts: Automatisches 365-Tage Spruch-Archiv -->
             <td class="card" style="vertical-align: middle;">
                 <h2>Tagesfokus</h2>
-                <p id="zitat-text" style="font-style: italic; color: #2C2C2E; line-height: 1.5; font-size: 17px; margin: 0 10px; font-weight: 500; letter-spacing: -0.2px;">
+                <p id="zitat-text" style="font-style: italic; color: #2C2C2E; line-height: 1.5; font-size: 18px; margin: 0 10px; font-weight: 500; letter-spacing: -0.2px;">
                     "Der beste Weg, die Zukunft vorherzusagen, ist, sie selbst zu gestalten."
                 </p>
             </td>
@@ -230,8 +201,17 @@
             document.getElementById('zitat-text').innerHTML = zitate[index];
         }
 
+        // Live-Widgets alle 5 Minuten neu laden
+        function ladeLiveWidgetsNeu() {
+            var frames = document.getElementsByClassName('live-container');
+            for (var i = 0; i < frames.length; i++) {
+                frames[i].src = frames[i].src;
+            }
+        }
+
         // Intervalle aktivieren
         setInterval(aktualisiereUhr, 1000);
+        setInterval(ladeLiveWidgetsNeu, 300000);
         
         // Sofortstarts
         aktualisiereUhr();
