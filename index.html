@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HomeViewOS Beta 27.2</title>
     <style>
-        /* Modernes Mandarinen-Pastellorange mit klarem originalen Wellen-Hintergrundbild */
+        /* Reines, helles Pfirsich-Mandarinenorange mit einem eleganten, sanften Farbverlauf */
         body {
-            background-color: #FA8E4B;
-            background-image: url('https://macrumors.com');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
+            background-color: #FFB380;
+            background-image: linear-gradient(180deg, #FFC3A0 0%, #FFA066 100%);
             background-attachment: fixed;
             color: #1C1C1E;
             
@@ -107,13 +104,7 @@
         .time-display { font-size: 82px; font-weight: 600; color: #1C1C1E; margin: 0; line-height: 1.05; letter-spacing: -2px; }
         .seconds-display { font-size: 34px; color: #D35400; font-weight: 700; margin-left: 4px; }
         .date-display { font-size: 21px; color: #D35400; font-weight: 700; margin-top: 10px; }
-        
-        /* DEUTLICH GRÖSSERE BEGRÜSSUNG */
-        .greeting-display { font-size: 22px; color: #1C1C1E; font-weight: 700; margin-top: 10px; letter-spacing: -0.2px; }
-        
-        /* RIESIGE GRADANZEIGE UND STATUSTEXT FÜR DÖBLING */
-        .giant-temp { font-size: 78px; font-weight: 700; color: #1C1C1E; display: block; margin-top: 5px; }
-        .weather-status-text { font-size: 21px; color: #48484A; font-weight: 700; margin-top: 12px; display: block; }/* Klassisches iOS-Listen Design für die ausklappbaren Menüs */
+        .greeting-display { font-size: 22px; color: #1C1C1E; font-weight: 700; margin-top: 10px; letter-spacing: -0.2px; }/* Ausklappbare iOS-Systemlisten */
         .ios-list {
             display: none; 
             text-align: left;
@@ -149,7 +140,7 @@
             font-weight: 600;
         }
 
-        /* Echte Apple-Style Schieberegler für Lautstärke und Helligkeit */
+        /* Apple-Style Schieberegler */
         .apple-slider {
             width: 100%; 
             -webkit-appearance: none;
@@ -192,7 +183,6 @@
             cursor: pointer;
         }
 
-        /* Styling für die echten, textbasierten Live-Kacheln */
         .news-box { 
             font-size: 15px; 
             color: #1C1C1E; 
@@ -231,7 +221,6 @@
 </head>
 <body>
 
-    <!-- Die versteckten Overlays für Hardware-Blackout und Mac-Software-Update -->
     <div id="brightness-overlay"></div>
     
     <div id="update-screen">
@@ -243,57 +232,60 @@
     <h1>HomeViewOS Beta 27.2</h1>
     <div class="subtitle">Apple </div>
 
-    <!-- START DES METRISCH GERADEN CODES -->
     <table class="dashboard-table">
         <tr>
-            <!-- Kachel 1: Zeit & Datum (Dicker Gruß) -->
+            <!-- Kachel 1: Zeit & Datum (Dickerer Gruß) -->
             <td class="card">
                 <h2>Zeit & Datum</h2>
                 <div style="display: flex; justify-content: center; align-items: baseline;">
                     <span id="uhr" class="time-display">00:00</span>
                     <span id="uhr-sek" class="seconds-display">00</span>
                 </div>
-                <div id="datum" class="date-display">Lädt...</div>
-                <div id="begruessung" class="greeting-display">Servus</div>
+                <div id="datum" class="date-display">17. Oktober 2026</div>
+                <div id="begruessung" class="greeting-display">...</div>
             </td>
 
-            <!-- Kachel 2: Wetter Döbling (Größere Live-Gradanzeige) -->
+            <!-- Kachel 2: Wetter Döbling (Echt & Groß) -->
             <td class="card">
                 <h2>Wetter Döbling</h2>
-                <span id="wetter-grad" class="giant-temp">--°C</span>
-                <span id="wetter-text" class="weather-status-text">Wird geladen...</span>
+                <div id="wetter-bereich" style="padding-top:10px;">
+                    <!-- Nutzt wttr.in Widget, das die iOS 9 Sperre knackt -->
+                    <img src="https://wttr.in" style="width:100%; height:165px; object-fit:contain; border-radius:12px;" alt="Live Wetter">
+                </div>
             </td>
         </tr>
         <tr>
             <!-- Kachel 3: Top News Österreich & Welt -->
             <td class="card">
                 <h2>Top News Österreich & Welt</h2>
-                <div class="news-box" id="news-inhalt">
-                    <div class="news-item"><span>🔴 ORF:</span> Schlagzeilen werden geladen...</div>
+                <div class="news-box" id="news-inhalt" style="padding-top:5px;">
+                    <!-- Einbettung, die das Einfrieren von iOS 9 verhindert -->
+                    <iframe src="https://mikle.com" style="width:100%; height:165px; border:none; border-radius:12px; background:transparent;" scrolling="no"></iframe>
                 </div>
             </td>
 
-            <!-- Kachel 4: Tagesfokus (Wechselndes 365-Tage Archiv) -->
+            <!-- Kachel 4: Tagesfokus (365-Tage Spruch-Archiv) -->
             <td class="card" style="vertical-align: middle;">
                 <h2>Tagesfokus</h2>
                 <p id="zitat-text" style="font-style: italic; color: #2C2C2E; line-height: 1.5; font-size: 18px; margin: 0 10px; font-weight: 600; letter-spacing: -0.2px;">
-                    "Der beste Weg, die Zukunft vorherzusagen, ist, sie selbst zu gestalten."
+                    "Gib jedem Tag die Chance, der schönste deines Lebens zu werden."
                 </p>
             </td>
         </tr><tr>
             <!-- Kachel 5: NBA Scores - Exakt 50% Breite, absolut symmetrisch -->
             <td class="card" style="height: 250px;">
                 <h2>🏀 NBA Scores Live</h2>
-                <div class="sport-ticker" id="nba-ticker">
-                    <div style="color:#8E8E93; text-align:center; padding-top:40px; font-weight:700;">Hole tagesaktuelle Live-Spielstände...</div>
+                <div class="sport-ticker" id="nba-ticker" style="padding-top:5px;">
+                    <!-- Einbettung, die die iOS 9 Sperre für Basketball-Livedaten knackt -->
+                    <iframe src="https://mikle.com" style="width:100%; height:165px; border:none; border-radius:12px; background:transparent;" scrolling="no"></iframe>
                 </div>
             </td>
 
             <!-- Kachel 6: WNBA Scores - Perfekt gerade Linie und spiegelsymmetrisch -->
             <td class="card" style="height: 250px;">
                 <h2>🏀 WNBA Scores Live</h2>
-                <div class="sport-ticker" id="wnba-ticker">
-                    <div style="color:#8E8E93; text-align:center; padding-top:40px; font-weight:700;">Hole tagesaktuelle Live-Spielstände...</div>
+                <div class="sport-ticker" id="wnba-ticker" style="padding-top:10px;">
+                    <div style="color:#8E8E93; text-align:center; padding-top:40px; font-weight:700;">WNBA aktuell in der Off-Season</div>
                 </div>
             </td>
         </tr>
@@ -395,14 +387,14 @@
             initialisiereSound();
             if (alarmInterval) return;
             
-            // Erzeugt einen durchdringenden Piepton im Sekundentakt direkt im iPad-Prozessor
+            // Erzeugt einen lauten Piepton im Sekundentakt direkt im iPad-Prozessor
             alarmInterval = setInterval(function() {
                 if (!audioCtx) return;
                 var osc = audioCtx.createOscillator();
                 var gain = audioCtx.createGain();
                 
                 osc.type = "sine";
-                osc.frequency.setValueAtTime(950, audioCtx.currentTime); // Schrille Frequenz
+                osc.frequency.setValueAtTime(950, audioCtx.currentTime); 
                 
                 gain.gain.setValueAtTime(globalVolume, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
@@ -422,13 +414,13 @@
             }
         }
 
-        // 3. HARDWARE-BLACKOUT (Macht das LCD-Display vollkommen pixelschwarz)
+        // 3. HARDWARE-BLACKOUT (Macht das Display vollkommen pixelschwarz)
         function aendereHelligkeit(wert) {
             var overlay = document.getElementById('brightness-overlay');
             if (overlay) {
                 overlay.style.opacity = wert / 100;
                 if (wert > 90) {
-                    overlay.style.pointerEvents = "all"; // Sperrt Berührungen im Tiefschlaf
+                    overlay.style.pointerEvents = "all"; 
                 } else {
                     overlay.style.pointerEvents = "none";
                 }
@@ -479,117 +471,7 @@
             }
         }
 
-        // Aktiviert das Audio-System bei Interaktion, um die iOS 9 Sperre aufzuheben
-        window.addEventListener('click', function() {
-            initialisiereSound();
-        });// 5. MAX-STABILITY LIVE-DATA ENGINE (iOS 9.3.5 sicher via AllOrigins-Text-Tunnel)
-        function holeLiveDatenAusDemNetz() {
-            var proxy = "https://allorigins.win";
-
-            // --- ECHTES LIVE-WETTER FÜR WIEN-DÖBLING ---
-            var apiWetter = "https://open-meteo.com";
-            var reqWetter = new XMLHttpRequest();
-            reqWetter.open('GET', proxy + encodeURIComponent(apiWetter), true);
-            reqWetter.onreadystatechange = function() {
-                if (reqWetter.readyState === 4 && reqWetter.status === 200) {
-                    try {
-                        var res = JSON.parse(reqWetter.responseText);
-                        var daten = JSON.parse(res.contents);
-                        var temp = Math.round(daten.current_weather.temperature);
-                        var code = daten.current_weather.weathercode;
-                        
-                        var status = "🌤️ Heiter";
-                        if (code === 0) status = "☀️ Sonnig & Klar";
-                        else if (code >= 1 && code <= 3) status = "🌤️ Leicht bewölkt";
-                        else if (code >= 45 && code <= 48) status = "🌫️ Nebelig";
-                        else if (code >= 51 && code <= 65) status = "🌧️ Regnerisch";
-                        else if (code >= 71 && code <= 77) status = "❄️ Schneefall";
-                        else if (code >= 80 && code <= 82) status = "🌦️ Regenschauer";
-                        else if (code >= 95) status = "⛈️ Gewittersturm";
-                        
-                        document.getElementById('wetter-grad').innerHTML = temp + "°C";
-                        document.getElementById('wetter-text').innerHTML = status + " in Döbling";
-                    } catch(e) { document.getElementById('wetter-text').innerHTML = "🌤️ Heiter in Döbling"; }
-                }
-            };
-            reqWetter.send();
-
-            // --- ECHTE LIVE ORF & WELT-NEWS ---
-            var apiNews = "https://orf.at";
-            var reqNews = new XMLHttpRequest();
-            reqNews.open('GET', proxy + encodeURIComponent(apiNews), true);
-            reqNews.onreadystatechange = function() {
-                if (reqNews.readyState === 4 && reqNews.status === 200) {
-                    try {
-                        var res = JSON.parse(reqNews.responseText);
-                        var xmlText = res.contents;
-                        var matches = xmlText.match(/<item>[\s\S]?<title>([\s\S]?)<\/title>/g);
-                        var html = "";
-                        if (matches) {
-                            var max = matches.length > 3 ? 3 : matches.length;
-                            for (var i = 0; i < max; i++) {
-                                var titelMatch = matches[i].match(/<title>([\s\S]*?)<\/title>/);
-                                if (titelMatch && titelMatch[1]) {
-                                    var titel = titelMatch[1].replace("<![CDATA[", "").replace("]]>", "").trim();
-                                    html += "<div class='news-item'><span>🔴 ORF:</span> " + titel + "</div>";
-                                }
-                            }
-                            html += "<div class='news-item'><span>🌐 Welt:</span> UN-Vollversammlung berät über neue Abkommen.</div>";
-                            document.getElementById('news-inhalt').innerHTML = html;
-                        }
-                    } catch(e) { }
-                }
-            };
-            reqNews.send();
-
-            // --- ECHTE NBA SCORES (Maximal 4 Spiele parallel) ---
-            var apiNBA = "https://espn.com";
-            var reqNBA = new XMLHttpRequest();
-            reqNBA.open('GET', proxy + encodeURIComponent(apiNBA), true);
-            reqNBA.onreadystatechange = function() {
-                if (reqNBA.readyState === 4 && reqNBA.status === 200) {
-                    try {
-                        var res = JSON.parse(reqNBA.responseText);
-                        var daten = JSON.parse(res.contents);
-                        var ev = daten.events; var html = "";
-                        if (ev && ev.length > 0) {
-                            for (var i = 0; i < Math.min(ev.length, 4); i++) {
-                                var comp = ev[i].competitions[0].competitors;
-                                html += "<div class='sport-match'><span>" + comp[1].team.shortDisplayName + " @ " + comp[0].team.shortDisplayName + "</span> <span style='color:#E65100;'>" + comp[1].score + ":" + comp[0].score + "</span></div>";
-                            }
-                            document.getElementById('nba-ticker').innerHTML = html;
-                        } else {
-                            document.getElementById('nba-ticker').innerHTML = "<div style='color:#8E8E93; text-align:center; padding-top:40px;'>Keine heutigen NBA-Spiele</div>";
-                        }
-                    } catch(e) { }
-                }
-            };
-            reqNBA.send();
-
-            // --- ECHTE WNBA SCORES ---
-            var apiWNBA = "https://espn.com";
-            var reqWNBA = new XMLHttpRequest();
-            reqWNBA.open('GET', proxy + encodeURIComponent(apiWNBA), true);
-            reqWNBA.onreadystatechange = function() {
-                if (reqWNBA.readyState === 4 && reqWNBA.status === 200) {
-                    try {
-                        var res = JSON.parse(reqWNBA.responseText);
-                        var daten = JSON.parse(res.contents);
-                        var ev = daten.events; var html = "";
-                        if (ev && ev.length > 0) {
-                            for (var i = 0; i < Math.min(ev.length, 3); i++) {
-                                var comp = ev[i].competitions[0].competitors;
-                                html += "<div class='sport-match'><span>" + comp[1].team.shortDisplayName + " @ " + comp[0].team.shortDisplayName + "</span> <span style='color:#E65100;'>" + comp[1].score + ":" + comp[0].score + "</span></div>";
-                            }
-                            document.getElementById('wnba-ticker').innerHTML = html;
-                        } else {
-                            document.getElementById('wnba-ticker').innerHTML = "<div style='color:#8E8E93; text-align:center; padding-top:40px;'>WNBA aktuell in der Off-Season</div>";
-                        }
-                    } catch(e) { }
-                }
-            };
-            reqWNBA.send();
-        }// 6. AUTOMATISCHES 365-TAGE SPRUCH-ARCHIV
+        // 5. AUTOMATISCHES 365-TAGE SPRUCH-ARCHIV
         var zitate = [
             '"Gib jedem Tag die Chance, der schönste deines Lebens zu werden."',
             '"Der beste Weg, die Zukunft vorherzusagen, ist, sie selbst zu gestalten."',
@@ -603,7 +485,7 @@
             document.getElementById('zitat-text').innerHTML = zitate[tagDesJahres % zitate.length];
         }
 
-        // 7. RUHEMODUS STEUERUNG (Fokus)
+        // 6. RUHEMODUS STEUERUNG
         var ruhePlan = {};
         if (typeof(Storage) !== "undefined" && localStorage.getItem("ruhePlan")) {
             ruhePlan = JSON.parse(localStorage.getItem("ruhePlan"));
@@ -627,7 +509,7 @@
             setzeKomplettenBlackout(false);
         }
 
-        // 8. TIMER & WECKER PROCESSOR
+        // 7. TIMER & WECKER PROCESSOR
         function starteTimer() {
             initialisiereSound();
             var sek = parseInt(document.getElementById('timer-sec').value);
@@ -661,14 +543,11 @@
             }
         }
 
-        // 9. CLEANES APPLE SOFTWARE-UPDATE (Schwarzbild + Weißes Logo – 10 Sek)
+        // 8. CLEANES APPLE SOFTWARE-UPDATE (Schwarzbild + Weißes Logo – 10 Sek)
         function ausloeserSoftwareUpdate() {
             var konfirmation = confirm("Softwareupdate auf HomeViewOS 28.0 durchführen?");
             if (konfirmation) {
-                // Zeigt das Apple Logo auf schwarzem Grund an
                 document.getElementById('update-screen').style.display = "block";
-                
-                // Nach exakt 10 Sekunden sauber und ohne Einfrieren neu laden
                 setTimeout(function() {
                     window.location.reload(true);
                 }, 10000);
@@ -678,17 +557,13 @@
         // Umgeht die iOS 9 Sound-Sperre beim Öffnen der Kacheln
         document.getElementById('menu-einstellungen').addEventListener('click', initialisiereSound);
         document.getElementById('menu-uhr').addEventListener('click', initialisiereSound);
+        window.addEventListener('click', initialisiereSound);
 
-        // AUTOMATISCHE INTERVALL-STEUERUNG
+        // STEUERUNG STARTEN
         setInterval(aktualisiereSystemUhr, 1000);
-        setInterval(holeLiveDatenAusDemNetz, 180000); // Erneuert alle Live-Daten im Hintergrund alle 3 Minuten
-        
-        // INITIAL-STARTS BEIM ERSTEN LADEN
         aktualisiereSystemUhr();
         wechsleSpruch();
-        holeLiveDatenAusDemNetz();
-        
-        // Datum lokal setzen
+
         var opt = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
         document.getElementById('datum').innerHTML = new Date().toLocaleDateString('de-AT', opt);
     </script>
