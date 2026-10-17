@@ -11,7 +11,7 @@
     
     <title>HomeViewOS 27.0 Beta</title>
     <style>
-        /* Reines Pfirsich-Mandarinenorange mit dem feinen, weißen Linien-Raster-Muster */
+        /* Schönes Pfirsich-Mandarinenorange mit feinem, weißen Linien-Raster-Muster */
         body {
             background-color: #FFB380;
             background-image: 
@@ -22,15 +22,14 @@
             background-attachment: fixed;
             color: #1C1C1E;
             
-            /* Apple San Francisco Systemschriftart-Hierarchie für iPad Air & Mini */
+            /* Apple San Francisco Systemschriftart-Hierarchie */
             font-family: -apple-system-headline, -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
             margin: 0;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Rote Beta-Produktplakette oben rechts */
         .beta-badge {
             position: absolute;
             top: 20px; right: 25px;
@@ -46,49 +45,48 @@
         }
 
         h1 { 
-            font-size: 48px; font-weight: 700; margin-bottom: 2px; color: #1C1C1E; letter-spacing: -0.5px;
+            font-size: 52px; font-weight: 700; margin-bottom: 2px; color: #1C1C1E; letter-spacing: -0.5px;
             text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
         }
         
         .subtitle { 
-            font-size: 26px; color: #1C1C1E; margin-bottom: 25px; font-weight: 600; letter-spacing: 0.5px;
+            font-size: 28px; color: #1C1C1E; margin-bottom: 35px; font-weight: 600; letter-spacing: 0.5px;
             text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
         }
 
-        /* Das mathematische Tabellen-Layout erzwingt absolute Symmetrie auf iOS 9 */
+        /* Das mathematische Raster erzwingt absolute Symmetrie für genau 4 Kacheln */
         .dashboard-table {
-            width: 100%; max-width: 850px;
+            width: 100%; max-width: 900px;
             margin: 0 auto;
-            border-collapse: separate; border-spacing: 15px;
+            border-collapse: separate; border-spacing: 18px;
             table-layout: fixed;
         }
 
-        /* Milchglas-Kacheln mit transluzentem Apple-Effekt */
+        /* Schneeweiße Milchglas-Kacheln */
         .card {
             background-color: rgba(255, 255, 255, 0.94);
-            border-radius: 28px; 
-            padding: 22px;
+            border-radius: 30px; 
+            padding: 24px;
             text-align: center; 
             vertical-align: top;
             width: 50%;
-            height: 275px; 
+            height: 290px; /* Perfekte Höhe für das 4er-Raster */
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.7);
             box-sizing: border-box;
             overflow: hidden;
         }
 
-        /* Massive Kachel-Überschriften */
+        /* Massive Apple-Style Überschriften */
         .card h2 {
-            font-size: 24px; margin-top: 0; margin-bottom: 12px;
+            font-size: 25px; margin-top: 0; margin-bottom: 15px;
             color: #D35400; font-weight: 900; text-transform: uppercase;
             letter-spacing: 1.5px;
         }
 
-        /* Live-Container-Stile für die unblockierbaren Feeds */
         .live-frame {
             width: 100%;
-            height: 175px;
+            height: 195px;
             border: none;
             border-radius: 14px;
             background: transparent;
@@ -102,48 +100,34 @@
     <h1>HomeViewOS 27.0 Beta</h1>
     <div class="subtitle">Apple </div>
 
-    <table class="dashboard-table"><tr>
-            <!-- Kachel 1: Echte Live-Uhrzeit & Datum (Via hochkompatiblem Widget-Streaming) -->
+    <table class="dashboard-table">
+        <tr>
+            <!-- Kachel 1: Zeit & Datum (Hochkompatibles Live-Streaming-Widget) -->
             <td class="card">
                 <h2>Zeit & Datum</h2>
-                <iframe src="https://timeanddate.de" class="live-frame" style="height: 165px; margin-top: 5px;"></iframe>
+                <iframe src="https://zeitverschiebung.net" class="live-frame" style="height: 190px; margin-top: -5px;" scrolling="no"></iframe>
             </td>
 
-            <!-- Kachel 2: Wetter Döbling (Direktes Bild-Streaming ohne JavaScript-Sperre) -->
+            <!-- Kachel 2: Wetter Döbling (Direktes, unblockierbares Bild) -->
             <td class="card">
                 <h2>Wetter Döbling</h2>
                 <div style="padding-top: 5px;">
-                    <img src="https://wttr.in" style="width:100%; height:165px; object-fit:contain; border-radius:12px;" alt="Live Wetter Wien Döbling">
+                    <img src="https://wttr.in" style="width:100%; height:180px; object-fit:contain; border-radius:12px;" alt="Live Wetter">
                 </div>
             </td>
         </tr><tr>
-            <!-- Kachel 3: Top News Österreich & Welt (Echter Live-ORF-Textticker) -->
+            <!-- Kachel 3: Top News Österreich & Welt (Kompaktes RSS-Listen-Widget) -->
             <td class="card">
                 <h2>Top News Österreich & Welt</h2>
-                <!-- Lädt die originale, schlanke ORF-Schlagzeilen-Ansicht absolut unblockierbar direkt in das Feld -->
-                <iframe src="https://orf.at" class="live-frame" style="height: 175px;"></iframe>
+                <!-- Schreibt die echten ORF-Meldungen sauber als kurze, lesbare Liste direkt in das Feld -->
+                <iframe src="https://rss-script.de" class="live-frame" style="height: 195px;" scrolling="no"></iframe>
             </td>
 
-            <!-- Kachel 4: Tagesfokus (Fester, klassischer Apple-Motivationsspruch) -->
+            <!-- Kachel 4: Tagesfokus (Großer, fetter Apple-Spruch) -->
             <td class="card" style="vertical-align: middle;">
                 <h2>Tagesfokus</h2>
-                <p style="font-style: italic; color: #2C2C2E; line-height: 1.5; font-size: 20px; margin: 0 10px; font-weight: 700; letter-spacing: -0.2px; padding-top: 20px;">
+                <p style="font-style: italic; color: #2C2C2E; line-height: 1.5; font-size: 22px; margin: 0 10px; font-weight: 700; letter-spacing: -0.2px; padding-top: 25px;">
                     "Gib jedem Tag die Chance, der schönste deines Lebens zu werden."
-                </p>
-            </td>
-        </tr><tr>
-            <!-- Kachel 5: NBA Scores Live (Echte Livedaten & aktuelle Spielstände von Yahoo Sports) -->
-            <td class="card">
-                <h2>🏀 NBA Scores Live</h2>
-                <!-- Bettet den originalen mobilen Basketball-Live-Ticker perfekt und unblockierbar für iOS 9 ein -->
-                <iframe src="https://eurosport.com" class="live-frame" style="height: 175px;"></iframe>
-            </td>
-
-            <!-- Kachel 6: WNBA Scores Live -->
-            <td class="card" style="vertical-align: middle;">
-                <h2>🏀 WNBA Scores Live</h2>
-                <p style="color:#8E8E93; text-align:center; font-size: 18px; font-weight:700; padding-top: 40px;">
-                    WNBA aktuell in der Off-Season
                 </p>
             </td>
         </tr>
