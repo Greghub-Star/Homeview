@@ -1,271 +1,331 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Home View OS 27</title>
-    <style>
-        :root {
-            --bg-color: #e5e2db; /* Warmes Pastell-Beige/Grau */
-            --card-bg: #f5f3ef; /* Hellere Kachel-Farbe */
-            --accent-red: #ff3b30;
-            --text-main: #4a4a4a; 
-            --text-dim: #8e8e8e;
-        }
+<meta charset="UTF-8">
+<title>Apple Home View – iPad mini (iOS 9)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<style>
+/* ---------- Hintergrund (wechselt stündlich) ---------- */
+body{
+  margin:0;padding:0;
+  font-family:-apple-system,Helvetica,Arial,sans-serif;
+  background-size:cover;
+  background-position:center;
+  transition:background-image .5s ease-in-out;
+}
 
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: -apple-system, Helvetica, Arial, sans-serif;
-            overflow: hidden;
-        }
+/* ---------- Grundlayout ---------- */
+#dashboard{display:flex;height:100vh;overflow:hidden;background:rgba(255,255,255,0.6);}
 
-        /* STATUS BAR (Simulation oben rechts) */
-        .status-bar {
-            display: flex;
-            justify-content: flex-end;
-            padding: 5px 20px;
-            font-size: 12px;
-            font-weight: bold;
-            color: var(--text-dim);
-        }
+/* Live‑Center (links) */
+#live-center{
+  flex:1 1 40%;
+  padding:12px;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  background:rgba(255,255,255,0.8);
+}
 
-        .dashboard {
-            display: flex;
-            height: calc(100vh - 30px);
-            padding: 20px;
-            box-sizing: border-box;
-            gap: 30px;
-        }
+/* App‑Grid (rechts) */
+#app-grid{
+  flex:1 1 60%;
+  padding:12px;
+  box-sizing:border-box;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-gap:8px;
+  background:rgba(255,255,255,0.8);
+}
 
-        /* LINKS: DASHBOARD INFOS */
-        .info-panel {
-            flex: 1.2;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+/* Widgets */
+.status-bar{font-size:13px;color:#555;display:flex;justify-content:space-between;}
+.clock{font-size:48px;font-weight:300;margin-top:12px;color:#ff6f00;}
+.date{font-size:18px;color:#555;}
+.greeting{font-size:24px;color:#ff1744;margin-top:8px;}
+.weather{margin-top:12px;font-size:16px;color:#00695c;}
+.results{margin-top:12px;}
+.results h4{margin:4px 0 2px;font-size:14px;color:#444;}
+.results ul{margin:0;padding:0;list-style:none;font-size:14px;}
+.results li{margin:2px 0;}
 
-        #clock {
-            font-size: 120px;
-            font-weight: 200;
-            margin: 0;
-            color: var(--text-main);
-            line-height: 1;
-        }
+/* App‑Tiles */
+.app{
+  background:#fff;
+  border-radius:8px;
+  box-shadow:0 2px 4px rgba(0,0,0,0.1);
+  text-align:center;
+  padding:12px 0;
+  cursor:pointer;
+  user-select:none;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.app img{width:48px;height:48px;margin:0 auto 6px;}
+.app span{font-size:13px;display:block;word-break:break-word;}
+.app:hover{background:#ffecd1;}
 
-        #date {
-            font-size: 24px;
-            color: var(--text-dim);
-            margin-bottom: 30px;
-        }
+/* Modale (News) */
+.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;}
+.modal .content{background:#fff;width:90%;max-width:400px;max-height:80%;overflow:auto;border-radius:8px;padding:12px;}
+.modal h3{margin-top:0;}
+.close{position:absolute;top:6px;right:12px;font-size:18px;cursor:pointer;}
 
-        .live-data {
-            margin-bottom: 20px;
-        }
-
-        .label {
-            color: var(--accent-red);
-            font-size: 13px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        #temp {
-            font-size: 70px;
-            font-weight: 300;
-            margin: 0;
-        }
-
-        #sports {
-            font-size: 20px;
-            margin-top: 5px;
-        }
-
-        #greeting {
-            font-size: 30px;
-            color: var(--accent-red);
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        /* RECHTS: APP KACHELN */
-        .app-grid {
-            flex: 1;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            align-content: center;
-        }
-
-        .app-tile {
-            background: var(--card-bg);
-            width: calc(50% - 10px);
-            height: 140px;
-            border-radius: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border: 1px solid #ddd;
-            cursor: pointer;
-        }
-
-        .app-tile .icon { font-size: 40px; margin-bottom: 10px; }
-        .app-tile .name { font-size: 16px; color: var(--text-dim); }
-
-        /* OVERLAYS FÜR INTERNE APPS */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #fff;
-            color: #000;
-            z-index: 1000;
-            flex-direction: column;
-        }
-
-        .overlay-header {
-            padding: 40px 20px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #eee;
-        }
-
-        .close-btn { color: #007AFF; font-weight: bold; cursor: pointer; }
-        .app-content { flex: 1; padding: 20px; overflow-y: auto; }
-    </style>
+/* Responsive für iPad mini */
+@media (max-width:768px){
+  #dashboard{flex-direction:column;}
+  #live-center{flex-basis:30%;}
+  #app-grid{flex-basis:70%;grid-template-columns:repeat(2,1fr);}
+}
+</style>
 </head>
 <body>
 
+<div id="dashboard">
+  <!-- ===================== LIVE‑CENTER ===================== -->
+  <div id="live-center">
     <div class="status-bar">
-        <span id="wifi-sim">📶 WLAN</span> &nbsp; <span id="bat-sim">🔋 85%</span>
+      <div>WLAN ▂▂▂▂▂</div>
+      <div id="battery">🔋 87%</div>
     </div>
 
-    <div class="dashboard">
-        <div class="info-panel">
-            <div id="clock">00:00</div>
-            <div id="date">Lade...</div>
+    <div class="clock" id="clock">--:--</div>
+    <div class="date" id="date">--.--.----</div>
+    <div class="greeting" id="greeting">--</div>
 
-            <div class="live-data">
-                <div class="label">Wetter</div>
-                <div id="temp">--°C</div>
-                <div id="weather-desc">Lade...</div>
-            </div>
+    <div class="weather" id="weather">Wetter wird geladen…</div>
 
-            <div class="live-data">
-                <div class="label">NBA / WNBA</div>
-                <div id="sports">Lade Ergebnisse...</div>
-            </div>
+    <div class="results">
+      <h4>NBA</h4>
+      <ul id="nba-results"><li>Lade…</li></ul>
 
-            <div id="greeting">Lade...</div>
-        </div>
+      <h4>WNBA</h4>
+      <ul id="wnba-results"><li>Keine Daten (API nicht verfügbar)</li></ul>
+    </div>
+  </div>
 
-        <div class="app-grid">
-            <!-- Interne Apps (Overlays) -->
-            <div class="app-tile" onclick="openApp('app-news')">
-                <div class="icon">📰</div><div class="name">News</div>
-            </div>
-            <div class="app-tile" onclick="openApp('app-settings')">
-                <div class="icon">⚙️</div><div class="name">Settings</div>
-            </div>
-            <div class="app-tile" onclick="openApp('app-photos')">
-                <div class="icon">🖼️</div><div class="name">Fotos</div>
-            </div>
-            <div class="app-tile" onclick="openApp('app-clock')">
-                <div class="icon">⏰</div><div class="name">Uhr</div>
-            </div>
-            
-            <!-- Externe Apps (Öffnen neue Tabs) -->
-            <div class="app-tile" onclick="window.open('https://music.amazon.de', '_blank')">
-                <div class="icon">🎵</div><div class="name">Music</div>
-            </div>
-            <div class="app-tile" onclick="window.open('https://chatgpt.com', '_blank')">
-                <div class="icon">🤖</div><div class="name">ChatGPT</div>
-            </div>
-        </div>
+  <!-- ===================== APP‑GRID ===================== -->
+  <div id="app-grid">
+    <div class="app" onclick="openLink('https://music.amazon.com')">
+      <img src="https://i.imgur.com/oehIdop.png" alt="Music">
+      <span>Music</span>
     </div>
 
-    <!-- OVERLAYS -->
-    <div id="app-news" class="overlay">
-        <div class="overlay-header"><h2>News</h2><div class="close-btn" onclick="closeApp('app-news')">Fertig</div></div>
-        <div class="app-content" id="news-text">Lade News...</div>
+    <div class="app" onclick="openLink('https://chat.openai.com')">
+      <img src="https://i.imgur.com/UkKxgP5.png" alt="ChatGPT">
+      <span>ChatGPT</span>
     </div>
 
-    <div id="app-settings" class="overlay">
-        <div class="overlay-header"><h2>Einstellungen</h2><div class="close-btn" onclick="closeApp('app-settings')">Fertig</div></div>
-        <div class="app-content">
-            <p><strong style="font-size:20px">Gregory Cobe Leibenfrost</strong><br>Gregorycobe@icloud.com</p>
-            <hr>
-            <p>Version: Home View OS 27</p>
-            <p>Producer: Cobster Labs</p>
-        </div>
+    <div class="app" onclick="showSettings()">
+      <img src="https://i.imgur.com/YXnFfhC.png" alt="Settings">
+      <span>Einstellungen</span>
     </div>
 
-    <div id="app-photos" class="overlay">
-        <div class="overlay-header"><h2>Fotos</h2><div class="close-btn" onclick="closeApp('app-photos')">Fertig</div></div>
-        <div class="app-content" style="text-align:center">
-            <input type="file" accept="image/*" onchange="previewPhoto(event)">
-            <div id="photo-preview" style="margin-top:20px"></div>
-        </div>
+    <div class="app" onclick="showClockApp()">
+      <img src="https://i.imgur.com/2YdX1zS.png" alt="Clock">
+      <span>Uhr</span>
     </div>
 
-    <div id="app-clock" class="overlay">
-        <div class="overlay-header"><h2>Uhr</h2><div class="close-btn" onclick="closeApp('app-clock')">Fertig</div></div>
-        <div class="app-content" style="text-align:center; font-size:30px">
-            ⏰ Alarm: 07:00 <br><br> ⏱️ Stoppuhr: 00:00
-        </div>
+    <div class="app" onclick="showNews()">
+      <img src="https://i.imgur.com/tt61zBK.png" alt="News">
+      <span>News</span>
     </div>
+  </div>
+</div>
 
-    <script>
-        function updateClock() {
-            const now = new Date();
-            // Uhrzeit
-            document.getElementById('clock').innerText = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-            // Datum
-            document.getElementById('date').innerText = now.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' });
-            
-            // Gruß
-            let g = "Guten Abend!";
-            if(now.getHours() < 11) g = "Guten Morgen!";
-            else if(now.getHours() < 18) g = "Schönen Tag gewünscht!";
-            document.getElementById('greeting').innerText = g;
+<!-- ===================== MODAL (News) ===================== -->
+<div id="news-modal" class="modal"><div class="content"><span class="close" onclick="hideModal('news-modal')">&times;</span>
+<h3>Top‑Headlines</h3>
+<ul id="news-list"><li>Lade…</li></ul>
+</div></div>
 
-            // Akku Sim (ändert sich leicht alle Minuten)
-            let bat = 85 - Math.floor(now.getMinutes() / 10);
-            document.getElementById('bat-sim').innerText = "🔋 " + bat + "%";
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
+<div id="settings-modal" class="modal"><div class="content"><span class="close" onclick="hideModal('settings-modal')">&times;</span>
+<h3>Einstellungen</h3>
+<p><strong>Name:</strong> Gregory Cobe Leibenfrost</p>
+<p><strong>E‑Mail:</strong> <a href="mailto:Gregorycobe@icloud.com">Gregorycobe@icloud.com</a></p>
+<p><strong>Hersteller:</strong> Cobster Labs</p>
+<p><strong>Version:</strong> Home View OS 27</p>
+</div></div>
 
-        function loadData() {
-            document.getElementById('temp').innerText = "14°C";
-            document.getElementById('weather-desc').innerText = "☁️ Bewölkt";
-            document.getElementById('sports').innerHTML = "Lakers 110 - 105 Celtics<br>Fever 88 - 82 Liberty";
-            document.getElementById('news-text').innerHTML = "• Willkommen im Home View!<br>• System läuft auf iOS 9.3.5<br>• Cobster Labs News aktiv.";
-        }
-        loadData();
+<div id="clock-modal" class="modal"><div class="content"><span class="close" onclick="hideModal('clock-modal')">&times;</span>
+<h3>Uhr</h3>
+<div>
+<label>Alarm (hh:mm): <input type="time" id="alarm-time"></label>
+<button onclick="setAlarm()">Setzen</button>
+</div>
+<div style="margin-top:10px;">
+<button onclick="startStopwatch()">Stoppuhr starten</button>
+<button onclick="resetStopwatch()">Zurücksetzen</button>
+<div id="stopwatch-display" style="margin-top:6px;font-size:18px;">0.0</div>
+</div>
+</div></div>
 
-        function openApp(id) { 
-            document.getElementById(id).style.display = 'flex'; 
-        }
-        function closeApp(id) { 
-            document.getElementById(id).style.display = 'none'; 
-        }
-        function previewPhoto(event) {
-            const reader = new FileReader();
-            reader.onload = function(){
-                const img = document.createElement('img');
-                img.src = reader.result; img.style.maxWidth = '100%'; img.style.borderRadius = '10px';
-                document.getElementById('photo-preview').innerHTML = '';
-                document.getElementById('photo-preview').appendChild(img);
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
-    </script>
+<script>
+/* ---------- Hilfsfunktion ---------- */
+function $(id){return document.getElementById(id);}
+
+/* ---------- Hintergrund (stündlich wechseln) ----------
+   Wir nutzen 4 kostenlose Unsplash‑Bilder von NYC‑Sunset.
+   Die URLs werden jede Stunde neu gesetzt.
+*/
+const SKYLINE_URLS = [
+  'https://images.unsplash.com/photo-1506744038136-46273834b3fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080', // 0‑14 Uhr
+  'https://images.unsplash.com/photo-1521609779609-5495abe7c592?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080', // 15‑23 Uhr
+];
+function setBackground(){
+  const hour = new Date().getHours();
+  const idx = hour < 15 ? 0 : 1;
+  document.body.style.backgroundImage = url('${SKYLINE_URLS[idx]}');
+}
+setBackground();               // sofort
+setInterval(setBackground,60*60*1000); // jede Stunde
+
+/* ---------- Uhr, Datum & Begrüßung ----------
+   Wird jede Sekunde aktualisiert; das Datum bleibt täglich gleich.
+*/
+function updateClock(){
+  const now = new Date();
+  const h = now.getHours().toString().padStart(2,'0');
+  const m = now.getMinutes().toString().padStart(2,'0');
+  $('clock').textContent = ${h}:${m};
+
+  const opts = {weekday:'short', day:'numeric', month:'short', year:'numeric'};
+  $('date').textContent = now.toLocaleDateString('de-DE', opts);
+
+  let greet='Hallo';
+  if (now.getHours()<12) greet='Guten Morgen';
+  else if (now.getHours()<18) greet='Guten Nachmittag';
+  else greet='Guten Abend';
+  $('greeting').textContent = greet;
+}
+window.addEventListener('load',()=>{
+  updateClock();
+  setInterval(updateClock,1000);
+});
+
+/* ---------- Wetter (OpenWeatherMap) ----------
+   Platzhalter‑Daten, falls kein API‑Key vorhanden ist.
+*/
+const WEATHER_KEY = 'YOUR_OPENWEATHER_API_KEY'; // ← eintragen oder leer lassen
+function fetchWeather(){
+  if (!WEATHER_KEY || WEATHER_KEY==='YOUR_OPENWEATHER_API_KEY'){
+    // Beispiel‑Wetter
+    $('weather').textContent='22°C – leicht bewölkt (Beispiel)';
+    return;
+  }
+  const url = https://api.openweathermap.org/data/2.5/weather?q=Berlin&units=metric&lang=de&appid=${WEATHER_KEY};
+  fetch(url)
+    .then(r=>r.json())
+    .then(d=>{
+      const temp = Math.round(d.main.temp);
+      const desc = d.weather[0].description;
+      $('weather').textContent = ${temp}°C – ${desc};
+    })
+    .catch(()=>{$('weather').textContent='Wetter nicht verfügbar';});
+}
+fetchWeather();
+setInterval(fetchWeather,60*60*1000);
+
+/* ---------- NBA‑Ergebnisse (balldontlie) ----------
+   Fallback‑Beispiel, falls die API nicht erreichbar ist.
+*/
+function loadNBA(){
+  const url = https://www.balldontlie.io/api/v1/games?per_page=5&postseason=false&start_date=${new Date().toISOString().slice(0,10)};
+  fetch(url)
+    .then(r=>r.json())
+    .then(d=>{
+      const html = d.data.map(g=>{
+        const home = g.home_team.abbreviation;
+        const away = g.visitor_team.abbreviation;
+        const score = ${g.home_team_score}-${g.visitor_team_score};
+        return <li>${away} @ ${home}: ${score}</li>;
+      }).join('') || '<li>Keine Spiele heute</li>';
+      $('nba-results').innerHTML = html;
+    })
+    .catch(()=>{
+      // Beispiel‑Ergebnisse
+      $('nba-results').innerHTML = `
+        <li>Lakers @ Celtics: 112‑107</li>
+        <li>Warriors @ Nets: 98‑101</li>
+      `;
+    });
+}
+loadNBA();
+setInterval(loadNBA,60*60*1000);
+
+/* ---------- WNBA ----------
+   Keine kostenlose API – fester Hinweis.
+*/
+$('wnba-results').innerHTML='<li>Keine öffentliche API – kein Ergebnis</li>';
+
+/* ---------- News (NewsAPI) ----------
+   Wenn kein Key, zeigen wir statische Beispiel‑Headlines.
+*/
+const NEWS_KEY = 'YOUR_NEWSAPI_KEY'; // ← eintragen oder leer lassen
+function loadNews(){
+  if (!NEWS_KEY || NEWS_KEY==='YOUR_NEWSAPI_KEY'){
+    $('news-list').innerHTML = `
+      <li>Beispiel‑News 1 – <a href="#" target="_blank">Mehr</a></li>
+      <li>Beispiel‑News 2 – <a href="#" target="_blank">Mehr</a></li>
+      <li>Beispiel‑News 3 – <a href="#" target="_blank">Mehr</a></li>
+    `;
+    return;
+  }
+  const url = https://newsapi.org/v2/top-headlines?country=de&pageSize=5&apiKey=${NEWS_KEY};
+  fetch(url)
+    .then(r=>r.json())
+    .then(d=>{
+      const html = d.articles.map(a=><li><a href="${a.url}" target="_blank">${a.title}</a></li>).join('');
+      $('news-list').innerHTML = html;
+    })
+    .catch(()=>{$('news-list').innerHTML='<li>News nicht erreichbar</li>';});
+}
+loadNews();
+setInterval(loadNews,60*60*1000);
+
+/* ---------- Modale ----------
+   Show / Hide */
+function showModal(id){$(id).style.display='flex';}
+function hideModal(id){$(id).style.display='none';}
+function showSettings(){showModal('settings-modal');}
+function showNews(){showModal('news-modal');}
+function showClockApp(){showModal('clock-modal');}
+
+/* ---------- Externe Links ----------
+   Öffnet in neuem Tab – iOS 9 unterstützt das. */
+function openLink(url){window.open(url,'_blank');}
+
+/* ---------- Clock‑App (Alarm + Stoppuhr) ---------- */
+let alarmTO;
+function setAlarm(){
+  const t = $('alarm-time').value;
+  if(!t){alert('Bitte Zeit wählen');return;}
+  const [h,m]=t.split(':').map(Number);
+  const now = new Date();
+  const alarm = new Date(now);
+  alarm.setHours(h,m,0,0);
+  if(alarm<=now) alarm.setDate(alarm.getDate()+1);
+  const diff = alarm-now;
+  clearTimeout(alarmTO);
+  alarmTO = setTimeout(()=>alert('⏰ Alarm!'),diff);
+  alert('Alarm gestellt');
+}
+let swInt, swStart;
+function startStopwatch(){
+  if(swInt) return;
+  swStart = Date.now();
+  swInt = setInterval(()=>{
+    const sec = ((Date.now()-swStart)/1000).toFixed(1);
+    $('stopwatch-display').textContent = sec;
+  },100);
+}
+function resetStopwatch(){
+  clearInterval(swInt);
+  swInt = null;
+  $('stopwatch-display').textContent='0.0';
+}
+</script>
 </body>
 </html>
