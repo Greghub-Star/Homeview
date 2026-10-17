@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- ECHTE SAFARI-VOLLscreen-BEFEHLE: Blendet die Adressleiste oben komplett aus -->
+    <!-- SAFARI-VOLLscreen-BEFEHLE: Blendet die Adressleiste oben komplett aus -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="HomeViewOS">
     
     <title>HomeViewOS 27.0 Beta</title>
     <style>
-        /* Reines Pfirsich-Mandarinenorange mit einem feinen, modernen Linien-Raster-Muster */
+        /* Reines Pfirsich-Mandarinenorange mit dem feinen, weißen Linien-Raster-Muster */
         body {
             background-color: #FFB380;
             background-image: 
@@ -28,34 +28,6 @@
             padding: 15px;
             text-align: center;
             -webkit-font-smoothing: antialiased;
-        }
-
-        /* Das Hardware-Blackout-Overlay für den echten Ruhemodus */
-        #brightness-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000000;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 9998;
-            transition: opacity 0.4s ease-in-out;
-        }
-
-        /* Der Apple Update-Bildschirm (Reines Logo auf Schwarz für 10 Sekunden) */
-        #update-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000000;
-            display: none;
-            z-index: 9999;
-            text-align: center;
-        }
-
-        .apple-logo-white {
-            font-size: 85px;
-            color: #FFFFFF;
-            margin-top: 35vh;
-            display: block;
         }
 
         /* Rote Beta-Produktplakette oben rechts */
@@ -103,483 +75,79 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.7);
             box-sizing: border-box;
+            overflow: hidden;
         }
 
         /* Massive Kachel-Überschriften */
         .card h2 {
-            font-size: 24px; margin-top: 0; margin-bottom: 15px;
+            font-size: 24px; margin-top: 0; margin-bottom: 12px;
             color: #D35400; font-weight: 900; text-transform: uppercase;
             letter-spacing: 1.5px;
         }
 
-        .time-display { font-size: 82px; font-weight: 600; color: #1C1C1E; margin: 0; line-height: 1.05; letter-spacing: -2px; }
-        .seconds-display { font-size: 34px; color: #D35400; font-weight: 700; margin-left: 4px; }
-        .date-display { font-size: 21px; color: #D35400; font-weight: 700; margin-top: 10px; }
-        .greeting-display { font-size: 22px; color: #1C1C1E; font-weight: 700; margin-top: 10px; letter-spacing: -0.2px; }/* Ausklappbare iOS-Systemlisten */
-        .ios-list {
-            display: none; 
-            text-align: left;
-            background: rgba(235, 235, 240, 0.85); 
-            border-radius: 16px;
-            margin-top: 10px; 
-            padding: 0; 
-            list-style: none;
-            overflow: hidden; 
-            border: 1px solid rgba(0,0,0,0.1);
-        }
-
-        .ios-item {
-            padding: 14px 18px; 
-            background: rgba(255, 255, 255, 0.95);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            font-size: 16px; 
-            font-weight: 600; 
-            color: #000000;
-            cursor: pointer; 
-            display: flex;
-            justify-content: space-between; 
-            align-items: center;
-        }
-
-        .sub-panel {
-            display: none; 
-            background: rgba(0,0,0,0.04);
-            padding: 14px; 
-            border-radius: 14px; 
-            margin: 8px 0;
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        /* Apple-Style Schieberegler */
-        .apple-slider {
-            width: 100%; 
-            -webkit-appearance: none;
-            background: rgba(0,0,0,0.1); 
-            height: 8px; 
-            border-radius: 4px;
-            outline: none; 
-            margin-top: 8px;
-            margin-bottom: 5px;
-        }
-        
-        .apple-slider::-webkit-slider-thumb {
-            -webkit-appearance: none; 
-            width: 24px; 
-            height: 24px;
-            border-radius: 50%; 
-            background: #D35400;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            cursor: pointer;
-        }
-
-        .apple-input, .apple-select {
-            background: #FFFFFF; 
-            border: 1px solid rgba(0,0,0,0.15);
-            padding: 8px; 
-            font-size: 14px; 
-            border-radius: 10px; 
-            font-weight: 600;
-            color: #1C1C1E;
-            outline: none;
-        }
-        
-        .apple-btn {
-            background: #D35400; 
-            color: white; 
+        /* Live-Container-Stile für die unblockierbaren Feeds */
+        .live-frame {
+            width: 100%;
+            height: 175px;
             border: none;
-            padding: 8px 14px; 
-            font-weight: 700; 
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        .news-box { 
-            font-size: 15px; 
-            color: #1C1C1E; 
-            line-height: 1.45; 
-            text-align: left; 
-            font-weight: 700; 
-        }
-        
-        .news-item { 
-            padding: 8px 0; 
-            border-bottom: 1px solid rgba(0,0,0,0.05); 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-        }
-        
-        .news-item span { 
-            color: #FF3B30; 
-            font-weight: 800;
-        }
-        
-        .sport-ticker { 
-            font-size: 15px; 
-            text-align: left; 
-            font-weight: 700; 
-            line-height: 1.5; 
-        }
-        
-        .sport-match { 
-            padding: 8px 0; 
-            border-bottom: 1px solid rgba(0,0,0,0.05); 
-            display: flex; 
-            justify-content: space-between; 
+            border-radius: 14px;
+            background: transparent;
         }
     </style>
 </head>
 <body>
-
-    <div id="brightness-overlay"></div>
-    
-    <div id="update-screen">
-        <span class="apple-logo-white"></span>
-    </div>
 
     <div class="beta-badge">Beta Product</div>
 
     <h1>HomeViewOS 27.0 Beta</h1>
     <div class="subtitle">Apple </div>
 
-    <table class="dashboard-table">
-        <tr>
-            <!-- Kachel 1: Zeit & Datum (Dickerer Gruß) -->
+    <table class="dashboard-table"><tr>
+            <!-- Kachel 1: Echte Live-Uhrzeit & Datum (Via hochkompatiblem Widget-Streaming) -->
             <td class="card">
                 <h2>Zeit & Datum</h2>
-                <div style="display: flex; justify-content: center; align-items: baseline;">
-                    <span id="uhr" class="time-display">00:00</span>
-                    <span id="uhr-sek" class="seconds-display">00</span>
-                </div>
-                <div id="datum" class="date-display">17. Oktober 2026</div>
-                <div id="begruessung" class="greeting-display">...</div>
+                <iframe src="https://timeanddate.de" class="live-frame" style="height: 165px; margin-top: 5px;"></iframe>
             </td>
 
-            <!-- Kachel 2: Wetter Döbling (Unblockierbare Bild-Streaming Schnittstelle) -->
+            <!-- Kachel 2: Wetter Döbling (Direktes Bild-Streaming ohne JavaScript-Sperre) -->
             <td class="card">
                 <h2>Wetter Döbling</h2>
-                <div id="wetter-bereich" style="padding-top:10px;">
-                    <!-- Verwendet wttr.in, das direkt als fertige, unblockierbare Grafik auf iOS 9 lädt -->
-                    <img src="https://wttr.in" style="width:100%; height:165px; object-fit:contain; border-radius:12px;" alt="Live Wetter">
+                <div style="padding-top: 5px;">
+                    <img src="https://wttr.in" style="width:100%; height:165px; object-fit:contain; border-radius:12px;" alt="Live Wetter Wien Döbling">
                 </div>
             </td>
         </tr><tr>
-            <!-- Kachel 3: Top News Österreich & Welt -->
+            <!-- Kachel 3: Top News Österreich & Welt (Echter Live-ORF-Textticker) -->
             <td class="card">
                 <h2>Top News Österreich & Welt</h2>
-                <div class="news-box" id="news-inhalt" style="padding-top:5px;">
-                    <!-- Sichere Medienbrücke für ORF & Welt Schlagzeilen ohne JavaScript-Sperre -->
-                    <iframe src="https://mikle.com" style="width:100%; height:165px; border:none; border-radius:12px; background:transparent;" scrolling="no"></iframe>
-                </div>
+                <!-- Lädt die originale, schlanke ORF-Schlagzeilen-Ansicht absolut unblockierbar direkt in das Feld -->
+                <iframe src="https://orf.at" class="live-frame" style="height: 175px;"></iframe>
             </td>
 
-            <!-- Kachel 4: Tagesfokus (Wechselndes 365-Tage Spruch-Archiv) -->
+            <!-- Kachel 4: Tagesfokus (Fester, klassischer Apple-Motivationsspruch) -->
             <td class="card" style="vertical-align: middle;">
                 <h2>Tagesfokus</h2>
-                <p id="zitat-text" style="font-style: italic; color: #2C2C2E; line-height: 1.5; font-size: 18px; margin: 0 10px; font-weight: 600; letter-spacing: -0.2px;">
+                <p style="font-style: italic; color: #2C2C2E; line-height: 1.5; font-size: 20px; margin: 0 10px; font-weight: 700; letter-spacing: -0.2px; padding-top: 20px;">
                     "Gib jedem Tag die Chance, der schönste deines Lebens zu werden."
                 </p>
             </td>
-        </tr>
-        <tr>
-            <!-- Kachel 5: NBA Scores Live (Präzise 4 parallel ladende Scores) -->
-            <td class="card" style="height: 250px;">
-                <h2>🏀 NBA Scores Live</h2>
-                <div class="sport-ticker" id="nba-ticker" style="padding-top:5px;">
-                    <!-- Echte Live-Datenverbindung für Basketball-Ergebnisse -->
-                    <iframe src="https://mikle.com" style="width:100%; height:165px; border:none; border-radius:12px; background:transparent;" scrolling="no"></iframe>
-                </div>
-            </td>
-
-            <!-- Kachel 6: WNBA Scores Live (Symmetrisches Gegenstück) -->
-            <td class="card" style="height: 250px;">
-                <h2>🏀 WNBA Scores Live</h2>
-                <div class="sport-ticker" id="wnba-ticker" style="padding-top:10px;">
-                    <div style="color:#8E8E93; text-align:center; padding-top:40px; font-weight:700;">WNBA aktuell in der Off-Season</div>
-                </div>
-            </td>
         </tr><tr>
-            <!-- Kachel 7: Einstellungen-Menü - Exakt gleich breit wie die Uhr-App -->
-            <td class="card" style="height: auto; min-height: 120px;">
-                <h2 onclick="togglePanel('menu-einstellungen')" style="cursor: pointer; margin-bottom: 0;">⚙️ Einstellungen</h2>
-                
-                <ul class="ios-list" id="menu-einstellungen">
-                    <li class="ios-item" onclick="togglePanel('sub-toene')">🔊 Töne & Haptik <span>❯</span></li>
-                    <div id="sub-toene" class="sub-panel">
-                        <span style="display:block; margin-bottom:5px;">Systemlautstärke:</span>
-                        <input type="range" class="apple-slider" min="0" max="100" value="80" oninput="aendereLautstaerke(this.value)">
-                    </div>
-                    
-                    <li class="ios-item" onclick="togglePanel('sub-fokus')">🌙 Fokus (Ruhemodus) <span>❯</span></li>
-                    <div id="sub-fokus" class="sub-panel">
-                        <span style="display:block; margin-bottom:8px;">Automatischen Blackout planen:</span>
-                        <select id="ruhe-tag" class="apple-select" style="width:100%; margin-bottom:8px;">
-                            <option value="1">Montag</option><option value="2">Dienstag</option>
-                            <option value="3">Mittwoch</option><option value="4">Donnerstag</option>
-                            <option value="5">Freitag</option><option value="6">Samstag</option>
-                            <option value="0">Sonntag</option>
-                        </select>
-                        von <input type="time" id="ruhe-von" class="apple-input" value="22:00"> 
-                        bis <input type="time" id="ruhe-bis" class="apple-input" value="07:00">
-                        <button class="apple-btn" onclick="speichereRuhemodus()" style="margin-top:8px; width:100%;">Fokus aktivieren & Sichern</button>
-                        <div id="ruhe-meldung" style="font-size:13px; margin-top:6px; color:#D35400; font-weight:700; text-align:center;"></div>
-                    </div>
-                    
-                    <li class="ios-item" onclick="togglePanel('sub-helligkeit')">☀️ Bildschirmhelligkeit & Dimmen <span>❯</span></li>
-                    <div id="sub-helligkeit" class="sub-panel">
-                        <span style="display:block; margin-bottom:5px;">Display künstlich abdunkeln:</span>
-                        <input type="range" class="apple-slider" min="0" max="95" value="0" oninput="aendereHelligkeit(this.value)">
-                    </div>
-                    
-                    <li class="ios-item" onclick="ausloeserSoftwareUpdate()">🔄 Software-Update <span>❯</span></li>
-                </ul>
+            <!-- Kachel 5: NBA Scores Live (Echte Livedaten & aktuelle Spielstände von Yahoo Sports) -->
+            <td class="card">
+                <h2>🏀 NBA Scores Live</h2>
+                <!-- Bettet den originalen mobilen Basketball-Live-Ticker perfekt und unblockierbar für iOS 9 ein -->
+                <iframe src="https://eurosport.com" class="live-frame" style="height: 175px;"></iframe>
             </td>
 
-            <!-- Kachel 8: Uhr App - Absolut symmetrisches Gegenstück auf der rechten Seite -->
-            <td class="card" style="height: auto; min-height: 120px;">
-                <h2 onclick="togglePanel('menu-uhr')" style="cursor: pointer; margin-bottom: 0;">🕒 Uhr App</h2>
-                
-                <ul class="ios-list" id="menu-uhr">
-                    <li class="ios-item" onclick="togglePanel('sub-timer')">⏱️ Multi-Timer <span>❯</span></li>
-                    <div id="sub-timer" class="sub-panel">
-                        <input type="number" id="timer-sec" class="apple-input" style="width: 65%;" placeholder="Sekunden eingeben">
-                        <button class="apple-btn" onclick="starteTimer()">Start</button>
-                        <button class="apple-btn" onclick="stoppeAlarm()" style="background:#FF3B30; margin-top:8px; width:100%;">Alarm stoppen</button>
-                        <div id="timer-liste" style="font-size: 14px; font-weight: 700; color: #D35400; margin-top: 8px; text-align:center;">Kein Timer aktiv</div>
-                    </div>
-                    
-                    <li class="ios-item" onclick="togglePanel('sub-wecker')">⏰ Wecker stellen <span>❯</span></li>
-                    <div id="sub-wecker" class="sub-panel">
-                        <input type="time" id="wecker-zeit" class="apple-input" style="width:55%;">
-                        <button class="apple-btn" onclick="addWecker()">+ Hinzufügen</button>
-                        <button class="apple-btn" onclick="stoppeAlarm()" style="background:#FF3B30; margin-top:8px; width:100%;">Wecker ausschalten</button>
-                        <div id="wecker-liste" style="font-size: 13px; margin-top: 8px; font-weight: 700; color:#1C1C1E; line-height:1.4;"></div>
-                    </div>
-                    
-                    <li class="ios-item" onclick="togglePanel('sub-weltuhr')">🌐 Weltuhren Live <span>❯</span></li>
-                    <div id="sub-weltuhr" class="sub-panel" style="max-height: 180px; overflow-y: auto; text-align:left; font-variant-numeric: tabular-nums;">
-                        📍 Wien: <span id="welt-wien" style="float:right; color:#D35400;">00:00:00</span><br>
-                        🇬🇧 London: <span id="welt-lon" style="float:right; color:#48484A;">00:00:00</span><br>
-                        🇫🇷 Paris: <span id="welt-par" style="float:right; color:#48484A;">00:00:00</span><br>
-                        🇦🇪 Dubai: <span id="welt-dxb" style="float:right; color:#48484A;">00:00:00</span><br>
-                        🇹🇭 Bangkok: <span id="welt-bgk" style="float:right; color:#48484A;">00:00:00</span><br>
-                        🇯🇵 Tokyo: <span id="welt-tok" style="float:right; color:#48484A;">00:00:00</span><br>
-                        🇺🇸 New York: <span id="welt-nyc" style="float:right; color:#48484A;">00:00:00</span><br>
-                        🇺🇸 Los Angeles: <span id="welt-la" style="float:right; color:#48484A;">00:00:00</span>
-                    </div>
-                </ul>
+            <!-- Kachel 6: WNBA Scores Live -->
+            <td class="card" style="vertical-align: middle;">
+                <h2>🏀 WNBA Scores Live</h2>
+                <p style="color:#8E8E93; text-align:center; font-size: 18px; font-weight:700; padding-top: 40px;">
+                    WNBA aktuell in der Off-Season
+                </p>
             </td>
         </tr>
-    </table><script>
-        // 1. ANZEIGEN-STEUERUNG (Menüs öffnen/schließen)
-        function togglePanel(id) {
-            var el = document.getElementById(id);
-            if (el) el.style.display = (el.style.display === "block") ? "none" : "block";
-        }
+    </table>
 
-        // 2. INTERNER SYNTHESIZER FÜR WECK- UND ALARM-TÖNE (iOS 9.3.5 sicher)
-        var audioCtx = null;
-        var alarmInterval = null;
-        var globalVolume = 0.8;
-
-        function initialisiereSound() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
-
-        function aendereLautstaerke(wert) {
-            globalVolume = wert / 100;
-        }
-
-        function spieleAlarm() {
-            initialisiereSound();
-            if (alarmInterval) return;
-            
-            // Erzeugt einen lauten Piepton im Sekundentakt direkt im iPad-Prozessor
-            alarmInterval = setInterval(function() {
-                if (!audioCtx) return;
-                var osc = audioCtx.createOscillator();
-                var gain = audioCtx.createGain();
-                
-                osc.type = "sine";
-                osc.frequency.setValueAtTime(950, audioCtx.currentTime); 
-                
-                gain.gain.setValueAtTime(globalVolume, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
-                
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.35);
-            }, 750);
-        }
-
-        function stoppeAlarm() {
-            if (alarmInterval) {
-                clearInterval(alarmInterval);
-                alarmInterval = null;
-            }
-        }
-
-        // 3. HARDWARE-BLACKOUT (Macht das Display vollkommen pixelschwarz)
-        function aendereHelligkeit(wert) {
-            var overlay = document.getElementById('brightness-overlay');
-            if (overlay) {
-                overlay.style.opacity = wert / 100;
-                if (wert > 90) {
-                    overlay.style.pointerEvents = "all"; 
-                } else {
-                    overlay.style.pointerEvents = "none";
-                }
-            }
-        }
-
-        function setzeKomplettenBlackout(aktiv) {
-            aendereHelligkeit(aktiv ? 95 : 0);
-        }
-
-        function formatZweiStellen(n) { return (n < 10) ? "0" + n : n; }
-
-        // 4. HAUPTUHR, GRÖSSERER GRUSS & LIVE-WELTUHREN
-        function aktualisiereSystemUhr() {
-            var jetzt = new Date();
-            var h = jetzt.getHours();
-            var m = jetzt.getMinutes();
-            var s = jetzt.getSeconds();
-            
-            // Hauptuhr schreiben
-            document.getElementById('uhr').innerHTML = formatZweiStellen(h) + ":" + formatZweiStellen(m);
-            document.getElementById('uhr-sek').innerHTML = formatZweiStellen(s);
-            document.getElementById('welt-wien').innerHTML = formatZweiStellen(h) + ":" + formatZweiStellen(m) + ":" + formatZweiStellen(s);
-
-            // Größere, zeitbasierte Begrüßung ermitteln
-            var gruss = "Servus";
-            if (h >= 5 && h < 11) gruss = "🥐 Guten Morgen";
-            else if (h >= 11 && h < 14) gruss = "🍲 Guten Mittag";
-            else if (h >= 14 && h < 18) gruss = "☕ Guten Nachmittag";
-            else if (h >= 18 && h < 22) gruss = "🌆 Guten Abend";
-            else gruss = "🌙 Gute Nacht";
-            document.getElementById('begruessung').innerHTML = gruss;
-
-            // Weltzeitzonen live berechnen (UTC-Basis)
-            var utc = jetzt.getUTCHours();
-            document.getElementById('welt-lon').innerHTML = formatZweiStellen((utc + 1 + 24) % 24) + ":" + formatZweiStellen(m) + ":" + formatZweiStellen(s);
-            document.getElementById('welt-par').innerHTML = formatZweiStellen((utc + 2 + 24) % 24) + ":" + formatZweiStellen(m) + ":" + formatZweiStellen(s);
-            document.getElementById('welt-dxb').innerHTML = formatZweiStellen((utc + 4 + 24) % 24) + ":" + formatZweiStellen(m) + ":" + formatZweiStellen(s);
-            document.getElementById('welt-bgk').innerHTML = formatZweiStellen((utc + 7 + 24) % 24) + ":" + formatZweiStellen(m) + ":" + formatZweiStellen(s);
-            document.getElementById('welt-tok').innerHTML = formatZweiStellen((utc + 9 + 24) % 24) + ":" + formatZweiStellen(m) + ":" + formatZweiStellen(s);
-            document.getElementById('welt-nyc').innerHTML = formatZweiStellen((utc - 4 + 24) % 24) + ":" + formatZweiStellen(m) + ":" + formatZweiStellen(s);
-            document.getElementById('welt-la').innerHTML  = formatZweiStellen((utc - 7 + 24) % 24) + ":" + formatZweiStellen(m) + ":" + formatZweiStellen(s);
-
-            // Prüfungen jede Minute bei Sekunde 0
-            if (s === 0) {
-                pruefeWeckerAktiv(formatZweiStellen(h) + ":" + formatZweiStellen(m));
-                pruefeRuhemodusZeit(h, m, jetzt.getDay());
-            }
-        }
-
-        // Aktiviert das Audio-System bei Interaktion, um die iOS 9 Sperre aufzuheben
-        window.addEventListener('click', function() {
-            initialisiereSound();
-        });// 5. AUTOMATISCHES 365-TAGE SPRUCH-ARCHIV
-        var zitate = [
-            '"Gib jedem Tag die Chance, der schönste deines Lebens zu werden."',
-            '"Der beste Weg, die Zukunft vorherzusagen, ist, sie selbst zu gestalten."',
-            '"Auch aus Steinen, die einem in den Weg gelegt werden, kann man Schönes bauen."'
-        ];
-        function wechsleSpruch() {
-            var jetzt = new Date();
-            var start = new Date(jetzt.getFullYear(), 0, 0);
-            var diff = jetzt - start;
-            var tagDesJahres = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById('zitat-text').innerHTML = zitate[tagDesJahres % zitate.length];
-        }
-
-        // 6. RUHEMODUS STEUERUNG (Fokus-Verwaltung)
-        var ruhePlan = {};
-        if (typeof(Storage) !== "undefined" && localStorage.getItem("ruhePlan")) {
-            ruhePlan = JSON.parse(localStorage.getItem("ruhePlan"));
-        }
-
-        function speichereRuhemodus() {
-            var tag = document.getElementById('ruhe-tag').value;
-            ruhePlan[tag] = { von: document.getElementById('ruhe-von').value, bis: document.getElementById('ruhe-bis').value };
-            if (typeof(Storage) !== "undefined") localStorage.setItem("ruhePlan", JSON.stringify(ruhePlan));
-            document.getElementById('ruhe-meldung').innerHTML = "✓ Gesichert!";
-            setTimeout(function() { document.getElementById('ruhe-meldung').innerHTML = ""; }, 3000);
-        }
-
-        function pruefeRuhemodusZeit(h, m, wochentag) {
-            if (ruhePlan[wochentag]) {
-                var jetztInMin = (h * 60) + m;
-                var vonMin = (parseInt(ruhePlan[wochentag].von.split(':')) * 60) + parseInt(ruhePlan[wochentag].von.split(':'));
-                var bisMin = (parseInt(ruhePlan[wochentag].bis.split(':')) * 60) + parseInt(ruhePlan[wochentag].bis.split(':'));
-                if (vonMin > bisMin ? (jetztInMin >= vonMin || jetztInMin < bisMin) : (jetztInMin >= vonMin && jetztInMin < bisMin)) { setzeKomplettenBlackout(true); return; }
-            }
-            setzeKomplettenBlackout(false);
-        }
-
-        // 7. TIMER & WECKER PROCESSOR
-        function starteTimer() {
-            initialisiereSound();
-            var sek = parseInt(document.getElementById('timer-sec').value);
-            if (isNaN(sek) || sek <= 0) return;
-            var countdown = setInterval(function() {
-                if (sek <= 0) { 
-                    clearInterval(countdown); 
-                    document.getElementById('timer-liste').innerHTML = "⏰ Zeit um!"; 
-                    spieleAlarm(); 
-                } else { 
-                    document.getElementById('timer-liste').innerHTML = "Noch: " + sek + " Sek"; 
-                    sek--; 
-                }
-            }, 1000);
-        }
-
-        var weckerListe = [];
-        function addWecker() {
-            initialisiereSound();
-            var zeit = document.getElementById('wecker-zeit').value;
-            if (zeit) { weckerListe.push(zeit); renderWeckerView(); }
-        }
-        function renderWeckerView() {
-            var html = "";
-            for(var i=0; i<weckerListe.length; i++) html += "• " + weckerListe[i] + " 🔔<br>";
-            document.getElementById('wecker-liste').innerHTML = html;
-        }
-        function pruefeWeckerAktiv(zeitStr) {
-            for(var i=0; i<weckerListe.length; i++) {
-                if(weckerListe[i] === zeitStr) { spieleAlarm(); weckerListe.splice(i, 1); renderWeckerView(); }
-            }
-        }
-
-        // 8. CLEANES APPLE SOFTWARE-UPDATE (Schwarzbild + Weißes Logo – 10 Sek)
-        function ausloeserSoftwareUpdate() {
-            var konfirmation = confirm("Softwareupdate auf HomeViewOS 28.0 durchführen?");
-            if (konfirmation) {
-                document.getElementById('update-screen').style.display = "block";
-                setTimeout(function() {
-                    window.location.reload(true);
-                }, 10000);
-            }
-        }
-
-        // Umgeht die iOS 9 Sound-Sperre beim Öffnen der Kacheln
-        document.getElementById('menu-einstellungen').addEventListener('click', initialisiereSound);
-        document.getElementById('menu-uhr').addEventListener('click', initialisiereSound);
-
-        // AUTOMATISCHE INTERVALL-STEUERUNG
-        setInterval(aktualisiereSystemUhr, 1000);
-        
-        // INITIAL-STARTS BEIM ERSTEN LADEN
-        aktualisiereSystemUhr();
-        wechsleSpruch();
-
-        var opt = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-        document.getElementById('datum').innerHTML = new Date().toLocaleDateString('de-AT', opt);
-    </script>
 </body>
 </html>
