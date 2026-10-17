@@ -6,63 +6,71 @@
     <title>Home View OS 27</title>
     <style>
         :root {
-            --apple-gray: #1c1c1e;
+            --apple-gray: #f2f2f7;
             --apple-blue: #007aff;
-            --apple-bg: #000000;
-            --card-bg: rgba(44, 44, 46, 0.8);
-            --apple-red: #ff3b30;
-            --apple-green: #34c759;
+            --apple-bg: #e5e5ea;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-dark: #1c1c1e;
         }
         body {
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--apple-bg);
-            color: white;
+            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+            background-attachment: fixed;
+            color: var(--text-dark);
             overflow: hidden;
-            user-select: none;
+            height: 100vh;
         }
         #home-screen {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            grid-gap: 20px;
-            padding: 30px;
-            height: 100vh;
+            grid-auto-rows: minmax(150px, auto);
+            grid-gap: 25px;
+            padding: 40px;
             box-sizing: border-box;
-            background: linear-gradient(180deg, #2c3e50 0%, #000000 100%);
+            height: 100vh;
         }
         .card {
             background: var(--card-bg);
-            border-radius: 20px;
-            padding: 15px;
+            border-radius: 28px;
+            padding: 20px;
             text-align: center;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s;
+            cursor: pointer;
         }
+        .card:active { transform: scale(0.95); }
+        
         .clock-card {
             grid-column: span 2;
-            grid-row: span 1;
-            font-size: 3em;
-            font-weight: 200;
+            font-size: 5em;
+            font-weight: 300;
+            color: var(--text-dark);
         }
         .info-card {
             grid-column: span 1;
-            font-size: 0.9em;
+            font-size: 1.2em;
+            font-weight: 500;
         }
         .app-icon {
-            width: 60px;
-            height: 60px;
-            background: white;
-            border-radius: 12px;
-            margin: 0 auto 10px;
-            cursor: pointer;
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            color: black;
+            font-size: 35px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
+        /* Overlays */
         .overlay {
             display: none;
             position: fixed;
@@ -73,97 +81,70 @@
             background: var(--apple-gray);
             z-index: 100;
             animation: slideUp 0.3s ease-out;
+            color: var(--text-dark);
         }
         @keyframes slideUp {
             from { transform: translateY(100%); }
             to { transform: translateY(0); }
         }
         .overlay-header {
-            padding: 40px 20px 20px;
+            padding: 50px 20px 20px;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid #38383a;
+            border-bottom: 1px solid #d1d1d6;
         }
         .close-btn {
             color: var(--apple-blue);
-            font-size: 1.2em;
+            font-size: 1.3em;
             cursor: pointer;
             margin-right: 20px;
+            text-decoration: none;
         }
-        .settings-list {
-            padding: 20px;
-        }
+        .settings-list { padding: 20px; }
         .settings-item {
-            background: #2c2c2e;
+            background: white;
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        input[type="range"] {
-            width: 150px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         iframe {
             width: 100%;
-            height: calc(100% - 100px);
+            height: calc(100% - 110px);
             border: none;
         }
         .profile-section {
             display: flex;
             align-items: center;
             padding: 20px;
-            background: #2c2c2e;
+            background: white;
             border-radius: 15px;
             margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .profile-pic {
             width: 60px;
             height: 60px;
-            background: gray;
+            background: #ccc;
             border-radius: 50%;
             margin-right: 15px;
         }
-
-        /* Clock App Specifics */
-        .clock-app-container {
-            display: flex;
-            flex-direction: column;
-            height: calc(100% - 100px);
-        }
+        /* Clock App */
         .clock-tabs {
             display: flex;
             justify-content: space-around;
-            background: #000;
-            padding: 10px 0;
+            background: #fff;
+            padding: 15px 0;
+            border-bottom: 1px solid #d1d1d6;
         }
-        .tab {
-            color: gray;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .tab.active {
-            color: var(--apple-blue);
-        }
-        .clock-content {
-            display: none;
-            padding: 20px;
-            text-align: center;
-        }
-        .clock-content.active {
-            display: block;
-        }
-        .big-timer {
-            font-size: 4em;
-            margin: 40px 0;
-            font-weight: 200;
-        }
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
+        .tab { color: gray; cursor: pointer; font-weight: 600; }
+        .tab.active { color: var(--apple-blue); }
+        .clock-content { display: none; padding: 30px; text-align: center; }
+        .clock-content.active { display: block; }
+        .big-timer { font-size: 4em; margin: 40px 0; font-weight: 300; }
         .clock-btn {
             width: 80px;
             height: 80px;
@@ -172,9 +153,8 @@
             font-size: 1em;
             cursor: pointer;
             color: white;
+            font-weight: bold;
         }
-        .btn-start { background: var(--apple-green); }
-        .btn-stop { background: var(--apple-red); }
     </style>
 </head>
 <body>
@@ -188,79 +168,74 @@
     </div>
     <div class="card info-card">
         <strong>NBA/WNBA</strong><br>
-        <div id="scores" style="font-size: 0.7em;">Lade Ergebnisse...</div>
+        <div id="scores" style="font-size: 0.8em;">Lade...</div>
     </div>
     <div class="card info-card">
         <strong>News</strong><br>
-        <div id="news" style="font-size: 0.7em;">Lade News...</div>
+        <div id="news" style="font-size: 0.8em;">Lade...</div>
     </div>
     
     <div class="card" onclick="openApp('clockApp')">
-        <div class="app-icon" style="background: #000; color: white;">⏰</div>
+        <div class="app-icon" style="background: #fff; color: #000;">⏰</div>
         <span>Uhr</span>
     </div>
     <div class="card" onclick="openApp('settings')">
-        <div class="app-icon" style="background: #8e8e93;">⚙️</div>
+        <div class="app-icon" style="background: #8e8e93; color: #fff;">⚙️</div>
         <span>Einstellungen</span>
     </div>
     <div class="card" onclick="openApp('music')">
-        <div class="app-icon" style="background: #fa2d48;">🎵</div>
+        <div class="app-icon" style="background: #fa2d48; color: #fff;">🎵</div>
         <span>Music</span>
     </div>
     <div class="card" onclick="openApp('chatgpt')">
-        <div class="app-icon" style="background: #74aa9c;">🤖</div>
+        <div class="app-icon" style="background: #74aa9c; color: #fff;">🤖</div>
         <span>ChatGPT</span>
     </div>
     <div class="card" onclick="openApp('gallery')">
-        <div class="app-icon" style="background: #ffcc00;">🖼️</div>
+        <div class="app-icon" style="background: #ffcc00; color: #fff;">🖼️</div>
         <span>Fotos</span>
     </div>
 </div>
 
-<!-- Uhr App Overlay -->
+<!-- Uhr App -->
 <div id="clockApp" class="overlay">
     <div class="overlay-header">
         <span class="close-btn" onclick="closeApp('clockApp')">← Zurück</span>
         <h2>Uhr</h2>
     </div>
-    <div class="clock-app-container">
-        <div class="clock-tabs">
-            <span class="tab active" onclick="showTab('alarm')">Wecker</span>
-            <span class="tab" onclick="showTab('stopwatch')">Stoppuhr</span>
-            <span class="tab" onclick="showTab('timer')">Timer</span>
+    <div class="clock-tabs">
+        <span class="tab active" onclick="showTab('alarm', this)">Wecker</span>
+        <span class="tab" onclick="showTab('stopwatch', this)">Stoppuhr</span>
+        <span class="tab" onclick="showTab('timer', this)">Timer</span>
+    </div>
+    <div id="alarm" class="clock-content active">
+        <div class="settings-item" style="justify-content: center;">
+            <input type="time" id="alarmTime" style="padding: 10px; border-radius: 5px;">
+            <button onclick="setAlarm()" style="background: var(--apple-blue); color:white; border:none; border-radius:10px; padding: 10px 20px; cursor:pointer;">Hinzufügen</button>
         </div>
-        
-        <div id="alarm" class="clock-content active">
-            <div class="settings-item">
-                <input type="time" id="alarmTime">
-                <button onclick="setAlarm()" style="background: var(--apple-blue); color:white; border:none; border-radius:5px; padding: 5px 10px;">Stellen</button>
-            </div>
-            <div id="alarmList" style="margin-top: 20px; text-align: left;"></div>
+        <div id="alarmList" style="margin-top: 20px; text-align: left;"></div>
+    </div>
+    <div id="stopwatch" class="clock-content">
+        <div class="big-timer" id="sw-display">00:00.00</div>
+        <div style="display: flex; justify-content: center; gap: 20px;">
+            <button class="clock-btn" style="background: var(--apple-green);" onclick="startStopwatch()">Start</button>
+            <button class="clock-btn" style="background: var(--apple-red);" onclick="stopStopwatch()">Stop</button>
+            <button class="clock-btn" style="background: gray;" onclick="resetStopwatch()">Reset</button>
         </div>
-
-        <div id="stopwatch" class="clock-content">
-            <div class="big-timer" id="sw-display">00:00.00</div>
-            <div class="btn-group">
-                <button class="clock-btn btn-start" onclick="startStopwatch()">Start</button>
-                <button class="clock-btn btn-stop" onclick="stopStopwatch()">Stop</button>
-                <button class="clock-btn" style="background: gray;" onclick="resetStopwatch()">Reset</button>
-            </div>
+    </div>
+    <div id="timer" class="clock-content">
+        <div class="big-timer" id="tm-display">00:00</div>
+        <div class="settings-item" style="justify-content: center; margin-bottom: 20px;">
+            <input type="number" id="tm-input" placeholder="Minuten" style="width: 100px; padding: 10px; border-radius: 10px; border: 1px solid #ccc;">
         </div>
-
-        <div id="timer" class="clock-content">
-            <div class="big-timer" id="tm-display">00:00</div>
-            <div class="settings-item" style="justify-content: center; margin-bottom: 20px;">
-                <input type="number" id="tm-input" placeholder="Minuten" style="width: 100px; padding: 10px; border-radius: 5px;">
-            </div>
-            <div class="btn-group">
-                <button class="clock-btn btn-start" onclick="startTimer()">Start</button>
-                <button class="clock-btn btn-stop" onclick="stopTimer()">Stop</button>
-            </div>
+        <div style="display: flex; justify-content: center; gap: 20px;">
+            <button class="clock-btn" style="background: var(--apple-green);" onclick="startTimer()">Start</button>
+            <button class="clock-btn" style="background: var(--apple-red);" onclick="stopTimer()">Stop</button>
         </div>
     </div>
 </div>
 
-<!-- Einstellungen Overlay -->
+<!-- Einstellungen -->
 <div id="settings" class="overlay">
     <div class="overlay-header">
         <span class="close-btn" onclick="closeApp('settings')">← Zurück</span>
@@ -274,61 +249,21 @@
                 <small>Gregorycobe@icloud.com</small>
             </div>
         </div>
-        <div class="settings-item">
-            <span>Töne & Haptik</span>
-            <input type="checkbox" checked>
-        </div>
-        <div class="settings-item">
-            <span>Helligkeit</span>
-            <input type="range" min="0" max="100" value="80">
-        </div>
-        <div class="settings-item">
-            <span>Software-Update</span>
-            <span style="color: var(--apple-blue);">Home View OS 27 (Aktuell)</span>
-        </div>
-        <div class="settings-item">
-            <span>Ruhemodus</span>
-            <input type="time" value="22:00"> bis <input type="time" value="07:00">
-        </div>
-        <div style="text-align: center; margin-top: 20px; color: gray; font-size: 0.8em;">
-            Produzent: Cobster Labs
-        </div>
+        <div class="settings-item"><span>Töne & Haptik</span><input type="checkbox" checked></div>
+        <div class="settings-item"><span>Helligkeit</span><input type="range"></div>
+        <div class="settings-item"><span>Software</span><span style="color: var(--apple-blue);">Home View OS 27</span></div>
+        <div class="settings-item"><span>Ruhemodus</span><input type="time" value="22:00"></div>
+        <div style="text-align: center; margin-top: 30px; color: gray;">Produzent: Cobster Labs</div>
     </div>
 </div>
 
-<!-- Amazon Music Overlay -->
-<div id="music" class="overlay">
-    <div class="overlay-header">
-        <span class="close-btn" onclick="closeApp('music')">← Zurück</span>
-        <h2>Amazon Music</h2>
-    </div>
-    <iframe src="https://music.amazon.de"></iframe>
-</div>
-
-<!-- ChatGPT Overlay -->
-<div id="chatgpt" class="overlay">
-    <div class="overlay-header">
-        <span class="close-btn" onclick="closeApp('chatgpt')">← Zurück</span>
-        <h2>ChatGPT</h2>
-    </div>
-    <iframe src="https://chatgpt.com"></iframe>
-</div>
-
-<!-- Foto Mediathek Overlay -->
-<div id="gallery" class="overlay">
-    <div class="overlay-header">
-        <span class="close-btn" onclick="closeApp('gallery')">← Zurück</span>
-        <h2>Foto Mediathek</h2>
-    </div>
-    <div class="settings-list" style="text-align: center;">
-        <p>Hier kannst du Fotos hochladen (Simulation)</p>
-        <input type="file" accept="image/*" multiple onchange="alert('Fotos wurden zur Mediathek hinzugefügt!')">
-        <div id="photo-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px;"></div>
-    </div>
-</div>
+<!-- Andere Apps -->
+<div id="music" class="overlay"><div class="overlay-header"><span class="close-btn" onclick="closeApp('music')">← Zurück</span><h2>Music</h2></div><iframe src="https://music.amazon.de"></iframe></div>
+<div id="chatgpt" class="overlay"><div class="overlay-header"><span class="close-btn" onclick="closeApp('chatgpt')">← Zurück</span><h2>ChatGPT</h2></div><iframe src="https://chatgpt.com"></iframe></div>
+<div id="gallery" class="overlay"><div class="overlay-header"><span class="close-btn" onclick="closeApp('gallery')">← Zurück</span><h2>Fotos</h2></div><div class="settings-list" style="text-align:center;"><input type="file" multiple onchange="alert('Fotos hinzugefügt!')"></div></div>
 
 <script>
-    // --- Basis Funktionen ---
+    // Uhrzeit
     function updateClock() {
         const now = new Date();
         document.getElementById('clock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
@@ -336,18 +271,13 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    function updateWeather() {
-        const weathers = ["Sonnig", "Windig", "Bewölkt", "Regnerisch"];
-        const randomWeather = weathers[Math.floor(Math.random() * weathers.length)];
-        document.getElementById('temp').innerText = Math.floor(Math.random() * 15 + 10) + "°C";
-        document.getElementById('weather-desc').innerText = randomWeather;
-    }
-    setInterval(updateWeather, 3600000);
-    updateWeather();
-
+    // Wetter & Info
     function updateInfo() {
-        document.getElementById('scores').innerText = "NBA: LAL 110 - GSW 105\nWNBA: NYL 88 - LAS 82";
-        document.getElementById('news').innerText = "Heute: Neues Update für Home View OS 27 verfügbar!";
+        const weathers = ["Sonnig", "Windig", "Bewölkt", "Regnerisch"];
+        document.getElementById('temp').innerText = Math.floor(Math.random() * 10 + 15) + "°C";
+        document.getElementById('weather-desc').innerText = weathers[Math.floor(Math.random()*4)];
+        document.getElementById('scores').innerText = "NBA: LAL 112 - GSW 108\nWNBA: NYL 85 - LAS 78";
+        document.getElementById('news').innerText = "Cobster Labs veröffentlicht Update!";
     }
     setInterval(updateInfo, 3600000);
     updateInfo();
@@ -355,12 +285,12 @@
     function openApp(id) { document.getElementById(id).style.display = 'block'; }
     function closeApp(id) { document.getElementById(id).style.display = 'none'; }
 
-    // --- Uhr App Funktionen ---
-    function showTab(tabId) {
+    // Uhr-App Logik
+    function showTab(tabId, el) {
         document.querySelectorAll('.clock-content').forEach(c => c.classList.remove('active'));
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
-        event.currentTarget.classList.add('active');
+        el.classList.add('active');
     }
 
     // Wecker
@@ -369,23 +299,20 @@
         const time = document.getElementById('alarmTime').value;
         if(time) {
             alarms.push(time);
-            const list = document.getElementById('alarmList');
-            list.innerHTML += <div class="settings-item">${time} <span style="color:var(--apple-red)" onclick="this.parentElement.remove()">Löschen</span></div>;
+            document.getElementById('alarmList').innerHTML += <div class="settings-item">${time} <span style="color:red; cursor:pointer" onclick="this.parentElement.remove()">X</span></div>;
         }
     }
-
     setInterval(() => {
         const now = new Date();
         const currentTime = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
         if(alarms.includes(currentTime)) {
             alert("⏰ WECKER! Aufstehen, Gregory!");
-            alarms = alarms.filter(a => a !== currentTime); 
+            alarms = alarms.filter(a => a !== currentTime);
         }
     }, 1000);
 
     // Stoppuhr
-    let swTimer;
-    let swSeconds = 0;
+    let swTimer, swSeconds = 0;
     function startStopwatch() {
         if(swTimer) return;
         swTimer = setInterval(() => {
@@ -393,27 +320,27 @@
             let ms = swSeconds % 100;
             let s = Math.floor(swSeconds / 10) % 60;
             let m = Math.floor(swSeconds / 600);
-            document.getElementById('sw-display').innerText = 
-                (m < 10 ? "0"+m : m) + ":" + (s < 10 ? "0"+s : s) + "." + (ms < 10 ? "0"+ms : ms);
+            document.getElementById('sw-display').innerText = (m<10?"0"+m:m) + ":" + (s<10?"0"+s:s) + "." + (ms<10?"0"+ms:ms);
         }, 10);
     }
     function stopStopwatch() { clearInterval(swTimer); swTimer = null; }
-    function resetStopwatch() {
-        stopStopwatch();
-        swSeconds = 0;
-        document.getElementById('sw-display').innerText = "00:00.00";
-    }
+    function resetStopwatch() { stopStopwatch(); swSeconds = 0; document.getElementById('sw-display').innerText = "00:00.00"; }
 
     // Timer
-    let tmTimer;
-    let tmSeconds = 0;
+    let tmTimer, tmSeconds = 0;
     function startTimer() {
         const min = document.getElementById('tm-input').value;
         if(!tmSeconds && min) tmSeconds = min * 60;
         if(!tmSeconds) return;
-        
         tmTimer = setInterval(() => {
             tmSeconds--;
             let m = Math.floor(tmSeconds / 60);
             let s = tmSeconds % 60;
-            document.getElementById('tm-display').
+            document.getElementById('tm-display').innerText = (m<10?"0"+m:m) + ":" + (s<10?"0"+s:s);
+            if(tmSeconds <= 0) { clearInterval(tmTimer); alert("⏱️ Timer abgelaufen!"); }
+        }, 1000);
+    }
+    function stopTimer() { clearInterval(tmTimer); tmTimer = null; }
+</script>
+</body>
+</html>
