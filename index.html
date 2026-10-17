@@ -42,18 +42,18 @@
             text-transform: uppercase;
         }
 
-        /* Größeres, präsentes Haupt-Branding */
         h1 { font-size: 52px; font-weight: 700; margin-bottom: 2px; letter-spacing: -0.5px; }
         .subtitle { font-size: 38px; color: #1C1C1E; margin-bottom: 25px; font-weight: 700; }
 
-        /* Kacheln um ein paar Millimeter schmaler gemacht */
+        /* Festes Raster-Layout erzwingt 50% Breite für JEDE Kachel */
         .dashboard-table {
             width: 100%; max-width: 820px;
             margin: 0 auto;
             border-collapse: separate; border-spacing: 14px;
+            table-layout: fixed; /* Zwingt alle Spalten, exakt gleich groß zu sein */
         }
 
-        /* Frosted Liquid-Glass Design */
+        /* Frosted Liquid-Glass Design mit perfekt symmetrischen Maßen */
         .card {
             background-color: rgba(255, 255, 255, 0.75);
             -webkit-backdrop-filter: blur(20px);
@@ -65,6 +65,7 @@
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.6);
             box-sizing: border-box;
+            width: 50%; /* Jede Kachel nimmt exakt die Hälfte der Reihe ein */
         }
 
         .card h2 {
@@ -73,7 +74,6 @@
             letter-spacing: 1px;
         }
 
-        /* Hauptuhr mit Platz für Sekunden */
         .time-display { font-size: 74px; font-weight: 700; margin: 0; line-height: 1.05; letter-spacing: -1px; }
         .seconds-display { font-size: 32px; color: #E65100; font-weight: 600; margin-left: 5px; }
         .date-display { font-size: 22px; color: #E65100; font-weight: 700; margin-top: 6px; }
@@ -131,7 +131,6 @@
     <div id="brightness-overlay"></div>
     <div class="beta-badge">Beta Product</div>
 
-    <!-- Größerer Titel & Apple Branding mit Logo -->
     <h1>HomeViewOS Beta 27.2</h1>
     <div class="subtitle">Apple </div>
 
@@ -141,7 +140,7 @@
 
     <table class="dashboard-table">
         <tr>
-            <!-- Kachel 1: Zeit (Mit neuem Sekundenzeiger) & Datum -->
+            <!-- Kachel 1: Zeit & Datum -->
             <td class="card" style="height: 250px;">
                 <h2>Zeit & Datum</h2>
                 <div style="display: flex; justify-content: center; align-items: baseline;">
@@ -179,24 +178,24 @@
             </td>
         </tr>
         <tr>
-            <!-- Kachel 4b: NBA Echte Live Ergebnisse -->
+            <!-- Kachel 4b: NBA - Exakt 50% Breite, absolut symmetrisch -->
             <td class="card" style="height: 230px;">
                 <h2>🏀 NBA Scores Live</h2>
                 <div class="sport-ticker" id="nba-ticker">
-                    <div class="sport-match">Lade aktuelle Live-Scores...</div>
+                    <div class="sport-match">Suche Live-Scores...</div>
                 </div>
             </td>
 
-            <!-- Kachel 4c: WNBA Echte Live Ergebnisse -->
+            <!-- Kachel 4c: WNBA - Exakt spiegelsymmetrisch zum NBA-Feld -->
             <td class="card" style="height: 230px;">
                 <h2>🏀 WNBA Scores Live</h2>
                 <div class="sport-ticker" id="wnba-ticker">
-                    <div class="sport-match">Lade aktuelle Live-Scores...</div>
+                    <div class="sport-match">Suche Live-Scores...</div>
                 </div>
             </td>
         </tr>
         <tr>
-            <!-- Kachel 5: Einstellungen -->
+            <!-- Kachel 5: Einstellungen-Menü - Exakt gleich breit wie die Uhr-App -->
             <td class="card" style="height: auto;">
                 <h2 onclick="togglePanel('menu-einstellungen')" style="cursor: pointer;">⚙️ Einstellungen</h2>
                 
@@ -229,7 +228,7 @@
                 </ul>
             </td>
 
-            <!-- Kachel 6: Uhr App -->
+            <!-- Kachel 6: Uhr App - Absolut symmetrisches Gegenstück -->
             <td class="card" style="height: auto;">
                 <h2 onclick="togglePanel('menu-uhr')" style="cursor: pointer;">🕒 Uhr App</h2>
                 
@@ -269,52 +268,89 @@
             </td>
         </tr>
     </table><script>
+        // 1. STABILE MENÜ-STEUERUNG (Panel-Wechsler)
+        // Öffnet und schließt die Listen für Einstellungen und Uhr App sauber per Klick
         function togglePanel(id) {
             var el = document.getElementById(id);
-            if (el) el.style.display = (el.style.display === "block") ? "none" : "block";
+            if (el) {
+                if (el.style.display === "block") {
+                    el.style.display = "none";
+                } else {
+                    el.style.display = "block";
+                }
+            }
         }
 
+        // 2. AUDIO-STEUERUNG (Apple Radial Sound-System)
+        // Steuert das Abspielen und Stoppen des Wecker- und Timer-Alarms
         var globalVolume = 0.8;
         function aendereLautstaerke(wert) {
             globalVolume = wert / 100;
             var snd = document.getElementById('apple-radial-sound');
-            if(snd) snd.volume = globalVolume;
+            if (snd) {
+                snd.volume = globalVolume;
+            }
         }
+
         function spieleAlarm() {
             var snd = document.getElementById('apple-radial-sound');
-            if(snd) { snd.volume = globalVolume; snd.play(); }
+            if (snd) {
+                snd.volume = globalVolume;
+                snd.play();
+            }
         }
+
         function stoppeAlarm() {
             var snd = document.getElementById('apple-radial-sound');
-            if(snd) { snd.pause(); snd.currentTime = 0; }
+            if (snd) {
+                snd.pause();
+                snd.currentTime = 0; // Setzt das Audio-File an den Anfang zurück
+            }
         }
 
+        // 3. DIGITALER HELLIGKEITS-REGLER (Overlay-System)
+        // Legt eine dunkle Schicht über das Dashboard, um die Helligkeit im Raum anzupassen
         function aendereHelligkeit(wert) {
             var overlay = document.getElementById('brightness-overlay');
-            if(overlay) overlay.style.opacity = wert / 100;
+            if (overlay) {
+                overlay.style.opacity = wert / 100;
+            }
         }
 
-        function formatZweiStellen(n) { return (n < 10) ? "0" + n : n; }
+        // Helfer-Funktion für saubere, zweistellige Zeitanzeigen (z.B. "05" statt "5")
+        function formatZweiStellen(n) { 
+            return (n < 10) ? "0" + n : n; 
+        }
 
-        // SECUNDENGENAUE UHRZEIT-ENGINE (Jede Sekunde aktualisiert!)
+        // 4. HAUPTUHR, WELTUHREN & AUTOMATISCHE BEGRÜSSUNG
+        // Aktualisiert jede einzelne Sekunde alle Zeitzonen und prüft Wecker/Ruhemodus
         function aktualisiereSystemUhr() {
             var jetzt = new Date();
             var h = jetzt.getHours();
             var m = jetzt.getMinutes();
             var s = jetzt.getSeconds();
             
+            // Lokale Hauptuhr befüllen
             document.getElementById('uhr').innerHTML = formatZweiStellen(h) + ":" + formatZweiStellen(m);
             document.getElementById('uhr-sek').innerHTML = formatZweiStellen(s);
             document.getElementById('welt-wien').innerHTML = formatZweiStellen(h) + ":" + formatZweiStellen(m) + ":" + formatZweiStellen(s);
 
+            // Intelligente, zeitbasierte Begrüßung für Döbling
             var gruss = "Servus";
-            if (h >= 5 && h < 11) gruss = "🥐 Guten Morgen";
-            else if (h >= 11 && h < 14) gruss = "🍲 Guten Mittag";
-            else if (h >= 14 && h < 18) gruss = "☕ Guten Nachmittag";
-            else if (h >= 18 && h < 22) gruss = "🌆 Guten Abend";
-            else gruss = "🌙 Gute Nacht";
+            if (h >= 5 && h < 11) {
+                gruss = "🥐 Guten Morgen";
+            } else if (h >= 11 && h < 14) {
+                gruss = "🍲 Guten Mittag";
+            } else if (h >= 14 && h < 18) {
+                gruss = "☕ Guten Nachmittag";
+            } else if (h >= 18 && h < 22) {
+                gruss = "🌆 Guten Abend";
+            } else {
+                gruss = "🌙 Gute Nacht";
+            }
             document.getElementById('begruessung').innerHTML = gruss;
 
+            // Weltuhren berechnen (Basierend auf UTC-Zeit)
             var utc = jetzt.getUTCHours();
             document.getElementById('welt-lon').innerHTML = formatZweiStellen((utc + 1 + 24) % 24) + ":" + formatZweiStellen(m) + ":" + formatZweiStellen(s);
             document.getElementById('welt-par').innerHTML = formatZweiStellen((utc + 2 + 24) % 24) + ":" + formatZweiStellen(m) + ":" + formatZweiStellen(s);
@@ -326,54 +362,114 @@
             document.getElementById('welt-nyc').innerHTML = formatZweiStellen((utc - 4 + 24) % 24) + ":" + formatZweiStellen(m) + ":" + formatZweiStellen(s);
             document.getElementById('welt-la').innerHTML = formatZweiStellen((utc - 7 + 24) % 24) + ":" + formatZweiStellen(m) + ":" + formatZweiStellen(s);
 
+            // Jede Minute exakt bei Sekunde 0 wichtige Prüfungen durchführen
             if (s === 0) {
                 pruefeWeckerAktiv(formatZweiStellen(h) + ":" + formatZweiStellen(m));
                 pruefeRuhemodusZeit(h, m, jetzt.getDay());
             }
-        }
-
-        // ECHTES SPORT LIVE-DATEN SYSTEM (Aktualisiert alle 5 Minuten über Proxy)
+        }// 5. MAXIMUM PERFORMANCE LIVE-SPORT ENGINE (NBA)
+        // Zieht sich über die CORS-Brücke die echten, tagesaktuellen Spielergebnisse direkt auf das iPad Mini 1
         function holeLiveSportDaten() {
+            // --- ECHTE LIVE NBA-SCORES ABFRAGEN ---
             var urlNBA = "https://corsproxy.io?" + encodeURIComponent("https://espn.com");
             var reqNBA = new XMLHttpRequest();
             reqNBA.open('GET', urlNBA, true);
             reqNBA.onreadystatechange = function() {
-                if (reqNBA.readyState === 4 && reqNBA.status === 200) {
-                    var data = JSON.parse(reqNBA.responseText);
-                    var events = data.events;
-                    var html = "";
-                    var max = events.length > 3 ? 3 : events.length;
-                    for (var i = 0; i < max; i++) {
-                        var teams = events[i].competitions[0].competitors;
-                        html += "<div class='sport-match'><span>" + teams[0].team.shortDisplayName + " - " + teams[1].team.shortDisplayName + "</span> <span style='color:#E65100;'>" + teams[0].score + " : " + teams[1].score + "</span></div>";
+                if (reqNBA.readyState === 4) {
+                    if (reqNBA.status === 200) {
+                        try {
+                            var data = JSON.parse(reqNBA.responseText);
+                            var events = data.events;
+                            var html = "";
+                            
+                            if (events && events.length > 0) {
+                                // Zeige maximal die 3 aktuellsten bzw. wichtigsten Spiele an
+                                var max = (events.length > 3) ? 3 : events.length;
+                                for (var i = 0; i < max; i++) {
+                                    var competitors = events[i].competitions.competitors;
+                                    
+                                    // Sicheres Auslesen der Teams (Heim/Auswärts flexibel zugeordnet)
+                                    var homeTeam = competitors[0].team.shortDisplayName || competitors[0].team.name;
+                                    var awayTeam = competitors[1].team.shortDisplayName || competitors[1].team.name;
+                                    var homeScore = competitors[0].score;
+                                    var awayScore = competitors[1].score;
+                                    
+                                    // Spielstatus ermitteln (ob das Spiel live läuft, vorbei ist oder noch ansteht)
+                                    var statusType = events[i].status.type.state;
+                                    var statusText = events[i].status.type.shortDetail;
+                                    var scoreColor = (statusType === "in") ? "#FF3B30" : "#E65100"; // Rot wenn Live, Orange wenn fertig/geplant
+                                    
+                                    html += "<div class='sport-match' style='padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size:15px; font-weight:700;'>";
+                                    html += "  <span style='color:#1C1C1E;'>" + awayTeam + " @ " + homeTeam + "</span>";
+                                    html += "  <span style='color:" + scoreColor + "; font-variant-numeric: tabular-nums;'>" + awayScore + ":" + homeScore + " <small style='font-size:10px; color:#8E8E93;'>(" + statusText + ")</small></span>";
+                                    html += "</div>";
+                                }
+                                document.getElementById('nba-ticker').innerHTML = html;
+                            } else {
+                                document.getElementById('nba-ticker').innerHTML = "<div class='sport-match' style='color:#8E8E93; text-align:center; padding-top:20px;'>Keine heutigen Spiele angesetzt</div>";
+                            }
+                        } catch (e) {
+                            document.getElementById('nba-ticker').innerHTML = "<div class='sport-match' style='color:#FF3B30;'>Fehler beim Verarbeiten der NBA-Daten</div>";
+                        }
+                    } else {
+                        document.getElementById('nba-ticker').innerHTML = "<div class='sport-match' style='color:#FF3B30;'>NBA-Verbindung fehlgeschlagen</div>";
                     }
-                    document.getElementById('nba-ticker').innerHTML = html || "<div class='sport-match'>Keine heutigen Spiele</div>";
                 }
             };
-            reqNBA.send();
-
+            reqNBA.send();// --- ECHTE LIVE WNBA-SCORES ABFRAGEN ---
             var urlWNBA = "https://corsproxy.io?" + encodeURIComponent("https://espn.com");
             var reqWNBA = new XMLHttpRequest();
             reqWNBA.open('GET', urlWNBA, true);
             reqWNBA.onreadystatechange = function() {
-                if (reqWNBA.readyState === 4 && reqWNBA.status === 200) {
-                    var data = JSON.parse(reqWNBA.responseText);
-                    var events = data.events;
-                    var html = "";
-                    var max = events.length > 3 ? 3 : events.length;
-                    for (var i = 0; i < max; i++) {
-                        var teams = events[i].competitions[0].competitors;
-                        html += "<div class='sport-match'><span>" + teams[0].team.shortDisplayName + " - " + teams[1].team.shortDisplayName + "</span> <span style='color:#E65100;'>" + teams[0].score + " : " + teams[1].score + "</span></div>";
+                if (reqWNBA.readyState === 4) {
+                    if (reqWNBA.status === 200) {
+                        try {
+                            var data = JSON.parse(reqWNBA.responseText);
+                            var events = data.events;
+                            var html = "";
+                            
+                            if (events && events.length > 0) {
+                                var max = (events.length > 3) ? 3 : events.length;
+                                for (var i = 0; i < max; i++) {
+                                    var competitors = events[i].competitions.competitors;
+                                    
+                                    var homeTeam = competitors[0].team.shortDisplayName || competitors[0].team.name;
+                                    var awayTeam = competitors[1].team.shortDisplayName || competitors[1].team.name;
+                                    var homeScore = competitors[0].score;
+                                    var awayScore = competitors[1].score;
+                                    
+                                    var statusType = events[i].status.type.state;
+                                    var statusText = events[i].status.type.shortDetail;
+                                    var scoreColor = (statusType === "in") ? "#FF3B30" : "#E65100";
+                                    
+                                    html += "<div class='sport-match' style='padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size:15px; font-weight:700;'>";
+                                    html += "  <span style='color:#1C1C1E;'>" + awayTeam + " @ " + homeTeam + "</span>";
+                                    html += "  <span style='color:" + scoreColor + "; font-variant-numeric: tabular-nums;'>" + awayScore + ":" + homeScore + " <small style='font-size:10px; color:#8E8E93;'>(" + statusText + ")</small></span>";
+                                    html += "</div>";
+                                }
+                                document.getElementById('wnba-ticker').innerHTML = html;
+                            } else {
+                                // Da die WNBA im Oktober in der Off-Season ist, fangen wir das hier sauber ab
+                                document.getElementById('wnba-ticker').innerHTML = "<div class='sport-match' style='color:#8E8E93; text-align:center; padding-top:20px;'>Keine aktuellen Matches (Off-Season)</div>";
+                            }
+                        } catch (e) {
+                            document.getElementById('wnba-ticker').innerHTML = "<div class='sport-match' style='color:#FF3B30;'>Fehler beim Verarbeiten WNBA</div>";
+                        }
+                    } else {
+                        document.getElementById('wnba-ticker').innerHTML = "<div class='sport-match' style='color:#FF3B30;'>WNBA-Verbindung fehlgeschlagen</div>";
                     }
-                    document.getElementById('wnba-ticker').innerHTML = html || "<div class='sport-match'>Keine heutigen Spiele</div>";
                 }
             };
             reqWNBA.send();
         }
 
+        // 6. SPRUCH-WECHSLER (365 Tage Automatik)
         var zitate = [
             '"Gib jedem Tag die Chance, der schönste deines Lebens zu werden."',
-            '"Der beste Weg, die Zukunft vorherzusagen, ist, sie selbst zu gestalten."'
+            '"Der beste Weg, die Zukunft vorherzusagen, ist, sie selbst zu gestalten."',
+            '"Wer kämpft, kann verlieren. Wer nicht kämpft, hat schon verloren."',
+            '"Die reinste Form des Wahnsinns ist es, alles beim Alten zu belassen und zu hoffen, dass sich etwas ändert."',
+            '"Es ist nicht zu wenig Zeit, die wir haben, sondern es ist zu viel Zeit, die wir nicht nutzen."'
         ];
         function wechsleSpruch() {
             var jetzt = new Date();
@@ -382,34 +478,60 @@
             document.getElementById('zitat-text').innerHTML = zitate[tagDesJahres % zitate.length];
         }
 
+        // 7. INTELLIGENTER RUHEMODUS (Fokus-Verwaltung)
         var ruhePlan = {};
+        if (typeof(Storage) !== "undefined" && localStorage.getItem("ruhePlan")) {
+            ruhePlan = JSON.parse(localStorage.getItem("ruhePlan"));
+        }
+
         function speichereRuhemodus() {
             var tag = document.getElementById('ruhe-tag').value;
-            ruhePlan[tag] = { von: document.getElementById('ruhe-von').value, bis: document.getElementById('ruhe-bis').value };
+            ruhePlan[tag] = { 
+                von: document.getElementById('ruhe-von').value, 
+                bis: document.getElementById('ruhe-bis').value 
+            };
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("ruhePlan", JSON.stringify(ruhePlan));
+            }
             document.getElementById('ruhe-meldung').innerHTML = "✓ Gesichert!";
             setTimeout(function() { document.getElementById('ruhe-meldung').innerHTML = ""; }, 3000);
         }
 
         function pruefeRuhemodusZeit(h, m, wochentag) {
-            var korrigierterTag = (wochentag === 0) ? 6 : wochentag - 1;
+            var korrigierterTag = (wochentag === 0) ? 6 : wochentag - 1; 
             if (ruhePlan[korrigierterTag]) {
                 var jetztInMin = (h * 60) + m;
-                var vonMin = (parseInt(ruhePlan[korrigierterTag].von.split(':')[0]) * 60) + parseInt(ruhePlan[korrigierterTag].von.split(':')[1]);
-                var bisMin = (parseInt(ruhePlan[korrigierterTag].bis.split(':')[0]) * 60) + parseInt(ruhePlan[korrigierterTag].bis.split(':')[1]);
-                if (vonMin > bisMin ? (jetztInMin >= vonMin || jetztInMin < bisMin) : (jetztInMin >= vonMin && jetztInMin < bisMin)) { aendereHelligkeit(65); return; }
+                var vonTeile = ruhePlan[korrigierterTag].von.split(':');
+                var bisTeile = ruhePlan[korrigierterTag].bis.split(':');
+                var vonMin = (parseInt(vonTeile[0]) * 60) + parseInt(vonTeile[1]);
+                var bisMin = (parseInt(bisTeile[0]) * 60) + parseInt(bisTeile[1]);
+                
+                if (vonMin > bisMin) {
+                    if (jetztInMin >= vonMin || jetztInMin < bisMin) { aendereHelligkeit(65); return; }
+                } else {
+                    if (jetztInMin >= vonMin && jetztInMin < bisMin) { aendereHelligkeit(65); return; }
+                }
             }
-            aendereHelligkeit(0);
+            aendereHelligkeit(0); 
         }
 
+        // 8. MULTI-TIMER
         function starteTimer() {
             var sek = parseInt(document.getElementById('timer-sec').value);
             if (isNaN(sek) || sek <= 0) return;
             var countdown = setInterval(function() {
-                if (sek <= 0) { clearInterval(countdown); document.getElementById('timer-liste').innerHTML = "⏰ Zeit um!"; spieleAlarm(); }
-                else { document.getElementById('timer-liste').innerHTML = "Noch: " + sek + " Sek"; sek--; }
+                if (sek <= 0) { 
+                    clearInterval(countdown); 
+                    document.getElementById('timer-liste').innerHTML = "⏰ Zeit um!"; 
+                    spieleAlarm(); 
+                } else { 
+                    document.getElementById('timer-liste').innerHTML = "Noch: " + sek + " Sek"; 
+                    sek--; 
+                }
             }, 1000);
         }
 
+        // 9. WECKER-APP SYSTEM
         var weckerListe = [];
         function addWecker() {
             var zeit = document.getElementById('wecker-zeit').value;
@@ -428,8 +550,11 @@
 
         function sucheNachUpdates() { window.location.reload(true); }
 
+        // AUTOMATISCHE INTERVALL-STEUERUNG
         setInterval(aktualisiereSystemUhr, 1000);
-        setInterval(holeLiveSportDaten, 300000); // Alle 5 Minuten Sport-Scores live laden
+        setInterval(holeLiveSportDaten, 300000); // Alle 5 Minuten Live-Scores abholen
+        
+        // DIREKTSTARTS BEIM SEITENAUFRUF
         aktualisiereSystemUhr();
         wechsleSpruch();
         holeLiveSportDaten();
