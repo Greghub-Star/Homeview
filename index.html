@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HomeViewOS 28 Beta</title>
     <style>
-        /* Wunderschöner, fließender Wellen-Hintergrund (Die 27 wurde perfekt herausgeschnitten) */
+        /* Eleganter Apple-Wellenhintergrund in Pastell-Orange ohne die 27 */
         body {
             background-color: #FA8E4B;
             background-image: url('https://macrumors.com');
@@ -14,7 +14,6 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             color: #1C1C1E;
-            
             font-family: -apple-system-headline, -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
             margin: 0;
             padding: 20px;
@@ -22,7 +21,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Beta-Produkt-Plakette */
+        /* Rote Beta-Produktplakette */
         .beta-badge {
             position: absolute;
             top: 20px;
@@ -64,31 +63,34 @@
             border-spacing: 15px;
         }
 
+        /* Schneeweiße, abgerundete Apple-Widgets */
         .card {
             background-color: rgba(255, 255, 255, 0.94);
-            border-radius: 26px; /* Typisches abgerundetes Apple-Widget Design */
+            border-radius: 26px;
             padding: 24px;
             text-align: center;
             vertical-align: top;
             width: 50%;
-            height: 240px;
+            height: 265px; 
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.7);
+            box-sizing: border-box;
         }
 
-        /* MASSIVE, EXTRA GROSSE ÜBERSCHRIFTEN */
+        /* Massive Überschriften */
         .card h2 {
             font-size: 24px; 
             margin-top: 0;
-            margin-bottom: 18px;
+            margin-bottom: 15px;
             color: #D35400; 
             font-weight: 900; 
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
 
+        /* Große Zeitanzeige */
         .time-display {
-            font-size: 84px;
+            font-size: 82px;
             font-weight: 600;
             color: #1C1C1E;
             margin: 0;
@@ -96,34 +98,62 @@
             letter-spacing: -2px;
         }
 
+        /* Deutlich größeres Datum */
         .date-display {
-            font-size: 18px;
+            font-size: 21px; 
             color: #D35400;
-            font-weight: 600;
-            margin-top: 12px;
-        }
-
-        /* Ausfallsichere Textboxen für iOS 9 */
-        .fallback-box {
-            font-size: 18px;
-            color: #2C2C2E;
-            line-height: 1.6;
-            text-align: center;
-            padding-top: 20px;
-            font-weight: 600;
-        }
-
-        .interactive-link {
-            display: block;
-            background-color: #E5E5EA;
-            color: #1C1C1E;
-            text-decoration: none;
-            padding: 12px;
-            margin-top: 15px;
-            border-radius: 12px;
-            font-size: 15px;
             font-weight: 700;
-            border: 1px solid #D1D1D6;
+            margin-top: 10px;
+        }
+
+        /* Neue Begrüßungszeile */
+        .greeting-display {
+            font-size: 17px;
+            color: #48484A;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        /* ECHTE, riesige Gradanzeige beim Wetter */
+        .giant-temp {
+            font-size: 68px; 
+            font-weight: 700;
+            color: #1C1C1E;
+            display: block;
+            margin-top: 5px;
+            letter-spacing: -1px;
+        }
+
+        .weather-status-text {
+            font-size: 18px;
+            color: #48484A;
+            font-weight: 700;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Styling für die echten Text-Schlagzeilen */
+        .news-box {
+            font-size: 14px;
+            color: #1C1C1E;
+            line-height: 1.4;
+            text-align: left;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .news-item {
+            padding: 7px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .news-item span {
+            color: #FF3B30;
+            font-weight: bold;
+            margin-right: 6px;
         }
     </style>
 </head>
@@ -136,34 +166,31 @@
 
     <table class="dashboard-table">
         <tr>
-            <!-- Reihe 1 - Links: Uhrzeit & Datum -->
+            <!-- Kachel 1: Uhrzeit, vergrößertes Datum & Gruß -->
             <td class="card">
                 <h2>Zeit & Datum</h2>
                 <div id="uhr" class="time-display">00:00</div>
                 <div id="datum" class="date-display">Lädt...</div>
+                <div id="begruessung" class="greeting-display">Servus</div>
             </td>
 
-            <!-- Reihe 1 - Rechts: Wetter Döbling (Ausfallsicher verlinkt) -->
+            <!-- Kachel 2: ECHTES LIVE WETTER DÖBLING -->
             <td class="card">
                 <h2>Wetter 1190 Wien</h2>
-                <div class="fallback-box">
-                    <span>☀️ Aktuell 14°C</span><br>
-                    <span style="font-size: 15px; color: #48484A; font-weight: 500;">Heiter bis bewölkt in Döbling</span>
-                    <a href="https://wetter.at" class="interactive-link" target="_self">🔄 Live Wetter öffnen</a>
-                </div>
+                <span id="wetter-grad" class="giant-temp">--°C</span>
+                <span id="wetter-text" class="weather-status-text">Wird geladen...</span>
             </td>
         </tr>
         <tr>
-            <!-- Reihe 2 - Links: Schlagzeilen (Ausfallsicher verlinkt) -->
+            <!-- Kachel 3: ECHTE LIVE NEWS (ORF) -->
             <td class="card">
                 <h2>Top News Österreich & Welt</h2>
-                <div class="fallback-box" style="padding-top: 10px;">
-                    <span style="font-size: 15px; color: #48484A; font-weight: 500; display:block; margin-bottom: 10px;">Tippe hier, um die aktuellen ORF-Meldungen live einzusehen:</span>
-                    <a href="https://orf.at" class="interactive-link" target="_self">🔴 Live Schlagzeilen laden</a>
+                <div class="news-box" id="news-inhalt">
+                    <div class="news-item"><span>🔴 ORF:</span> Schlagzeilen werden geladen...</div>
                 </div>
             </td>
 
-            <!-- Reihe 2 - Rechts: Automatisches 365-Tage Spruch-Archiv -->
+            <!-- Kachel 4: Automatisches Spruch-Archiv -->
             <td class="card" style="vertical-align: middle;">
                 <h2>Tagesfokus</h2>
                 <p id="zitat-text" style="font-style: italic; color: #2C2C2E; line-height: 1.5; font-size: 18px; margin: 0 10px; font-weight: 500; letter-spacing: -0.2px;">
@@ -171,22 +198,28 @@
                 </p>
             </td>
         </tr>
-    </table>
-
-    <script>
-        // 1. LIVE-UHRZEIT & DATUM
-        function aktualisiereUhr() {
+    </table><script>
+        // 1. LIVE-UHRZEIT, DATUM & AUTOMATISCHE BEGRÜSSUNG
+        function aktualisiereUhrUndGruss() {
             var jetzt = new Date();
             var stunden = jetzt.getHours();
             var minuten = jetzt.getMinutes();
             
             if (stunden < 10) stunden = "0" + stunden;
             if (minuten < 10) minuten = "0" + minuten;
-            
             document.getElementById('uhr').innerHTML = stunden + ":" + minuten;
             
             var optionen = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
             document.getElementById('datum').innerHTML = jetzt.toLocaleDateString('de-AT', optionen);
+            
+            var gruss = "Servus";
+            if (stunden >= 5 && stunden < 11) gruss = "☀️ Guten Morgen";
+            else if (stunden >= 11 && stunden < 14) gruss = "🍽️ Guten Mittag";
+            else if (stunden >= 14 && stunden < 18) gruss = "☕ Guten Nachmittag";
+            else if (stunden >= 18 && stunden < 22) gruss = "🌆 Guten Abend";
+            else gruss = "🌙 Gute Nacht";
+            
+            document.getElementById('begruessung').innerHTML = gruss;
         }
 
         // 2. 365-TAGE SPRUCH-ARCHIV
@@ -200,32 +233,90 @@
             '"Wege entstehen dadurch, dass man sie geht."',
             '"Ziele im Leben erreicht man nicht durch Wünschen, sondern durch Handeln."',
             '"Auch aus Steinen, die einem in den Weg gelegt werden, kann man Schönes bauen."',
-            '"Das Geheimnis des Vorwärtskommens besteht darin, den ersten Schritt zu tun."',
-            '"Es kommt nicht darauf an, wie langsam du gehst, solange du nicht stehen bleibst."',
-            '"Die kunst ist, einmal mehr aufzustehen, als man umgeworfen wurde."',
-            '"Kleine Taten, die man ausführt, sind besser als große, die man nur plant."',
-            '"Wer die Welt bewegen will, sollte erst sich selbst bewegen."',
-            '"Glaube daran, dass du es kannst, und du hast die Hälfte des Weges geschafft."'
+            '"Das Geheimnis des Vorwärtskommens besteht darin, den ersten Schritt zu tun."'
         ];
 
         function wechsleSpruch() {
             var jetzt = new Date();
             var start = new Date(jetzt.getFullYear(), 0, 0);
             var diff = jetzt - start;
-            var einTag = 1000 * 60 * 60 * 24;
-            var tagDesJahres = Math.floor(diff / einTag);
-            
+            var tagDesJahres = Math.floor(diff / (1000 * 60 * 60 * 24));
             var index = tagDesJahres % zitate.length;
             document.getElementById('zitat-text').innerHTML = zitate[index];
         }
 
-        // Intervalle aktivieren
-        setInterval(aktualisiereUhr, 1000);
-        
-        // Sofortstarts
-        aktualisiereUhr();
-        wechsleSpruch();
-    </script>
+        // 3. TUNNEL-ABFRAGE FÜR LIVE-WETTER (iOS 9 sicher via open-meteo & Proxy)
+        function holeEchtesWetter() {
+            var apiWetter = "https://open-meteo.com";
+            var url = "https://corsproxy.io?" + encodeURIComponent(apiWetter);
+            
+            var req = new XMLHttpRequest();
+            req.open('GET', url, true);
+            req.onreadystatechange = function() {
+                if (req.readyState === 4 && req.status === 200) {
+                    var daten = JSON.parse(req.responseText);
+                    var temp = Math.round(daten.current_weather.temperature);
+                    var code = daten.current_weather.weathercode;
+                    
+                    var statusText = "Heiter";
+                    if (code === 0) statusText = "☀️ Sonnig & Klar";
+                    else if (code >= 1 && code <= 3) statusText = "🌤️ Leicht bewölkt";
+                    else if (code >= 45 && code <= 48) statusText = "🌫️ Nebelig";
+                    else if (code >= 51 && code <= 65) statusText = "🌧️ Regnerisch";
+                    else if (code >= 71 && code <= 77) statusText = "❄️ Schneefall";
+                    else if (code >= 80 && code <= 82) statusText = "🌦️ Regenschauer";
+                    else if (code >= 95) statusText = "⛈️ Gewittersturm";
+                    
+                    document.getElementById('wetter-grad').innerHTML = temp + "°C";
+                    document.getElementById('wetter-text').innerHTML = statusText;
+                }
+            };
+            req.send();
+        }
 
+        // 4. ECHTE ORF LIVE SCHLAGZEILEN (Bricht die iOS 9 Sperre über Text-Tunnel)
+        function holeEchteNews() {
+            var rssUrl = "https://orf.at";
+            var url = "https://corsproxy.io?" + encodeURIComponent(rssUrl);
+            
+            var req = new XMLHttpRequest();
+            req.open('GET', url, true);
+            req.onreadystatechange = function() {
+                if (req.readyState === 4 && req.status === 200) {
+                    var xmlText = req.responseText;
+                    
+                    // Super-kompatibler Regex-Parser für das alte iOS 9 XML
+                    var matches = xmlText.match(/<item>[\s\S]?<title>([\s\S]?)<\/title>/g);
+                    var html = "";
+                    
+                    if (matches) {
+                        var max = matches.length > 3 ? 3 : matches.length;
+                        for (var i = 0; i < max; i++) {
+                            var titelMatch = matches[i].match(/<title>([\s\S]*?)<\/title>/);
+                            if (titelMatch && titelMatch[1]) {
+                                var titel = titelMatch[1].replace("<![CDATA[", "").replace("]]>", "").trim();
+                                html += "<div class='news-item'><span>🔴 ORF:</span> " + titel + "</div>";
+                            }
+                        }
+                    } else {
+                        html = "<div class='news-item'>Keine aktuellen Schlagzeilen gefunden.</div>";
+                    }
+                    document.getElementById('news-inhalt').innerHTML = html;
+                }
+            };
+            req.send();
+        }
+
+        // Automatische Aktualisierungs-Intervalle
+        setInterval(aktualisiereUhrUndGruss, 1000);
+        setInterval(holeEchtesWetter, 300000); // Alle 5 Minuten echtes Wetter live laden
+        setInterval(holeEchteNews, 600000);   // Alle 10 Minuten echte ORF-News live laden
+        
+        // Sofortstarts beim ersten Aufrufen der Seite
+        aktualisiereUhrUndGruss();
+        wechsleSpruch();
+        holeEchtesWetter();
+        holeEchteNews();
+    </script>
 </body>
 </html>
