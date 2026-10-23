@@ -1,241 +1,699 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Home</title>
-    
-    <style>
-        /* 1zu1 Apple Home Reset & Core Styles */
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            margin: 0;
-            padding: 0;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            /* Original Apple Home Hintergrund (Vollbild-Naturverlauf) */
-            background: url('https://unsplash.com') no-repeat center center fixed;
-            background-size: cover;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            padding: 40px 30px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17191d">
+  <title>HomeViewOS</title>
 
-        /* Top-Bar (Home-Name und Status) */
-        .home-header {
-            margin-bottom: 35px;
-            color: #ffffff;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        .home-header h1 {
-            font-size: 34px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
+    body {
+      margin: 0;
+      padding: 18px;
+      background: #111317;
+      color: #f5f5f7;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+        Arial, sans-serif;
+    }
 
-        .home-header .status-text {
-            font-size: 16px;
-            font-weight: 400;
-            opacity: 0.9;
-            margin-top: 4px;
-        }
+    .dashboard {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-        /* Sektions-Titel (z.B. "Favoriten") */
-        .section-title {
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-        }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 4px 2px;
+    }
 
-        /* Kachel-Raster für iPad Mini Querformat (Exakte Abstände) */
-        .accessories-grid {
-            width: 100%;
-            font-size: 0; /* Verhindert Whitespace-Bugs in iOS 9 */
-        }
+    .brand {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
 
-        /* Die klassische quadratische Apple HomeKit Kachel */
-        .tile {
-            display: inline-block;
-            vertical-align: top;
-            width: 152px;
-            height: 152px;
-            margin-right: 14px;
-            margin-bottom: 14px;
-            /* Original transluzentes Weiß für inaktive Kacheln */
-            background-color: rgba(255, 255, 255, 0.55);
-            border-radius: 12px;
-            padding: 14px;
-            position: relative;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: background-color 0.15s ease;
-        }
+    .status {
+      color: #a1a1aa;
+      font-size: 12px;
+    }
 
-        /* Komplett deckendes Weiß, wenn das Gerät eingeschaltet ist */
-        .tile.active {
-            background-color: rgba(255, 255, 255, 0.96);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-        }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
 
-        /* Icon oben links */
-        .tile-icon {
-            font-size: 28px;
-            display: block;
-            margin-bottom: 30px;
-            opacity: 0.4; /* Im gedimmten Zustand leicht transparent */
-            transition: opacity 0.15s ease;
-        }
+    .card {
+      min-width: 0;
+      padding: 22px;
+      border-radius: 22px;
+      background: #202329;
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
 
-        .tile.active .tile-icon {
-            opacity: 1.0;
-            /* Apple-typischer Orange-Gelb-Farbton für aktive Lichter */
-            color: #ff9500; 
-        }
+    .card-title {
+      margin: 0 0 16px;
+      color: #a7abb5;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
 
-        /* Text-Container unten in der Kachel */
-        .tile-info {
-            position: absolute;
-            bottom: 14px;
-            left: 14px;
-            right: 14px;
-        }
+    .welcome {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
 
-        .tile-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #000000;
-            line-height: 1.2;
-            display: -webkit-box;
-            -webkit-line-clamp: 2; /* Erlaubt maximal zwei Zeilen wie bei iOS */
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
+    .greeting {
+      margin: 0 0 8px;
+      font-size: 30px;
+      font-weight: 600;
+    }
 
-        .tile-status {
-            font-size: 12px;
-            font-weight: 400;
-            color: #555555;
-            margin-top: 3px;
-        }
+    .date {
+      color: #b3b7c0;
+      font-size: 16px;
+    }
 
-        .tile.active .tile-status {
-            color: #ff9500; /* Status-Schrift wechselt zu Orange bei Aktivität */
-        }
-        
-    </style>
+    .clock-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      min-height: 230px;
+    }
+
+    .clock {
+      position: relative;
+      width: 155px;
+      height: 155px;
+      flex: 0 0 155px;
+      border-radius: 50%;
+      border: 3px solid #50545e;
+      background: radial-gradient(circle, #2b2f37 0%, #191b20 100%);
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.45),
+        0 0 0 6px rgba(255,255,255,0.025);
+    }
+
+    .tick {
+      position: absolute;
+      top: 7px;
+      left: 50%;
+      width: 2px;
+      height: 8px;
+      margin-left: -1px;
+      background: #c6cad2;
+      transform-origin: 1px 67px;
+    }
+
+    .tick.major {
+      width: 3px;
+      height: 12px;
+      margin-left: -1.5px;
+      background: #ffffff;
+    }
+
+    .hand {
+      position: absolute;
+      left: 50%;
+      bottom: 50%;
+      border-radius: 4px;
+      transform-origin: 50% 100%;
+    }
+
+    .hour-hand {
+      width: 5px;
+      height: 38px;
+      margin-left: -2.5px;
+      background: #f5f5f7;
+    }
+
+    .minute-hand {
+      width: 3px;
+      height: 53px;
+      margin-left: -1.5px;
+      background: #d5d8df;
+    }
+
+    .second-hand {
+      width: 2px;
+      height: 59px;
+      margin-left: -1px;
+      background: #ff5b5b;
+    }
+
+    .clock-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 9px;
+      height: 9px;
+      margin: -4.5px 0 0 -4.5px;
+      border-radius: 50%;
+      background: #ff5b5b;
+    }
+
+    .digital-time {
+      font-size: 36px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .digital-date {
+      margin-top: 8px;
+      color: #a7abb5;
+      font-size: 14px;
+    }
+
+    .weather-main {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .weather-icon {
+      font-size: 54px;
+      line-height: 1;
+    }
+
+    .temperature {
+      font-size: 42px;
+      font-weight: 300;
+    }
+
+    .weather-description {
+      margin-top: 5px;
+      color: #b3b7c0;
+      font-size: 14px;
+    }
+
+    .weather-details {
+      display: flex;
+      gap: 20px;
+      margin-top: 22px;
+      color: #c4c7ce;
+      font-size: 13px;
+    }
+
+    .weather-details strong {
+      display: block;
+      margin-top: 5px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .news-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .news-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .news-list li:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .news-list a {
+      color: #f0f1f4;
+      text-decoration: none;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .news-list a:active {
+      color: #8ab4ff;
+    }
+
+    .news-meta {
+      margin-top: 5px;
+      color: #858b98;
+      font-size: 11px;
+    }
+
+    .news-message {
+      color: #a7abb5;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .footer {
+      padding: 18px 4px 4px;
+      color: #696f7b;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    @media (max-width: 650px) {
+      body {
+        padding: 10px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .welcome {
+        grid-column: auto;
+      }
+
+      .greeting {
+        font-size: 25px;
+      }
+
+      .clock-card {
+        gap: 18px;
+        padding: 18px 12px;
+      }
+
+      .clock {
+        width: 125px;
+        height: 125px;
+        flex-basis: 125px;
+      }
+
+      .tick {
+        transform-origin: 1px 52px;
+      }
+
+      .digital-time {
+        font-size: 27px;
+      }
+
+      .temperature {
+        font-size: 36px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <main class="dashboard">
+    <header class="header">
+      <div class="brand">HomeViewOS</div>
+      <div class="status" id="connection-status">Dashboard aktiv</div>
+    </header>
 
-    <!-- Apple Home Header -->
-    <div class="home-header">
-        <h1 id="home-title">Mein Zuhause</h1>
-        <div class="status-text" id="global-status">Alle Geräte reagieren.</div>
-    </div>
+    <section class="grid">
+      <div class="card welcome">
+        <div>
+          <h1 class="greeting" id="greeting">Guten Tag</h1>
+          <div class="date" id="welcome-date">Willkommen zu Hause.</div>
+        </div>
+      </div>
 
-    <div class="section-title">Lieblingsgeräte</div>
-
-    <!-- Kachel-Übersicht -->
-    <div class="accessories-grid">
-        
-        <!-- Licht Kachel -->
-        <div class="tile active" onclick="toggleTile(this, 'Licht')">
-            <span class="tile-icon">💡</span>
-            <div class="tile-info">
-                <div class="tile-name">Stehlampe</div>
-                <div class="tile-status">An</div>
-            </div>
+      <div class="card clock-card">
+        <div class="clock" id="analog-clock" aria-label="Analoge Uhr">
+          <div id="clock-ticks"></div>
+          <div class="hand hour-hand" id="hour-hand"></div>
+          <div class="hand minute-hand" id="minute-hand"></div>
+          <div class="hand second-hand" id="second-hand"></div>
+          <div class="clock-center"></div>
         </div>
 
-        <!-- TV Kachel -->
-        <div class="tile" onclick="toggleTile(this, 'Standard')">
-            <span class="tile-icon">📺</span>
-            <div class="tile-info">
-                <div class="tile-name">Wohnzimmer TV</div>
-                <div class="tile-status">Aus</div>
+        <div>
+          <div class="digital-time" id="digital-time">--:--:--</div>
+          <div class="digital-date" id="digital-date">Datum wird geladen</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Wetter · Wien-Döbling</h2>
+
+        <div class="weather-main">
+          <div class="weather-icon" id="weather-icon">⛅</div>
+          <div>
+            <div class="temperature" id="temperature">--°</div>
+            <div class="weather-description" id="weather-description">
+              Wetter wird geladen …
             </div>
+          </div>
         </div>
 
-        <!-- Schloss Kachel -->
-        <div class="tile" onclick="toggleTile(this, 'Schloss')">
-            <span class="tile-icon">🔒</span>
-            <div class="tile-info">
-                <div class="tile-name">Haustür</div>
-                <div class="tile-status">Verriegelt</div>
-            </div>
+        <div class="weather-details">
+          <div>
+            Wind
+            <strong id="wind-speed">-- km/h</strong>
+          </div>
+          <div>
+            Gefühlt
+            <strong id="feels-like">--°</strong>
+          </div>
         </div>
 
-        <!-- Thermostat Kachel -->
-        <div class="tile active" onclick="toggleTile(this, 'Klima')">
-            <span class="tile-icon">🌡️</span>
-            <div class="tile-info">
-                <div class="tile-name">Heizung</div>
-                <div class="tile-status">21,0°</div>
-            </div>
+        <div class="news-message" id="weather-updated" style="margin-top:16px;">
+          Aktuelle Wetterdaten von Open-Meteo
         </div>
+      </div>
 
-        <!-- Kaffeemaschine Kachel -->
-        <div class="tile" onclick="toggleTile(this, 'Standard')">
-            <span class="tile-icon">☕</span>
-            <div class="tile-info">
-                <div class="tile-name">Kaffeemaschine</div>
-                <div class="tile-status">Aus</div>
-            </div>
-        </div>
+      <div class="card">
+        <h2 class="card-title">NBA · Basketball</h2>
+        <ul class="news-list" id="nba-news">
+          <li class="news-message">Nachrichten werden geladen …</li>
+        </ul>
+      </div>
 
-    </div>
+      <div class="card">
+        <h2 class="card-title">WNBA · Basketball</h2>
+        <ul class="news-list" id="wnba-news">
+          <li class="news-message">Nachrichten werden geladen …</li>
+        </ul>
+      </div>
 
-    <script>
-        // Logik für den exakten Apple-Zustandswechsel
-        function toggleTile(element, type) {
-            var isActive = element.classList.contains('active');
-            var statusElement = element.querySelector('.tile-status');
-            var iconElement = element.querySelector('.tile-icon');
-            
-            if (isActive) {
-                // Ausschalten
-                element.classList.remove('active');
-                if (type === 'Licht' || type === 'Standard') statusElement.innerText = 'Aus';
-                if (type === 'Schloss') {
-                    statusElement.innerText = 'Entriegelt';
-                    iconElement.innerText = '🔓';
-                }
-            } else {
-                // Einschalten
-                element.classList.add('active');
-                if (type === 'Licht' || type === 'Standard') statusElement.innerText = 'An';
-                if (type === 'Schloss') {
-                    statusElement.innerText = 'Verriegelt';
-                    iconElement.innerText = '🔒';
-                }
-            }
-            
-            updateGlobalStatus();
+      <div class="card">
+        <h2 class="card-title">KURIER · Österreich & Welt</h2>
+        <ul class="news-list" id="kurier-news">
+          <li class="news-message">Nachrichten werden geladen …</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="footer">
+      HomeViewOS · Wetterdaten: Open-Meteo · Nachrichten werden regelmäßig aktualisiert
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var months = [
+        "Jänner", "Februar", "März", "April", "Mai", "Juni",
+        "Juli", "August", "September", "Oktober", "November", "Dezember"
+      ];
+
+      var weekdays = [
+        "Sonntag", "Montag", "Dienstag", "Mittwoch",
+        "Donnerstag", "Freitag", "Samstag"
+      ];
+
+      function pad(number) {
+        return number < 10 ? "0" + number : String(number);
+      }
+
+      function updateClock() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds();
+        var milliseconds = now.getMilliseconds();
+
+        document.getElementById("digital-time").textContent =
+          pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
+
+        document.getElementById("digital-date").textContent =
+          weekdays[now.getDay()] + ", " +
+          now.getDate() + ". " + months[now.getMonth()] + " " +
+          now.getFullYear();
+
+        document.getElementById("welcome-date").textContent =
+          weekdays[now.getDay()] + ", " +
+          now.getDate() + ". " + months[now.getMonth()] + " " +
+          now.getFullYear();
+
+        var greeting = "Guten Abend";
+        if (hours >= 5 && hours < 11) {
+          greeting = "Guten Morgen";
+        } else if (hours >= 11 && hours < 18) {
+          greeting = "Guten Tag";
         }
 
-        // Berechnet die dynamische Statuszeile oben links (wie bei Apple Home)
-        function updateGlobalStatus() {
-            var activeTiles = document.querySelectorAll('.tile.active').length;
-            var statusText = document.getElementById('global-status');
-            
-            if (activeTiles === 0) {
-                statusText.innerText = 'Alle Geräte sind aus.';
-            } else {
-                statusText.innerText = activeTiles + ' Geräte eingeschaltet.';
+        document.getElementById("greeting").textContent = greeting;
+
+        var smoothSeconds = seconds + milliseconds / 1000;
+        var secondAngle = smoothSeconds * 6;
+        var minuteAngle = minutes * 6 + smoothSeconds * 0.1;
+        var hourAngle = (hours % 12) * 30 + minutes * 0.5;
+
+        document.getElementById("second-hand").style.transform =
+          "rotate(" + secondAngle + "deg)";
+        document.getElementById("minute-hand").style.transform =
+          "rotate(" + minuteAngle + "deg)";
+        document.getElementById("hour-hand").style.transform =
+          "rotate(" + hourAngle + "deg)";
+      }
+
+      function createClockTicks() {
+        var container = document.getElementById("clock-ticks");
+        var i;
+
+        for (i = 0; i < 12; i++) {
+          var tick = document.createElement("div");
+          tick.className = i % 3 === 0 ? "tick major" : "tick";
+          tick.style.transform = "rotate(" + (i * 30) + "deg)";
+          container.appendChild(tick);
+        }
+      }
+
+      function weatherDescription(code) {
+        var descriptions = {
+          0: ["Klarer Himmel", "☀️"],
+          1: ["Überwiegend klar", "🌤️"],
+          2: ["Teilweise bewölkt", "⛅"],
+          3: ["Bewölkt", "☁️"],
+          45: ["Neblig", "🌫️"],
+          48: ["Reifnebel", "🌫️"],
+          51: ["Leichter Nieselregen", "🌦️"],
+          53: ["Nieselregen", "🌦️"],
+          55: ["Starker Nieselregen", "🌧️"],
+          61: ["Leichter Regen", "🌦️"],
+          63: ["Regen", "🌧️"],
+          65: ["Starker Regen", "🌧️"],
+          71: ["Leichter Schneefall", "🌨️"],
+          73: ["Schneefall", "🌨️"],
+          75: ["Starker Schneefall", "❄️"],
+          80: ["Regenschauer", "🌦️"],
+          81: ["Regenschauer", "🌧️"],
+          82: ["Starke Regenschauer", "⛈️"],
+          95: ["Gewitter", "⛈️"],
+          96: ["Gewitter mit Hagel", "⛈️"],
+          99: ["Starkes Gewitter mit Hagel", "⛈️"]
+        };
+
+        return descriptions[code] || ["Wetterdaten verfügbar", "🌡️"];
+      }
+
+      function loadWeather() {
+        var url =
+          "https://api.open-meteo.com/v1/forecast" +
+          "?latitude=48.249" +
+          "&longitude=16.341" +
+          "&current=temperature_2m,relative_humidity_2m,apparent_temperature," +
+          "is_day,precipitation,weather_code,wind_speed_10m" +
+          "&timezone=Europe%2FBerlin";
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.timeout = 12000;
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState !== 4) return;
+
+          if (xhr.status >= 200 && xhr.status < 300) {
+            try {
+              var data = JSON.parse(xhr.responseText);
+              var current = data.current;
+              var description = weatherDescription(current.weather_code);
+
+              document.getElementById("temperature").textContent =
+                Math.round(current.temperature_2m) + "°";
+
+              document.getElementById("weather-description").textContent =
+                description[0];
+
+              document.getElementById("weather-icon").textContent =
+                description[1];
+
+              document.getElementById("wind-speed").textContent =
+                Math.round(current.wind_speed_10m) + " km/h";
+
+              document.getElementById("feels-like").textContent =
+                Math.round(current.apparent_temperature) + "°";
+
+              document.getElementById("weather-updated").textContent =
+                "Stand: " + current.time.substring(11, 16) + " Uhr";
+            } catch (error) {
+              showWeatherError();
             }
+          } else {
+            showWeatherError();
+          }
+        };
+
+        xhr.onerror = showWeatherError;
+        xhr.ontimeout = showWeatherError;
+        xhr.send();
+      }
+
+      function showWeatherError() {
+        document.getElementById("weather-description").textContent =
+          "Wetter momentan nicht verfügbar";
+        document.getElementById("weather-updated").textContent =
+          "Bitte Internetverbindung prüfen.";
+      }
+
+      function showNewsMessage(element, message) {
+        element.innerHTML = "";
+        var item = document.createElement("li");
+        item.className = "news-message";
+        item.textContent = message;
+        element.appendChild(item);
+      }
+
+      function renderNews(elementId, items, limit) {
+        var list = document.getElementById(elementId);
+        list.innerHTML = "";
+
+        if (!items || !items.length) {
+          showNewsMessage(list, "Noch keine Nachrichten verfügbar.");
+          return;
         }
 
-        // Initialen Status beim Laden berechnen
-        updateGlobalStatus();
-    </script>
+        var count = Math.min(items.length, limit);
+
+        for (var i = 0; i < count; i++) {
+          var item = items[i];
+          var li = document.createElement("li");
+          var link = document.createElement("a");
+
+          link.textContent = item.title || "Nachricht öffnen";
+
+          if (item.link && /^https?:\/\//i.test(item.link)) {
+            link.href = item.link;
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+          } else {
+            link.href = "#";
+          }
+
+          li.appendChild(link);
+
+          if (item.date) {
+            var meta = document.createElement("div");
+            meta.className = "news-meta";
+            meta.textContent = item.date;
+            li.appendChild(meta);
+          }
+
+          list.appendChild(li);
+        }
+      }
+
+      function loadNews() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "news.json?updated=" + new Date().getTime(), true);
+        xhr.timeout = 12000;
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState !== 4) return;
+
+          if (xhr.status >= 200 && xhr.status < 300) {
+            try {
+              var data = JSON.parse(xhr.responseText);
+
+              renderNews("nba-news", data.nba || [], 5);
+              renderNews("wnba-news", data.wnba || [], 5);
+              renderNews("kurier-news", data.kurier || [], 5);
+
+              document.getElementById("connection-status").textContent =
+                "Aktualisiert " +
+                pad(new Date().getHours()) + ":" +
+                pad(new Date().getMinutes());
+            } catch (error) {
+              showNewsMessage(
+                document.getElementById("nba-news"),
+                "news.json konnte nicht gelesen werden."
+              );
+              showNewsMessage(
+                document.getElementById("wnba-news"),
+                "news.json konnte nicht gelesen werden."
+              );
+              showNewsMessage(
+                document.getElementById("kurier-news"),
+                "news.json konnte nicht gelesen werden."
+              );
+            }
+          } else {
+            showNewsMessage(
+              document.getElementById("nba-news"),
+              "news.json fehlt oder ist nicht erreichbar. Bitte GitHub Actions ausführen."
+            );
+            showNewsMessage(
+              document.getElementById("wnba-news"),
+              "Nachrichten werden über GitHub Actions bereitgestellt."
+            );
+            showNewsMessage(
+              document.getElementById("kurier-news"),
+              "Nachrichten werden über GitHub Actions bereitgestellt."
+            );
+          }
+        };
+
+        xhr.onerror = function () {
+          showNewsMessage(
+            document.getElementById("nba-news"),
+            "Nachrichtenquelle nicht erreichbar."
+          );
+          showNewsMessage(
+            document.getElementById("wnba-news"),
+            "Nachrichtenquelle nicht erreichbar."
+          );
+          showNewsMessage(
+            document.getElementById("kurier-news"),
+            "Nachrichtenquelle nicht erreichbar."
+          );
+        };
+
+        xhr.ontimeout = function () {
+          showNewsMessage(
+            document.getElementById("nba-news"),
+            "Zeitüberschreitung beim Laden der Nachrichten."
+          );
+          showNewsMessage(
+            document.getElementById("wnba-news"),
+            "Zeitüberschreitung beim Laden der Nachrichten."
+          );
+          showNewsMessage(
+            document.getElementById("kurier-news"),
+            "Zeitüberschreitung beim Laden der Nachrichten."
+          );
+        };
+
+        xhr.send();
+      }
+
+      createClockTicks();
+      updateClock();
+      loadWeather();
+      loadNews();
+
+      window.setInterval(updateClock, 250);
+      window.setInterval(loadWeather, 300000);
+      window.setInterval(loadNews, 300000);
+    })();
+  </script>
 </body>
 </html>
