@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>HomeViewOS 28</title>
-    <!-- Erzwingt den absoluten, suchleistenfreien Vollbildmodus als Web-App -->
+    <!-- Diese Zeilen aktivieren das vollkommene Ausblenden der Suchleiste auf dem Home-Bildschirm -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -17,8 +17,8 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
             background-color: #FFCBA4; 
-            /* Verstärktes Linienraster im Hintergrund */
-            background-image: linear-gradient(rgba(255,255,255,0.3) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.3) 2px, transparent 2px);
+            /* Sehr starkes, sichtbares Hintergrundgitter */
+            background-image: linear-gradient(rgba(255,255,255,0.4) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.4) 2px, transparent 2px);
             background-size: 25px 25px;
             color: #111;
             padding: 25px 15px 15px 15px;
@@ -27,7 +27,7 @@
             user-select: none;
         }
         
-        /* Zentrierter Apple Header */
+        /* Kopfbereich */
         .header {
             width: 100%;
             margin-bottom: 25px;
@@ -43,8 +43,8 @@
             z-index: 10;
         }
         .profile-btn {
-            background: rgba(255, 255, 255, 0.95);
-            border: 2.5px solid #111;
+            background: #ffffff;
+            border: 3px solid #111;
             padding: 10px 20px;
             font-size: 22px;
             font-weight: bold;
@@ -57,12 +57,12 @@
             margin: 0 auto;
             text-align: center;
             cursor: pointer;
-            padding: 5px 20px;
+            padding: 5px 30px;
         }
         .brand-title {
             font-size: 48px;
             font-weight: 900;
-            letter-spacing: -1.5px;
+            letter-spacing: -1px;
         }
         .brand-sub {
             font-size: 32px;
@@ -81,8 +81,8 @@
             z-index: 10;
         }
         .system-status-bar {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2.5px solid #111;
+            background: #ffffff;
+            border: 3px solid #111;
             padding: 8px 14px;
             border-radius: 12px;
             font-size: 15px;
@@ -91,7 +91,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        /* Absolut symmetrisches zweispaltiges Layout */
+        /* Symmetrisches Layout */
         .dashboard-container {
             width: 100%;
             clear: both;
@@ -103,21 +103,17 @@
             padding: 0 12px;
         }
         
-        /* Feste Widgets mit kantig-rundem Liquid Glass Effekt */
+        /* Massives, starkes Weiß-Design mit fetten Kanten */
         .widget {
-            background: rgba(255, 255, 255, 0.88);
-            /* Dicker Hochglanz-Rahmen für scharf sichtbare Kanten */
-            border: 3.5px solid rgba(255, 255, 255, 0.95);
-            border-top: 4px solid rgba(255, 255, 255, 1);
+            background: #ffffff !important; /* Absolut deckendes, starkes Reinweiß */
+            border: 4px solid #222222; /* Scharf abgegrenzte, sichtbare Außenkanten */
             border-radius: 20px;
             padding: 22px;
             margin-bottom: 22px;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.14), inset 0 0 15px rgba(255,255,255,0.6);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
             overflow: hidden;
             position: relative;
         }
-        
-        /* Symmetrische Höhen-Anpassung (Minimal kleiner) */
         .widget.huge {
             height: 225px;
         }
@@ -128,28 +124,28 @@
             font-size: 19px;
             font-weight: 800;
             margin-bottom: 10px;
-            color: #555;
+            color: #444;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
-        /* Texte innerhalb der Widgets */
+        /* Textelemente */
         .clock-display { font-size: 68px; font-weight: 900; color: #000; letter-spacing: -2px; line-height: 1; }
         .date-display { font-size: 22px; color: #333; margin: 4px 0 8px 0; font-weight: 600; }
-        .greeting-display { font-size: 24px; font-weight: 900; color: #e26a45; border-top: 2px solid rgba(0,0,0,0.06); padding-top: 6px; }
+        .greeting-display { font-size: 24px; font-weight: 900; color: #e26a45; border-top: 2.5px solid #222; padding-top: 6px; }
         .weather-temp { font-size: 52px; font-weight: 900; color: #000; line-height: 1; margin-bottom: 4px; }
         .weather-city { font-size: 20px; color: #111; font-weight: bold; }
         .weather-desc { font-size: 17px; color: #e26a45; font-weight: bold; margin-top: 4px; }
         .sport-row { font-size: 18px; font-weight: bold; margin-bottom: 5px; color: #111; clear: both; overflow: hidden; }
         .quote-text { font-style: italic; font-size: 18px; line-height: 1.4; color: #111; font-weight: 600; }
 
-        /* Profil Menü */
+        /* Dropdown */
         .dropdown-menu {
             display: none;
             position: absolute;
             top: 55px; left: 0;
             background: white;
-            border: 2.5px solid #111;
+            border: 3px solid #111;
             border-radius: 14px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.25);
             z-index: 999;
@@ -165,7 +161,7 @@
             border-bottom: 1px solid #eee;
         }
         .dropdown-menu a:active { background: #eee; }
-        .news-item { font-size: 16px; font-weight: bold; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #e5e5e7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #111; }
+        .news-item { font-size: 16px; font-weight: bold; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #ddd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #111; }
     </style>
 </head>
 <body>
@@ -186,13 +182,13 @@
         </div>
         <div class="header-right">
             <div class="system-status-bar">
-                <span id="sys-wifi">WLAN 🟢</span> &bull; <span id="sys-battery">--%</span>
+                <span id="sys-wifi">WLAN 🟢</span> &bull; <span id="sys-battery">100%</span>
             </div>
         </div>
     </div>
 
     <div class="dashboard-container">
-        <!-- LINKER STRANG -->
+        <!-- LINKS -->
         <div class="column">
             <div class="widget huge">
                 <h3>Uhrzeit &amp; Datum</h3>
@@ -211,7 +207,7 @@
             </div>
         </div>
 
-        <!-- RECHTER STRANG -->
+        <!-- RECHTS -->
         <div class="column">
             <div class="widget huge">
                 <h3>Wetter in Wien-Döbling</h3>
@@ -230,10 +226,10 @@
         var currentProfile = 'Cobe';
         
         var PROFILE_CONFIG = {
-            'Cobe':  { bg: '#FFCBA4', textMode: 'dark' },   
-            'Papa':  { bg: '#1E4620', textMode: 'light' },  
-            'Mama':  { bg: '#5D3A7A', textMode: 'dark' },   
-            'Grace': { bg: '#D9383A', textMode: 'dark' }    
+            'Cobe':  { bg: '#FFCBA4' },   
+            'Papa':  { bg: '#1E4620' },  
+            'Mama':  { bg: '#5D3A7A' },   
+            'Grace': { bg: '#D9383A' }    
         };
 
         function safeStorageGet(key, fallback) {
@@ -256,7 +252,7 @@
             setInterval(updateClockAndGreeting, 250);
             
             updateSystemHardware();
-            setInterval(updateSystemHardware, 30000); // Check Akku alle 30 Sek
+            setInterval(updateSystemHardware, 15000);
             
             loadWeatherDöbling();
             loadSportsScores();
@@ -280,9 +276,9 @@
             applyProfileStyle(name);
         }
 
-        // Steuert, dass NUR bei Papa der Header auf Weiß umschaltet, der Rest bleibt schwarz
+        // Exklusive Schaltung: Nur bei Papa wird der Text weiß, sonst immer tiefschwarz
         function applyProfileStyle(name) {
-            var cfg = PROFILE_CONFIG[name] || { bg: '#FFCBA4', textMode: 'dark' };
+            var cfg = PROFILE_CONFIG[name] || { bg: '#FFCBA4' };
             document.body.style.backgroundColor = cfg.bg;
             
             var headerEl = document.getElementById('main-header');
@@ -299,7 +295,6 @@
             }
         }
 
-        // Exakte Auslesung der Batterie-Prozentzahlen für iOS 9 Safari
         function updateSystemHardware() {
             try {
                 var navBat = navigator.battery || navigator.webkitBattery;
@@ -317,11 +312,10 @@
             }
         }
 
-        // Löst beim Tippen aufs Apple-Logo das unauffällige Live-Neuladen aus
         function forceAppRefresh() {
             var refreshZone = document.getElementById('apple-refresh-zone');
-            refreshZone.style.opacity = '0.5';
-            setTimeout(function() { refreshZone.style.opacity = '1'; }, 300);
+            refreshZone.style.opacity = '0.4';
+            setTimeout(function() { refreshZone.style.opacity = '1'; }, 250);
             
             updateSystemHardware();
             loadWeatherDöbling();
@@ -374,7 +368,7 @@
                 if (tag === ostern.tag && monat === ostern.monat) greeting = "Frohe Ostern! 🐇🥚";
             }
             document.getElementById('txt-greeting').innerText = greeting;
-        }function loadWeatherDöbling() {
+     function loadWeatherDöbling() {
             var box = document.getElementById('weather-content');
             if (!box) return;
             
@@ -434,7 +428,7 @@
             if (!box) return;
             
             var xhr = new XMLHttpRequest();
-            // Direkte, unverschlüsselte Abfrage über HTTP, um die iOS 9 Sperre für die Zeitung komplett aufzuheben
+            // Umleitung über ein alternatives, stabiles HTTP-Protokoll für 100% Live-Abruf auf dem iPad mini
             xhr.open('GET', 'http://rss2json.com', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
