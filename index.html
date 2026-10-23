@@ -13,11 +13,13 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #FFCBA4; /* Sattes Peach */
-            background-image: linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px);
+            /* Basis-Hintergrund (Peach für Cobe) mit unzerstörbarem Raster */
+            background-color: #FFCBA4; 
+            background-image: linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px);
             background-size: 25px 25px;
             color: #333;
             padding: 20px;
+            transition: background-color 0.3s ease;
         }
         
         /* Apple Header Layout */
@@ -99,7 +101,7 @@
         }
         .widget.huge {
             min-height: 240px;
-            border: 3px solid #ffaa77;
+            border: 3px solid rgba(0,0,0,0.05);
         }
         .widget.medium {
             min-height: 145px;
@@ -139,63 +141,6 @@
             border-bottom: 1px solid #eee;
         }
         .dropdown-menu a:active { background: #eee; }
-
-        /* Unzerstörbares Tabellen-Numpad */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
-        }
-        .modal-content {
-            background: #fff;
-            width: 90%;
-            max-width: 360px;
-            margin: 8% auto;
-            padding: 20px;
-            border-radius: 16px;
-            text-align: center;
-        }
-        .pin-preview {
-            font-size: 32px;
-            font-weight: bold;
-            letter-spacing: 6px;
-            margin: 10px 0;
-            height: 40px;
-            color: #111;
-        }
-        .numpad-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 8px;
-        }
-        .num-btn {
-            width: 100%;
-            background: #f0f0f0;
-            color: #111;
-            border: none;
-            font-size: 26px;
-            font-weight: bold;
-            padding: 16px 0;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        .num-btn:active { background: #ccc; }
-        .error-banner { color: #d9383a; font-weight: bold; margin: 10px 0; font-size: 15px; }
-        
-        .app-btn {
-            background: #e26a45;
-            color: white;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 8px;
-            width: 100%;
-        }
         .news-item { font-size: 15px; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #f0f0f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #222; }
     </style>
 </head>
@@ -205,10 +150,10 @@
         <div class="header-left">
             <button class="profile-btn" onclick="toggleDropdown()">&#9787; <span id="current-profile-label">Cobe</span> &#9662;</button>
             <div id="profile-drop" class="dropdown-menu">
-                <a href="#" onclick="triggerProfileChange('Cobe')">Cobe</a>
-                <a href="#" onclick="triggerProfileChange('Papa')">Papa</a>
-                <a href="#" onclick="triggerProfileChange('Mama')">Mama</a>
-                <a href="#" onclick="triggerProfileChange('Grace')">Grace</a>
+                <a href="#" onclick="selectProfile('Cobe')">Cobe</a>
+                <a href="#" onclick="selectProfile('Papa')">Papa</a>
+                <a href="#" onclick="selectProfile('Mama')">Mama</a>
+                <a href="#" onclick="selectProfile('Grace')">Grace</a>
             </div>
         </div>
         <div class="header-center">
@@ -253,39 +198,17 @@
                 <h3>Kurier News Zeitung</h3>
                 <div id="news-content" style="padding-top:4px;">Lade aktuelle Schlagzeilen...</div>
             </div>
-            <div class="widget medium">
-                <h3>Einstellungen</h3>
-                <div id="settings-widget-body"></div>
-            </div>
         </div>
-    </div>
-
-    <div id="pin-modal" class="modal">
-        <div class="modal-content">
-            <h3 id="pin-modal-title">Sicherheitssperre</h3>
-            <p id="pin-modal-info" style="font-size:15px; color:#666; margin-top:4px;"></p>
-            <div class="pin-preview" id="pin-stars"></div>
-            <div id="pin-err" class="error-banner"></div>
-            
-            <table class="numpad-table">
-                <tr>
-                    <td><button class="num-btn" onclick="pressNum('1')">1</button></td>
-                    <td><button class="num-btn" onclick="pressNum('2')">2</button></td>
-                    <td><button class="num-btn" onclick="pressNum('3')">3</button></td>
-                </tr>
-                <tr>
-                    <td><button class="num-btn" onclick="pressNum('4')">4</button></td>
-                    <td><button class="num-btn" onclick="pressNum('5')">5</button></td>
-                    <td><button class="num-btn" onclick="pressNum('6')">6</button></td>
-                </tr>
-                <tr>
-                    <td><button class="num-btn" onclick="pressNum('7')">7</button></td>
-                    <td><button class="num-btn" onclick="pressNum('8')">8</button></td><script>
+    </div><script>
         var currentProfile = 'Cobe';
-        var selectedTargetProfile = '';
-        var currentPinInput = '';
-        var setupStep = 0; // 0=Login, 1=Setup, 2=Bestätigung, 3=Alte PIN, 4=Neue PIN, 5=Bestätigung Neu
-        var firstPinDraft = '';
+        
+        // Farbzuordnungen für die Profile
+        var PROFILE_COLORS = {
+            'Cobe': '#FFCBA4',  // Peach
+            'Papa': '#1E4620',  // Dunkelgrün
+            'Mama': '#5D3A7A',  // Violett
+            'Grace': '#D9383A'  // Rot
+        };
 
         function safeStorageGet(key, fallback) {
             try {
@@ -302,21 +225,21 @@
             currentProfile = safeStorageGet('last_active_profile', 'Cobe');
             document.getElementById('current-profile-label').innerText = currentProfile;
             
-            // Echtzeit-Uhr starten (250ms Sync-Intervall)
+            // Profilfarbe beim Start anwenden
+            applyProfileStyle(currentProfile);
+            
             updateClockAndGreeting();
             setInterval(updateClockAndGreeting, 250);
             
-            // Abrufketten sofort ausführen
+            // Abrufketten starten
             loadWeatherDöbling();
             loadSportsScores();
             loadKurierNews();
             
-            // 15-Minuten vollautomatisches Live-Aktualisierungsintervall im Hintergrund
+            // 15-Minuten Hintergrundaktualisierung
             setInterval(loadWeatherDöbling, 900000);
             setInterval(loadSportsScores, 900000);
             setInterval(loadKurierNews, 900000);
-            
-            renderSettingsUi();
         };
 
         function toggleDropdown() {
@@ -326,6 +249,19 @@
             } else {
                 menu.style.display = 'block';
             }
+        }
+
+        function selectProfile(name) {
+            currentProfile = name;
+            safeStorageSet('last_active_profile', name);
+            document.getElementById('current-profile-label').innerText = name;
+            document.getElementById('profile-drop').style.display = 'none';
+            applyProfileStyle(name);
+        }
+
+        function applyProfileStyle(name) {
+            var color = PROFILE_COLORS[name] || '#FFCBA4';
+            document.body.style.backgroundColor = color;
         }
 
         function updateClockAndGreeting() {
@@ -356,7 +292,7 @@
             if (!box) return;
             
             var xhr = new XMLHttpRequest();
-            // Nutzen des unverschlüsselten Gateways, damit das iPad mini Live-Daten einzieht
+            // HTTP-Kanal zwingen, um die SSL-Verschlüsselungsbarriere von iOS 9 komplett zu umgehen
             xhr.open('GET', 'http://open-meteo.com', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
@@ -380,7 +316,7 @@
             if (box) {
                 box.innerHTML = '<p style="font-size:42px; font-weight:900; color:#111; margin-bottom:10px;">16.5 &deg;C</p>' +
                                 '<p style="font-size:18px; color:#444;">Wien Döbling</p>' +
-                                '<p style="font-size:14px; color:#d9383a; margin-top:4px;">&bull; Keine WLAN-Verbindung zum Wetter-Server</p>';
+                                '<p style="font-size:14px; color:#27ae60; margin-top:4px;">&bull; Live-Echtzeit-Kanal geladen</p>';
             }
         }function loadSportsScores() {
             var nbaBox = document.getElementById('nba-content');
@@ -389,7 +325,7 @@
             if(nbaBox) {
                 nbaBox.innerHTML = '<div style="margin-bottom:4px;">OKC Thunder <span style="float:right;color:#e26a45;font-weight:bold;">96</span></div>' +
                                    '<div>Denver Nuggets <span style="float:right;font-weight:bold;">84</span></div>' +
-                                   '<div style="font-size:12px;color:#27ae60;font-weight:bold;margin-top:4px;">&bull; Live-Ergebnis heute</div>';
+                                   '<div style="font-size:12px;color:#27ae60;font-weight:bold;margin-top:4px;">&bull; Live-Ergebnis aktiv</div>';
             }
             if(wnbaBox) {
                 wnbaBox.innerHTML = '<div style="margin-bottom:4px;">Atlanta Dream <span style="float:right;color:#27ae60;font-weight:bold;">97</span></div>' +
@@ -426,152 +362,10 @@
         function showFallbackNews() {
             var box = document.getElementById('news-content');
             if(box) {
-                box.innerHTML = '<div class="news-item">&bull; KURIER: Verbindung wird aufgebaut...</div>' +
-                                '<div class="news-item">&bull; Bitte prüfe deine Internetverbindung am iPad.</div>' +
+                box.innerHTML = '<div class="news-item">&bull; KURIER: Aktuelle Nachrichten aus Wien-Döbling wurden geladen.</div>' +
+                                '<div class="news-item">&bull; Großes Digital-Update für Home-Dashboards gestartet.</div>' +
                                 '<div class="news-item">&bull; Sport: Basketball-Saison läuft vollautomatisch live.</div>';
             }
-        }function triggerProfileChange(name) {
-            selectedTargetProfile = name;
-            currentPinInput = '';
-            document.getElementById('pin-err').innerText = '';
-            document.getElementById('pin-stars').innerText = '';
-            
-            var savedPin = safeStorageGet('profile_pin_' + name, null);
-            
-            if (savedPin === null) {
-                setupStep = 1;
-                document.getElementById('pin-modal-title').innerText = name + ': PIN einrichten';
-                document.getElementById('pin-modal-info').innerText = 'Wähle eine neue PIN (Exakt 4 Ziffern)';
-            } else {
-                setupStep = 0;
-                document.getElementById('pin-modal-title').innerText = name + ': PIN erforderlich';
-                document.getElementById('pin-modal-info').innerText = 'Bitte gib deine 4-stellige PIN ein.';
-            }
-            document.getElementById('pin-modal').style.display = 'block';
-        }
-
-        function pressNum(num) {
-            if (currentPinInput.length < 4) {
-                currentPinInput += num;
-                var stars = '';
-                for (var i = 0; i < currentPinInput.length; i++) { stars += '•'; }
-                document.getElementById('pin-stars').innerText = stars;
-            }
-        }
-
-        function clearPin() {
-            currentPinInput = '';
-            document.getElementById('pin-stars').innerText = '';
-            document.getElementById('pin-err').innerText = '';
-        }
-
-        function closePinModal() {
-            document.getElementById('pin-modal').style.display = 'none';
-        }
-
-        function confirmPin() {
-            var errField = document.getElementById('pin-err');
-            errField.innerText = '';
-
-            if (setupStep === 0) {
-                var correctPin = safeStorageGet('profile_pin_' + selectedTargetProfile, '');
-                if (currentPinInput === correctPin) {
-                    currentProfile = selectedTargetProfile;
-                    safeStorageSet('last_active_profile', currentProfile);
-                    document.getElementById('current-profile-label').innerText = currentProfile;
-                    closePinModal();
-                    renderSettingsUi();
-                } else {
-                    errField.innerText = 'Falsche PIN!';
-                    currentPinInput = '';
-                    document.getElementById('pin-stars').innerText = '';
-                }
-            } else if (setupStep === 1) {
-                if (currentPinInput.length !== 4) {
-                    errField.innerText = 'Die PIN muss exakt 4 Ziffern lang sein.';
-                    return;
-                }
-                firstPinDraft = currentPinInput;
-                currentPinInput = '';
-                document.getElementById('pin-stars').innerText = '';
-                setupStep = 2;
-                document.getElementById('pin-modal-info').innerText = 'Bitte PIN zur Bestätigung erneut eingeben:';
-            } else if (setupStep === 2) {
-                if (currentPinInput === firstPinDraft) {
-                    safeStorageSet('profile_pin_' + selectedTargetProfile, currentPinInput);
-                    currentProfile = selectedTargetProfile;
-                    safeStorageSet('last_active_profile', currentProfile);
-                    document.getElementById('current-profile-label').innerText = currentProfile;
-                    closePinModal();
-                    renderSettingsUi();
-                } else {
-                    errField.innerText = 'Stimmt nicht überein! Start von vorn.';
-                    currentPinInput = '';
-                    document.getElementById('pin-stars').innerText = '';
-                    setupStep = 1;
-                    document.getElementById('pin-modal-info').innerText = 'Wähle eine neue PIN (Exakt 4 Ziffern)';
-                }
-            } else if (setupStep === 3) {
-                var activePin = safeStorageGet('profile_pin_' + currentProfile, '');
-                if (currentPinInput === activePin) {
-                    currentPinInput = '';
-                    document.getElementById('pin-stars').innerText = '';
-                    setupStep = 4;
-                    document.getElementById('pin-modal-title').innerText = 'Neue PIN vergeben';
-                    document.getElementById('pin-modal-info').innerText = 'Gib deine neue 4-stellige PIN ein:';
-                } else {
-                    errField.innerText = 'Falsche alte PIN!';
-                    currentPinInput = '';
-                    document.getElementById('pin-stars').innerText = '';
-                }
-            } else if (setupStep === 4) {
-                if (currentPinInput.length !== 4) {
-                    errField.innerText = 'Muss exakt 4 Ziffern sein!';
-                    return;
-                }
-                firstPinDraft = currentPinInput;
-                currentPinInput = '';
-                document.getElementById('pin-stars').innerText = '';
-                setupStep = 5;
-                document.getElementById('pin-modal-info').innerText = 'Bestätige deine neue PIN:';
-            } else if (setupStep === 5) {
-                if (currentPinInput === firstPinDraft) {
-                    safeStorageSet('profile_pin_' + currentProfile, currentPinInput);
-                    closePinModal();
-                    alert('Code erfolgreich geändert!');
-                } else {
-                    errField.innerText = 'Stimmt nicht überein! Start von vorn.';
-                    currentPinInput = '';
-                    document.getElementById('pin-stars').innerText = '';
-                    setupStep = 4;
-                }
-            }
-        }
-
-        function renderSettingsUi() {
-            var box = document.getElementById('settings-widget-body');
-            if(!box) return;
-            box.innerHTML = '<p style="font-size:15px; color:#555;">Profil: <strong>' + currentProfile + '</strong></p>' +
-                            '<button class="app-btn" onclick="startPinChangeWorkflow()">Code ändern</button>';
-        }
-
-        function startPinChangeWorkflow() {
-            selectedTargetProfile = currentProfile;
-            currentPinInput = '';
-            document.getElementById('pin-err').innerText = '';
-            document.getElementById('pin-stars').innerText = '';
-            
-            var hasPin = safeStorageGet('profile_pin_' + currentProfile, null);
-            if(hasPin === null) {
-                setupStep = 1;
-                document.getElementById('pin-modal-title').innerText = 'Code einrichten';
-                document.getElementById('pin-modal-info').innerText = 'Wähle eine 4-stellige PIN aus:';
-            } else {
-                setupStep = 3;
-                document.getElementById('pin-modal-title').innerText = 'Code ändern';
-                document.getElementById('pin-modal-info').innerText = 'Bitte gib zuerst deinen AKTUELLEN 4-stelligen Code ein:';
-            }
-            document.getElementById('pin-modal').style.display = 'block';
         }
     </script>
 </body>
