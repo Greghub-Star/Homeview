@@ -6,398 +6,619 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>HomeViewOS 27</title>
+
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
   color: #292421;
 }
+
 body {
   background-color: #f7cbb5;
   background-image:
-    linear-gradient(rgba(125,83,62,.10) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(125,83,62,.10) 1px, transparent 1px);
+    linear-gradient(rgba(125,83,62,0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125,83,62,0.09) 1px, transparent 1px);
   background-size: 26px 26px;
-  padding: 10px 14px;
+  padding: 8px;
 }
+
 .header {
-  height: 68px;
+  height: 62px;
   position: relative;
   text-align: center;
+  padding-top: 2px;
 }
+
 .brand {
-  font-size: 30px;
-  line-height: 34px;
+  font-size: 29px;
+  line-height: 32px;
   letter-spacing: -1px;
 }
-.brand strong { font-weight: 800; }
-.apple-line {
-  font-size: 14px;
-  letter-spacing: 2px;
-  margin-top: 1px;
+
+.brand strong {
+  font-weight: bold;
 }
-.apple-logo { font-size: 18px; margin-right: 4px; }
+
+.apple-line {
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-top: 0;
+}
+
 .beta {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 2px;
+  top: 2px;
   color: #b42323;
   border: 1px solid #b42323;
-  padding: 4px 6px;
+  padding: 3px 5px;
   font-size: 9px;
   font-weight: bold;
-  letter-spacing: .8px;
+  letter-spacing: 1px;
 }
+
+/* iOS 9 kompatibles Zweispalten-Layout */
 .dashboard {
-  height: calc(100% - 68px);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  grid-template-rows: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-content: stretch;
+  align-content: stretch;
+  margin-left: -4px;
+  margin-right: -4px;
 }
+
 .widget {
-  min-width: 0;
-  min-height: 0;
+  width: calc(50% - 8px);
+  height: 218px;
+  margin: 4px;
+  padding: 10px;
   overflow: hidden;
-  background: rgba(255,250,246,.92);
-  border: 1px solid rgba(111,76,58,.2);
+  min-width: 0;
+  background: rgba(255,250,246,0.94);
+  border: 1px solid rgba(111,76,58,0.20);
   border-radius: 13px;
-  padding: 11px 14px;
-  box-shadow: 0 3px 9px rgba(93,57,39,.07);
+  box-shadow: 0 3px 9px rgba(93,57,39,0.07);
 }
+
 .widget h2 {
-  margin: 0 0 7px;
+  margin: 0 0 8px;
   font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.7px;
   color: #82604f;
 }
+
 .clock-time {
-  font-size: 39px;
-  font-weight: 300;
-  letter-spacing: -1px;
-  line-height: 1.1;
+  font-size: 38px;
+  font-weight: normal;
+  line-height: 1.15;
 }
+
 .clock-date {
-  margin-top: 5px;
-  font-size: 14px;
+  font-size: 12px;
+  margin-top: 6px;
   color: #735b4e;
 }
-.small-note, .news-status {
-  margin-top: 5px;
-  font-size: 10px;
-  color: #947d70;
-}
+
 .weather-temp {
-  font-size: 36px;
-  font-weight: 300;
+  font-size: 34px;
   line-height: 1.1;
-  margin: 3px 0 5px;
+  margin: 4px 0;
 }
-.weather-description { font-size: 14px; margin-bottom: 5px; }
+
+.weather-description {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
 .weather-details {
   font-size: 11px;
-  line-height: 1.45;
+  line-height: 1.5;
   color: #826d61;
 }
+
 .news-list {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
+
 .news-list li {
-  font-size: 12px;
-  line-height: 1.25;
+  font-size: 11px;
+  line-height: 1.3;
   padding: 5px 0;
-  border-bottom: 1px solid rgba(112,79,61,.12);
+  border-bottom: 1px solid rgba(112,79,61,0.12);
 }
-.news-list li:last-child { border-bottom: none; }
-.news-list a { color: #292421; text-decoration: none; }
+
+.news-list li:last-child {
+  border-bottom: none;
+}
+
+.news-list a {
+  color: #292421;
+  text-decoration: none;
+}
+
+.news-status {
+  font-size: 9px;
+  line-height: 1.3;
+  color: #947d70;
+  margin-top: 5px;
+}
+
 .quote-mark {
-  font-size: 29px;
-  line-height: .8;
+  font-size: 30px;
+  line-height: 0.8;
   color: #cf8b6a;
 }
+
 .quote-text {
-  font-size: 17px;
-  line-height: 1.3;
-  font-weight: 500;
-  margin: 7px 0;
+  font-size: 16px;
+  line-height: 1.35;
+  margin: 9px 0;
 }
+
 .quote-footer {
   color: #967665;
-  font-size: 10px;
+  font-size: 9px;
   text-transform: uppercase;
-  letter-spacing: .7px;
+  letter-spacing: 0.5px;
 }
-@media (max-width: 700px) {
-  body { padding: 6px; }
-  .header { height: 54px; }
-  .brand { font-size: 23px; line-height: 27px; }
-  .apple-line { font-size: 11px; }
-  .beta { font-size: 7px; padding: 3px; }
-  .dashboard {
-    height: calc(100% - 54px);
-    gap: 6px;
+
+@media screen and (max-width: 480px) {
+  .brand {
+    font-size: 24px;
   }
-  .widget { padding: 7px; border-radius: 9px; }
-  .widget h2 { font-size: 10px; margin-bottom: 5px; }
-  .clock-time { font-size: 29px; }
-  .clock-date { font-size: 11px; }
-  .weather-temp { font-size: 28px; }
-  .weather-description { font-size: 11px; }
-  .weather-details { font-size: 9px; }
-  .news-list li { font-size: 10px; padding: 3px 0; }
-  .quote-text { font-size: 13px; }
+
+  .beta {
+    font-size: 7px;
+  }
+
+  .widget {
+    height: 205px;
+    padding: 7px;
+  }
+
+  .widget h2 {
+    font-size: 10px;
+  }
+
+  .clock-time {
+    font-size: 29px;
+  }
+
+  .clock-date {
+    font-size: 10px;
+  }
+
+  .weather-temp {
+    font-size: 27px;
+  }
+
+  .weather-description {
+    font-size: 11px;
+  }
+
+  .weather-details {
+    font-size: 9px;
+  }
+
+  .news-list li {
+    font-size: 10px;
+    padding: 4px 0;
+  }
+
+  .quote-text {
+    font-size: 13px;
+  }
 }
 </style>
 </head>
+
 <body>
 
 <header class="header">
   <div class="beta">BETA PRODUCT</div>
   <div class="brand">HomeViewOS <strong>27</strong></div>
-  <div class="apple-line"><span class="apple-logo">&#63743;</span> Apple</div>
+  <div class="apple-line">&#63743; Apple</div>
 </header>
 
 <main class="dashboard">
+
+  <!-- 1. UHRZEIT -->
   <section class="widget">
     <h2>Uhrzeit &amp; Datum</h2>
-    <div id="clock" class="clock-time">--:--</div>
-    <div id="date" class="clock-date">Wird geladen …</div>
-    <div class="small-note">Lokale Gerätezeit</div>
+    <div id="clock" class="clock-time">--:--:--</div>
+    <div id="date" class="clock-date">Datum wird geladen …</div>
+    <div class="news-status">Lokale Gerätezeit</div>
   </section>
 
+  <!-- 2. WETTER -->
   <section class="widget">
     <h2>Wetter · Wien-Döbling</h2>
     <div id="weatherTemp" class="weather-temp">--°C</div>
-    <div id="weatherDescription" class="weather-description">Wetter wird geladen …</div>
+    <div id="weatherDescription" class="weather-description">
+      Wetter wird geladen …
+    </div>
     <div id="weatherDetails" class="weather-details"></div>
-    <div id="weatherStatus" class="news-status"></div>
+    <div id="weatherStatus" class="news-status">Verbinde mit Wetterdienst …</div>
   </section>
 
+  <!-- 3. NBA -->
   <section class="widget">
     <h2>NBA · Aktuelle News</h2>
-    <ul id="nbaNews" class="news-list"><li>News werden geladen …</li></ul>
-    <div id="nbaStatus" class="news-status">Aktualisierung alle 60 Sekunden</div>
+    <ul id="nbaNews" class="news-list">
+      <li>NBA-News werden geladen …</li>
+    </ul>
+    <div id="nbaStatus" class="news-status">Warte auf ESPN …</div>
   </section>
 
+  <!-- 4. WNBA -->
   <section class="widget">
     <h2>WNBA · Aktuelle News</h2>
-    <ul id="wnbaNews" class="news-list"><li>News werden geladen …</li></ul>
-    <div id="wnbaStatus" class="news-status">Aktualisierung alle 60 Sekunden</div>
+    <ul id="wnbaNews" class="news-list">
+      <li>WNBA-News werden geladen …</li>
+    </ul>
+    <div id="wnbaStatus" class="news-status">Warte auf ESPN …</div>
   </section>
 
+  <!-- 5. KURIER -->
   <section class="widget">
     <h2>KURIER · Österreich &amp; Welt</h2>
-    <ul id="kurierNews" class="news-list"><li>News werden geladen …</li></ul>
-    <div id="kurierStatus" class="news-status">Aktualisierung alle 60 Sekunden</div>
+    <ul id="kurierNews" class="news-list">
+      <li>KURIER-News werden geladen …</li>
+    </ul>
+    <div id="kurierStatus" class="news-status">Verbinde mit Feed …</div>
   </section>
 
+  <!-- 6. SPRUCH -->
   <section class="widget">
     <h2>Spruch des Tages</h2>
     <div class="quote-mark">“</div>
     <div id="quoteText" class="quote-text">Jeder Schritt zählt.</div>
     <div id="quoteFooter" class="quote-footer">Wechsel um 00:00 und 12:00 Uhr</div>
   </section>
+
 </main>
 
 <script>
 (function () {
-  function el(id) { return document.getElementById(id); }
-  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function byId(id) {
+    return document.getElementById(id);
+  }
 
+  function pad(number) {
+    return number < 10 ? "0" + number : "" + number;
+  }
+
+  /* UHRZEIT UND DATUM */
   function updateClock() {
     var now = new Date();
-    el("clock").textContent = pad(now.getHours()) + ":" + pad(now.getMinutes());
-    var days = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
-    var months = ["Jänner","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
-    el("date").textContent = days[now.getDay()] + ", " + now.getDate() + ". " +
-      months[now.getMonth()] + " " + now.getFullYear();
+
+    byId("clock").innerHTML =
+      pad(now.getHours()) + ":" +
+      pad(now.getMinutes()) + ":" +
+      pad(now.getSeconds());
+
+    var weekdays = [
+      "Sonntag", "Montag", "Dienstag", "Mittwoch",
+      "Donnerstag", "Freitag", "Samstag"
+    ];
+
+    var months = [
+      "Jänner", "Februar", "März", "April", "Mai", "Juni",
+      "Juli", "August", "September", "Oktober", "November", "Dezember"
+    ];
+
+    byId("date").innerHTML =
+      weekdays[now.getDay()] + ", " +
+      now.getDate() + ". " +
+      months[now.getMonth()] + " " +
+      now.getFullYear();
   }
+
   updateClock();
   window.setInterval(updateClock, 1000);
 
-  function weatherCode(code) {
+  /* WETTERDATEN VON OPEN-METEO */
+  function describeWeather(code) {
     var descriptions = {
-      0:"Klarer Himmel",1:"Überwiegend klar",2:"Teilweise bewölkt",
-      3:"Bewölkt",45:"Nebel",48:"Reifnebel",51:"Leichter Nieselregen",
-      53:"Nieselregen",55:"Starker Nieselregen",61:"Leichter Regen",
-      63:"Regen",65:"Starker Regen",71:"Leichter Schneefall",
-      73:"Schneefall",75:"Starker Schneefall",80:"Regenschauer",
-      81:"Regenschauer",82:"Starke Regenschauer",95:"Gewitter",
-      96:"Gewitter mit Hagel",99:"Starkes Gewitter"
+      0: "Klarer Himmel",
+      1: "Überwiegend klar",
+      2: "Teilweise bewölkt",
+      3: "Bewölkt",
+      45: "Nebel",
+      48: "Reifnebel",
+      51: "Leichter Nieselregen",
+      53: "Nieselregen",
+      55: "Starker Nieselregen",
+      61: "Leichter Regen",
+      63: "Regen",
+      65: "Starker Regen",
+      71: "Leichter Schneefall",
+      73: "Schneefall",
+      75: "Starker Schneefall",
+      80: "Regenschauer",
+      81: "Regenschauer",
+      82: "Starke Regenschauer",
+      95: "Gewitter",
+      96: "Gewitter mit Hagel",
+      99: "Starkes Gewitter"
     };
-    return descriptions[code] || "Aktuelle Wetterlage";
+
+    return descriptions[code] || "Wetterlage";
   }
 
   function loadWeather() {
-    var url = "https://api.open-meteo.com/v1/forecast?latitude=48.249&longitude=16.341" +
+    var url =
+      "https://api.open-meteo.com/v1/forecast" +
+      "?latitude=48.249&longitude=16.341" +
       "&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m" +
       "&timezone=Europe%2FVienna";
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
-    xhr.timeout = 12000;
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState !== 4) return;
-      if (xhr.status >= 200 && xhr.status < 300) {
-        try {
-          var current = JSON.parse(xhr.responseText).current;
-          el("weatherTemp").textContent = Math.round(current.temperature_2m) + "°C";
-          el("weatherDescription").textContent = weatherCode(current.weather_code);
-          el("weatherDetails").innerHTML =
-            "Gefühlt: " + Math.round(current.apparent_temperature) + "°C<br>" +
-            "Luftfeuchtigkeit: " + current.relative_humidity_2m + "%<br>" +
-            "Wind: " + Math.round(current.wind_speed_10m) + " km/h";
-          el("weatherStatus").textContent = "Stand: " + current.time.replace("T"," ");
-        } catch (e) {
-          el("weatherStatus").textContent = "Wetterdaten konnten nicht gelesen werden.";
-        }
-      } else {
-        el("weatherStatus").textContent = "Wetterdienst nicht erreichbar; letzter Stand bleibt erhalten.";
-      }
-    };
-    xhr.onerror = function () {
-      el("weatherStatus").textContent = "Verbindung zum Wetterdienst fehlgeschlagen.";
-    };
-    xhr.ontimeout = function () {
-      el("weatherStatus").textContent = "Zeitüberschreitung beim Wetterdienst.";
-    };
-    xhr.send();
-  }
-  loadWeather();
-  window.setInterval(loadWeather, 600000);
 
-  function safeText(value) {
-    return String(value || "").replace(/[&<>"']/g, function (c) {
-      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
-    });
-  }
-
-  function renderNews(listId, statusId, articles, label) {
-    if (!articles || !articles.length) {
-      el(statusId).textContent = "Keine Meldungen geliefert; letzter Stand bleibt erhalten.";
-      return;
-    }
-    var html = "";
-    var count = Math.min(4, articles.length);
-    for (var i = 0; i < count; i++) {
-      var item = articles[i];
-      var title = item.headline || item.title || item.description || "Meldung";
-      var link = item.links && item.links.web && item.links.web.href ?
-        item.links.web.href : (item.link || "");
-      html += "<li>";
-      if (link) {
-        html += '<a href="' + safeText(link) + '" target="_blank">' +
-          safeText(title) + "</a>";
-      } else {
-        html += safeText(title);
-      }
-      html += "</li>";
-    }
-    el(listId).innerHTML = html;
-    el(statusId).textContent = label + " · Aktualisiert " +
-      new Date().toLocaleTimeString("de-AT", {hour:"2-digit",minute:"2-digit"});
-  }
-
-  function loadESPN(league, listId, statusId, label) {
-    var url = "https://site.api.espn.com/apis/site/v2/sports/basketball/" +
-      league + "/news?limit=10";
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.timeout = 15000;
+
     xhr.onreadystatechange = function () {
-      if (xhr.readyState !== 4) return;
+      if (xhr.readyState !== 4) {
+        return;
+      }
+
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          var data = JSON.parse(xhr.responseText);
+          var current = data.current;
+
+          byId("weatherTemp").innerHTML =
+            Math.round(current.temperature_2m) + "°C";
+
+          byId("weatherDescription").innerHTML =
+            describeWeather(current.weather_code);
+
+          byId("weatherDetails").innerHTML =
+            "Gefühlt: " +
+            Math.round(current.apparent_temperature) + "°C<br>" +
+            "Luftfeuchtigkeit: " +
+            current.relative_humidity_2m + "%<br>" +
+            "Wind: " +
+            Math.round(current.wind_speed_10m) + " km/h";
+
+          byId("weatherStatus").innerHTML =
+            "Stand: " + current.time.replace("T", " ");
+        } catch (error) {
+          byId("weatherStatus").innerHTML =
+            "Antwort des Wetterdienstes unlesbar.";
+        }
+      } else {
+        byId("weatherStatus").innerHTML =
+          "Wetterdienst antwortet mit Fehler " + xhr.status + ".";
+      }
+    };
+
+    xhr.onerror = function () {
+      byId("weatherStatus").innerHTML =
+        "Verbindung blockiert oder nicht erreichbar.";
+    };
+
+    xhr.ontimeout = function () {
+      byId("weatherStatus").innerHTML =
+        "Wetterabruf hat zu lange gedauert.";
+    };
+
+    xhr.send(null);
+  }
+
+  loadWeather();
+  window.setInterval(loadWeather, 600000);
+
+  /* SICHERE DARSTELLUNG VON NEWS-TEXT */
+  function escapeHTML(text) {
+    return String(text || "").replace(/[&<>"']/g, function (c) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[c];
+    });
+  }
+
+  function renderNews(listId, statusId, articles, sourceName) {
+    if (!articles || articles.length === 0) {
+      byId(statusId).innerHTML =
+        "Keine Meldungen erhalten; letzter Stand bleibt erhalten.";
+      return;
+    }
+
+    var html = "";
+    var count = Math.min(5, articles.length);
+
+    for (var i = 0; i < count; i++) {
+      var article = articles[i];
+      var title = article.headline || article.title || article.description || "Meldung";
+      var link = "";
+
+      if (article.links && article.links.web && article.links.web.href) {
+        link = article.links.web.href;
+      } else if (article.link) {
+        link = article.link;
+      }
+
+      html += "<li>";
+
+      if (link) {
+        html += '<a href="' + escapeHTML(link) +
+          '" target="_blank">' + escapeHTML(title) + "</a>";
+      } else {
+        html += escapeHTML(title);
+      }
+
+      html += "</li>";
+    }
+
+    byId(listId).innerHTML = html;
+
+    byId(statusId).innerHTML =
+      sourceName + " · Aktualisiert " +
+      pad(new Date().getHours()) + ":" +
+      pad(new Date().getMinutes());
+  }
+
+  /* NBA UND WNBA: ESPN JSON */
+  function loadESPN(league, listId, statusId, label) {
+    var url =
+      "https://site.api.espn.com/apis/site/v2/sports/basketball/" +
+      league + "/news?limit=10";
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.timeout = 15000;
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState !== 4) {
+        return;
+      }
+
       if (xhr.status >= 200 && xhr.status < 300) {
         try {
           var data = JSON.parse(xhr.responseText);
           renderNews(listId, statusId, data.articles || [], label);
-        } catch (e) {
-          el(statusId).textContent = "Ungültige Antwort; letzter Stand bleibt erhalten.";
+        } catch (error) {
+          byId(statusId).innerHTML =
+            "News-Antwort konnte nicht gelesen werden.";
         }
       } else {
-        el(statusId).textContent = "Feed nicht erreichbar; letzter Stand bleibt erhalten.";
+        byId(statusId).innerHTML =
+          "ESPN-Fehler " + xhr.status + "; letzter Stand bleibt erhalten.";
       }
     };
+
     xhr.onerror = function () {
-      el(statusId).textContent = "Verbindung fehlgeschlagen; letzter Stand bleibt erhalten.";
+      byId(statusId).innerHTML =
+        "ESPN-Verbindung blockiert; letzter Stand bleibt erhalten.";
     };
+
     xhr.ontimeout = function () {
-      el(statusId).textContent = "Zeitüberschreitung; letzter Stand bleibt erhalten.";
+      byId(statusId).innerHTML =
+        "ESPN-Abruf hat zu lange gedauert.";
     };
-    xhr.send();
+
+    xhr.send(null);
   }
 
+  /* KURIER RSS ÜBER PROXY */
   function loadKurier() {
-    var feed = "https://kurier.at/xml/rss";
-    var url = "https://api.allorigins.win/raw?url=" + encodeURIComponent(feed);
+    var feed = "https://kurier.at/xml/rssd";
+    var url = "https://api.allorigins.win/raw?url=" +
+      encodeURIComponent(feed);
+
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.timeout = 15000;
+
     xhr.onreadystatechange = function () {
-      if (xhr.readyState !== 4) return;
+      if (xhr.readyState !== 4) {
+        return;
+      }
+
       if (xhr.status >= 200 && xhr.status < 300) {
         try {
-          var xml = new DOMParser().parseFromString(xhr.responseText, "text/xml");
+          var xml = new DOMParser().parseFromString(
+            xhr.responseText, "text/xml"
+          );
+
           var nodes = xml.getElementsByTagName("item");
           var articles = [];
+
           for (var i = 0; i < nodes.length && articles.length < 5; i++) {
-            var t = nodes[i].getElementsByTagName("title")[0];
-            var l = nodes[i].getElementsByTagName("link")[0];
-            if (t) articles.push({
-              title: t.textContent,
-              link: l ? l.textContent : "https://kurier.at/"
-            });
+            var titleNode = nodes[i].getElementsByTagName("title")[0];
+            var linkNode = nodes[i].getElementsByTagName("link")[0];
+
+            if (titleNode) {
+              articles.push({
+                title: titleNode.textContent,
+                link: linkNode ? linkNode.textContent : "https://kurier.at/"
+              });
+            }
           }
-          renderNews("kurierNews", "kurierStatus", articles, "KURIER RSS");
-        } catch (e) {
-          el("kurierStatus").textContent = "RSS-Feed konnte nicht gelesen werden.";
+
+          renderNews(
+            "kurierNews",
+            "kurierStatus",
+            articles,
+            "KURIER RSS"
+          );
+        } catch (error) {
+          byId("kurierStatus").innerHTML =
+            "KURIER-Feed konnte nicht gelesen werden.";
         }
       } else {
-        el("kurierStatus").textContent = "KURIER-Feed nicht erreichbar; letzter Stand bleibt erhalten.";
+        byId("kurierStatus").innerHTML =
+          "KURIER-Feed nicht erreichbar; letzter Stand bleibt erhalten.";
       }
     };
+
     xhr.onerror = function () {
-      el("kurierStatus").textContent = "RSS-Verbindung fehlgeschlagen.";
+      byId("kurierStatus").innerHTML =
+        "Feed-Verbindung blockiert oder nicht erreichbar.";
     };
+
     xhr.ontimeout = function () {
-      el("kurierStatus").textContent = "Zeitüberschreitung beim KURIER-Feed.";
+      byId("kurierStatus").innerHTML =
+        "KURIER-Abruf hat zu lange gedauert.";
     };
-    xhr.send();
+
+    xhr.send(null);
   }
 
-  function loadNews() {
+  function loadAllNews() {
     loadESPN("nba", "nbaNews", "nbaStatus", "ESPN NBA");
     loadESPN("wnba", "wnbaNews", "wnbaStatus", "ESPN WNBA");
     loadKurier();
   }
-  loadNews();
-  window.setInterval(loadNews, 60000);
 
+  loadAllNews();
+  window.setInterval(loadAllNews, 60000);
+
+  /* SPRUCH DES TAGES */
   var quoteStarts = [
-    "Erfolg beginnt", "Mut wächst", "Stärke entsteht", "Fortschritt beginnt",
-    "Veränderung beginnt", "Selbstvertrauen wächst", "Ausdauer zahlt sich aus",
-    "Klarheit entsteht", "Ein Neubeginn beginnt", "Gute Gewohnheiten wachsen",
-    "Wahre Größe zeigt sich", "Kleine Schritte führen", "Geduld hilft",
-    "Disziplin bedeutet", "Der erste Schritt zählt", "Neue Möglichkeiten entstehen",
-    "Zuversicht wächst", "Respekt zeigt sich", "Erfahrung lehrt",
-    "Freude entsteht", "Gute Entscheidungen beginnen", "Innere Ruhe wächst",
-    "Ein offener Geist entdeckt", "Aus Fehlern entsteht", "Hoffnung bleibt",
-    "Konzentration hilft", "Jede Herausforderung bietet", "Verantwortung schafft",
-    "Ein kleiner Fortschritt ist", "Ein klarer Fokus schafft",
-    "Freundlichkeit schafft", "Dankbarkeit verändert", "Wer ruhig bleibt",
-    "Gute Ideen brauchen", "Manchmal reicht", "Lernen hört nie auf",
-    "Ein Ziel braucht", "Kluge Menschen wissen", "Wer Chancen erkennt",
-    "Das Morgen entsteht", "Wahre Geduld bedeutet", "Ein guter Gedanke kann",
-    "Erfahrung wird zur Stärke", "Wer sich selbst kennt", "Jeder Tag bietet",
-    "Kreativität wächst", "Ein guter Plan braucht", "Wer dranbleibt",
-    "Ein bewusster Schritt schafft", "Eine gute Haltung schafft"
+    "Erfolg beginnt", "Mut wächst", "Stärke entsteht",
+    "Fortschritt beginnt", "Selbstvertrauen wächst",
+    "Ausdauer zahlt sich aus", "Klarheit entsteht",
+    "Gute Gewohnheiten wachsen", "Wahre Größe zeigt sich",
+    "Kleine Schritte führen", "Geduld hilft", "Der erste Schritt zählt",
+    "Neue Möglichkeiten entstehen", "Zuversicht wächst",
+    "Respekt zeigt sich", "Erfahrung lehrt", "Freude entsteht",
+    "Innere Ruhe wächst", "Aus Fehlern entsteht",
+    "Hoffnung bleibt", "Konzentration hilft",
+    "Jede Herausforderung bietet", "Ein kleiner Fortschritt ist",
+    "Ein klarer Fokus schafft", "Dankbarkeit verändert",
+    "Gute Ideen brauchen", "Lernen hört nie auf",
+    "Kluge Menschen wissen", "Wer Chancen erkennt",
+    "Das Morgen entsteht", "Wahre Geduld bedeutet",
+    "Erfahrung wird zur Stärke", "Wer sich selbst kennt",
+    "Jeder Tag bietet", "Kreativität wächst",
+    "Wer dranbleibt", "Ein bewusster Schritt schafft",
+    "Eine gute Haltung schafft", "Vertrauen entsteht",
+    "Ein guter Plan braucht", "Wer ruhig bleibt",
+    "Gute Entscheidungen beginnen", "Freundlichkeit schafft",
+    "Persönliches Wachstum beginnt", "Disziplin bedeutet",
+    "Wer Fragen stellt", "Ein offener Geist entdeckt",
+    "Ein guter Gedanke kann", "Verantwortung schafft"
   ];
+
   var quoteEnds = [
     "durch kleine Schritte, die du konsequent gehst.",
     "wenn du auch nach Rückschlägen weitermachst.",
@@ -409,27 +630,35 @@ body {
     "mit Mut, auch wenn noch nicht alles sicher ist.",
     "wenn du deine Energie bewusst einsetzt.",
     "indem du heute das Beste aus dir machst.",
-    "wenn du das Wichtige vom Dringenden unterscheidest.",
-    "durch Taten, nicht nur durch gute Absichten.",
     "wenn du offen bleibst und weiter dazulernst.",
+    "durch Taten, nicht nur durch gute Absichten.",
+    "wenn du das Wichtige vom Dringenden unterscheidest.",
     "indem du anderen mit Respekt begegnest.",
     "wenn du dich auf den nächsten Schritt konzentrierst."
   ];
 
   function updateQuote() {
     var now = new Date();
-    var start = new Date(now.getFullYear(), 0, 0);
-    var day = Math.floor((now - start) / 86400000);
+    var yearStart = new Date(now.getFullYear(), 0, 0);
+    var day = Math.floor((now - yearStart) / 86400000);
     var half = now.getHours() < 12 ? 0 : 1;
     var slot = (day - 1) * 2 + half;
+
     var a = (slot * 17 + 3) % quoteStarts.length;
-    var b = (slot * 7 + Math.floor(slot / quoteStarts.length)) % quoteEnds.length;
-    el("quoteText").textContent = quoteStarts[a] + " " + quoteEnds[b];
-    el("quoteFooter").textContent = half === 0 ?
-      "Spruch 1 · 00:00–11:59 Uhr" : "Spruch 2 · 12:00–23:59 Uhr";
+    var b = (slot * 7 + Math.floor(slot / quoteStarts.length)) %
+      quoteEnds.length;
+
+    byId("quoteText").innerHTML =
+      escapeHTML(quoteStarts[a] + " " + quoteEnds[b]);
+
+    byId("quoteFooter").innerHTML = half === 0 ?
+      "Spruch 1 · 00:00–11:59 Uhr" :
+      "Spruch 2 · 12:00–23:59 Uhr";
   }
+
   updateQuote();
   window.setInterval(updateQuote, 15000);
+
 })();
 </script>
 </body>
