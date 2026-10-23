@@ -5,7 +5,6 @@
     <title>HomeViewOS 27</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        /* iOS 9 Kompatibles CSS */
         * {
             box-sizing: border-box;
             -webkit-box-sizing: border-box;
@@ -13,520 +12,294 @@
             padding: 0;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #e26a45; /* Kräftiges Peach-Korall */
-            background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: #222;
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #FFCBA4; /* Echtes, schönes Peach */
+            background-image: linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px);
+            background-size: 25px 25px;
+            color: #333;
             padding: 20px;
-            font-size: 18px; /* Größere Schrift für Lesbarkeit */
         }
+        
+        /* Neuer, zentrierter Kopfbereich */
         .header {
-            margin-bottom: 25px;
+            width: 100%;
+            margin-bottom: 30px;
+            position: relative;
+            text-align: center;
             clear: both;
-            overflow: hidden;
         }
         .header-left {
             float: left;
-            width: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            color: #444;
+            padding-top: 10px;
+        }
+        .header-center {
+            display: inline-block;
+        }
+        .brand-title {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #111;
+        }
+        .brand-sub {
+            font-size: 22px;
+            color: #333;
+            margin-top: 2px;
         }
         .header-right {
             float: right;
-            width: 50%;
-            text-align: right;
-            font-size: 16px;
-        }
-        .profile-btn {
-            background: #ffffff;
-            border: 2px solid #ccc;
-            padding: 12px 20px;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .brand-title {
-            font-size: 28px;
-            font-weight: normal;
-            margin: 0;
-        }
-        .brand-title strong {
-            font-weight: 900;
-        }
-        .brand-sub {
-            font-size: 18px;
-            color: #333;
-            margin: 2px 0;
+            padding-top: 5px;
         }
         .brand-beta {
-            font-size: 14px;
+            background-color: #d9383a;
+            color: #fff;
+            font-size: 12px;
             font-weight: bold;
-            color: #d9383a;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
             letter-spacing: 1px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        /* Dashboard Spalten-Layout ohne Grid */
+
+        /* Zweispaltiges Layout */
         .dashboard-container {
             width: 100%;
             clear: both;
-            overflow: hidden;
         }
         .column {
             float: left;
             width: 50%;
-            padding: 0 10px;
+            padding: 0 12px;
         }
+        
+        /* Edle Widget-Karten */
         .widget {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            min-height: 180px;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 24px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
         }
         .widget h3 {
-            font-size: 22px;
-            margin-bottom: 12px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 6px;
-            color: #111;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        /* Formularelemente */
-        select, input, button {
+        
+        /* Uhrzeit Styling */
+        .clock-display {
+            font-size: 52px;
+            font-weight: 700;
+            color: #111;
+            letter-spacing: -1px;
+            margin-bottom: 4px;
+        }
+        .date-display {
             font-size: 18px;
-            padding: 10px;
-            margin: 5px 0;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .greeting-display {
+            font-size: 22px;
+            font-weight: 600;
+            color: #e26a45;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        /* Formular-Elemente für Einstellungen */
+        select, input, button {
+            font-size: 16px;
+            padding: 12px;
+            margin: 6px 0;
             width: 100%;
-            border-radius: 6px;
-            border: 1px solid #ccc;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background: #fafafa;
         }
         button {
-            background: #333;
+            background: #222;
             color: #fff;
             border: none;
             font-weight: bold;
-            cursor: pointer;
         }
         button:active {
-            background: #555;
+            background: #444;
         }
-        .error-msg {
-            color: #d9383a;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        .success-msg {
-            color: #27ae60;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        /* Modal für PIN Abfrage */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
-        }
-        .modal-content {
-            background: #fff;
-            width: 90%;
-            max-width: 400px;
-            margin: 15% auto;
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-        }
-        .widget-list-item {
-            padding: 8px;
-            background: #eee;
-            margin: 4px 0;
-            border-radius: 4px;
-            font-size: 16px;
-        }
+        .error-msg { color: #d9383a; font-weight: bold; margin: 8px 0; }
+        .success-msg { color: #27ae60; font-weight: bold; margin: 8px 0; }
     </style>
 </head>
 <body>
 
     <!-- KOPFBEREICH -->
     <div class="header">
-        <div class="header-left">
-            <button class="profile-btn" onclick="openProfileSelector()">&#9787; <span id="current-profile-label">Cobe</span> &#9662;</button>
+        <div class="header-left" onclick="openProfileSelector()" style="cursor:pointer;">
+            &#9787; <span id="current-profile-label">Cobe</span> &#9662;
+        </div>
+        <div class="header-center">
+            <div class="brand-title">HomeViewOS 27</div>
+            <div class="brand-sub">Apple</div>
         </div>
         <div class="header-right">
-            <div class="brand-title">HomeViewOS <strong>27</strong></div>
-            <div class="brand-sub">Apple &#63743;</div>
             <div class="brand-beta">BETA PRODUCT</div>
         </div>
     </div>
 
-    <!-- WIDGET CONTAINER -->
+    <!-- DASHBOARD -->
     <div class="dashboard-container" id="widget-grid">
-        <div class="column" id="col-left"></div>
-        <div class="column" id="col-right"></div>
-    </div>
+        <!-- LINKE SPALTE -->
+        <div class="column">
+            <div class="widget">
+                <h3>Uhrzeit &amp; Datum</h3>
+                <div class="clock-display" id="txt-clock">--:--:--</div>
+                <div class="date-display" id="txt-date">--.--.----</div>
+                <div class="greeting-display" id="txt-greeting">Hallo!</div>
+            </div>
 
-    <!-- PROFILE SELECTION MODAL -->
-    <div id="profile-modal" class="modal">
-        <div class="modal-content">
-            <h3 id="modal-title">Profil wechseln</h3>
-            <div id="modal-profile-buttons">
-                <button onclick="selectProfileIntent('Cobe')">Cobe</button>
-                <button onclick="selectProfileIntent('Papa')">Papa</button>
-                <button onclick="selectProfileIntent('Mama')">Mama</button>
-                <button onclick="selectProfileIntent('Grace')">Grace</button>
+            <div class="widget">
+                <h3>NBA Spielstände</h3>
+                <p style="color:#888; font-style:italic;">Keine Live-Spieldaten verfügbar.</p>
             </div>
-            <div id="pin-prompt-area" style="display:none;">
-                <p id="pin-instruction">Bitte PIN eingeben:</p>
-                <input type="password" id="profile-pin-input" pattern="[0-9]*" inputmode="numeric" placeholder="4-12 Ziffern">
-                <button onclick="submitProfilePin()">Verify &amp; Login</button>
+
+            <div class="widget">
+                <h3>Zitat des Tages</h3>
+                <p style="font-style: italic; font-size: 19px; line-height: 1.4; color: #222;">"Die Kunst ist, einmal mehr aufzustehen, als man umgeworfen wurde."</p>
+                <p style="text-align:right; font-size:15px; color:#666; margin-top:8px;">- Altes Sprichwort</p>
             </div>
-            <div id="modal-error" class="error-msg"></div>
-            <button style="background:#ccc; color:#000; margin-top:10px;" onclick="closeModal()">Abbrechen</button>
+        </div>
+
+        <!-- RECHTE SPALTE -->
+        <div class="column">
+            <div class="widget">
+                <h3>Wetter in Wien-Döbling</h3>
+                <div id="weather-content"><p style="color:#666;">Lade Wetterdaten...</p></div>
+            </div>
+
+            <div class="widget">
+                <h3>WNBA Spielstände</h3>
+                <p style="color:#888; font-style:italic;">Keine Live-Spieldaten verfügbar.</p>
+            </div>
+
+            <div class="widget">
+                <h3>Einstellungen</h3>
+                <div id="settings-widget-body">Lade...</div>
+            </div>
         </div>
     </div><script>
-        // Globale Konfiguration & Statusvariablen
         var PROFILES = ['Cobe', 'Papa', 'Mama', 'Grace'];
         var currentProfile = 'Cobe';
-        var pendingProfile = '';
-        
-        var DEFAULT_WIDGET_ORDER = ['clock', 'nba', 'quote', 'weather', 'wnba', 'settings'];
-        var WIDGET_LABELS = {
-            'clock': 'Uhrzeit & Datum',
-            'weather': 'Wetter in Wien-Döbling',
-            'nba': 'NBA Spielstände',
-            'wnba': 'WNBA Spielstände',
-            'quote': 'Zitat des Tages',
-            'settings': 'Einstellungen'
-        };
 
-        // Hilfsfunktion für sicheren LocalStorage Zugriff auf alten Geräten
         function safeStorageGet(key, fallback) {
             try {
                 var val = localStorage.getItem(key);
                 return val !== null ? JSON.parse(val) : fallback;
-            } catch(e) {
-                return fallback;
-            }
+            } catch(e) { return fallback; }
         }
 
         function safeStorageSet(key, val) {
-            try {
-                localStorage.setItem(key, JSON.stringify(val));
-                return true;
-            } catch(e) {
-                alert('Speicherfehler: Der private Modus des Browsers blockiert eventuell das Speichern.');
-                return false;
-            }
+            try { localStorage.setItem(key, JSON.stringify(val)); return true; } catch(e) { return false; }
         }
 
-        // Initialisiere Profildaten falls nicht vorhanden
-        function initProfileStorage() {
-            for (var i = 0; i < PROFILES.length; i++) {
-                var p = PROFILES[i];
-                if (!safeStorageGet('profile_widgets_' + p, null)) {
-                    safeStorageSet('profile_widgets_' + p, DEFAULT_WIDGET_ORDER);
-                }
-            }
-        }
-
-        // App Start
         window.onload = function() {
-            initProfileStorage();
             currentProfile = safeStorageGet('last_active_profile', 'Cobe');
-            
-            var pin = safeStorageGet('profile_pin_' + currentProfile, '');
-            if(!pin) {
-                currentProfile = 'Cobe';
-            }
-            
             document.getElementById('current-profile-label').innerText = currentProfile;
-            renderDashboard();
-            startClockUpdates();
-            loadWeatherData();
+            
+            // Ticker starten
+            updateClockAndGreeting();
+            setInterval(updateClockAndGreeting, 1000);
+            
+            // Wetter laden
+            loadWeatherDöbling();
+            
+            // Einstellungen rendern
+            renderSettingsUi();
         };
 
-        // Dashboard Rendering basierend auf Profil-Präferenzen
-        function renderDashboard() {
-            var activeWidgets = safeStorageGet('profile_widgets_' + currentProfile, DEFAULT_WIDGET_ORDER);
-            
-            var colLeft = document.getElementById('col-left');
-            var colRight = document.getElementById('col-right');
-            
-            colLeft.innerHTML = '';
-            colRight.innerHTML = '';
-
-            var hasPin = safeStorageGet('profile_pin_' + currentProfile, null);
-            if (!hasPin) {
-                colLeft.innerHTML = '<div class="widget"><h3>Hinweis</h3><p class="error-msg">Für das Profil ' + currentProfile + ' wurde noch kein PIN vergeben.</p><p>Bitte richte zuerst einen PIN im Einstellungs-Widget (rechte Spalte) ein.</p></div>';
-            }
-
-            for (var i = 0; i < activeWidgets.length; i++) {
-                var wId = activeWidgets[i];
-                var wHtml = createWidgetHtml(wId);
-                
-                if (i % 2 === 0) {
-                    colLeft.innerHTML += wHtml;
-                } else {
-                    colRight.innerHTML += wHtml;
-                }
-            }
-
-            if (document.getElementById('widget-clock-body')) updateClockUi();
-            if (document.getElementById('setting-profile-select')) populateSettingsUi();
-        }
-
-        // Erzeugung des HTML-Skeletts für die jeweiligen Widgets
-        function createWidgetHtml(id) {
-            var title = WIDGET_LABELS[id] || id;
-            var html = '<div class="widget" id="widget-' + id + '"><h3>' + title + '</h3>';
-            
-            if (id === 'clock') {
-                html += '<div id="widget-clock-body" style="font-size: 32px; font-weight: bold; text-align: center; padding: 20px 0;">--:--:--</div>' +
-                        '<div id="widget-date-body" style="font-size: 18px; text-align: center; color: #555;">--.--.----</div>';
-            } else if (id === 'weather') {
-                html += '<div id="weather-content"><p>Lade Wetterdaten...</p></div>';
-            } else if (id === 'nba') {
-                html += '<div><p style="color:#777; font-style:italic;">Keine Live-Spieldaten verfügbar.</p><p style="font-size:15px; margin-top:5px;">Saison-Pause oder keine aktiven Begegnungen aufgezeichnet.</p></div>';
-            } else if (id === 'wnba') {
-                html += '<div><p style="color:#777; font-style:italic;">Keine Live-Spieldaten verfügbar.</p><p style="font-size:15px; margin-top:5px;">Derzeit finden keine Spiele statt.</p></div>';
-            } else if (id === 'quote') {
-                html += '<div style="font-style: italic; padding: 10px 0;">"Die Kunst ist, einmal mehr aufzustehen, als man umgeworfen wurde."</div><div style="text-align:right; font-size:15px; color:#555;">- Altes Sprichwort</div>';
-            } else if (id === 'settings') {
-                html += '<div id="settings-widget-body"></div>';
-            }
-
-            html += '</div>';
-            return html;
-        }
-
-        // Uhrzeit & Datums-Logik
-        function startClockUpdates() {
-            setInterval(function() {
-                if (document.getElementById('widget-clock-body')) {
-                    updateClockUi();
-                }
-            }, 1000);
-        }
-
-        function updateClockUi() {
+        // Zeitgesteuerte Begrüßungslogik mit Emojis
+        function updateClockAndGreeting() {
             var d = new Date();
-            var h = String(d.getHours()); if(h.length < 2) h = '0' + h;
-            var m = String(d.getMinutes()); if(m.length < 2) m = '0' + m;
-            var s = String(d.getSeconds()); if(s.length < 2) s = '0' + s;
+            var h = d.getHours();
+            var min = d.getMinutes(); if(min < 10) min = '0' + min;
+            var sec = d.getSeconds(); if(sec < 10) sec = '0' + sec;
             
-            var day = String(d.getDate()); if(day.length < 2) day = '0' + day;
-            var mon = String(d.getMonth() + 1); if(mon.length < 2) mon = '0' + mon;
-            var yr = d.getFullYear();
+            var day = d.getDate(); if(day < 10) day = '0' + day;
+            var mon = d.getMonth() + 1; if(mon < 10) mon = '0' + mon;
+            
+            document.getElementById('txt-clock').innerText = h + ':' + min + ':' + sec;
+            document.getElementById('txt-date').innerText = day + '.' + mon + '.' + d.getFullYear();
 
-            document.getElementById('widget-clock-body').innerText = h + ':' + m + ':' + s;
-            document.getElementById('widget-date-body').innerText = day + '.' + mon + '.' + yr;
+            var greeting = "Hallo! 😊";
+            if (h >= 5 && h < 9) { greeting = "Guten Morgen! ☕"; }
+            else if (h >= 9 && h < 12) { greeting = "Guten Vormittag! ☀️"; }
+            else if (h >= 12 && h < 14) { greeting = "Guten Mittag! 🍽️"; }
+            else if (h >= 14 && h < 18) { greeting = "Guten Nachmittag! 🍰"; }
+            else if (h >= 18 && h < 22) { greeting = "Guten Abend! 🌆"; }
+            else { greeting = "Gute Nacht! 🌙"; }
+
+            document.getElementById('txt-greeting').innerText = greeting;
         }
 
-        // Wetter API Integration (Open-Meteo ohne Key-Zwang, hohe iOS 9 Kompatibilität via XHR)
-        function loadWeatherData() {
+        // Extrem robuster Wetter-Abruf ohne komplexe ES6-Konstrukte
+        function loadWeatherDöbling() {
             var url = 'https://open-meteo.com';
             var xhr = new XMLHttpRequest();
             xhr.open('GET', url, true);
-            xhr.timeout = 10000; 
-            
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
-                    var container = document.getElementById('weather-content');
-                    if (!container) return;
-
+                    var box = document.getElementById('weather-content');
+                    if (!box) return;
                     if (xhr.status === 200) {
                         try {
-                            var data = JSON.parse(xhr.responseText);
-                            var cw = data.current_weather;
-                            
-                            var temp = cw.temperature;
-                            var wind = cw.windspeed;
-                            var timeRaw = cw.time;
-                            var timeFormatted = timeRaw ? timeRaw.replace('T', ' ') : 'Unbekannt';
-
-                            container.innerHTML = 
-                                '<p style="font-size:24px; font-weight:bold; margin-bottom:5px;">' + temp + ' &deg;C</p>' +
-                                '<p>Windgeschwindigkeit: ' + wind + ' km/h</p>' +
-                                '<p style="font-size:13px; color:#666; margin-top:10px;">Zuletzt aktualisiert: ' + timeFormatted + '</p>';
+                            var response = JSON.parse(xhr.responseText);
+                            var temp = response.current_weather.temperature;
+                            var wind = response.current_weather.windspeed;
+                            box.innerHTML = '<p style="font-size:28px; font-weight:bold; color:#111;">' + temp + ' &deg;C</p>' +
+                                            '<p style="margin-top:4px; color:#444;">Windgeschwindigkeit: ' + wind + ' km/h</p>';
                         } catch(e) {
-                            container.innerHTML = '<p class="error-msg">Fehler bei der Datenverarbeitung.</p>';
+                            box.innerHTML = '<p style="color:#d9383a;">Fehler beim Auswerten der Daten.</p>';
                         }
                     } else {
-                        container.innerHTML = '<p class="error-msg">Wetterdaten aktuell nicht erreichbar.</p>';
+                        box.innerHTML = '<p style="color:#d9383a;">Wetterdaten temporär nicht verfügbar.</p>';
                     }
                 }
             };
-            
-            xhr.ontimeout = function() {
-                var container = document.getElementById('weather-content');
-                if (container) container.innerHTML = '<p class="error-msg">Zeitüberschreitung beim Laden.</p>';
-            };
-
             xhr.send();
-        }// Profilverwaltung & Modals
-        function openProfileSelector() {
-            document.getElementById('modal-title').innerText = 'Profil wechseln';
-            document.getElementById('modal-profile-buttons').style.display = 'block';
-            document.getElementById('pin-prompt-area').style.display = 'none';
-            document.getElementById('modal-error').innerText = '';
-            document.getElementById('profile-modal').style.display = 'block';
         }
 
-        function closeModal() {
-            document.getElementById('profile-modal').style.display = 'none';
-        }
+        // Einfaches Einstellungs-Widget
+        function renderSettingsUi() {
+            var body = document.getElementById('settings-widget-body');
+            if(!body) return;
 
-        function selectProfileIntent(name) {
-            pendingProfile = name;
-            var targetPin = safeStorageGet('profile_pin_' + name, null);
-            
-            if (targetPin === null) {
-                currentProfile = pendingProfile;
-                safeStorageSet('last_active_profile', currentProfile);
-                document.getElementById('current-profile-label').innerText = currentProfile;
-                closeModal();
-                renderDashboard();
-            } else {
-                document.getElementById('modal-profile-buttons').style.display = 'none';
-                document.getElementById('pin-prompt-area').style.display = 'block';
-                document.getElementById('pin-instruction').innerText = 'Bitte PIN für ' + name + ' eingeben:';
-                document.getElementById('profile-pin-input').value = '';
-                document.getElementById('modal-error').innerText = '';
-            }
-        }
-
-        function submitProfilePin() {
-            var entered = document.getElementById('profile-pin-input').value;
-            var realPin = safeStorageGet('profile_pin_' + pendingProfile, '');
-            
-            if (entered === realPin) {
-                currentProfile = pendingProfile;
-                safeStorageSet('last_active_profile', currentProfile);
-                document.getElementById('current-profile-label').innerText = currentProfile;
-                closeModal();
-                renderDashboard();
-            } else {
-                document.getElementById('modal-error').innerText = 'Falscher PIN! Zugriff verweigert.';
-            }
-        }
-
-        // Einstellungs-Widget Steuerung
-        function populateSettingsUi() {
-            var container = document.getElementById('settings-widget-body');
-            if (!container) return;
-
-            var activeWidgets = safeStorageGet('profile_widgets_' + currentProfile, DEFAULT_WIDGET_ORDER).slice();
-            
-            var html = '<div>' +
-                '<label style="font-weight:bold; display:block; margin-top:8px;">Gewähltes Konfigurationsprofil:</label>' +
-                '<select id="setting-profile-select" onchange="changeSettingsTargetProfile(this.value)">';
-            
-            for (var i = 0; i < PROFILES.length; i++) {
+            var html = '<label style="display:block; font-weight:bold; margin-bottom:4px;">Aktives Profil:</label>' +
+                       '<select onchange="switchProfile(this.value)">';
+            for(var i=0; i<PROFILES.length; i++) {
                 var sel = (PROFILES[i] === currentProfile) ? ' selected' : '';
                 html += '<option value="' + PROFILES[i] + '"' + sel + '>' + PROFILES[i] + '</option>';
             }
-            html += '</select></div>';
-
-            var hasPin = safeStorageGet('profile_pin_' + currentProfile, null);
-            html += '<div style="margin-top:15px; border-top:1px solid #ccc; padding-top:10px;">';
-            if (!hasPin) {
-                html += '<p class="error-msg" style="font-size:14px;">Dieses Profil besitzt noch keinen PIN!</p>' +
-                        '<input type="password" id="set-pin-1" placeholder="Neuer PIN (4-12 Ziffern)" pattern="[0-9]*" inputmode="numeric">' +
-                        '<input type="password" id="set-pin-2" placeholder="PIN wiederholen" pattern="[0-9]*" inputmode="numeric">' +
-                        '<button onclick="saveNewPin(false)">PIN erstmalig einrichten</button>';
-            } else {
-                html += '<p class="success-msg" style="font-size:14px;">PIN ist aktiv.</p>' +
-                        '<input type="password" id="set-pin-old" placeholder="Aktueller PIN" pattern="[0-9]*" inputmode="numeric">' +
-                        '<input type="password" id="set-pin-1" placeholder="Neuer PIN (4-12 Ziffern)" pattern="[0-9]*" inputmode="numeric">' +
-                        '<input type="password" id="set-pin-2" placeholder="Neuen PIN wiederholen" pattern="[0-9]*" inputmode="numeric">' +
-                        '<button onclick="saveNewPin(true)">PIN ändern</button>';
-            }
-            html += '<div id="pin-setting-status"></div></div>';
-
-            html += '<div style="margin-top:15px; border-top:1px solid #ccc; padding-top:10px;">' +
-                    '<label style="font-weight:bold;">Sichtbare Widgets (Reihenfolge ändern):</label>';
-            
-            for (var j = 0; j < activeWidgets.length; j++) {
-                var widgetId = activeWidgets[j];
-                html += '<div class="widget-list-item">' + WIDGET_LABELS[widgetId] + ' ' +
-                        '<span style="float:right;">' +
-                        '<a href="#" onclick="moveWidgetInList(' + j + ', -1); return false;" style="text-decoration:none; margin-right:8px;">&uarr; Hoch</a>' +
-                        '<a href="#" onclick="moveWidgetInList(' + j + ', 1); return false;" style="text-decoration:none;">&darr; Runter</a>' +
-                        '</span></div>';
-            }
-
-            html += '<button style="background:#d9383a; margin-top:12px;" onclick="resetProfileLayoutToDefault()">Standardlayout wiederherstellen</button>';
-            html += '</div>';
-
-            container.innerHTML = html;
+            html += '</select>';
+            body.innerHTML = html;
         }
 
-        function changeSettingsTargetProfile(target) {
-            pendingProfile = target;
-            var targetPin = safeStorageGet('profile_pin_' + target, null);
-            if (targetPin === null) {
-                currentProfile = target;
-                safeStorageSet('last_active_profile', currentProfile);
-                document.getElementById('current-profile-label').innerText = currentProfile;
-                renderDashboard();
-            } else {
-                openProfileSelector();
-                selectProfileIntent(target);
-            }
+        function switchProfile(name) {
+            currentProfile = name;
+            safeStorageSet('last_active_profile', name);
+            document.getElementById('current-profile-label').innerText = name;
+            renderSettingsUi();
         }
 
-        function saveNewPin(requiresOld) {
-            var statusDiv = document.getElementById('pin-setting-status');
-            statusDiv.innerHTML = '';
-
-            var pin1 = document.getElementById('set-pin-1').value;
-            var pin2 = document.getElementById('set-pin-2').value;
-
-            if (requiresOld) {
-                var oldPin = document.getElementById('set-pin-old').value;
-                var realOld = safeStorageGet('profile_pin_' + currentProfile, '');
-                if (oldPin !== realOld) {
-                    statusDiv.innerHTML = '<p class="error-msg">Der aktuelle PIN ist nicht korrekt.</p>';
-                    return;
-                }
-            }
-
-            if (pin1.length < 4 || pin1.length > 12 || !/^\d+$/.test(pin1)) {
-                statusDiv.innerHTML = '<p class="error-msg">Der PIN muss aus 4 bis 12 numerischen Ziffern bestehen.</p>';
-                return;
-            }
-
-            if (pin1 !== pin2) {
-                statusDiv.innerHTML = '<p class="error-msg">Die PIN-Eingaben stimmen nicht übereinstimen.</p>';
-                return;
-            }
-
-            if (safeStorageSet('profile_pin_' + currentProfile, pin1)) {
-                statusDiv.innerHTML = '<p class="success-msg">PIN erfolgreich gespeichert!</p>';
-                setTimeout(function() { renderDashboard(); }, 1000);
-            }
-        }
-
-        function moveWidgetInList(index, direction) {
-            var activeWidgets = safeStorageGet('profile_widgets_' + currentProfile, DEFAULT_WIDGET_ORDER).slice();
-            var targetIndex = index + direction;
-            
-            if (targetIndex >= 0 && targetIndex < activeWidgets.length) {
-                var temp = activeWidgets[index];
-                activeWidgets[index] = activeWidgets[targetIndex];
-                activeWidgets[targetIndex] = temp;
-                
-                if (safeStorageSet('profile_widgets_' + currentProfile, activeWidgets)) {
-                    renderDashboard();
-                }
-            }
-        }
-
-        function resetProfileLayoutToDefault() {
-            if (confirm('Möchtest du das Layout für ' + currentProfile + ' wirklich auf die Standardeinstellungen zurücksetzen?')) {
-                if (safeStorageSet('profile_widgets_' + currentProfile, DEFAULT_WIDGET_ORDER)) {
-                    renderDashboard();
-                }
+        function openProfileSelector() {
+            var target = prompt("Zu welchem Profil möchtest du wechseln? (Cobe, Papa, Mama, Grace):");
+            if(target && PROFILES.indexOf(target) !== -1) {
+                switchProfile(target);
             }
         }
     </script>
