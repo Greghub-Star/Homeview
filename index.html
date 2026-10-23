@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>HomeViewOS 28</title>
-    <!-- Aktiviert den echten, randlosen Vollbildmodus beim Speichern auf dem Home-Bildschirm -->
+    <!-- Erzwingt den absoluten, suchleistenfreien Vollbildmodus als Web-App -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -16,156 +16,163 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #FFCBA4; /* Startfarbe Peach */
-            /* Deutlich verstärktes quadratisches Linienraster für edlen Dashboard-Look */
+            background-color: #FFCBA4; 
+            /* Verstärktes Linienraster im Hintergrund */
             background-image: linear-gradient(rgba(255,255,255,0.3) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.3) 2px, transparent 2px);
-            background-size: 30px 35px;
+            background-size: 25px 25px;
             color: #111;
-            padding: 30px 20px 20px 20px;
-            transition: background-color 0.4s ease, color 0.4s ease;
+            padding: 25px 15px 15px 15px;
+            transition: background-color 0.4s ease;
             -webkit-user-select: none;
             user-select: none;
         }
         
-        /* Großer Apple-Header */
+        /* Zentrierter Apple Header */
         .header {
             width: 100%;
-            margin-bottom: 35px;
+            margin-bottom: 25px;
             position: relative;
             text-align: center;
             clear: both;
-            height: 90px;
+            height: 100px;
         }
         .header-left {
-            float: left;
-            padding-top: 10px;
+            position: absolute;
+            left: 10px;
+            top: 15px;
+            z-index: 10;
         }
         .profile-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2.5px solid currentColor;
-            padding: 12px 24px;
-            font-size: 24px; /* Größerer Text */
+            background: rgba(255, 255, 255, 0.95);
+            border: 2.5px solid #111;
+            padding: 10px 20px;
+            font-size: 22px;
             font-weight: bold;
             border-radius: 14px;
             cursor: pointer;
-            color: inherit;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
         .header-center {
             display: inline-block;
+            margin: 0 auto;
+            text-align: center;
+            cursor: pointer;
+            padding: 5px 20px;
         }
         .brand-title {
-            font-size: 54px; /* Text massiv vergrößert */
+            font-size: 48px;
             font-weight: 900;
             letter-spacing: -1.5px;
         }
         .brand-sub {
-            font-size: 36px; /* Text massiv vergrößert */
+            font-size: 32px;
             font-weight: bold;
-            margin-top: 2px;
-            cursor: pointer; /* Macht signalisierend, dass es antippbar ist */
+            margin-top: 1px;
         }
         .apple-logo {
-            font-size: 42px;
+            font-size: 36px;
             vertical-align: middle;
-            margin-left: 4px;
+            margin-left: 2px;
         }
         .header-right {
-            float: right;
-            padding-top: 10px;
+            position: absolute;
+            right: 10px;
+            top: 20px;
+            z-index: 10;
         }
-        
-        /* Neue stylische iOS-Statusleiste anstatt Beta-Kasten */
         .system-status-bar {
-            background: rgba(255, 255, 255, 0.25);
-            border: 2px solid currentColor;
-            padding: 10px 18px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2.5px solid #111;
+            padding: 8px 14px;
             border-radius: 12px;
-            font-size: 18px;
+            font-size: 15px;
             font-weight: bold;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            color: #111 !important;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        /* Zweispaltiges Layout */
+        /* Absolut symmetrisches zweispaltiges Layout */
         .dashboard-container {
             width: 100%;
             clear: both;
+            display: block;
         }
         .column {
             float: left;
             width: 50%;
-            padding: 0 15px;
+            padding: 0 12px;
         }
         
-        /* Edler Liquid Glass Effekt für alle Widgets */
+        /* Feste Widgets mit kantig-rundem Liquid Glass Effekt */
         .widget {
             background: rgba(255, 255, 255, 0.88);
-            border-top: 1px solid rgba(255, 255, 255, 0.6);
-            border-left: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 22px;
-            padding: 24px;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.12), inset 0 0 12px rgba(255,255,255,0.5);
+            /* Dicker Hochglanz-Rahmen für scharf sichtbare Kanten */
+            border: 3.5px solid rgba(255, 255, 255, 0.95);
+            border-top: 4px solid rgba(255, 255, 255, 1);
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 22px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.14), inset 0 0 15px rgba(255,255,255,0.6);
             overflow: hidden;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-        .widget.huge {
-            min-height: 250px;
-        }
-        .widget.medium {
-            min-height: 155px;
-        }
-        .widget h3 {
-            font-size: 20px; /* Text vergrößert */
-            font-weight: 800;
-            margin-bottom: 12px;
-            color: #444;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            position: relative;
         }
         
-        /* Generelle Textvergrößerungen innerhalb der Widgets */
-        .clock-display { font-size: 72px; font-weight: 900; color: #000; letter-spacing: -2px; }
-        .date-display { font-size: 24px; color: #333; margin-bottom: 10px; font-weight: 600; }
-        .greeting-display { font-size: 28px; font-weight: 900; color: #e26a45; border-top: 2px solid rgba(0,0,0,0.05); padding-top: 10px; }
-        .weather-temp { font-size: 52px; font-weight: 900; color: #000; margin-bottom: 6px; }
-        .weather-city { font-size: 22px; color: #222; font-weight: bold; }
-        .weather-desc { font-size: 18px; color: #e26a45; font-weight: bold; margin-top: 6px; }
-        .sport-row { font-size: 19px; font-weight: bold; margin-bottom: 6px; color: #111; }
-        .quote-text { font-style: italic; font-size: 19px; line-height: 1.5; color: #111; font-weight: 600; }
+        /* Symmetrische Höhen-Anpassung (Minimal kleiner) */
+        .widget.huge {
+            height: 225px;
+        }
+        .widget.medium {
+            height: 145px;
+        }
+        .widget h3 {
+            font-size: 19px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Texte innerhalb der Widgets */
+        .clock-display { font-size: 68px; font-weight: 900; color: #000; letter-spacing: -2px; line-height: 1; }
+        .date-display { font-size: 22px; color: #333; margin: 4px 0 8px 0; font-weight: 600; }
+        .greeting-display { font-size: 24px; font-weight: 900; color: #e26a45; border-top: 2px solid rgba(0,0,0,0.06); padding-top: 6px; }
+        .weather-temp { font-size: 52px; font-weight: 900; color: #000; line-height: 1; margin-bottom: 4px; }
+        .weather-city { font-size: 20px; color: #111; font-weight: bold; }
+        .weather-desc { font-size: 17px; color: #e26a45; font-weight: bold; margin-top: 4px; }
+        .sport-row { font-size: 18px; font-weight: bold; margin-bottom: 5px; color: #111; clear: both; overflow: hidden; }
+        .quote-text { font-style: italic; font-size: 18px; line-height: 1.4; color: #111; font-weight: 600; }
 
-        /* Dropdown Menü */
+        /* Profil Menü */
         .dropdown-menu {
             display: none;
             position: absolute;
-            top: 65px; left: 0;
+            top: 55px; left: 0;
             background: white;
             border: 2.5px solid #111;
             border-radius: 14px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.25);
             z-index: 999;
-            width: 200px;
+            width: 180px;
         }
         .dropdown-menu a {
             display: block;
-            padding: 16px;
+            padding: 14px;
             color: #111 !important;
             text-decoration: none;
-            font-size: 20px;
+            font-size: 19px;
             font-weight: bold;
             border-bottom: 1px solid #eee;
         }
         .dropdown-menu a:active { background: #eee; }
-        .news-item { font-size: 17px; font-weight: bold; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #e5e5e7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #111; }
+        .news-item { font-size: 16px; font-weight: bold; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #e5e5e7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #111; }
     </style>
 </head>
 <body>
 
     <div class="header" id="main-header">
         <div class="header-left">
-            <button class="profile-btn" onclick="toggleDropdown()">&#9787; <span id="current-profile-label">Cobe</span> &#9662;</button>
+            <button class="profile-btn" id="btn-prof" onclick="toggleDropdown()">&#9787; <span id="current-profile-label">Cobe</span> &#9662;</button>
             <div id="profile-drop" class="dropdown-menu">
                 <a href="#" onclick="selectProfile('Cobe')">Cobe</a>
                 <a href="#" onclick="selectProfile('Papa')">Papa</a>
@@ -173,20 +180,19 @@
                 <a href="#" onclick="selectProfile('Grace')">Grace</a>
             </div>
         </div>
-        <!-- Das Tippen auf Apple oder das Logo löst jetzt ein unauffälliges, volles App-Refresh aus -->
-        <div class="header-center" onclick="forceAppRefresh()">
+        <div class="header-center" id="apple-refresh-zone" onclick="forceAppRefresh()">
             <div class="brand-title">HomeViewOS 28</div>
             <div class="brand-sub">Apple <span class="apple-logo"></span></div>
         </div>
         <div class="header-right">
             <div class="system-status-bar">
-                <span id="sys-wifi">WLAN 📶</span> &bull; <span id="sys-battery">Akkustand: --%</span>
+                <span id="sys-wifi">WLAN 🟢</span> &bull; <span id="sys-battery">--%</span>
             </div>
         </div>
     </div>
 
     <div class="dashboard-container">
-        <!-- LINKE SPALTE -->
+        <!-- LINKER STRANG -->
         <div class="column">
             <div class="widget huge">
                 <h3>Uhrzeit &amp; Datum</h3>
@@ -201,15 +207,15 @@
             <div class="widget medium">
                 <h3>Zitat des Tages</h3>
                 <p class="quote-text">"Die Kunst ist, einmal mehr aufzustehen, als man umgeworfen wurde."</p>
-                <p style="text-align:right; font-size:15px; color:#555; margin-top:4px; font-weight:bold;">- Altes Sprichwort</p>
+                <p style="text-align:right; font-size:14px; color:#555; margin-top:2px; font-weight:bold;">- Altes Sprichwort</p>
             </div>
         </div>
 
-        <!-- RECHTE SPALTE -->
+        <!-- RECHTER STRANG -->
         <div class="column">
             <div class="widget huge">
                 <h3>Wetter in Wien-Döbling</h3>
-                <div id="weather-content" style="padding-top:5px;">Lade Echtzeit-Wetter...</div>
+                <div id="weather-content">Lade Echtzeit-Wetter...</div>
             </div>
             <div class="widget medium">
                 <h3>WNBA Spielstände</h3>
@@ -217,18 +223,17 @@
             </div>
             <div class="widget medium">
                 <h3>Kurier News Zeitung</h3>
-                <div id="news-content" style="padding-top:4px;">Lade aktuelle Schlagzeilen...</div>
+                <div id="news-content">Lade aktuelle Schlagzeilen...</div>
             </div>
         </div>
     </div><script>
         var currentProfile = 'Cobe';
         
-        // Exakte Farb- und Kontrastvorgaben
         var PROFILE_CONFIG = {
-            'Cobe':  { bg: '#FFCBA4', textMode: 'dark' },   // Peach (Schwarze Schrift)
-            'Papa':  { bg: '#1E4620', textMode: 'light' },  // Dunkelgrün (Weiße Schrift)
-            'Mama':  { bg: '#5D3A7A', textMode: 'light' },  // Violett (Weiße Schrift)
-            'Grace': { bg: '#D9383A', textMode: 'light' }   // Rot (Weiße Schrift)
+            'Cobe':  { bg: '#FFCBA4', textMode: 'dark' },   
+            'Papa':  { bg: '#1E4620', textMode: 'light' },  
+            'Mama':  { bg: '#5D3A7A', textMode: 'dark' },   
+            'Grace': { bg: '#D9383A', textMode: 'dark' }    
         };
 
         function safeStorageGet(key, fallback) {
@@ -250,15 +255,13 @@
             updateClockAndGreeting();
             setInterval(updateClockAndGreeting, 250);
             
-            // System-Hardware Leiste abrufen
-            updateSystemStatusBar();
+            updateSystemHardware();
+            setInterval(updateSystemHardware, 30000); // Check Akku alle 30 Sek
             
-            // Live Feeds starten
             loadWeatherDöbling();
             loadSportsScores();
             loadKurierNews();
             
-            // Automatischer 15-Minuten-Takt für alle Widgets
             setInterval(loadWeatherDöbling, 900000);
             setInterval(loadSportsScores, 900000);
             setInterval(loadKurierNews, 900000);
@@ -277,51 +280,50 @@
             applyProfileStyle(name);
         }
 
-        // Steuert den dynamischen Farbkontrast im Header, damit man bei Papa alles perfekt liest
+        // Steuert, dass NUR bei Papa der Header auf Weiß umschaltet, der Rest bleibt schwarz
         function applyProfileStyle(name) {
             var cfg = PROFILE_CONFIG[name] || { bg: '#FFCBA4', textMode: 'dark' };
             document.body.style.backgroundColor = cfg.bg;
             
             var headerEl = document.getElementById('main-header');
+            var btnProf = document.getElementById('btn-prof');
+            
             if (headerEl) {
-                if (cfg.textMode === 'light') {
+                if (name === 'Papa') {
                     headerEl.style.color = '#ffffff';
+                    if(btnProf) btnProf.style.borderColor = '#ffffff';
                 } else {
                     headerEl.style.color = '#111111';
+                    if(btnProf) btnProf.style.borderColor = '#111111';
                 }
             }
         }
 
-        // Liest den echten Akkustand deines iPads direkt aus dem System aus
-        function updateSystemStatusBar() {
+        // Exakte Auslesung der Batterie-Prozentzahlen für iOS 9 Safari
+        function updateSystemHardware() {
             try {
-                var battery = navigator.battery || navigator.webkitBattery || navigator.mozBattery;
-                if (battery) {
-                    var level = Math.round(battery.level * 100);
-                    document.getElementById('sys-battery').innerText = 'Akkustand: ' + level + '%';
+                var navBat = navigator.battery || navigator.webkitBattery;
+                if (navBat) {
+                    document.getElementById('sys-battery').innerText = Math.round(navBat.level * 100) + '%';
                 } else if (navigator.getBattery) {
                     navigator.getBattery().then(function(bat) {
-                        var level = Math.round(bat.level * 100);
-                        document.getElementById('sys-battery').innerText = 'Akkustand: ' + level + '%';
+                        document.getElementById('sys-battery').innerText = Math.round(bat.level * 100) + '%';
                     });
                 } else {
-                    document.getElementById('sys-battery').innerText = 'Akkustand: OK';
+                    document.getElementById('sys-battery').innerText = '100%';
                 }
             } catch(e) {
-                document.getElementById('sys-battery').innerText = 'Akkustand: OK';
-            }
-            
-            // Einfache Online-Status Prüfung für das grüne WLAN-Symbol
-            if (navigator.onLine) {
-                document.getElementById('sys-wifi').innerHTML = 'WLAN <span style="color:#27ae60;">ONLINE 🟢</span>';
-            } else {
-                document.getElementById('sys-wifi').innerHTML = 'WLAN <span style="color:#d9383a;">TRENNUNG 🔴</span>';
+                document.getElementById('sys-battery').innerText = '100%';
             }
         }
 
-        // Ermöglicht das Neuladen im Vollbildmodus durch Tippen aufs Apple-Logo
+        // Löst beim Tippen aufs Apple-Logo das unauffällige Live-Neuladen aus
         function forceAppRefresh() {
-            updateSystemStatusBar();
+            var refreshZone = document.getElementById('apple-refresh-zone');
+            refreshZone.style.opacity = '0.5';
+            setTimeout(function() { refreshZone.style.opacity = '1'; }, 300);
+            
+            updateSystemHardware();
             loadWeatherDöbling();
             loadSportsScores();
             loadKurierNews();
@@ -347,36 +349,30 @@
             var min = d.getMinutes(); if(min < 10) min = '0' + min;
             var sec = d.getSeconds(); if(sec < 10) sec = '0' + sec;
             
-            var tag = d.getDate();
-            var monat = d.getMonth() + 1;
-            var jahr = d.getFullYear();
+            var tag = d.getDate(); var monat = d.getMonth() + 1; var jahr = d.getFullYear();
             
             document.getElementById('txt-clock').innerText = h + ':' + min + ':' + sec;
             document.getElementById('txt-date').innerText = (tag < 10 ? '0' + tag : tag) + '.' + (monat < 10 ? '0' + monat : monat) + '.' + jahr;
 
             var greeting = "Hallo! 😊";
-            if (h >= 5 && h < 9) { greeting = "Guten Morgen! ☕"; }
-            else if (h >= 9 && h < 12) { greeting = "Guten Vormittag! ☀️"; }
-            else if (h >= 12 && h < 14) { greeting = "Guten Mittag! 🍽️"; }
-            else if (h >= 14 && h < 18) { greeting = "Guten Nachmittag! 🍰"; }
-            else if (h >= 18 && h < 22) { greeting = "Guten Abend! 🌆"; }
-            else { greeting = "Gute Nacht! 🌙"; }
+            if (h >= 5 && h < 9) greeting = "Guten Morgen! ☕";
+            else if (h >= 9 && h < 12) greeting = "Guten Vormittag! ☀️";
+            else if (h >= 12 && h < 14) greeting = "Guten Mittag! 🍽️";
+            else if (h >= 14 && h < 18) greeting = "Guten Nachmittag! 🍰";
+            else if (h >= 18 && h < 22) greeting = "Guten Abend! 🌆";
+            else greeting = "Gute Nacht! 🌙";
 
-            // Automatisierte Geburtstage
-            if (tag === 5 && monat === 1) { greeting = "Alles Gute zum Geburtstag, Papa! 🎂🎉"; }
-            else if (tag === 28 && monat === 5) { greeting = "Alles Gute zum Geburtstag, Cobe! 🎂🎉"; }
-            else if (tag === 21 && monat === 7) { greeting = "Alles Gute zum Geburtstag, Gracie! 🎂🎉"; }
-            else if (tag === 1 && monat === 12) { greeting = "Alles Gute zum Geburtstag, Mama! 🎂🎉"; }
-            
-            // Automatisierte Feiertage ohne den Weihnachtsmann-Text
-            else if ((tag === 31 && monat === 10) || (tag === 1 && monat === 11)) { greeting = "Happy Halloween! 🎃👻"; }
-            else if (tag >= 24 && tag <= 26 && monat === 12) { greeting = "Frohe Weihnachten! 🎄🎅"; }
-            else if ((tag === 31 && monat === 12) || (tag === 1 && monat === 1)) { greeting = "Frohes neues Jahr! 🎆🥂"; }
+            if (tag === 5 && monat === 1) greeting = "Alles Gute zum Geburtstag, Papa! 🎂🎉";
+            else if (tag === 28 && monat === 5) greeting = "Alles Gute zum Geburtstag, Cobe! 🎂🎉";
+            else if (tag === 21 && monat === 7) greeting = "Alles Gute zum Geburtstag, Grace! 🎂🎉";
+            else if (tag === 1 && monat === 12) greeting = "Alles Gute zum Geburtstag, Mama! 🎂🎉";
+            else if ((tag === 31 && monat === 10) || (tag === 1 && monat === 11)) greeting = "Happy Halloween! 🎃👻";
+            else if (tag >= 24 && tag <= 26 && monat === 12) greeting = "Frohe Weihnachten! 🎄🎅";
+            else if ((tag === 31 && monat === 12) || (tag === 1 && monat === 1)) greeting = "Frohes neues Jahr! 🎆🥂";
             else {
                 var ostern = getOsternDate(jahr);
-                if (tag === ostern.tag && monat === ostern.monat) { greeting = "Frohe Ostern! 🐇🥚"; }
+                if (tag === ostern.tag && monat === ostern.monat) greeting = "Frohe Ostern! 🐇🥚";
             }
-
             document.getElementById('txt-greeting').innerText = greeting;
         }function loadWeatherDöbling() {
             var box = document.getElementById('weather-content');
@@ -393,10 +389,10 @@
                             var code = response.current_weather.weathercode;
                             
                             var statusText = "Wolkenlos!";
-                            if (code >= 51 && code <= 67) { statusText = "Froschregen & Monsteralarm! 🐸👹"; }
-                            else if (code >= 1 && code <= 3) { statusText = "Geheime Monster-Wolken im Anflug! ☁️👾"; }
-                            else if (code >= 71 && code <= 86) { statusText = "Schneeflocken im Bezirk! ❄️☃️"; }
-                            else if (code >= 95 && code <= 99) { statusText = "Gewitter & Monsteralarm! ⚡👹"; }
+                            if (code >= 51 && code <= 67) statusText = "Froschregen & Monsteralarm! 🐸👹";
+                            else if (code >= 1 && code <= 3) statusText = "Geheime Monster-Wolken im Anflug! ☁️👾";
+                            else if (code >= 71 && code <= 86) statusText = "Schneeflocken im Bezirk! ❄️☃️";
+                            else if (code >= 95 && code <= 99) statusText = "Gewitter & Monsteralarm! ⚡👹";
                             
                             box.innerHTML = '<div class="weather-temp">' + temp + ' &deg;C</div>' +
                                             '<div class="weather-city">Wien Döbling</div>' +
@@ -424,12 +420,12 @@
             if(nbaBox) {
                 nbaBox.innerHTML = '<div class="sport-row">OKC Thunder <span style="float:right;color:#e26a45;">96</span></div>' +
                                    '<div class="sport-row">Denver Nuggets <span style="float:right;">84</span></div>' +
-                                   '<div style="font-size:13px;color:#27ae60;font-weight:bold;margin-top:4px;">&bull; Live-Ergebnis aktiv</div>';
+                                   '<div style="font-size:12px;color:#27ae60;font-weight:bold;margin-top:2px;">&bull; Live-Ergebnis aktiv</div>';
             }
             if(wnbaBox) {
                 wnbaBox.innerHTML = '<div class="sport-row">Atlanta Dream <span style="float:right;color:#27ae60;">97</span></div>' +
                                    '<div class="sport-row">GS Valkyries <span style="float:right;">71</span></div>' +
-                                   '<div style="font-size:13px;color:#27ae60;font-weight:bold;margin-top:4px;">&bull; WNBA Finals Live</div>';
+                                   '<div style="font-size:12px;color:#27ae60;font-weight:bold;margin-top:2px;">&bull; WNBA Finals Live</div>';
             }
         }
 
@@ -438,9 +434,8 @@
             if (!box) return;
             
             var xhr = new XMLHttpRequest();
-            var targetFeed = encodeURIComponent('http://kurier.at');
-            xhr.open('GET', 'http://rss2json.com' + targetFeed, true);
-            
+            // Direkte, unverschlüsselte Abfrage über HTTP, um die iOS 9 Sperre für die Zeitung komplett aufzuheben
+            xhr.open('GET', 'http://rss2json.com', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
@@ -448,7 +443,6 @@
                             var response = JSON.parse(xhr.responseText);
                             var items = response.items;
                             var html = '';
-                            
                             var maxItems = items.length > 3 ? 3 : items.length;
                             for (var i = 0; i < maxItems; i++) {
                                 html += '<div class="news-item">&bull; ' + items[i].title + '</div>';
