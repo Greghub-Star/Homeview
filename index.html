@@ -276,7 +276,6 @@
             applyProfileStyle(name);
         }
 
-        // Exklusive Schaltung: Nur bei Papa wird der Text weiß, sonst immer tiefschwarz
         function applyProfileStyle(name) {
             var cfg = PROFILE_CONFIG[name] || { bg: '#FFCBA4' };
             document.body.style.backgroundColor = cfg.bg;
@@ -358,7 +357,7 @@
 
             if (tag === 5 && monat === 1) greeting = "Alles Gute zum Geburtstag, Papa! 🎂🎉";
             else if (tag === 28 && monat === 5) greeting = "Alles Gute zum Geburtstag, Cobe! 🎂🎉";
-            else if (tag === 21 && monat === 7) greeting = "Alles Gute zum Geburtstag, Grace! 🎂🎉";
+            else if (tag === 21 && monat === 7) greeting = "Alles Gute zum Geburtstag, Gracie! 🎂🎉";
             else if (tag === 1 && monat === 12) greeting = "Alles Gute zum Geburtstag, Mama! 🎂🎉";
             else if ((tag === 31 && monat === 10) || (tag === 1 && monat === 11)) greeting = "Happy Halloween! 🎃👻";
             else if (tag >= 24 && tag <= 26 && monat === 12) greeting = "Frohe Weihnachten! 🎄🎅";
@@ -368,12 +367,13 @@
                 if (tag === ostern.tag && monat === ostern.monat) greeting = "Frohe Ostern! 🐇🥚";
             }
             document.getElementById('txt-greeting').innerText = greeting;
-     function loadWeatherDöbling() {
+        }function loadWeatherDöbling() {
             var box = document.getElementById('weather-content');
             if (!box) return;
             
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'http://open-meteo.com', true);
+            // Umgestellt auf HTTPS, um Mixed-Content-Sperren auf GitHub Pages zu verhindern
+            xhr.open('GET', 'https://open-meteo.com', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
@@ -428,8 +428,8 @@
             if (!box) return;
             
             var xhr = new XMLHttpRequest();
-            // Umleitung über ein alternatives, stabiles HTTP-Protokoll für 100% Live-Abruf auf dem iPad mini
-            xhr.open('GET', 'http://rss2json.com', true);
+            // Komplett auf HTTPS umgestellt, damit das Skript nicht lautlos abstürzt
+            xhr.open('GET', 'https://rss2json.com', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
