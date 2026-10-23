@@ -13,56 +13,69 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #FFCBA4; /* Echtes, schönes Peach */
+            background-color: #FFCBA4; /* Schönes Peach-Korall */
             background-image: linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px);
             background-size: 25px 25px;
             color: #333;
             padding: 20px;
         }
         
-        /* Neuer, zentrierter Kopfbereich */
+        /* Kopfbereich */
         .header {
             width: 100%;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             position: relative;
             text-align: center;
             clear: both;
         }
         .header-left {
             float: left;
+            padding-top: 15px;
+        }
+        .profile-btn {
+            background: #fff;
+            border: 2px solid #333;
+            padding: 10px 18px;
             font-size: 20px;
             font-weight: bold;
-            color: #444;
-            padding-top: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         .header-center {
             display: inline-block;
         }
         .brand-title {
-            font-size: 36px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+            font-size: 46px;
+            font-weight: 900;
+            letter-spacing: -1px;
             color: #111;
         }
         .brand-sub {
-            font-size: 22px;
-            color: #333;
-            margin-top: 2px;
+            font-size: 32px;
+            font-weight: bold;
+            color: #000;
+            margin-top: 4px;
+        }
+        .apple-logo {
+            font-size: 38px;
+            vertical-align: middle;
+            margin-left: 6px;
+            color: #000;
         }
         .header-right {
             float: right;
-            padding-top: 5px;
+            padding-top: 15px;
         }
         .brand-beta {
             background-color: #d9383a;
             color: #fff;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 6px 12px;
+            border-radius: 6px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
 
         /* Zweispaltiges Layout */
@@ -73,129 +86,203 @@
         .column {
             float: left;
             width: 50%;
-            padding: 0 12px;
+            padding: 0 10px;
         }
         
-        /* Edle Widget-Karten */
+        /* Widgets */
         .widget {
-            background: rgba(255, 255, 255, 0.96);
-            border-radius: 16px;
-            padding: 22px;
-            margin-bottom: 24px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .widget.huge {
+            min-height: 240px;
+            border: 3px solid #ffaa77;
+        }
+        .widget.medium {
+            min-height: 145px;
         }
         .widget h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 14px;
-            color: #666;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #555;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
-        /* Uhrzeit Styling */
-        .clock-display {
-            font-size: 52px;
-            font-weight: 700;
-            color: #111;
-            letter-spacing: -1px;
-            margin-bottom: 4px;
-        }
-        .date-display {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 12px;
-        }
-        .greeting-display {
-            font-size: 22px;
-            font-weight: 600;
-            color: #e26a45;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-        }
+        .clock-display { font-size: 64px; font-weight: 900; color: #111; letter-spacing: -1px; }
+        .date-display { font-size: 20px; color: #555; margin-bottom: 8px; }
+        .greeting-display { font-size: 24px; font-weight: bold; color: #e26a45; border-top: 1px solid #eee; padding-top: 8px; }
 
-        /* Formular-Elemente für Einstellungen */
-        select, input, button {
-            font-size: 16px;
-            padding: 12px;
-            margin: 6px 0;
-            width: 100%;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            background: #fafafa;
+        /* Dropdown */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 60px; left: 0;
+            background: white;
+            border: 2px solid #222;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            z-index: 999;
+            width: 180px;
         }
-        button {
-            background: #222;
-            color: #fff;
-            border: none;
+        .dropdown-menu a {
+            display: block;
+            padding: 14px;
+            color: #111;
+            text-decoration: none;
+            font-size: 18px;
             font-weight: bold;
+            border-bottom: 1px solid #eee;
         }
-        button:active {
-            background: #444;
+        .dropdown-menu a:active { background: #eee; }
+
+        /* Integriertes Nummern-Pad Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
         }
-        .error-msg { color: #d9383a; font-weight: bold; margin: 8px 0; }
-        .success-msg { color: #27ae60; font-weight: bold; margin: 8px 0; }
+        .modal-content {
+            background: #fff;
+            width: 90%;
+            max-width: 360px;
+            margin: 12% auto;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .pin-preview {
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin: 15px 0;
+            height: 40px;
+            color: #111;
+        }
+        .numpad {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .numpad-row {
+            clear: both;
+            overflow: hidden;
+        }
+        .num-btn {
+            float: left;
+            width: 30%;
+            margin: 1.5%;
+            background: #f0f0f0;
+            color: #111;
+            border: none;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 15px 0;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .num-btn:active { background: #ccc; }
+        .error-banner { color: #d9383a; font-weight: bold; margin: 10px 0; font-size: 15px; }
+        
+        .news-item { font-size: 15px; margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px solid #f0f0f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     </style>
 </head>
 <body>
 
     <!-- KOPFBEREICH -->
     <div class="header">
-        <div class="header-left" onclick="openProfileSelector()" style="cursor:pointer;">
-            &#9787; <span id="current-profile-label">Cobe</span> &#9662;
+        <div class="header-left">
+            <button class="profile-btn" onclick="toggleDropdown()">&#9787; <span id="current-profile-label">Cobe</span> &#9662;</button>
+            <div id="profile-drop" class="dropdown-menu">
+                <a href="#" onclick="triggerProfileChange('Cobe')">Cobe</a>
+                <a href="#" onclick="triggerProfileChange('Papa')">Papa</a>
+                <a href="#" onclick="triggerProfileChange('Mama')">Mama</a>
+                <a href="#" onclick="triggerProfileChange('Grace')">Grace</a>
+            </div>
         </div>
         <div class="header-center">
             <div class="brand-title">HomeViewOS 27</div>
-            <div class="brand-sub">Apple</div>
+            <div class="brand-sub">Apple <span class="apple-logo"></span></div>
         </div>
         <div class="header-right">
             <div class="brand-beta">BETA PRODUCT</div>
         </div>
     </div>
 
-    <!-- DASHBOARD -->
-    <div class="dashboard-container" id="widget-grid">
-        <!-- LINKE SPALTE -->
+    <!-- MAIN DASHBOARD -->
+    <div class="dashboard-container">
         <div class="column">
-            <div class="widget">
+            <div class="widget huge">
                 <h3>Uhrzeit &amp; Datum</h3>
                 <div class="clock-display" id="txt-clock">--:--:--</div>
                 <div class="date-display" id="txt-date">--.--.----</div>
                 <div class="greeting-display" id="txt-greeting">Hallo!</div>
             </div>
-
-            <div class="widget">
+            <div class="widget medium">
                 <h3>NBA Spielstände</h3>
-                <p style="color:#888; font-style:italic;">Keine Live-Spieldaten verfügbar.</p>
+                <p style="color:#777; font-style:italic; font-size:15px;">Keine Live-Spieldaten verfügbar.</p>
             </div>
-
-            <div class="widget">
+            <div class="widget medium">
                 <h3>Zitat des Tages</h3>
-                <p style="font-style: italic; font-size: 19px; line-height: 1.4; color: #222;">"Die Kunst ist, einmal mehr aufzustehen, als man umgeworfen wurde."</p>
-                <p style="text-align:right; font-size:15px; color:#666; margin-top:8px;">- Altes Sprichwort</p>
+                <p style="font-style: italic; font-size: 16px; color: #222;">"Die Kunst ist, einmal mehr aufzustehen, als man umgeworfen wurde."</p>
             </div>
         </div>
 
-        <!-- RECHTE SPALTE -->
         <div class="column">
-            <div class="widget">
+            <div class="widget huge">
                 <h3>Wetter in Wien-Döbling</h3>
-                <div id="weather-content"><p style="color:#666;">Lade Wetterdaten...</p></div>
+                <div id="weather-content" style="padding-top:10px;">Lade Wetterdaten...</div>
             </div>
-
-            <div class="widget">
+            <div class="widget medium">
                 <h3>WNBA Spielstände</h3>
-                <p style="color:#888; font-style:italic;">Keine Live-Spieldaten verfügbar.</p>
+                <p style="color:#777; font-style:italic; font-size:15px;">Derzeit finden keine Spiele statt.</p>
             </div>
-
-            <div class="widget">
-                <h3>Einstellungen</h3>
-                <div id="settings-widget-body">Lade...</div>
+            <div class="widget medium">
+                <h3>Kurier News</h3>
+                <div id="news-content" style="font-size:14px; color:#444;">Lade aktuelle Schlagzeilen...</div>
             </div>
         </div>
-    </div><script>
-        var PROFILES = ['Cobe', 'Papa', 'Mama', 'Grace'];
+    </div>
+
+    <!-- PIN SECURITY OVERLAY MODAL -->
+    <div id="pin-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="pin-modal-title">Sicherheitssperre</h3>
+            <p id="pin-modal-info" style="font-size:15px; color:#666; margin-top:4px;"></p>
+            <div class="pin-preview" id="pin-stars"></div>
+            <div id="pin-err" class="error-banner"></div>
+            
+            <div class="numpad">
+                <div class="numpad-row">
+                    <button class="num-btn" onclick="pressNum('1')">1</button>
+                    <button class="num-btn" onclick="pressNum('2')">2</button>
+                    <button class="num-btn" onclick="pressNum('3')">3</button>
+                </div>
+                <div class="numpad-row">
+                    <button class="num-btn" onclick="pressNum('4')">4</button>
+                    <button class="num-btn" onclick="pressNum('5')">5</button>
+                    <button class="num-btn" onclick="pressNum('6')">6</button>
+                </div>
+                <div class="numpad-row">
+                    <button class="num-btn" onclick="pressNum('7')">7</button>
+                    <button class="num-btn" onclick="pressNum('8')">8</button>
+                    <button class="num-btn" onclick="pressNum('9')">9</button>
+                </div>
+                <div class="numpad-row">
+                    <button class="num-btn" style="background:#e74c3c; color:white;" onclick="clearPin()">C</button>
+                    <button class="num-btn" onclick="pressNum('0')">0</button><script>
         var currentProfile = 'Cobe';
+        var selectedTargetProfile = '';
+        var currentPinInput = '';
+        var setupStep = 0; // 0 = Normaler Login, 1 = Setup Ersteinrichtung, 2 = Setup Bestätigung
+        var firstPinDraft = '';
 
         function safeStorageGet(key, fallback) {
             try {
@@ -212,18 +299,109 @@
             currentProfile = safeStorageGet('last_active_profile', 'Cobe');
             document.getElementById('current-profile-label').innerText = currentProfile;
             
-            // Ticker starten
+            // Hochpräziser Intervall-Sync für ruckelfreie Sekundenanzeige
             updateClockAndGreeting();
-            setInterval(updateClockAndGreeting, 1000);
+            setInterval(updateClockAndGreeting, 200);
             
-            // Wetter laden
             loadWeatherDöbling();
-            
-            // Einstellungen rendern
-            renderSettingsUi();
+            loadKurierNews();
         };
 
-        // Zeitgesteuerte Begrüßungslogik mit Emojis
+        function toggleDropdown() {
+            var menu = document.getElementById('profile-drop');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // Profil-Sicherheitssteuerung über das Nummern-Pad
+        function triggerProfileChange(name) {
+            document.getElementById('profile-drop').style.display = 'none';
+            selectedTargetProfile = name;
+            currentPinInput = '';
+            document.getElementById('pin-err').innerText = '';
+            document.getElementById('pin-stars').innerText = '';
+            
+            var savedPin = safeStorageGet('profile_pin_' + name, null);
+            
+            if (savedPin === null) {
+                // Keine PIN registriert -> Starte geführte Ersteinrichtung
+                setupStep = 1;
+                document.getElementById('pin-modal-title').innerText = name + ': PIN einrichten';
+                document.getElementById('pin-modal-info').innerText = 'Wähle eine neue PIN (4-12 Ziffern)';
+            } else {
+                // Abfrage der bestehenden PIN
+                setupStep = 0;
+                document.getElementById('pin-modal-title').innerText = name + ': PIN erforderlich';
+                document.getElementById('pin-modal-info').innerText = 'Bitte gib deine PIN ein, um dich anzumelden.';
+            }
+            document.getElementById('pin-modal').style.display = 'block';
+        }
+
+        function pressNum(num) {
+            if (currentPinInput.length < 12) {
+                currentPinInput += num;
+                var stars = '';
+                for (var i = 0; i < currentPinInput.length; i++) stars += '•';
+                document.getElementById('pin-stars').innerText = stars;
+            }
+        }
+
+        function clearPin() {
+            currentPinInput = '';
+            document.getElementById('pin-stars').innerText = '';
+            document.getElementById('pin-err').innerText = '';
+        }
+
+        function closePinModal() {
+            document.getElementById('pin-modal').style.display = 'none';
+        }
+
+        function confirmPin() {
+            var errField = document.getElementById('pin-err');
+            errField.innerText = '';
+
+            if (setupStep === 0) {
+                // Prüfung bei Anmeldung
+                var correctPin = safeStorageGet('profile_pin_' + selectedTargetProfile, '');
+                if (currentPinInput === correctPin) {
+                    currentProfile = selectedTargetProfile;
+                    safeStorageSet('last_active_profile', currentProfile);
+                    document.getElementById('current-profile-label').innerText = currentProfile;
+                    closePinModal();
+                } else {
+                    errField.innerText = 'Falsche PIN! Bitte versuche es erneut.';
+                    currentPinInput = '';
+                    document.getElementById('pin-stars').innerText = '';
+                }
+            } else if (setupStep === 1) {
+                // Ersteinrichtung Schritt 1
+                if (currentPinInput.length < 4) {
+                    errField.innerText = 'Die PIN muss mindestens 4 Ziffern lang sein.';
+                    return;
+                }
+                firstPinDraft = currentPinInput;
+                currentPinInput = '';
+                document.getElementById('pin-stars').innerText = '';
+                setupStep = 2;
+                document.getElementById('pin-modal-info').innerText = 'Bitte bestätige die neue PIN durch erneute Eingabe:';
+            } else if (setupStep === 2) {
+                // Ersteinrichtung Schritt 2 (Abgleich)
+                if (currentPinInput === firstPinDraft) {
+                    safeStorageSet('profile_pin_' + selectedTargetProfile, currentPinInput);
+                    currentProfile = selectedTargetProfile;
+                    safeStorageSet('last_active_profile', currentProfile);
+                    document.getElementById('current-profile-label').innerText = currentProfile;
+                    closePinModal();
+                } else {
+                    errField.innerText = 'Die PINs stimmen nicht überein! Start von vorn.';
+                    currentPinInput = '';
+                    document.getElementById('pin-stars').innerText = '';
+                    setupStep = 1;
+                    document.getElementById('pin-modal-info').innerText = 'Wähle eine neue PIN (4-12 Ziffern)';
+                }
+            }
+        }
+
+        // Ticker-Funktion
         function updateClockAndGreeting() {
             var d = new Date();
             var h = d.getHours();
@@ -237,17 +415,16 @@
             document.getElementById('txt-date').innerText = day + '.' + mon + '.' + d.getFullYear();
 
             var greeting = "Hallo! 😊";
-            if (h >= 5 && h < 9) { greeting = "Guten Morgen! ☕"; }
-            else if (h >= 9 && h < 12) { greeting = "Guten Vormittag! ☀️"; }
-            else if (h >= 12 && h < 14) { greeting = "Guten Mittag! 🍽️"; }
-            else if (h >= 14 && h < 18) { greeting = "Guten Nachmittag! 🍰"; }
-            else if (h >= 18 && h < 22) { greeting = "Guten Abend! 🌆"; }
-            else { greeting = "Gute Nacht! 🌙"; }
+            if (h >= 5 && h < 9) greeting = "Guten Morgen! ☕";
+            else if (h >= 9 && h < 12) greeting = "Guten Vormittag! ☀️";
+            else if (h >= 12 && h < 14) greeting = "Guten Mittag! 🍽️";
+            else if (h >= 14 && h < 18) greeting = "Guten Nachmittag! 🍰";
+            else if (h >= 18 && h < 22) greeting = "Guten Abend! 🌆";
+            else greeting = "Gute Nacht! 🌙";
 
             document.getElementById('txt-greeting').innerText = greeting;
         }
 
-        // Extrem robuster Wetter-Abruf ohne komplexe ES6-Konstrukte
         function loadWeatherDöbling() {
             var url = 'https://open-meteo.com';
             var xhr = new XMLHttpRequest();
@@ -261,46 +438,40 @@
                             var response = JSON.parse(xhr.responseText);
                             var temp = response.current_weather.temperature;
                             var wind = response.current_weather.windspeed;
-                            box.innerHTML = '<p style="font-size:28px; font-weight:bold; color:#111;">' + temp + ' &deg;C</p>' +
-                                            '<p style="margin-top:4px; color:#444;">Windgeschwindigkeit: ' + wind + ' km/h</p>';
-                        } catch(e) {
-                            box.innerHTML = '<p style="color:#d9383a;">Fehler beim Auswerten der Daten.</p>';
-                        }
-                    } else {
-                        box.innerHTML = '<p style="color:#d9383a;">Wetterdaten temporär nicht verfügbar.</p>';
-                    }
+                            box.innerHTML = '<p style="font-size:42px; font-weight:900; color:#111; margin-bottom:10px;">' + temp + ' &deg;C</p>' +
+                                            '<p style="font-size:18px; color:#444;">Wien Döbling</p>' +
+                                            '<p style="font-size:16px; color:#666; margin-top:4px;">Wind: ' + wind + ' km/h</p>';
+                        } catch(e) { box.innerHTML = '<p style="color:#d9383a;">Fehler bei Daten-Auswertung.</p>'; }
+                    } else { box.innerHTML = '<p style="color:#d9383a;">Wetterdaten aktuell nicht verfügbar.</p>'; }
                 }
             };
             xhr.send();
         }
 
-        // Einfaches Einstellungs-Widget
-        function renderSettingsUi() {
-            var body = document.getElementById('settings-widget-body');
-            if(!body) return;
-
-            var html = '<label style="display:block; font-weight:bold; margin-bottom:4px;">Aktives Profil:</label>' +
-                       '<select onchange="switchProfile(this.value)">';
-            for(var i=0; i<PROFILES.length; i++) {
-                var sel = (PROFILES[i] === currentProfile) ? ' selected' : '';
-                html += '<option value="' + PROFILES[i] + '"' + sel + '>' + PROFILES[i] + '</option>';
-            }
-            html += '</select>';
-            body.innerHTML = html;
-        }
-
-        function switchProfile(name) {
-            currentProfile = name;
-            safeStorageSet('last_active_profile', name);
-            document.getElementById('current-profile-label').innerText = name;
-            renderSettingsUi();
-        }
-
-        function openProfileSelector() {
-            var target = prompt("Zu welchem Profil möchtest du wechseln? (Cobe, Papa, Mama, Grace):");
-            if(target && PROFILES.indexOf(target) !== -1) {
-                switchProfile(target);
-            }
+        function loadKurierNews() {
+            var rssUrl = 'https://kurier.at';
+            var url = 'https://rss2json.com' + encodeURIComponent(rssUrl);
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    var box = document.getElementById('news-content');
+                    if (!box) return;
+                    if (xhr.status === 200) {
+                        try {
+                            var response = JSON.parse(xhr.responseText);
+                            var items = response.items;
+                            var html = '';
+                            var maxItems = items.length > 3 ? 3 : items.length;
+                            for (var i = 0; i < maxItems; i++) {
+                                html += '<div class="news-item">&bull; ' + items[i].title + '</div>';
+                            }
+                            box.innerHTML = html;
+                        } catch(e) { box.innerHTML = '<p style="color:#d9383a;">News-Format Fehler.</p>'; }
+                    } else { box.innerHTML = '<p style="color:#d9383a;">Schlagzeilen offline.</p>'; }
+                }
+            };
+            xhr.send();
         }
     </script>
 </body>
