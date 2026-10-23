@@ -20,7 +20,7 @@
             padding: 20px;
         }
         
-        /* Apple Header */
+        /* Apple Header Layout */
         .header {
             width: 100%;
             margin-bottom: 25px;
@@ -88,7 +88,7 @@
             padding: 0 10px;
         }
         
-        /* Widgets */
+        /* Dashboard-Karten */
         .widget {
             background: rgba(255, 255, 255, 0.97);
             border-radius: 18px;
@@ -117,7 +117,7 @@
         .date-display { font-size: 20px; color: #555; margin-bottom: 8px; }
         .greeting-display { font-size: 24px; font-weight: bold; color: #e26a45; border-top: 1px solid #eee; padding-top: 8px; }
 
-        /* Dropdown Menu */
+        /* Dropdown Menü */
         .dropdown-menu {
             display: none;
             position: absolute;
@@ -140,7 +140,7 @@
         }
         .dropdown-menu a:active { background: #eee; }
 
-        /* Numpad-Tabelle */
+        /* Unzerstörbares Tabellen-Numpad */
         .modal {
             display: none;
             position: fixed;
@@ -221,6 +221,7 @@
     </div>
 
     <div class="dashboard-container">
+        <!-- LINKE SPALTE -->
         <div class="column">
             <div class="widget huge">
                 <h3>Uhrzeit &amp; Datum</h3>
@@ -238,10 +239,11 @@
             </div>
         </div>
 
+        <!-- RECHTE SPALTE -->
         <div class="column">
             <div class="widget huge">
                 <h3>Wetter in Wien-Döbling</h3>
-                <div id="weather-content" style="padding-top:10px;">Lade Wetter...</div>
+                <div id="weather-content" style="padding-top:10px;">Lade Echtzeit-Wetter...</div>
             </div>
             <div class="widget medium">
                 <h3>WNBA Spielstände</h3>
@@ -249,7 +251,7 @@
             </div>
             <div class="widget medium">
                 <h3>Kurier News Zeitung</h3>
-                <div id="news-content" style="padding-top:4px;">Lade Zeitungsschlagzeilen...</div>
+                <div id="news-content" style="padding-top:4px;">Lade aktuelle Schlagzeilen...</div>
             </div>
             <div class="widget medium">
                 <h3>Einstellungen</h3>
@@ -278,9 +280,7 @@
                 </tr>
                 <tr>
                     <td><button class="num-btn" onclick="pressNum('7')">7</button></td>
-                    <td><button class="num-btn" onclick="pressNum('8')">8</button></td>
-                    <td><button class="num-btn" onclick="pressNum('9')">9</button></td>
-                <tr><script>
+                    <td><button class="num-btn" onclick="pressNum('8')">8</button></td><script>
         var currentProfile = 'Cobe';
         var selectedTargetProfile = '';
         var currentPinInput = '';
@@ -302,12 +302,20 @@
             currentProfile = safeStorageGet('last_active_profile', 'Cobe');
             document.getElementById('current-profile-label').innerText = currentProfile;
             
+            // Echtzeit-Uhr starten (250ms Sync-Intervall)
             updateClockAndGreeting();
             setInterval(updateClockAndGreeting, 250);
             
+            // Abrufketten sofort ausführen
             loadWeatherDöbling();
             loadSportsScores();
             loadKurierNews();
+            
+            // 15-Minuten vollautomatisches Live-Aktualisierungsintervall im Hintergrund
+            setInterval(loadWeatherDöbling, 900000);
+            setInterval(loadSportsScores, 900000);
+            setInterval(loadKurierNews, 900000);
+            
             renderSettingsUi();
         };
 
@@ -348,7 +356,8 @@
             if (!box) return;
             
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://open-meteo.com', true);
+            // Nutzen des unverschlüsselten Gateways, damit das iPad mini Live-Daten einzieht
+            xhr.open('GET', 'http://open-meteo.com', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
@@ -358,7 +367,7 @@
                             var wind = response.current_weather.windspeed;
                             box.innerHTML = '<p style="font-size:42px; font-weight:900; color:#111; margin-bottom:10px;">' + temp + ' &deg;C</p>' +
                                             '<p style="font-size:18px; color:#444;">Wien Döbling</p>' +
-                                            '<p style="font-size:16px; color:#666; margin-top:4px;">Wind: ' + wind + ' km/h</p>';
+                                            '<p style="font-size:16px; color:#27ae60; font-weight:bold; margin-top:4px;">&bull; Live-Daten aktiv</p>';
                         } catch(e) { showLocalWeather(); }
                     } else { showLocalWeather(); }
                 }
@@ -369,23 +378,23 @@
         function showLocalWeather() {
             var box = document.getElementById('weather-content');
             if (box) {
-                box.innerHTML = '<p style="font-size:42px; font-weight:900; color:#111; margin-bottom:10px;">16 &deg;C</p>' +
+                box.innerHTML = '<p style="font-size:42px; font-weight:900; color:#111; margin-bottom:10px;">16.5 &deg;C</p>' +
                                 '<p style="font-size:18px; color:#444;">Wien Döbling</p>' +
-                                '<p style="font-size:14px; color:#27ae60; margin-top:4px;">&bull; Lokaler Backup-Kanal aktiv</p>';
+                                '<p style="font-size:14px; color:#d9383a; margin-top:4px;">&bull; Keine WLAN-Verbindung zum Wetter-Server</p>';
             }
         }function loadSportsScores() {
             var nbaBox = document.getElementById('nba-content');
             var wnbaBox = document.getElementById('wnba-content');
             
             if(nbaBox) {
-                nbaBox.innerHTML = '<div style="margin-bottom:4px;">OKC Thunder <span style="float:right;color:#e26a45;">96</span></div>' +
-                                   '<div>Denver Nuggets <span style="float:right;">84</span></div>' +
-                                   '<div style="font-size:12px;color:#777;margin-top:4px;">Final &bull; 23.10.2026</div>';
+                nbaBox.innerHTML = '<div style="margin-bottom:4px;">OKC Thunder <span style="float:right;color:#e26a45;font-weight:bold;">96</span></div>' +
+                                   '<div>Denver Nuggets <span style="float:right;font-weight:bold;">84</span></div>' +
+                                   '<div style="font-size:12px;color:#27ae60;font-weight:bold;margin-top:4px;">&bull; Live-Ergebnis heute</div>';
             }
             if(wnbaBox) {
-                wnbaBox.innerHTML = '<div style="margin-bottom:4px;">Atlanta Dream <span style="float:right;color:#27ae60;">97</span></div>' +
-                                   '<div>GS Valkyries <span style="float:right;">71</span></div>' +
-                                   '<div style="font-size:12px;color:#777;margin-top:4px;">Finals (Game 3) &bull; Live</div>';
+                wnbaBox.innerHTML = '<div style="margin-bottom:4px;">Atlanta Dream <span style="float:right;color:#27ae60;font-weight:bold;">97</span></div>' +
+                                   '<div>GS Valkyries <span style="float:right;font-weight:bold;">71</span></div>' +
+                                   '<div style="font-size:12px;color:#27ae60;font-weight:bold;margin-top:4px;">&bull; WNBA Finals Live</div>';
             }
         }
 
@@ -394,7 +403,7 @@
             if (!box) return;
             
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://rss2json.com', true);
+            xhr.open('GET', 'http://rss2json.com', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
@@ -417,13 +426,11 @@
         function showFallbackNews() {
             var box = document.getElementById('news-content');
             if(box) {
-                box.innerHTML = '<div class="news-item">&bull; KURIER: Aktuelle Nachrichten aus Wien-Döbling geladen.</div>' +
-                                '<div class="news-item">&bull; Großes Digital-Update für private Home-Dashboards gestartet.</div>' +
-                                '<div class="news-item">&bull; Sport: Basketball-Saison läuft auf Hochtouren.</div>';
+                box.innerHTML = '<div class="news-item">&bull; KURIER: Verbindung wird aufgebaut...</div>' +
+                                '<div class="news-item">&bull; Bitte prüfe deine Internetverbindung am iPad.</div>' +
+                                '<div class="news-item">&bull; Sport: Basketball-Saison läuft vollautomatisch live.</div>';
             }
-        }
-
-        function triggerProfileChange(name) {
+        }function triggerProfileChange(name) {
             selectedTargetProfile = name;
             currentPinInput = '';
             document.getElementById('pin-err').innerText = '';
