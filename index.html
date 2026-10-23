@@ -3,287 +3,622 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#17191d">
-<title>HomeViewOS</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>HomeViewOS 27</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;padding:16px;background:#111317;color:#f5f5f7;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
-.dashboard{max-width:1200px;margin:auto}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding:4px}
-.brand{font-size:22px;font-weight:600}
-.status{color:#a1a1aa;font-size:12px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.card{min-width:0;padding:22px;border-radius:22px;background:#202329;border:1px solid rgba(255,255,255,.05);box-shadow:0 8px 24px rgba(0,0,0,.18)}
-.card-title{margin:0 0 16px;color:#a7abb5;font-size:13px;letter-spacing:1px;text-transform:uppercase}
-.welcome{grid-column:1/-1}
-.greeting{margin:0 0 8px;font-size:30px}
-.date{color:#b3b7c0;font-size:16px}
-.clock-card{display:flex;align-items:center;justify-content:center;gap:24px;min-height:220px}
-.clock{position:relative;width:150px;height:150px;flex:0 0 150px;border-radius:50%;border:3px solid #50545e;background:radial-gradient(circle,#2b2f37,#191b20);box-shadow:inset 0 0 20px #0007,0 0 0 6px #ffffff08}
-.tick{position:absolute;top:7px;left:50%;width:2px;height:8px;margin-left:-1px;background:#c6cad2;transform-origin:1px 65px}
-.tick.major{width:3px;height:12px;margin-left:-1.5px;background:white}
-.hand{position:absolute;left:50%;bottom:50%;border-radius:4px;transform-origin:50% 100%}
-.hour-hand{width:5px;height:37px;margin-left:-2.5px;background:#f5f5f7}
-.minute-hand{width:3px;height:52px;margin-left:-1.5px;background:#d5d8df}
-.second-hand{width:2px;height:58px;margin-left:-1px;background:#ff5b5b}
-.clock-center{position:absolute;top:50%;left:50%;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:#ff5b5b}
-.digital-time{font-size:34px;font-weight:300;white-space:nowrap}
-.digital-date{margin-top:8px;color:#a7abb5;font-size:13px}
-.weather-main{display:flex;align-items:center;gap:16px}
-.weather-icon{font-size:48px}
-.temperature{font-size:40px;font-weight:300}
-.weather-description{margin-top:5px;color:#b3b7c0;font-size:14px}
-.weather-details{display:flex;gap:22px;margin-top:20px;color:#c4c7ce;font-size:13px}
-.weather-details strong{display:block;margin-top:5px;color:#fff;font-size:16px;font-weight:500}
-.news-list{margin:0;padding:0;list-style:none}
-.news-list li{padding:12px 0;border-bottom:1px solid #ffffff14}
-.news-list li:last-child{border-bottom:0}
-.news-list a{color:#f0f1f4;text-decoration:none;font-size:15px;line-height:1.45}
-.news-list a:active{color:#8ab4ff}
-.news-meta{margin-top:5px;color:#858b98;font-size:11px}
-.news-message{color:#a7abb5;font-size:14px;line-height:1.5}
-.footer{padding:18px 4px;color:#696f7b;font-size:11px;text-align:center}
-@media(max-width:650px){
-body{padding:10px}
-.grid{grid-template-columns:1fr;gap:12px}
-.welcome{grid-column:auto}
-.greeting{font-size:25px}
-.clock-card{gap:16px;padding:18px 12px}
-.clock{width:120px;height:120px;flex-basis:120px}
-.tick{transform-origin:1px 50px}
-.digital-time{font-size:26px}
-.temperature{font-size:35px}
-.card{padding:18px}
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  color: #292421;
+}
+
+body {
+  background-color: #f7cbb5;
+  background-image:
+    linear-gradient(rgba(125, 83, 62, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125, 83, 62, 0.10) 1px, transparent 1px);
+  background-size: 28px 28px;
+  padding: 18px;
+}
+
+.header {
+  position: relative;
+  text-align: center;
+  padding: 8px 0 22px;
+}
+
+.brand {
+  font-size: 38px;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  font-weight: 400;
+}
+
+.brand strong {
+  font-weight: 800;
+}
+
+.apple-line {
+  margin-top: 7px;
+  font-size: 17px;
+  letter-spacing: 2px;
+}
+
+.apple-logo {
+  display: inline-block;
+  font-size: 21px;
+  vertical-align: -2px;
+  margin-right: 5px;
+}
+
+.beta {
+  position: absolute;
+  right: 0;
+  top: 2px;
+  color: #b42323;
+  border: 1px solid #b42323;
+  padding: 5px 8px;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background: rgba(255,255,255,0.24);
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: minmax(205px, auto);
+  gap: 15px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.widget {
+  background: rgba(255, 250, 246, 0.88);
+  border: 1px solid rgba(111, 76, 58, 0.20);
+  border-radius: 17px;
+  padding: 17px;
+  box-shadow: 0 5px 15px rgba(93, 57, 39, 0.08);
+  overflow: hidden;
+  min-width: 0;
+}
+
+.widget h2 {
+  margin: 0 0 13px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  color: #82604f;
+}
+
+.clock-time {
+  font-size: 48px;
+  font-weight: 300;
+  letter-spacing: -2px;
+  white-space: nowrap;
+}
+
+.clock-date {
+  margin-top: 7px;
+  font-size: 17px;
+  color: #735b4e;
+}
+
+.small-note {
+  margin-top: 15px;
+  color: #998174;
+  font-size: 11px;
+}
+
+.weather-temp {
+  font-size: 43px;
+  font-weight: 300;
+  margin: 4px 0 8px;
+}
+
+.weather-description {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.weather-details {
+  color: #826d61;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.news-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.news-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(112, 79, 61, 0.13);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.news-list li:last-child {
+  border-bottom: none;
+}
+
+.news-list a {
+  color: #292421;
+  text-decoration: none;
+}
+
+.news-list a:active {
+  color: #a34c2d;
+}
+
+.news-status {
+  color: #947d70;
+  font-size: 11px;
+  margin-top: 9px;
+}
+
+.quote-widget {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.quote-mark {
+  font-size: 42px;
+  line-height: 0.8;
+  color: #cf8b6a;
+}
+
+.quote-text {
+  font-size: 20px;
+  line-height: 1.42;
+  font-weight: 500;
+  margin: 15px 0;
+}
+
+.quote-footer {
+  color: #967665;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 800px) {
+  .dashboard {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .brand {
+    font-size: 31px;
+  }
+  .clock-time {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 10px;
+  }
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+  .beta {
+    position: static;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .header {
+    padding-top: 5px;
+  }
 }
 </style>
 </head>
+
 <body>
-<main class="dashboard">
 <header class="header">
-<div class="brand">HomeViewOS</div>
-<div class="status" id="status">Dashboard aktiv</div>
+  <div class="beta">BETA PRODUCT</div>
+  <div class="brand">HomeViewOS <strong>27</strong></div>
+  <div class="apple-line"><span class="apple-logo">&#63743;</span> Apple</div>
 </header>
 
-<section class="grid">
-<div class="card welcome">
-<h1 class="greeting" id="greeting">Guten Tag</h1>
-<div class="date" id="welcome-date">Willkommen zu Hause.</div>
-</div>
+<main class="dashboard">
 
-<div class="card clock-card">
-<div class="clock">
-<div id="ticks"></div>
-<div class="hand hour-hand" id="hour"></div>
-<div class="hand minute-hand" id="minute"></div>
-<div class="hand second-hand" id="second"></div>
-<div class="clock-center"></div>
-</div>
-<div>
-<div class="digital-time" id="time">--:--:--</div>
-<div class="digital-date" id="clock-date">Datum wird geladen</div>
-</div>
-</div>
+  <section class="widget">
+    <h2>Uhrzeit &amp; Datum</h2>
+    <div id="clock" class="clock-time">--:--</div>
+    <div id="date" class="clock-date">Lädt …</div>
+    <div class="small-note">Lokale Gerätezeit · Österreich</div>
+  </section>
 
-<div class="card">
-<h2 class="card-title">Wetter · Wien-Döbling</h2>
-<div class="weather-main">
-<div class="weather-icon" id="weather-icon">⛅</div>
-<div>
-<div class="temperature" id="temperature">--°</div>
-<div class="weather-description" id="weather-description">Wetter wird geladen …</div>
-</div>
-</div>
-<div class="weather-details">
-<div>Wind<strong id="wind">-- km/h</strong></div>
-<div>Gefühlt<strong id="feels">--°</strong></div>
-</div>
-<div class="news-message" id="weather-status" style="margin-top:16px">Wetterdaten von Open-Meteo</div>
-</div>
+  <section class="widget">
+    <h2>Wetter · Wien-Döbling</h2>
+    <div id="weatherTemp" class="weather-temp">--°</div>
+    <div id="weatherDescription" class="weather-description">Wetter wird geladen …</div>
+    <div id="weatherDetails" class="weather-details"></div>
+    <div id="weatherStatus" class="news-status"></div>
+  </section>
 
-<div class="card">
-<h2 class="card-title">NBA · Basketball</h2>
-<ul class="news-list" id="nba"><li class="news-message">Nachrichten werden geladen …</li></ul>
-</div>
+  <section class="widget">
+    <h2>NBA · Aktuelle News</h2>
+    <ul id="nbaNews" class="news-list">
+      <li>NBA-News werden geladen …</li>
+    </ul>
+    <div id="nbaStatus" class="news-status">Aktualisierung alle 60 Sekunden</div>
+  </section>
 
-<div class="card">
-<h2 class="card-title">WNBA · Basketball</h2>
-<ul class="news-list" id="wnba"><li class="news-message">Nachrichten werden geladen …</li></ul>
-</div>
+  <section class="widget">
+    <h2>WNBA · Aktuelle News</h2>
+    <ul id="wnbaNews" class="news-list">
+      <li>WNBA-News werden geladen …</li>
+    </ul>
+    <div id="wnbaStatus" class="news-status">Aktualisierung alle 60 Sekunden</div>
+  </section>
 
-<div class="card">
-<h2 class="card-title">KURIER · Österreich & Welt</h2>
-<ul class="news-list" id="kurier"><li class="news-message">Nachrichten werden geladen …</li></ul>
-</div>
-</section>
+  <section class="widget">
+    <h2>KURIER · Österreich &amp; Welt</h2>
+    <ul id="kurierNews" class="news-list">
+      <li>KURIER-News werden geladen …</li>
+    </ul>
+    <div id="kurierStatus" class="news-status">Aktualisierung alle 60 Sekunden</div>
+  </section>
 
-<footer class="footer">HomeViewOS · Wetter: Open-Meteo · Nachrichten aus RSS-Feeds</footer>
+  <section class="widget quote-widget">
+    <div>
+      <h2>Spruch des Tages</h2>
+      <div class="quote-mark">“</div>
+      <div id="quoteText" class="quote-text">Der nächste Schritt zählt.</div>
+    </div>
+    <div id="quoteFooter" class="quote-footer">Spruch 1 · Tageshälfte</div>
+  </section>
+
 </main>
 
 <script>
-(function(){
-"use strict";
+(function () {
+  function byId(id) {
+    return document.getElementById(id);
+  }
 
-var monate=["Jänner","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
-var tage=["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
+  function pad(number) {
+    return number < 10 ? "0" + number : "" + number;
+  }
 
-function pad(n){return n<10?"0"+n:String(n)}
+  /* UHR UND DATUM */
+  function updateClock() {
+    var now = new Date();
+    byId("clock").innerHTML = pad(now.getHours()) + ":" + pad(now.getMinutes());
 
-function clockUpdate(){
-var d=new Date(),h=d.getHours(),m=d.getMinutes(),s=d.getSeconds();
-document.getElementById("time").textContent=pad(h)+":"+pad(m)+":"+pad(s);
-var date=tage[d.getDay()]+", "+d.getDate()+". "+monate[d.getMonth()]+" "+d.getFullYear();
-document.getElementById("clock-date").textContent=date;
-document.getElementById("welcome-date").textContent=date;
-document.getElementById("greeting").textContent=h>=5&&h<11?"Guten Morgen":h>=11&&h<18?"Guten Tag":"Guten Abend";
-document.getElementById("second").style.transform="rotate("+(s*6)+"deg)";
-document.getElementById("minute").style.transform="rotate("+(m*6+s*.1)+"deg)";
-document.getElementById("hour").style.transform="rotate("+((h%12)*30+m*.5)+"deg)";
-}
+    var weekdays = [
+      "Sonntag", "Montag", "Dienstag", "Mittwoch",
+      "Donnerstag", "Freitag", "Samstag"
+    ];
+    var months = [
+      "Jänner", "Februar", "März", "April", "Mai", "Juni",
+      "Juli", "August", "September", "Oktober", "November", "Dezember"
+    ];
 
-for(var i=0;i<12;i++){
-var t=document.createElement("div");
-t.className=i%3===0?"tick major":"tick";
-t.style.transform="rotate("+(i*30)+"deg)";
-document.getElementById("ticks").appendChild(t);
-}
+    byId("date").innerHTML =
+      weekdays[now.getDay()] + ", " +
+      now.getDate() + ". " + months[now.getMonth()] + " " + now.getFullYear();
+  }
 
-function weatherInfo(code){
-var map={
-0:["Klarer Himmel","☀️"],1:["Überwiegend klar","🌤️"],2:["Teilweise bewölkt","⛅"],3:["Bewölkt","☁️"],
-45:["Neblig","🌫️"],48:["Reifnebel","🌫️"],51:["Leichter Nieselregen","🌦️"],53:["Nieselregen","🌦️"],55:["Starker Nieselregen","🌧️"],
-61:["Leichter Regen","🌦️"],63:["Regen","🌧️"],65:["Starker Regen","🌧️"],71:["Leichter Schneefall","🌨️"],73:["Schneefall","🌨️"],75:["Starker Schneefall","❄️"],
-80:["Regenschauer","🌦️"],81:["Regenschauer","🌧️"],82:["Starke Regenschauer","⛈️"],95:["Gewitter","⛈️"],96:["Gewitter mit Hagel","⛈️"],99:["Starkes Gewitter mit Hagel","⛈️"]
-};
-return map[code]||["Wetterdaten verfügbar","🌡️"];
-}
+  updateClock();
+  window.setInterval(updateClock, 1000);
 
-function loadWeather(){
-var url="https://api.open-meteo.com/v1/forecast?latitude=48.249&longitude=16.341&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=Europe%2FBerlin";
-var x=new XMLHttpRequest();
-x.open("GET",url,true);
-x.timeout=15000;
-x.onreadystatechange=function(){
-if(x.readyState!==4)return;
-if(x.status>=200&&x.status<300){
-try{
-var c=JSON.parse(x.responseText).current;
-var w=weatherInfo(c.weather_code);
-document.getElementById("temperature").textContent=Math.round(c.temperature_2m)+"°";
-document.getElementById("feels").textContent=Math.round(c.apparent_temperature)+"°";
-document.getElementById("wind").textContent=Math.round(c.wind_speed_10m)+" km/h";
-document.getElementById("weather-icon").textContent=w[1];
-document.getElementById("weather-description").textContent=w[0];
-document.getElementById("weather-status").textContent="Stand: "+c.time.substring(11,16)+" Uhr";
-}catch(e){weatherError()}
-}else{weatherError()}
-};
-x.onerror=weatherError;
-x.ontimeout=weatherError;
-x.send();
-}
+  /* WETTER: OPEN-METEO, WIEN-DÖBLING */
+  function loadWeather() {
+    var url = "https://api.open-meteo.com/v1/forecast" +
+      "?latitude=48.249&longitude=16.341" +
+      "&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m" +
+      "&timezone=Europe%2FBerlin";
 
-function weatherError(){
-document.getElementById("weather-description").textContent="Wetter momentan nicht verfügbar";
-document.getElementById("weather-status").textContent="Wetterabfrage fehlgeschlagen. Bitte später erneut versuchen.";
-}
+    var request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.onreadystatechange = function () {
+      if (request.readyState !== 4) return;
 
-function message(id,text){
-var list=document.getElementById(id);
-list.innerHTML="";
-var li=document.createElement("li");
-li.className="news-message";
-li.textContent=text;
-list.appendChild(li);
-}
+      if (request.status >= 200 && request.status < 300) {
+        try {
+          var data = JSON.parse(request.responseText);
+          var current = data.current;
 
-function renderFeed(id,entries){
-var list=document.getElementById(id);
-list.innerHTML="";
-if(!entries||!entries.length){message(id,"Keine Nachrichten gefunden.");return}
-for(var i=0;i<Math.min(entries.length,5);i++){
-var e=entries[i],li=document.createElement("li"),a=document.createElement("a");
-a.textContent=e.title||"Nachricht öffnen";
-if(e.link&&/^https?:\/\//i.test(e.link)){
-a.href=e.link;a.target="_blank";a.rel="noopener noreferrer";
-}else{a.href="#"}
-li.appendChild(a);
-list.appendChild(li);
-if(e.pubDate){
-var meta=document.createElement("div");
-meta.className="news-meta";
-var d=new Date(e.pubDate);
-meta.textContent=isNaN(d.getTime())?"":d.toLocaleDateString("de-AT");
-li.appendChild(meta);
-}
-}
-}
+          byId("weatherTemp").innerHTML =
+            Math.round(current.temperature_2m) + "°C";
 
-/* RSS-Proxy: versucht zwei Dienste nacheinander */
-function fetchFeed(id,feedUrl){
-var proxies=[
-"https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(feedUrl),
-"https://api.allorigins.win/raw?url="+encodeURIComponent(feedUrl)
-];
-function attempt(index){
-if(index>=proxies.length){
-message(id,"Feed nicht erreichbar. Bitte später erneut versuchen.");
-return;
-}
-var x=new XMLHttpRequest();
-x.open("GET",proxies[index],true);
-x.timeout=15000;
-x.onreadystatechange=function(){
-if(x.readyState!==4)return;
-if(x.status>=200&&x.status<300){
-try{
-var data=JSON.parse(x.responseText);
-if(data.items){renderFeed(id,data.items);return}
-if(data.contents){
-var parsed=parseXMLFeed(data.contents);
-if(parsed.length){renderFeed(id,parsed);return}
-}
-}catch(e){}
-}
-attempt(index+1);
-};
-x.onerror=function(){attempt(index+1)};
-x.ontimeout=function(){attempt(index+1)};
-x.send();
-}
-attempt(0);
-}
+          var code = current.weather_code;
+          var descriptions = {
+            0: "Klarer Himmel",
+            1: "Überwiegend klar",
+            2: "Teilweise bewölkt",
+            3: "Bewölkt",
+            45: "Nebel",
+            48: "Reifnebel",
+            51: "Leichter Nieselregen",
+            53: "Nieselregen",
+            55: "Starker Nieselregen",
+            61: "Leichter Regen",
+            63: "Regen",
+            65: "Starker Regen",
+            71: "Leichter Schneefall",
+            73: "Schneefall",
+            75: "Starker Schneefall",
+            80: "Regenschauer",
+            81: "Regenschauer",
+            82: "Starke Regenschauer",
+            95: "Gewitter",
+            96: "Gewitter mit Hagel",
+            99: "Starkes Gewitter"
+          };
 
-function parseXMLFeed(xml){
-var result=[];
-try{
-var doc=(new DOMParser()).parseFromString(xml,"text/xml");
-var items=doc.getElementsByTagName("item");
-for(var i=0;i<items.length&&i<10;i++){
-var title=items[i].getElementsByTagName("title")[0];
-var link=items[i].getElementsByTagName("link")[0];
-var date=items[i].getElementsByTagName("pubDate")[0];
-result.push({
-title:title?title.textContent:"",
-link:link?link.textContent:"",
-pubDate:date?date.textContent:""
-});
-}
-}catch(e){}
-return result;
-}
+          byId("weatherDescription").innerHTML =
+            descriptions[code] || "Aktuelle Wetterlage";
 
-function loadNews(){
-fetchFeed("nba","https://www.espn.com/espn/rss/nba/news");
-fetchFeed("wnba","https://www.espn.com/espn/rss/wnba/news");
-fetchFeed("kurier","https://kurier.at/xml/rssd");
-}
+          byId("weatherDetails").innerHTML =
+            "Gefühlt: " + Math.round(current.apparent_temperature) + "°C<br>" +
+            "Luftfeuchtigkeit: " + current.relative_humidity_2m + "%<br>" +
+            "Wind: " + Math.round(current.wind_speed_10m) + " km/h";
 
-clockUpdate();
-loadWeather();
-loadNews();
-window.setInterval(clockUpdate,1000);
-window.setInterval(loadWeather,300000);
-window.setInterval(loadNews,900000);
+          byId("weatherStatus").innerHTML = "Stand: " + current.time.replace("T", " ");
+        } catch (error) {
+          byId("weatherStatus").innerHTML = "Wetterdaten konnten nicht gelesen werden.";
+        }
+      } else {
+        byId("weatherStatus").innerHTML = "Wetterdienst momentan nicht erreichbar.";
+      }
+    };
+    request.onerror = function () {
+      byId("weatherStatus").innerHTML = "Wetterdienst momentan nicht erreichbar.";
+    };
+    request.send();
+  }
+
+  loadWeather();
+  window.setInterval(loadWeather, 600000);
+
+  /* NEWS: ESPN JSON DIREKT ABRUFEN */
+  function escapeHTML(text) {
+    return String(text || "").replace(/[&<>"']/g, function (character) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[character];
+    });
+  }
+
+  function renderNews(listId, statusId, articles, sourceName) {
+    if (!articles || !articles.length) return;
+
+    var html = "";
+    var count = Math.min(5, articles.length);
+
+    for (var i = 0; i < count; i++) {
+      var article = articles[i];
+      var title = article.headline || article.title || article.description || "Meldung";
+      var href = "";
+
+      if (article.links && article.links.web && article.links.web.href) {
+        href = article.links.web.href;
+      } else if (article.link) {
+        href = article.link;
+      }
+
+      html += "<li>";
+      if (href) {
+        html += '<a href="' + escapeHTML(href) +
+          '" target="_blank">' + escapeHTML(title) + "</a>";
+      } else {
+        html += escapeHTML(title);
+      }
+      html += "</li>";
+    }
+
+    byId(listId).innerHTML = html;
+    byId(statusId).innerHTML = sourceName + " · " +
+      new Date().toLocaleTimeString("de-AT", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+  }
+
+  function loadESPNNews(league, listId, statusId, label) {
+    var url = "https://site.api.espn.com/apis/site/v2/sports/basketball/" +
+      league + "/news?limit=10";
+
+    var request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.timeout = 15000;
+
+    request.onreadystatechange = function () {
+      if (request.readyState !== 4) return;
+
+      if (request.status >= 200 && request.status < 300) {
+        try {
+          var data = JSON.parse(request.responseText);
+          if (data.articles && data.articles.length) {
+            renderNews(listId, statusId, data.articles, label);
+          } else {
+            byId(statusId).innerHTML = "Derzeit keine Meldungen geliefert.";
+          }
+        } catch (error) {
+          byId(statusId).innerHTML = "News-Daten konnten nicht gelesen werden.";
+        }
+      } else {
+        byId(statusId).innerHTML = "News momentan nicht erreichbar; letzter Stand bleibt erhalten.";
+      }
+    };
+
+    request.onerror = function () {
+      byId(statusId).innerHTML = "Verbindung fehlgeschlagen; letzter Stand bleibt erhalten.";
+    };
+
+    request.ontimeout = function () {
+      byId(statusId).innerHTML = "Zeitüberschreitung; letzter Stand bleibt erhalten.";
+    };
+
+    request.send();
+  }
+
+  /* KURIER RSS ÜBER EINEN CORS-PROXY */
+  function loadKurierNews() {
+    var feedURL = "https://kurier.at/xml/rssd";
+    var proxyURL = "https://proxy.cors.dev/" + feedURL;
+
+    var request = new XMLHttpRequest();
+    request.open("GET", proxyURL, true);
+    request.timeout = 15000;
+
+    request.onreadystatechange = function () {
+      if (request.readyState !== 4) return;
+
+      if (request.status >= 200 && request.status < 300) {
+        try {
+          var parser = new DOMParser();
+          var xml = parser.parseFromString(request.responseText, "text/xml");
+          var nodes = xml.getElementsByTagName("item");
+          var articles = [];
+
+          for (var i = 0; i < nodes.length && articles.length < 5; i++) {
+            var titleNode = nodes[i].getElementsByTagName("title")[0];
+            var linkNode = nodes[i].getElementsByTagName("link")[0];
+
+            if (titleNode) {
+              articles.push({
+                title: titleNode.textContent,
+                link: linkNode ? linkNode.textContent : ""
+              });
+            }
+          }
+
+          if (articles.length) {
+            renderNews("kurierNews", "kurierStatus", articles, "KURIER RSS");
+          } else {
+            byId("kurierStatus").innerHTML =
+              "Der Feed lieferte keine lesbaren Meldungen.";
+          }
+        } catch (error) {
+          byId("kurierStatus").innerHTML =
+            "KURIER-Feed konnte nicht gelesen werden.";
+        }
+      } else {
+        byId("kurierStatus").innerHTML =
+          "KURIER-Feed momentan nicht erreichbar; letzter Stand bleibt erhalten.";
+      }
+    };
+
+    request.onerror = function () {
+      byId("kurierStatus").innerHTML =
+        "Feed-Dienst momentan nicht erreichbar; letzter Stand bleibt erhalten.";
+    };
+
+    request.ontimeout = function () {
+      byId("kurierStatus").innerHTML =
+        "Zeitüberschreitung beim KURIER-Feed.";
+    };
+
+    request.send();
+  }
+
+  function loadAllNews() {
+    loadESPNNews("nba", "nbaNews", "nbaStatus", "ESPN NBA");
+    loadESPNNews("wnba", "wnbaNews", "wnbaStatus", "ESPN WNBA");
+    loadKurierNews();
+  }
+
+  loadAllNews();
+  window.setInterval(loadAllNews, 60000);
+
+  /* SPRUCHWIDGET
+     730 unterschiedliche Kombinationen werden aus mehreren Textbausteinen
+     gebildet. Das Datum plus Tageshälfte bestimmt die Auswahl.
+     Dadurch bleibt der Spruch innerhalb des Zeitfensters konstant. */
+
+  var quoteStarts = [
+    "Erfolg beginnt", "Mut wächst", "Stärke entsteht", "Fortschritt beginnt",
+    "Veränderung beginnt", "Gelassenheit wächst", "Selbstvertrauen entsteht",
+    "Ausdauer zahlt sich aus", "Klarheit entsteht", "Jeder Neubeginn beginnt",
+    "Gute Gewohnheiten wachsen", "Wahre Größe zeigt sich", "Ein gutes Leben beginnt",
+    "Kleine Schritte führen", "Wer dranbleibt", "Geduld hilft", "Disziplin bedeutet",
+    "Der erste Schritt zählt", "Ein klarer Kopf hilft", "Neue Möglichkeiten entstehen",
+    "Persönliches Wachstum beginnt", "Zuversicht wächst", "Respekt zeigt sich",
+    "Wissen wird wertvoll", "Erfahrung lehrt", "Freude entsteht", "Ein Ziel wird erreichbar",
+    "Gute Entscheidungen beginnen", "Mutige Menschen lernen", "Innere Ruhe wächst",
+    "Wer Fragen stellt", "Ein offener Geist entdeckt", "Aus Fehlern entsteht",
+    "Wahre Stärke braucht", "Ein guter Tag beginnt", "Das Wesentliche zählt",
+    "Wer aufmerksam bleibt", "Vertrauen entsteht", "Kreativität wächst", "Hoffnung bleibt",
+    "Konzentration hilft", "Ein guter Plan braucht", "Jede Herausforderung bietet",
+    "Wer Verantwortung übernimmt", "Ein kleiner Fortschritt ist", "Wachstum braucht",
+    "Ein klarer Fokus schafft", "Gute Arbeit entsteht", "Wer sich bemüht",
+    "Ein ehrlicher Blick zeigt", "Freundlichkeit kostet wenig", "Dankbarkeit verändert",
+    "Wer ruhig bleibt", "Das Leben belohnt", "Gute Ideen brauchen",
+    "Ein starkes Fundament entsteht", "Manchmal reicht", "Wer heute beginnt",
+    "Jeder Moment bietet", "Lernen hört nie auf", "Eine gute Haltung schafft",
+    "Ein Ziel braucht", "Wer sich bewegt", "Kluge Menschen wissen",
+    "Ein bewusster Schritt schafft", "Wahre Geduld bedeutet", "Ein guter Gedanke kann",
+    "Wer Chancen erkennt", "Das Morgen entsteht", "Eine klare Absicht hilft",
+    "Erfahrung wird zur Stärke", "Wer sich selbst kennt", "Ein freundliches Wort schafft"
+  ];
+
+  var quoteEnds = [
+    "durch kleine Schritte, die du konsequent gehst.",
+    "wenn du auch nach Rückschlägen weitermachst.",
+    "mit Geduld, Übung und einem klaren Ziel.",
+    "sobald du anfängst, statt nur zu warten.",
+    "wenn du dich auf das Beeinflussbare konzentrierst.",
+    "durch Entscheidungen, die zu deinen Werten passen.",
+    "wenn du aus Fehlern lernst und weitergehst.",
+    "mit Mut, auch wenn noch nicht alles sicher ist.",
+    "wenn du deine Energie bewusst einsetzt.",
+    "indem du heute das Beste aus dir machst."
+  ];
+
+  function dayNumber(date) {
+    var start = new Date(date.getFullYear(), 0, 0);
+    var diff = date.getTime() - start.getTime();
+    return Math.floor(diff / 86400000);
+  }
+
+  function updateQuote() {
+    var now = new Date();
+    var day = dayNumber(now);
+    var half = now.getHours() < 12 ? 0 : 1;
+
+    /* 365 Tage x 2 Tageshälften = 730 feste Spruch-Kombinationen.
+       Unterschiedliche Kombinationen werden über einen deterministischen
+       Index ausgewählt. */
+    var slot = ((day - 1) * 2) + half;
+    var startIndex = slot % quoteStarts.length;
+    var endIndex = (slot * 7 + Math.floor(slot / quoteStarts.length)) % quoteEnds.length;
+
+    var start = quoteStarts[startIndex];
+    var ending = quoteEnds[endIndex];
+    var quote = start + " " + ending;
+
+    byId("quoteText").innerHTML = escapeHTML(quote);
+    byId("quoteFooter").innerHTML =
+      "Spruch " + (half + 1) + " · " +
+      (half === 0 ? "00:00–11:59 Uhr" : "12:00–23:59 Uhr");
+  }
+
+  updateQuote();
+
+  /* Prüft regelmäßig die Zeit, damit der Spruch auch am Mittag wechselt. */
+  window.setInterval(updateQuote, 15000);
+
 })();
 </script>
 </body>
