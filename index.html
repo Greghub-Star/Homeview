@@ -339,7 +339,10 @@
             if (!box) return;
             
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'http://rss2json.com', true);
+            // Geändert auf reines HTTP und einen robusten, unverschlüsselten JSON-Feed-Tunnel für iOS 9
+            var targetFeed = encodeURIComponent('http://kurier.at');
+            xhr.open('GET', 'http://rss2json.com' + targetFeed, true);
+            
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
@@ -347,6 +350,8 @@
                             var response = JSON.parse(xhr.responseText);
                             var items = response.items;
                             var html = '';
+                            
+                            // Zeigt die Top 3 echten Schlagzeilen live an
                             var maxItems = items.length > 3 ? 3 : items.length;
                             for (var i = 0; i < maxItems; i++) {
                                 html += '<div class="news-item">&bull; ' + items[i].title + '</div>';
@@ -362,8 +367,8 @@
         function showFallbackNews() {
             var box = document.getElementById('news-content');
             if(box) {
-                box.innerHTML = '<div class="news-item">&bull; KURIER: Aktuelle Nachrichten aus Wien-Döbling wurden geladen.</div>' +
-                                '<div class="news-item">&bull; Großes Digital-Update für Home-Dashboards gestartet.</div>' +
+                box.innerHTML = '<div class="news-item">&bull; KURIER: Verbindung wird aufgebaut...</div>' +
+                                '<div class="news-item">&bull; Bitte prüfe deine Internetverbindung am iPad.</div>' +
                                 '<div class="news-item">&bull; Sport: Basketball-Saison läuft vollautomatisch live.</div>';
             }
         }
