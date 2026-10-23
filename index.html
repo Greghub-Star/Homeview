@@ -13,14 +13,14 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #FFCBA4; /* Schönes Peach-Korall */
+            background-color: #FFCBA4; /* Sattes Peach */
             background-image: linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px);
             background-size: 25px 25px;
             color: #333;
             padding: 20px;
         }
         
-        /* Kopfbereich */
+        /* Apple Header */
         .header {
             width: 100%;
             margin-bottom: 25px;
@@ -61,7 +61,6 @@
             font-size: 38px;
             vertical-align: middle;
             margin-left: 6px;
-            color: #000;
         }
         .header-right {
             float: right;
@@ -78,7 +77,7 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
 
-        /* Zweispaltiges Layout */
+        /* Zweispaltiges Grid */
         .dashboard-container {
             width: 100%;
             clear: both;
@@ -118,7 +117,7 @@
         .date-display { font-size: 20px; color: #555; margin-bottom: 8px; }
         .greeting-display { font-size: 24px; font-weight: bold; color: #e26a45; border-top: 1px solid #eee; padding-top: 8px; }
 
-        /* Dropdown */
+        /* Dropdown Menu */
         .dropdown-menu {
             display: none;
             position: absolute;
@@ -141,7 +140,7 @@
         }
         .dropdown-menu a:active { background: #eee; }
 
-        /* Integriertes Nummern-Pad Modal */
+        /* Integriertes Nummern-Pad */
         .modal {
             display: none;
             position: fixed;
@@ -157,7 +156,6 @@
             padding: 20px;
             border-radius: 16px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         .pin-preview {
             font-size: 32px;
@@ -166,10 +164,6 @@
             margin: 15px 0;
             height: 40px;
             color: #111;
-        }
-        .numpad {
-            width: 100%;
-            margin-top: 10px;
         }
         .numpad-row {
             clear: both;
@@ -191,12 +185,24 @@
         .num-btn:active { background: #ccc; }
         .error-banner { color: #d9383a; font-weight: bold; margin: 10px 0; font-size: 15px; }
         
-        .news-item { font-size: 15px; margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px solid #f0f0f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        /* App Style Buttons */
+        .app-btn {
+            background: #e26a45;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
+        }
+        .news-item { font-size: 14px; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     </style>
 </head>
 <body>
 
-    <!-- KOPFBEREICH -->
     <div class="header">
         <div class="header-left">
             <button class="profile-btn" onclick="toggleDropdown()">&#9787; <span id="current-profile-label">Cobe</span> &#9662;</button>
@@ -216,7 +222,6 @@
         </div>
     </div>
 
-    <!-- MAIN DASHBOARD -->
     <div class="dashboard-container">
         <div class="column">
             <div class="widget huge">
@@ -227,7 +232,7 @@
             </div>
             <div class="widget medium">
                 <h3>NBA Spielstände</h3>
-                <p style="color:#777; font-style:italic; font-size:15px;">Keine Live-Spieldaten verfügbar.</p>
+                <p style="color:#777; font-style:italic; font-size:15px;" id="nba-scores">Keine Live-Spieldaten verfügbar.</p>
             </div>
             <div class="widget medium">
                 <h3>Zitat des Tages</h3>
@@ -238,15 +243,15 @@
         <div class="column">
             <div class="widget huge">
                 <h3>Wetter in Wien-Döbling</h3>
-                <div id="weather-content" style="padding-top:10px;">Lade Wetterdaten...</div>
+                <div id="weather-content" style="padding-top:10px;">Lade Wetterdaten über Proxy...</div>
             </div>
             <div class="widget medium">
                 <h3>WNBA Spielstände</h3>
-                <p style="color:#777; font-style:italic; font-size:15px;">Derzeit finden keine Spiele statt.</p>
+                <p style="color:#777; font-style:italic; font-size:15px;" id="wnba-scores">Derzeit finden keine Spiele statt.</p>
             </div>
             <div class="widget medium">
-                <h3>Kurier News</h3>
-                <div id="news-content" style="font-size:14px; color:#444;">Lade aktuelle Schlagzeilen...</div>
+                <h3>Einstellungen</h3>
+                <div id="settings-widget-body"></div>
             </div>
         </div>
     </div>
@@ -281,7 +286,7 @@
         var currentProfile = 'Cobe';
         var selectedTargetProfile = '';
         var currentPinInput = '';
-        var setupStep = 0; // 0 = Normaler Login, 1 = Setup Ersteinrichtung, 2 = Setup Bestätigung
+        var setupStep = 0; // 0 = Login, 1 = Setup, 2 = Bestätigung, 3 = Code ändern (Alte PIN), 4 = Code ändern (Neu), 5 = Code ändern (Bestätigung)
         var firstPinDraft = '';
 
         function safeStorageGet(key, fallback) {
@@ -299,20 +304,78 @@
             currentProfile = safeStorageGet('last_active_profile', 'Cobe');
             document.getElementById('current-profile-label').innerText = currentProfile;
             
-            // Hochpräziser Intervall-Sync für ruckelfreie Sekundenanzeige
+            // Hochpräziser Sync für ruckelfreie Sekundenanzeige
             updateClockAndGreeting();
             setInterval(updateClockAndGreeting, 200);
             
+            // Wetter und Einstellungen laden
             loadWeatherDöbling();
-            loadKurierNews();
+            renderSettingsUi();
         };
 
         function toggleDropdown() {
             var menu = document.getElementById('profile-drop');
-            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+            }
         }
 
-        // Profil-Sicherheitssteuerung über das Nummern-Pad
+        function updateClockAndGreeting() {
+            var d = new Date();
+            var h = d.getHours();
+            var min = d.getMinutes(); if(min < 10) min = '0' + min;
+            var sec = d.getSeconds(); if(sec < 10) sec = '0' + sec;
+            
+            var day = d.getDate(); if(day < 10) day = '0' + day;
+            var mon = d.getMonth() + 1; if(mon < 10) mon = '0' + mon;
+            
+            document.getElementById('txt-clock').innerText = h + ':' + min + ':' + sec;
+            document.getElementById('txt-date').innerText = day + '.' + mon + '.' + d.getFullYear();
+
+            var greeting = "Hallo! 😊";
+            if (h >= 5 && h < 9) { greeting = "Guten Morgen! ☕"; }
+            else if (h >= 9 && h < 12) { greeting = "Guten Vormittag! ☀️"; }
+            else if (h >= 12 && h < 14) { greeting = "Guten Mittag! 🍽️"; }
+            else if (h >= 14 && h < 18) { greeting = "Guten Nachmittag! 🍰"; }
+            else if (h >= 18 && h < 22) { greeting = "Guten Abend! 🌆"; }
+            else { greeting = "Gute Nacht! 🌙"; }
+
+            document.getElementById('txt-greeting').innerText = greeting;
+        }
+
+        // Tunnellösung über einen offenen CORS-Proxy, um TLS-Fehler auf iOS 9 zu umgehen
+        function loadWeatherDöbling() {
+            var targetUrl = 'https://open-meteo.com';
+            var proxyUrl = 'https://allorigins.win' + encodeURIComponent(targetUrl);
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', proxyUrl, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    var box = document.getElementById('weather-content');
+                    if (!box) return;
+                    if (xhr.status === 200) {
+                        try {
+                            var wrapper = JSON.parse(xhr.responseText);
+                            var response = JSON.parse(wrapper.contents);
+                            var temp = response.current_weather.temperature;
+                            var wind = response.current_weather.windspeed;
+                            
+                            box.innerHTML = '<p style="font-size:42px; font-weight:900; color:#111; margin-bottom:10px;">' + temp + ' &deg;C</p>' +
+                                            '<p style="font-size:18px; color:#444;">Wien Döbling</p>' +
+                                            '<p style="font-size:16px; color:#666; margin-top:4px;">Wind: ' + wind + ' km/h</p>';
+                        } catch(e) { 
+                            box.innerHTML = '<p style="color:#d9383a; font-size:15px;">Proxy aktiv, aber Datenstruktur inkompatibel.</p>'; 
+                        }
+                    } else { 
+                        box.innerHTML = '<p style="color:#d9383a; font-size:15px;">Verbindung zum Daten-Proxy fehlgeschlagen.</p>'; 
+                    }
+                }
+            };
+            xhr.send();
+        }// Profil-Sicherheitssteuerung über das Nummern-Pad
         function triggerProfileChange(name) {
             document.getElementById('profile-drop').style.display = 'none';
             selectedTargetProfile = name;
@@ -323,12 +386,10 @@
             var savedPin = safeStorageGet('profile_pin_' + name, null);
             
             if (savedPin === null) {
-                // Keine PIN registriert -> Starte geführte Ersteinrichtung
                 setupStep = 1;
                 document.getElementById('pin-modal-title').innerText = name + ': PIN einrichten';
                 document.getElementById('pin-modal-info').innerText = 'Wähle eine neue PIN (4-12 Ziffern)';
             } else {
-                // Abfrage der bestehenden PIN
                 setupStep = 0;
                 document.getElementById('pin-modal-title').innerText = name + ': PIN erforderlich';
                 document.getElementById('pin-modal-info').innerText = 'Bitte gib deine PIN ein, um dich anzumelden.';
@@ -340,7 +401,9 @@
             if (currentPinInput.length < 12) {
                 currentPinInput += num;
                 var stars = '';
-                for (var i = 0; i < currentPinInput.length; i++) stars += '•';
+                for (var i = 0; i < currentPinInput.length; i++) {
+                    stars += '•';
+                }
                 document.getElementById('pin-stars').innerText = stars;
             }
         }
@@ -360,118 +423,105 @@
             errField.innerText = '';
 
             if (setupStep === 0) {
-                // Prüfung bei Anmeldung
                 var correctPin = safeStorageGet('profile_pin_' + selectedTargetProfile, '');
                 if (currentPinInput === correctPin) {
                     currentProfile = selectedTargetProfile;
                     safeStorageSet('last_active_profile', currentProfile);
                     document.getElementById('current-profile-label').innerText = currentProfile;
                     closePinModal();
+                    renderSettingsUi();
                 } else {
-                    errField.innerText = 'Falsche PIN! Bitte versuche es erneut.';
+                    errField.innerText = 'Falsche PIN!';
                     currentPinInput = '';
                     document.getElementById('pin-stars').innerText = '';
                 }
             } else if (setupStep === 1) {
-                // Ersteinrichtung Schritt 1
                 if (currentPinInput.length < 4) {
-                    errField.innerText = 'Die PIN muss mindestens 4 Ziffern lang sein.';
+                    errField.innerText = 'Mindestens 4 Ziffern erforderlich.';
                     return;
                 }
                 firstPinDraft = currentPinInput;
                 currentPinInput = '';
                 document.getElementById('pin-stars').innerText = '';
                 setupStep = 2;
-                document.getElementById('pin-modal-info').innerText = 'Bitte bestätige die neue PIN durch erneute Eingabe:';
+                document.getElementById('pin-modal-info').innerText = 'Bitte PIN zur Bestätigung erneut eingeben und OK drücken:';
             } else if (setupStep === 2) {
-                // Ersteinrichtung Schritt 2 (Abgleich)
                 if (currentPinInput === firstPinDraft) {
                     safeStorageSet('profile_pin_' + selectedTargetProfile, currentPinInput);
                     currentProfile = selectedTargetProfile;
                     safeStorageSet('last_active_profile', currentProfile);
                     document.getElementById('current-profile-label').innerText = currentProfile;
                     closePinModal();
+                    renderSettingsUi();
                 } else {
-                    errField.innerText = 'Die PINs stimmen nicht überein! Start von vorn.';
+                    errField.innerText = 'PINs stimmen nicht überein! Start von vorn.';
                     currentPinInput = '';
                     document.getElementById('pin-stars').innerText = '';
                     setupStep = 1;
                     document.getElementById('pin-modal-info').innerText = 'Wähle eine neue PIN (4-12 Ziffern)';
                 }
+            } else if (setupStep === 3) {
+                var activePin = safeStorageGet('profile_pin_' + currentProfile, '');
+                if (currentPinInput === activePin) {
+                    currentPinInput = '';
+                    document.getElementById('pin-stars').innerText = '';
+                    setupStep = 4;
+                    document.getElementById('pin-modal-title').innerText = 'Neue PIN vergeben';
+                    document.getElementById('pin-modal-info').innerText = 'Gib deine neue Wunsch-PIN ein:';
+                } else {
+                    errField.innerText = 'Falsche alte PIN!';
+                    currentPinInput = '';
+                    document.getElementById('pin-stars').innerText = '';
+                }
+            } else if (setupStep === 4) {
+                if (currentPinInput.length < 4) {
+                    errField.innerText = 'Mindestens 4 Ziffern!';
+                    return;
+                }
+                firstPinDraft = currentPinInput;
+                currentPinInput = '';
+                document.getElementById('pin-stars').innerText = '';
+                setupStep = 5;
+                document.getElementById('pin-modal-info').innerText = 'Bestätige deine neue PIN:';
+            } else if (setupStep === 5) {
+                if (currentPinInput === firstPinDraft) {
+                    safeStorageSet('profile_pin_' + currentProfile, currentPinInput);
+                    closePinModal();
+                    alert('Code erfolgreich geändert!');
+                } else {
+                    errField.innerText = 'Fehler! Stimmt nicht überein. Start von vorn.';
+                    currentPinInput = '';
+                    document.getElementById('pin-stars').innerText = '';
+                    setupStep = 4;
+                }
             }
         }
 
-        // Ticker-Funktion
-        function updateClockAndGreeting() {
-            var d = new Date();
-            var h = d.getHours();
-            var min = d.getMinutes(); if(min < 10) min = '0' + min;
-            var sec = d.getSeconds(); if(sec < 10) sec = '0' + sec;
-            
-            var day = d.getDate(); if(day < 10) day = '0' + day;
-            var mon = d.getMonth() + 1; if(mon < 10) mon = '0' + mon;
-            
-            document.getElementById('txt-clock').innerText = h + ':' + min + ':' + sec;
-            document.getElementById('txt-date').innerText = day + '.' + mon + '.' + d.getFullYear();
-
-            var greeting = "Hallo! 😊";
-            if (h >= 5 && h < 9) greeting = "Guten Morgen! ☕";
-            else if (h >= 9 && h < 12) greeting = "Guten Vormittag! ☀️";
-            else if (h >= 12 && h < 14) greeting = "Guten Mittag! 🍽️";
-            else if (h >= 14 && h < 18) greeting = "Guten Nachmittag! 🍰";
-            else if (h >= 18 && h < 22) greeting = "Guten Abend! 🌆";
-            else greeting = "Gute Nacht! 🌙";
-
-            document.getElementById('txt-greeting').innerText = greeting;
+        // App-artiges Einstellungs-Widget
+        function renderSettingsUi() {
+            var box = document.getElementById('settings-widget-body');
+            if(!box) return;
+            box.innerHTML = '<p style="font-size:15px; color:#555;">Profil: <strong>' + currentProfile + '</strong></p>' +
+                            '<button class="app-btn" onclick="startPinChangeWorkflow()">Code ändern</button>';
         }
 
-        function loadWeatherDöbling() {
-            var url = 'https://open-meteo.com';
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    var box = document.getElementById('weather-content');
-                    if (!box) return;
-                    if (xhr.status === 200) {
-                        try {
-                            var response = JSON.parse(xhr.responseText);
-                            var temp = response.current_weather.temperature;
-                            var wind = response.current_weather.windspeed;
-                            box.innerHTML = '<p style="font-size:42px; font-weight:900; color:#111; margin-bottom:10px;">' + temp + ' &deg;C</p>' +
-                                            '<p style="font-size:18px; color:#444;">Wien Döbling</p>' +
-                                            '<p style="font-size:16px; color:#666; margin-top:4px;">Wind: ' + wind + ' km/h</p>';
-                        } catch(e) { box.innerHTML = '<p style="color:#d9383a;">Fehler bei Daten-Auswertung.</p>'; }
-                    } else { box.innerHTML = '<p style="color:#d9383a;">Wetterdaten aktuell nicht verfügbar.</p>'; }
-                }
-            };
-            xhr.send();
-        }
-
-        function loadKurierNews() {
-            var rssUrl = 'https://kurier.at';
-            var url = 'https://rss2json.com' + encodeURIComponent(rssUrl);
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    var box = document.getElementById('news-content');
-                    if (!box) return;
-                    if (xhr.status === 200) {
-                        try {
-                            var response = JSON.parse(xhr.responseText);
-                            var items = response.items;
-                            var html = '';
-                            var maxItems = items.length > 3 ? 3 : items.length;
-                            for (var i = 0; i < maxItems; i++) {
-                                html += '<div class="news-item">&bull; ' + items[i].title + '</div>';
-                            }
-                            box.innerHTML = html;
-                        } catch(e) { box.innerHTML = '<p style="color:#d9383a;">News-Format Fehler.</p>'; }
-                    } else { box.innerHTML = '<p style="color:#d9383a;">Schlagzeilen offline.</p>'; }
-                }
-            };
-            xhr.send();
+        function startPinChangeWorkflow() {
+            selectedTargetProfile = currentProfile;
+            currentPinInput = '';
+            document.getElementById('pin-err').innerText = '';
+            document.getElementById('pin-stars').innerText = '';
+            
+            var hasPin = safeStorageGet('profile_pin_' + currentProfile, null);
+            if(hasPin === null) {
+                setupStep = 1;
+                document.getElementById('pin-modal-title').innerText = 'Code einrichten';
+                document.getElementById('pin-modal-info').innerText = 'Wähle eine PIN aus:';
+            } else {
+                setupStep = 3;
+                document.getElementById('pin-modal-title').innerText = 'Code ändern';
+                document.getElementById('pin-modal-info').innerText = 'Bitte gib zuerst deinen AKTUELLEN Code ein:';
+            }
+            document.getElementById('pin-modal').style.display = 'block';
         }
     </script>
 </body>
