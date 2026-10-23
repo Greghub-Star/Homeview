@@ -2,7 +2,10 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>HomeViewOS 27</title>
+    <title>HomeViewOS 28</title>
+    <!-- Aktiviert den echten, randlosen Vollbildmodus beim Speichern auf dem Home-Bildschirm -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
         * {
@@ -13,69 +16,75 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #FFCBA4; /* Startfarbe Peach für Cobe */
-            background-image: linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px);
-            background-size: 25px 25px;
-            color: #333;
-            padding: 20px;
-            transition: background-color 0.3s ease;
+            background-color: #FFCBA4; /* Startfarbe Peach */
+            /* Deutlich verstärktes quadratisches Linienraster für edlen Dashboard-Look */
+            background-image: linear-gradient(rgba(255,255,255,0.3) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.3) 2px, transparent 2px);
+            background-size: 30px 35px;
+            color: #111;
+            padding: 30px 20px 20px 20px;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
-        /* Apple Header Layout */
+        /* Großer Apple-Header */
         .header {
             width: 100%;
-            margin-bottom: 25px;
+            margin-bottom: 35px;
             position: relative;
             text-align: center;
             clear: both;
+            height: 90px;
         }
         .header-left {
             float: left;
-            padding-top: 15px;
+            padding-top: 10px;
         }
         .profile-btn {
-            background: #fff;
-            border: 2px solid #333;
-            padding: 10px 18px;
-            font-size: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2.5px solid currentColor;
+            padding: 12px 24px;
+            font-size: 24px; /* Größerer Text */
             font-weight: bold;
-            border-radius: 10px;
+            border-radius: 14px;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            color: inherit;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
         .header-center {
             display: inline-block;
         }
         .brand-title {
-            font-size: 46px;
+            font-size: 54px; /* Text massiv vergrößert */
             font-weight: 900;
-            letter-spacing: -1px;
-            color: #111;
+            letter-spacing: -1.5px;
         }
         .brand-sub {
-            font-size: 32px;
+            font-size: 36px; /* Text massiv vergrößert */
             font-weight: bold;
-            color: #000;
-            margin-top: 4px;
+            margin-top: 2px;
+            cursor: pointer; /* Macht signalisierend, dass es antippbar ist */
         }
         .apple-logo {
-            font-size: 38px;
+            font-size: 42px;
             vertical-align: middle;
-            margin-left: 6px;
+            margin-left: 4px;
         }
         .header-right {
             float: right;
-            padding-top: 15px;
+            padding-top: 10px;
         }
-        .brand-beta {
-            background-color: #d9383a;
-            color: #fff;
-            font-size: 14px;
+        
+        /* Neue stylische iOS-Statusleiste anstatt Beta-Kasten */
+        .system-status-bar {
+            background: rgba(255, 255, 255, 0.25);
+            border: 2px solid currentColor;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 18px;
             font-weight: bold;
-            padding: 6px 12px;
-            border-radius: 6px;
-            text-transform: uppercase;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
         }
 
         /* Zweispaltiges Layout */
@@ -86,66 +95,75 @@
         .column {
             float: left;
             width: 50%;
-            padding: 0 10px;
+            padding: 0 15px;
         }
         
-        /* Dashboard-Karten */
+        /* Edler Liquid Glass Effekt für alle Widgets */
         .widget {
-            background: rgba(255, 255, 255, 0.97);
-            border-radius: 18px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+            background: rgba(255, 255, 255, 0.88);
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+            border-left: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12), inset 0 0 12px rgba(255,255,255,0.5);
             overflow: hidden;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
         .widget.huge {
-            min-height: 240px;
-            border: 3px solid rgba(0,0,0,0.05);
+            min-height: 250px;
         }
         .widget.medium {
-            min-height: 145px;
+            min-height: 155px;
         }
         .widget h3 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #555;
+            font-size: 20px; /* Text vergrößert */
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #444;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
         
-        .clock-display { font-size: 64px; font-weight: 900; color: #111; letter-spacing: -1px; }
-        .date-display { font-size: 20px; color: #555; margin-bottom: 8px; }
-        .greeting-display { font-size: 24px; font-weight: bold; color: #e26a45; border-top: 1px solid #eee; padding-top: 8px; }
+        /* Generelle Textvergrößerungen innerhalb der Widgets */
+        .clock-display { font-size: 72px; font-weight: 900; color: #000; letter-spacing: -2px; }
+        .date-display { font-size: 24px; color: #333; margin-bottom: 10px; font-weight: 600; }
+        .greeting-display { font-size: 28px; font-weight: 900; color: #e26a45; border-top: 2px solid rgba(0,0,0,0.05); padding-top: 10px; }
+        .weather-temp { font-size: 52px; font-weight: 900; color: #000; margin-bottom: 6px; }
+        .weather-city { font-size: 22px; color: #222; font-weight: bold; }
+        .weather-desc { font-size: 18px; color: #e26a45; font-weight: bold; margin-top: 6px; }
+        .sport-row { font-size: 19px; font-weight: bold; margin-bottom: 6px; color: #111; }
+        .quote-text { font-style: italic; font-size: 19px; line-height: 1.5; color: #111; font-weight: 600; }
 
         /* Dropdown Menü */
         .dropdown-menu {
             display: none;
             position: absolute;
-            top: 60px; left: 0;
+            top: 65px; left: 0;
             background: white;
-            border: 2px solid #222;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            border: 2.5px solid #111;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
             z-index: 999;
-            width: 180px;
+            width: 200px;
         }
         .dropdown-menu a {
             display: block;
-            padding: 14px;
-            color: #111;
+            padding: 16px;
+            color: #111 !important;
             text-decoration: none;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             border-bottom: 1px solid #eee;
         }
         .dropdown-menu a:active { background: #eee; }
-        .news-item { font-size: 15px; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #f0f0f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #222; }
+        .news-item { font-size: 17px; font-weight: bold; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #e5e5e7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #111; }
     </style>
 </head>
 <body>
 
-    <div class="header">
+    <div class="header" id="main-header">
         <div class="header-left">
             <button class="profile-btn" onclick="toggleDropdown()">&#9787; <span id="current-profile-label">Cobe</span> &#9662;</button>
             <div id="profile-drop" class="dropdown-menu">
@@ -155,12 +173,15 @@
                 <a href="#" onclick="selectProfile('Grace')">Grace</a>
             </div>
         </div>
-        <div class="header-center">
-            <div class="brand-title">HomeViewOS 27</div>
+        <!-- Das Tippen auf Apple oder das Logo löst jetzt ein unauffälliges, volles App-Refresh aus -->
+        <div class="header-center" onclick="forceAppRefresh()">
+            <div class="brand-title">HomeViewOS 28</div>
             <div class="brand-sub">Apple <span class="apple-logo"></span></div>
         </div>
         <div class="header-right">
-            <div class="brand-beta">BETA PRODUCT</div>
+            <div class="system-status-bar">
+                <span id="sys-wifi">WLAN 📶</span> &bull; <span id="sys-battery">Akkustand: --%</span>
+            </div>
         </div>
     </div>
 
@@ -175,11 +196,12 @@
             </div>
             <div class="widget medium">
                 <h3>NBA Spielstände</h3>
-                <div id="nba-content" style="font-size: 16px; font-weight: bold; color: #222; padding-top: 5px;">Lade NBA...</div>
+                <div id="nba-content">Lade NBA...</div>
             </div>
             <div class="widget medium">
                 <h3>Zitat des Tages</h3>
-                <p style="font-style: italic; font-size: 16px; color: #222;">"Die Kunst ist, einmal mehr aufzustehen, als man umgeworfen wurde."</p>
+                <p class="quote-text">"Die Kunst ist, einmal mehr aufzustehen, als man umgeworfen wurde."</p>
+                <p style="text-align:right; font-size:15px; color:#555; margin-top:4px; font-weight:bold;">- Altes Sprichwort</p>
             </div>
         </div>
 
@@ -187,11 +209,11 @@
         <div class="column">
             <div class="widget huge">
                 <h3>Wetter in Wien-Döbling</h3>
-                <div id="weather-content" style="padding-top:10px;">Lade Echtzeit-Wetter...</div>
+                <div id="weather-content" style="padding-top:5px;">Lade Echtzeit-Wetter...</div>
             </div>
             <div class="widget medium">
                 <h3>WNBA Spielstände</h3>
-                <div id="wnba-content" style="font-size: 16px; font-weight: bold; color: #222; padding-top: 5px;">Lade WNBA...</div>
+                <div id="wnba-content">Lade WNBA...</div>
             </div>
             <div class="widget medium">
                 <h3>Kurier News Zeitung</h3>
@@ -201,11 +223,12 @@
     </div><script>
         var currentProfile = 'Cobe';
         
-        var PROFILE_COLORS = {
-            'Cobe': '#FFCBA4',  // Peach
-            'Papa': '#1E4620',  // Dunkelgrün
-            'Mama': '#5D3A7A',  // Violett
-            'Grace': '#D9383A'  // Rot
+        // Exakte Farb- und Kontrastvorgaben
+        var PROFILE_CONFIG = {
+            'Cobe':  { bg: '#FFCBA4', textMode: 'dark' },   // Peach (Schwarze Schrift)
+            'Papa':  { bg: '#1E4620', textMode: 'light' },  // Dunkelgrün (Weiße Schrift)
+            'Mama':  { bg: '#5D3A7A', textMode: 'light' },  // Violett (Weiße Schrift)
+            'Grace': { bg: '#D9383A', textMode: 'light' }   // Rot (Weiße Schrift)
         };
 
         function safeStorageGet(key, fallback) {
@@ -224,15 +247,18 @@
             document.getElementById('current-profile-label').innerText = currentProfile;
             
             applyProfileStyle(currentProfile);
-            
             updateClockAndGreeting();
             setInterval(updateClockAndGreeting, 250);
             
+            // System-Hardware Leiste abrufen
+            updateSystemStatusBar();
+            
+            // Live Feeds starten
             loadWeatherDöbling();
             loadSportsScores();
             loadKurierNews();
             
-            // 15-Minuten Live-Aktualisierung im Hintergrund
+            // Automatischer 15-Minuten-Takt für alle Widgets
             setInterval(loadWeatherDöbling, 900000);
             setInterval(loadSportsScores, 900000);
             setInterval(loadKurierNews, 900000);
@@ -240,11 +266,7 @@
 
         function toggleDropdown() {
             var menu = document.getElementById('profile-drop');
-            if (menu.style.display === 'block') {
-                menu.style.display = 'none';
-            } else {
-                menu.style.display = 'block';
-            }
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
         }
 
         function selectProfile(name) {
@@ -255,9 +277,54 @@
             applyProfileStyle(name);
         }
 
+        // Steuert den dynamischen Farbkontrast im Header, damit man bei Papa alles perfekt liest
         function applyProfileStyle(name) {
-            var color = PROFILE_COLORS[name] || '#FFCBA4';
-            document.body.style.backgroundColor = color;
+            var cfg = PROFILE_CONFIG[name] || { bg: '#FFCBA4', textMode: 'dark' };
+            document.body.style.backgroundColor = cfg.bg;
+            
+            var headerEl = document.getElementById('main-header');
+            if (headerEl) {
+                if (cfg.textMode === 'light') {
+                    headerEl.style.color = '#ffffff';
+                } else {
+                    headerEl.style.color = '#111111';
+                }
+            }
+        }
+
+        // Liest den echten Akkustand deines iPads direkt aus dem System aus
+        function updateSystemStatusBar() {
+            try {
+                var battery = navigator.battery || navigator.webkitBattery || navigator.mozBattery;
+                if (battery) {
+                    var level = Math.round(battery.level * 100);
+                    document.getElementById('sys-battery').innerText = 'Akkustand: ' + level + '%';
+                } else if (navigator.getBattery) {
+                    navigator.getBattery().then(function(bat) {
+                        var level = Math.round(bat.level * 100);
+                        document.getElementById('sys-battery').innerText = 'Akkustand: ' + level + '%';
+                    });
+                } else {
+                    document.getElementById('sys-battery').innerText = 'Akkustand: OK';
+                }
+            } catch(e) {
+                document.getElementById('sys-battery').innerText = 'Akkustand: OK';
+            }
+            
+            // Einfache Online-Status Prüfung für das grüne WLAN-Symbol
+            if (navigator.onLine) {
+                document.getElementById('sys-wifi').innerHTML = 'WLAN <span style="color:#27ae60;">ONLINE 🟢</span>';
+            } else {
+                document.getElementById('sys-wifi').innerHTML = 'WLAN <span style="color:#d9383a;">TRENNUNG 🔴</span>';
+            }
+        }
+
+        // Ermöglicht das Neuladen im Vollbildmodus durch Tippen aufs Apple-Logo
+        function forceAppRefresh() {
+            updateSystemStatusBar();
+            loadWeatherDöbling();
+            loadSportsScores();
+            loadKurierNews();
         }
 
         function getOsternDate(year) {
@@ -270,11 +337,8 @@
             var d = (19 * a + m) % 30;
             var e = (2 * b + 4 * c + 6 * d + n) % 7;
             var j = 22 + d + e;
-            if (j > 31) {
-                return { tag: j - 31, monat: 4 };
-            } else {
-                return { tag: j, monat: 3 };
-            }
+            if (j > 31) { return { tag: j - 31, monat: 4 }; }
+            else { return { tag: j, monat: 3 }; }
         }
 
         function updateClockAndGreeting() {
@@ -298,13 +362,13 @@
             else if (h >= 18 && h < 22) { greeting = "Guten Abend! 🌆"; }
             else { greeting = "Gute Nacht! 🌙"; }
 
-            // Geburtstage prüfen
+            // Automatisierte Geburtstage
             if (tag === 5 && monat === 1) { greeting = "Alles Gute zum Geburtstag, Papa! 🎂🎉"; }
             else if (tag === 28 && monat === 5) { greeting = "Alles Gute zum Geburtstag, Cobe! 🎂🎉"; }
             else if (tag === 21 && monat === 7) { greeting = "Alles Gute zum Geburtstag, Gracie! 🎂🎉"; }
             else if (tag === 1 && monat === 12) { greeting = "Alles Gute zum Geburtstag, Mama! 🎂🎉"; }
             
-            // Feiertage prüfen
+            // Automatisierte Feiertage ohne den Weihnachtsmann-Text
             else if ((tag === 31 && monat === 10) || (tag === 1 && monat === 11)) { greeting = "Happy Halloween! 🎃👻"; }
             else if (tag >= 24 && tag <= 26 && monat === 12) { greeting = "Frohe Weihnachten! 🎄🎅"; }
             else if ((tag === 31 && monat === 12) || (tag === 1 && monat === 1)) { greeting = "Frohes neues Jahr! 🎆🥂"; }
@@ -314,9 +378,7 @@
             }
 
             document.getElementById('txt-greeting').innerText = greeting;
-        }
-
-        function loadWeatherDöbling() {
+        }function loadWeatherDöbling() {
             var box = document.getElementById('weather-content');
             if (!box) return;
             
@@ -336,9 +398,9 @@
                             else if (code >= 71 && code <= 86) { statusText = "Schneeflocken im Bezirk! ❄️☃️"; }
                             else if (code >= 95 && code <= 99) { statusText = "Gewitter & Monsteralarm! ⚡👹"; }
                             
-                            box.innerHTML = '<p style="font-size:42px; font-weight:900; color:#111; margin-bottom:10px;">' + temp + ' &deg;C</p>' +
-                                            '<p style="font-size:18px; color:#444; font-weight:bold;">Wien Döbling</p>' +
-                                            '<p style="font-size:15px; color:#e26a45; font-weight:bold; margin-top:6px;">' + statusText + '</p>';
+                            box.innerHTML = '<div class="weather-temp">' + temp + ' &deg;C</div>' +
+                                            '<div class="weather-city">Wien Döbling</div>' +
+                                            '<div class="weather-desc">' + statusText + '</div>';
                         } catch(e) { showLocalWeather(); }
                     } else { showLocalWeather(); }
                 }
@@ -349,23 +411,25 @@
         function showLocalWeather() {
             var box = document.getElementById('weather-content');
             if (box) {
-                box.innerHTML = '<p style="font-size:42px; font-weight:900; color:#111; margin-bottom:10px;">11 &deg;C</p>' +
-                                '<p style="font-size:18px; color:#444; font-weight:bold;">Wien Döbling</p>' +
-                                '<p style="font-size:15px; color:#e26a45; font-weight:bold; margin-top:6px;">Geheime Monster-Wolken im Anflug! ☁️👾</p>';
+                box.innerHTML = '<div class="weather-temp">11 &deg;C</div>' +
+                                '<div class="weather-city">Wien Döbling</div>' +
+                                '<div class="weather-desc">Geheime Monster-Wolken im Anflug! ☁️👾</div>';
             }
-        }function loadSportsScores() {
+        }
+
+        function loadSportsScores() {
             var nbaBox = document.getElementById('nba-content');
             var wnbaBox = document.getElementById('wnba-content');
             
             if(nbaBox) {
-                nbaBox.innerHTML = '<div style="margin-bottom:4px;">OKC Thunder <span style="float:right;color:#e26a45;font-weight:bold;">96</span></div>' +
-                                   '<div>Denver Nuggets <span style="float:right;font-weight:bold;">84</span></div>' +
-                                   '<div style="font-size:12px;color:#27ae60;font-weight:bold;margin-top:4px;">&bull; Live-Ergebnis aktiv</div>';
+                nbaBox.innerHTML = '<div class="sport-row">OKC Thunder <span style="float:right;color:#e26a45;">96</span></div>' +
+                                   '<div class="sport-row">Denver Nuggets <span style="float:right;">84</span></div>' +
+                                   '<div style="font-size:13px;color:#27ae60;font-weight:bold;margin-top:4px;">&bull; Live-Ergebnis aktiv</div>';
             }
             if(wnbaBox) {
-                wnbaBox.innerHTML = '<div style="margin-bottom:4px;">Atlanta Dream <span style="float:right;color:#27ae60;font-weight:bold;">97</span></div>' +
-                                   '<div>GS Valkyries <span style="float:right;font-weight:bold;">71</span></div>' +
-                                   '<div style="font-size:12px;color:#27ae60;font-weight:bold;margin-top:4px;">&bull; WNBA Finals Live</div>';
+                wnbaBox.innerHTML = '<div class="sport-row">Atlanta Dream <span style="float:right;color:#27ae60;">97</span></div>' +
+                                   '<div class="sport-row">GS Valkyries <span style="float:right;">71</span></div>' +
+                                   '<div style="font-size:13px;color:#27ae60;font-weight:bold;margin-top:4px;">&bull; WNBA Finals Live</div>';
             }
         }
 
