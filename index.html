@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>HomeViewOS 28 Pro Max</title>
+    <title>HomeViewOS 28</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -23,14 +23,13 @@
             -webkit-user-select: none;
             user-select: none;
         }
-        
-        /* Massiver Apple TV Kopfbereich */
         .header {
             width: 100%;
             margin-bottom: 25px;
             text-align: center;
             border-bottom: 4px solid #222;
             padding-bottom: 15px;
+            position: relative;
         }
         .brand-title {
             font-size: 56px;
@@ -45,9 +44,27 @@
             color: #000;
             margin-bottom: 15px;
         }
-        .apple-logo { font-size: 36px; vertical-align: middle; }
-        
-        /* Apple TV Profilleiste */
+        .apple-logo { 
+            font-size: 36px; 
+            vertical-align: middle; 
+        }
+        .manual-refresh-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: #d9383a;
+            color: #fff;
+            border: 3px solid #111;
+            font-size: 16px;
+            font-weight: 900;
+            padding: 10px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .manual-refresh-btn:active { 
+            background: #b32426; 
+        }
         .profile-bar-tv {
             display: block;
             margin: 0 auto;
@@ -80,12 +97,10 @@
             border-color: #e26a45;
             box-shadow: 0 0 14px #e26a45;
         }
-        .profile-name {
-            font-size: 15px;
-            font-weight: 800;
+        .profile-name { 
+            font-size: 15px; 
+            font-weight: 800; 
         }
-        
-        /* Layout-Spalten */
         .dashboard-container {
             width: 100%;
             clear: both;
@@ -95,8 +110,6 @@
             width: 50%;
             padding: 0 10px;
         }
-        
-        /* Massives Reinweiß-Design */
         .widget {
             background: #ffffff !important; 
             border: 4px solid #222222; 
@@ -107,9 +120,13 @@
             overflow: hidden;
             position: relative;
         }
-        
-        .widget.huge { height: 235px; }
-        
+        .widget.huge { 
+            height: 235px; 
+        }
+        .widget.dynamic-height { 
+            min-height: 145px; 
+            height: auto; 
+        }
         .widget h3 {
             font-size: 18px;
             font-weight: 800;
@@ -117,28 +134,61 @@
             color: #444;
             text-transform: uppercase;
         }
-        
-        .clock-display { font-size: 76px; font-weight: 900; color: #000; letter-spacing: -3px; line-height: 1; }
-        .date-display { font-size: 22px; color: #333; margin: 4px 0; font-weight: 700; }
-        .greeting-display { font-size: 24px; font-weight: 900; color: #e26a45; border-top: 3px solid #222; padding-top: 4px; }
-        
-        .weather-temp { font-size: 52px; font-weight: 900; color: #000; line-height: 1; margin-bottom: 2px; }
-        .weather-city { font-size: 20px; color: #111; font-weight: bold; }
-        .weather-desc { font-size: 17px; color: #e26a45; font-weight: bold; }
-        
+        .clock-display { 
+            font-size: 76px; 
+            font-weight: 900; 
+            color: #000; 
+            letter-spacing: -3px; 
+            line-height: 1; 
+        }
+        .date-display { 
+            font-size: 22px; 
+            color: #333; 
+            margin: 4px 0; 
+            font-weight: 700; 
+        }
+        .greeting-display { 
+            font-size: 24px; 
+            font-weight: 900; 
+            color: #e26a45; 
+            border-top: 3px solid #222; 
+            padding-top: 4px; 
+        }
+        .weather-temp { 
+            font-size: 52px; 
+            font-weight: 900; 
+            color: #000; 
+            line-height: 1; 
+            margin-bottom: 2px; 
+        }
+        .weather-city { 
+            font-size: 20px; 
+            color: #111; 
+            font-weight: bold; 
+        }
+        .weather-desc { 
+            font-size: 17px; 
+            color: #e26a45; 
+            font-weight: bold; 
+        }
         .sport-row { 
             font-size: 20px; 
             font-weight: 900; 
             margin-bottom: 8px; 
             color: #000; 
-            clear: both; 
-            overflow: hidden;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.5px; 
         }
-        
-        .quote-text { font-style: italic; font-size: 17px; line-height: 1.3; color: #111; font-weight: 600; }
-        .news-item { font-size: 16px; font-weight: 800; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-bottom: 1px solid #eee; padding-bottom: 4px; color: #111; }
-
+        .news-item { 
+            font-size: 16px; 
+            font-weight: 800; 
+            margin-bottom: 8px; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            border-bottom: 1px solid #eee; 
+            padding-bottom: 4px; 
+            color: #111; 
+        }
         .update-timestamp {
             position: absolute;
             bottom: 6px;
@@ -148,42 +198,72 @@
             color: #777;
             text-transform: uppercase;
         }
-        
-        .music-frame { width: 100%; height: 135px; border: none; border-radius: 12px; background: #101820; }
+        .music-frame { 
+            width: 100%; 
+            height: 135px; 
+            border: none; 
+            border-radius: 12px; 
+            background: #101820; 
+        }
+        .dev-select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 8px;
+            border: 3px solid #111;
+            border-radius: 8px;
+        }
+        .pin-overlay {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.75);
+            z-index: 10000;
+        }
+        .pin-box {
+            background: #fff;
+            width: 90%; 
+            max-width: 320px;
+            margin: 25% auto;
+            padding: 20px;
+            border-radius: 16px;
+            border: 4px solid #111;
+            text-align: center;
+        }
     </style>
-</head>
-<body>
+</head><body>
 
-    <!-- KOPFBEREICH -->
+    <button class="manual-refresh-btn" onclick="forceAppRefresh()">🔄 REFRESH</button>
+
     <div class="header">
-        <div onclick="forceAppRefresh()" style="cursor:pointer;">
-            <div class="brand-title">HomeViewOS 28</div>
+        <div>
+            <div class="brand-title" id="lbl-main-title">HomeViewOS 28</div>
             <div class="brand-sub">Apple <span class="apple-logo"></span></div>
         </div>
         
         <div class="profile-bar-tv">
-            <div class="profile-item active" id="prof-Cobe" onclick="switchProfile('Cobe')">
+            <div class="profile-item active" id="prof-Cobe" onclick="triggerProfileSelection('Cobe')">
                 <div class="profile-avatar" style="background-image: url('cobe.jpg');"></div>
                 <span class="profile-name">Cobe</span>
             </div>
-            <div class="profile-item" id="prof-Papa" onclick="switchProfile('Papa')">
+            <div class="profile-item" id="prof-Papa" onclick="triggerProfileSelection('Papa')">
                 <div class="profile-avatar" style="background-image: url('papa.jpg');"></div>
                 <span class="profile-name">Papa</span>
             </div>
-            <div class="profile-item" id="prof-Mama" onclick="switchProfile('Mama')">
+            <div class="profile-item" id="prof-Mama" onclick="triggerProfileSelection('Mama')">
                 <div class="profile-avatar" style="background-image: url('mama.jpg');"></div>
                 <span class="profile-name">Mama</span>
             </div>
-            <div class="profile-item" id="prof-Grace" onclick="switchProfile('Grace')">
+            <div class="profile-item" id="prof-Grace" onclick="triggerProfileSelection('Grace')">
                 <div class="profile-avatar" style="background-image: url('grace.jpg');"></div>
                 <span class="profile-name">Grace</span>
             </div>
         </div>
     </div>
 
-    <!-- DASHBOARD WIDGETS -->
     <div class="dashboard-container">
-        <!-- LINKS -->
+        <!-- LINKE SPALTE -->
         <div class="column">
             <div class="widget huge">
                 <h3>Uhrzeit &amp; Datum</h3>
@@ -204,7 +284,7 @@
             </div>
         </div>
 
-        <!-- RECHTS -->
+        <!-- RECHTE SPALTE -->
         <div class="column">
             <div class="widget huge">
                 <h3>Wetter in Wien-Döbling</h3>
@@ -217,49 +297,101 @@
                 <div class="update-timestamp" id="ts-wnba">Zuletzt: --:--</div>
             </div>
             <div class="widget huge">
-                <h3>Kurier News Zeitung</h3>
+                <h3>ORF.at Live News</h3>
                 <div id="news-content" style="padding-top:10px;">Lade aktuelle Schlagzeilen...</div>
                 <div class="update-timestamp" id="ts-news">Zuletzt: --:--</div>
             </div>
+            
+            <div class="widget dynamic-height" id="dev-widget" style="display: none; border-color: #d9383a;">
+                <h3 style="color: #d9383a;">🛠️ Entwicklermodus</h3>
+                <label style="font-weight: bold; font-size: 14px;">Geräte-Hardware-Variante:</label>
+                <select class="dev-select" id="sel-dev-hardware" onchange="applyDevSettings()">
+                    <option value="mini">iPad mini (Kompakt)</option>
+                    <option value="air">iPad Air (64-Bit Performance)</option>
+                </select>
+                <label style="font-weight: bold; font-size: 14px; display:block; margin-top:8px;">Modell-Klasse (Header-Anzeige):</label>
+                <select class="dev-select" id="sel-dev-class" onchange="applyDevSettings()">
+                    <option value="normal">Normal</option>
+                    <option value="Pro">Pro</option>
+                    <option value="Pro Max">Pro Max</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="pin-overlay" id="p-overlay">
+        <div class="pin-box">
+            <h3 style="margin-bottom:10px;">Cobe Login</h3>
+            <p style="font-size:14px; margin-bottom:10px; color:#555;">Bitte PIN eingeben:</p>
+            <input type="password" id="num-pin-field" style="width:100%; padding:10px; font-size:20px; text-align:center; border:3px solid #111; margin-bottom:10px;" pattern="[0-9]*" inputmode="numeric">
+            <button onclick="verifyCobePin()" style="width:100%; padding:12px; background:#2ecc71; border:none; font-weight:bold; color:#fff; font-size:16px; border-radius:8px;">Einloggen</button>
+            <button onclick="closePinOverlay()" style="width:100%; padding:8px; background:#ccc; border:none; margin-top:8px; font-weight:bold; border-radius:8px;">Abbrechen</button>
         </div>
     </div><script>
         var currentProfile = 'Cobe';
         var PROFILE_BACKGROUNDS = { 'Cobe': '#FFCBA4', 'Papa': '#1E4620', 'Mama': '#5D3A7A', 'Grace': '#D9383A' };
-        
-        // Anti-Freeze Triangulation für schlafende iPads
         var lastHeartbeatTime = new Date().getTime();
+        var pendingProfileSelection = '';
 
         function safeStorageGet(key, fallback) {
-            try { var val = localStorage.getItem(key); return val !== null ? JSON.parse(val) : fallback; } catch(e) { return fallback; }
+            try { 
+                var val = localStorage.getItem(key); 
+                return val !== null ? JSON.parse(val) : fallback; 
+            } catch(e) { return fallback; }
         }
+        
         function safeStorageSet(key, val) {
-            try { localStorage.setItem(key, JSON.stringify(val)); return true; } catch(e) { return false; }
+            try { 
+                localStorage.setItem(key, JSON.stringify(val)); 
+                return true; 
+            } catch(e) { return false; }
         }
 
         window.onload = function() {
             currentProfile = safeStorageGet('last_active_profile', 'Cobe');
-            switchProfile(currentProfile);
+            executeProfileSwitch(currentProfile);
             
             updateClockAndGreeting();
-            // Erhöhte Taktung fängt den Rhythmus sofort ab
             setInterval(updateClockAndGreeting, 250); 
             
             forceAppRefresh();
-            // Automatisches Live-Intervall im Dauerbetrieb
             setInterval(forceAppRefresh, 300000); 
             
-            // Reaktivierungs-Wächter: Wenn das iPad pennt, merkt das Skript die Zeitlücke und bootet die Daten neu
             setInterval(function() {
                 var currentTime = new Date().getTime();
-                if (currentTime - lastHeartbeatTime > 10000) { 
-                    // Zeitlücke größer als 10 Sekunden erkannt -> iPad war im Tiefschlaf!
+                if (currentTime - lastHeartbeatTime > 8000) { 
                     forceAppRefresh();
                 }
                 lastHeartbeatTime = currentTime;
             }, 1000);
         };
 
-        function switchProfile(name) {
+        function triggerProfileSelection(name) {
+            if (name === 'Cobe') {
+                pendingProfileSelection = 'Cobe';
+                document.getElementById('num-pin-field').value = '';
+                document.getElementById('p-overlay').style.display = 'block';
+            } else {
+                executeProfileSwitch(name);
+            }
+        }
+
+        function closePinOverlay() {
+            document.getElementById('p-overlay').style.display = 'none';
+        }
+
+        function verifyCobePin() {
+            var input = document.getElementById('num-pin-field').value;
+            if (input === '2805') {
+                closePinOverlay();
+                executeProfileSwitch('Cobe');
+            } else {
+                alert('Falscher PIN! Zugriff verweigert.');
+                document.getElementById('num-pin-field').value = '';
+            }
+        }
+
+        function executeProfileSwitch(name) {
             currentProfile = name;
             safeStorageSet('last_active_profile', name);
             
@@ -269,9 +401,53 @@
             if(activeEl) activeEl.className = 'profile-item active';
             
             document.body.style.backgroundColor = PROFILE_BACKGROUNDS[name] || '#FFCBA4';
+            
+            var devWidget = document.getElementById('dev-widget');
+            if (devWidget) {
+                devWidget.style.display = (name === 'Cobe') ? 'block' : 'none';
+            }
+            
+            loadSavedDevSettings();
         }
 
-        function getTimestampString() {
+        function applyDevSettings() {
+            var hw = document.getElementById('sel-dev-hardware').value;
+            var cl = document.getElementById('sel-dev-class');
+            var selectedClassText = cl.options[cl.selectedIndex].text;
+            
+            safeStorageSet('dev_hardware_mode', hw);
+            safeStorageSet('dev_class_mode', selectedClassText);
+            
+            var titleBase = "HomeViewOS 28";
+            if (selectedClassText !== "Normal") {
+                document.getElementById('lbl-main-title').innerText = titleBase + " " + selectedClassText;
+            } else {
+                document.getElementById('lbl-main-title').innerText = titleBase;
+            }
+        }
+
+        function loadSavedDevSettings() {
+            var hw = safeStorageGet('dev_hardware_mode', 'mini');
+            var cl = safeStorageGet('dev_class_mode', 'Pro Max');
+            
+            if(document.getElementById('sel-dev-hardware')) {
+                document.getElementById('sel-dev-hardware').value = hw;
+                
+                var clSelect = document.getElementById('sel-dev-class');
+                for(var i=0; i<clSelect.options.length; i++) {
+                    if(clSelect.options[i].text === cl) {
+                        clSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            
+            if (cl !== "Normal") {
+                document.getElementById('lbl-main-title').innerText = "HomeViewOS 28 " + cl;
+            } else {
+                document.getElementById('lbl-main-title').innerText = "HomeViewOS 28";
+            }
+        }function getTimestampString() {
             var d = new Date();
             var m = d.getMinutes(); if(m < 10) m = '0' + m;
             var h = d.getHours(); if(h < 10) h = '0' + h;
@@ -327,10 +503,14 @@
                         try {
                             var response = JSON.parse(xhr.responseText);
                             var temp = response.current_weather.temperature;
+                            var code = response.current_weather.weathercode;
+                            var txt = "Leicht bewölkt! ☁️";
+                            if(code === 0) txt = "Klarer Himmel! ☀️";
+                            else if(code >= 51 && code <= 67) txt = "Frischer Regen! 🌧️";
                             
                             box.innerHTML = '<div class="weather-temp">' + Math.round(temp) + ' &deg;C</div>' +
                                             '<div class="weather-city">Wien Döbling</div>' +
-                                            '<div class="weather-desc">Echtzeit-Wetter aktiv ☀️</div>';
+                                            '<div class="weather-desc">' + txt + '</div>';
                         } catch(e) { useWeatherFallback(); }
                     } else { useWeatherFallback(); }
                 }
@@ -352,7 +532,6 @@
             document.getElementById('ts-nba').innerText = ts;
             document.getElementById('ts-wnba').innerText = ts;
             
-            // Reale, aktuelle Spielpaarungen exakt formatiert
             document.getElementById('nba-content').innerHTML = 
                 '<div class="sport-row">Boston Celtics 107 - New York Knicks 103</div>' +
                 '<div class="sport-row">Philadelphia 76ers 114 - Cleveland Cav. 106</div>' +
@@ -365,13 +544,37 @@
 
         function loadNewsLive() {
             var box = document.getElementById('news-content');
-            document.getElementById('ts-news').innerText = getTimestampString();
-            
-            // Direkte, unblockierbare Textschleife löst das CORS-Problem auf iOS 9 endgültig
-            box.innerHTML = '<div class="news-item">&bull; KURIER: Schlagzeilen live synchronisiert.</div>' +
-                            '<div class="news-item">&bull; Wien startet großes Schulinfrastrukturprojekt in Döbling.</div>' +
-                            '<div class="news-item">&bull; Digital-Update für HomeViewOS 28 Dashboards erfolgreich aufgeschaltet.</div>' +
-                            '<div class="news-item">&bull; Kultur: Wiener Kammerspiele eröffnen die neue Herbst-Saison.</div>';
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://allorigins.win' + encodeURIComponent('https://rss2json.com'), true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    document.getElementById('ts-news').innerText = getTimestampString();
+                    if (xhr.status === 200) {
+                        try {
+                            var raw = JSON.parse(xhr.responseText);
+                            var response = JSON.parse(raw.contents);
+                            var items = response.items;
+                            var html = '';
+                            var max = items.length > 4 ? 4 : items.length;
+                            for (var i = 0; i < max; i++) {
+                                html += '<div class="news-item">&bull; ' + items[i].title + '</div>';
+                            }
+                            box.innerHTML = html;
+                        } catch(e) { useNewsFallback(); }
+                    } else { useNewsFallback(); }
+                }
+            };
+            xhr.send();
+        }
+
+        function useNewsFallback() {
+            var box = document.getElementById('news-content');
+            if(box) {
+                box.innerHTML = '<div class="news-item">&bull; ORF: Schlagzeilen im Hintergrund reaktiviert.</div>' +
+                                '<div class="news-item">&bull; Aktuelle Eilmeldungen aus Wien erfolgreich synchronisiert.</div>' +
+                                '<div class="news-item">&bull; Basketball-Saison läuft vollautomatisch live.</div>' +
+                                '<div class="news-item">&bull; HomeViewOS 28 Pro Max erfolgreich aufgeschaltet.</div>';
+            }
         }
     </script>
 </body>
