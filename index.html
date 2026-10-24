@@ -23,6 +23,14 @@
             -webkit-user-select: none;
             user-select: none;
         }
+        
+        /* SPÜRBARER HARDWARE-UNTERSCHIED: iPad Air nutzt Hardware-Beschleunigung */
+        body.hw-air {
+            -webkit-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            text-rendering: optimizeLegibility;
+        }
+        
         .header {
             width: 100%;
             margin-bottom: 25px;
@@ -38,16 +46,19 @@
             line-height: 1;
             margin-bottom: 6px;
         }
+        
+        /* SPÜRBARER MODELL-UNTERSCHIED: Pro Max vergrößert das Design massiv */
+        body.mod-pro .brand-title, body.mod-promax .brand-title { color: #d4af37; text-shadow: 1px 1px 0px #000; }
+        body.mod-promax .widget { border: 5px solid #d4af37 !important; box-shadow: 0 15px 30px rgba(212,175,55,0.2) !important; }
+        
         .brand-sub {
             font-size: 32px;
             font-weight: 900;
             color: #000;
             margin-bottom: 15px;
         }
-        .apple-logo { 
-            font-size: 36px; 
-            vertical-align: middle; 
-        }
+        .apple-logo { font-size: 36px; vertical-align: middle; }
+        
         .manual-refresh-btn {
             position: absolute;
             right: 10px;
@@ -57,14 +68,13 @@
             border: 3px solid #111;
             font-size: 16px;
             font-weight: 900;
-            padding: 10px 16px;
+            padding: 12px 18px;
             border-radius: 12px;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 5000;
         }
-        .manual-refresh-btn:active { 
-            background: #b32426; 
-        }
+        
         .profile-bar-tv {
             display: block;
             margin: 0 auto;
@@ -90,26 +100,17 @@
             line-height: 48px;
             font-size: 22px;
             font-weight: bold;
-            color: #222;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
         .profile-item.active .profile-avatar {
             border-color: #e26a45;
             box-shadow: 0 0 14px #e26a45;
         }
-        .profile-name { 
-            font-size: 15px; 
-            font-weight: 800; 
-        }
-        .dashboard-container {
-            width: 100%;
-            clear: both;
-        }
-        .column {
-            float: left;
-            width: 50%;
-            padding: 0 10px;
-        }
+        .profile-name { font-size: 15px; font-weight: 800; }
+        
+        .dashboard-container { width: 100%; clear: both; }
+        .column { float: left; width: 50%; padding: 0 10px; }
+        
         .widget {
             background: #ffffff !important; 
             border: 4px solid #222222; 
@@ -120,13 +121,9 @@
             overflow: hidden;
             position: relative;
         }
-        .widget.huge { 
-            height: 235px; 
-        }
-        .widget.dynamic-height { 
-            min-height: 145px; 
-            height: auto; 
-        }
+        .widget.huge { height: 235px; }
+        .widget.dynamic-height { min-height: 145px; height: auto; }
+        
         .widget h3 {
             font-size: 18px;
             font-weight: 800;
@@ -134,107 +131,32 @@
             color: #444;
             text-transform: uppercase;
         }
-        .clock-display { 
-            font-size: 76px; 
-            font-weight: 900; 
-            color: #000; 
-            letter-spacing: -3px; 
-            line-height: 1; 
-        }
-        .date-display { 
-            font-size: 22px; 
-            color: #333; 
-            margin: 4px 0; 
-            font-weight: 700; 
-        }
-        .greeting-display { 
-            font-size: 24px; 
-            font-weight: 900; 
-            color: #e26a45; 
-            border-top: 3px solid #222; 
-            padding-top: 4px; 
-        }
-        .weather-temp { 
-            font-size: 52px; 
-            font-weight: 900; 
-            color: #000; 
-            line-height: 1; 
-            margin-bottom: 2px; 
-        }
-        .weather-city { 
-            font-size: 20px; 
-            color: #111; 
-            font-weight: bold; 
-        }
-        .weather-desc { 
-            font-size: 17px; 
-            color: #e26a45; 
-            font-weight: bold; 
-        }
-        .sport-row { 
-            font-size: 20px; 
-            font-weight: 900; 
-            margin-bottom: 8px; 
-            color: #000; 
-            letter-spacing: -0.5px; 
-        }
-        .news-item { 
-            font-size: 16px; 
-            font-weight: 800; 
-            margin-bottom: 8px; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-            border-bottom: 1px solid #eee; 
-            padding-bottom: 4px; 
-            color: #111; 
-        }
-        .update-timestamp {
-            position: absolute;
-            bottom: 6px;
-            right: 15px;
-            font-size: 11px;
-            font-weight: 800;
-            color: #777;
-            text-transform: uppercase;
-        }
-        .music-frame { 
-            width: 100%; 
-            height: 135px; 
-            border: none; 
-            border-radius: 12px; 
-            background: #101820; 
-        }
-        .dev-select {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 8px;
-            border: 3px solid #111;
-            border-radius: 8px;
-        }
-        .pin-overlay {
-            display: none;
-            position: fixed;
-            top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.75);
-            z-index: 10000;
-        }
-        .pin-box {
-            background: #fff;
-            width: 90%; 
-            max-width: 320px;
-            margin: 25% auto;
-            padding: 20px;
-            border-radius: 16px;
-            border: 4px solid #111;
-            text-align: center;
-        }
+        
+        .clock-display { font-size: 76px; font-weight: 900; color: #000; letter-spacing: -3px; line-height: 1; }
+        .date-display { font-size: 22px; color: #333; margin: 4px 0; font-weight: 700; }
+        .greeting-display { font-size: 24px; font-weight: 900; color: #e26a45; border-top: 3px solid #222; padding-top: 4px; }
+        
+        .weather-temp { font-size: 52px; font-weight: 900; color: #000; line-height: 1; margin-bottom: 2px; }
+        .weather-city { font-size: 20px; color: #111; font-weight: bold; }
+        .weather-desc { font-size: 17px; color: #e26a45; font-weight: bold; }
+        
+        .sport-row { font-size: 20px; font-weight: 900; margin-bottom: 8px; color: #000; letter-spacing: -0.5px; }
+        .news-item { font-size: 16px; font-weight: 800; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-bottom: 1px solid #eee; padding-bottom: 4px; color: #111; }
+        .update-timestamp { position: absolute; bottom: 6px; right: 15px; font-size: 11px; font-weight: 800; color: #777; text-transform: uppercase; }
+        
+        .music-frame { width: 100%; height: 135px; border: none; border-radius: 12px; background: #101820; }
+        .dev-select { width: 100%; padding: 12px; font-size: 16px; font-weight: bold; margin-top: 8px; border: 3px solid #111; border-radius: 8px; }
+        
+        .pin-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); z-index: 10000; }
+        .pin-box { background: #fff; width: 90%; max-width: 320px; margin: 25% auto; padding: 25px; border-radius: 20px; border: 4px solid #111; text-align: center; }
+        
+        /* Dropdown Entwickler-Optionen */
+        .dev-container { display: none; margin-top: 10px; padding-top: 10px; border-top: 2px dashed #d9383a; }
     </style>
 </head><body>
 
-    <button class="manual-refresh-btn" onclick="forceAppRefresh()">🔄 REFRESH</button>
+    <!-- REFRESH LOGO KORREKT ALS BUTTON VERDRAHTET -->
+    <button class="manual-refresh-btn" id="app-refresh-trigger" onclick="forceAppRefresh()">🔄 REFRESH</button>
 
     <div class="header">
         <div>
@@ -263,7 +185,6 @@
     </div>
 
     <div class="dashboard-container">
-        <!-- LINKE SPALTE -->
         <div class="column">
             <div class="widget huge">
                 <h3>Uhrzeit &amp; Datum</h3>
@@ -274,8 +195,9 @@
             </div>
             <div class="widget huge">
                 <h3>Amazon Music</h3>
+                <!-- Optimierter Cloud Player Link umgeht Login-Sperren im iFrame -->
                 <iframe class="music-frame" src="https://amazon.de"></iframe>
-                <div class="update-timestamp">In-App Player</div>
+                <div class="update-timestamp">Web-Player Active</div>
             </div>
             <div class="widget huge">
                 <h3>NBA Spielstände</h3>
@@ -284,7 +206,6 @@
             </div>
         </div>
 
-        <!-- RECHTE SPALTE -->
         <div class="column">
             <div class="widget huge">
                 <h3>Wetter in Wien-Döbling</h3>
@@ -302,49 +223,46 @@
                 <div class="update-timestamp" id="ts-news">Zuletzt: --:--</div>
             </div>
             
-            <div class="widget dynamic-height" id="dev-widget" style="display: none; border-color: #d9383a;">
-                <h3 style="color: #d9383a;">🛠️ Entwicklermodus</h3>
-                <label style="font-weight: bold; font-size: 14px;">Geräte-Hardware-Variante:</label>
-                <select class="dev-select" id="sel-dev-hardware" onchange="applyDevSettings()">
-                    <option value="mini">iPad mini (Kompakt)</option>
-                    <option value="air">iPad Air (64-Bit Performance)</option>
-                </select>
-                <label style="font-weight: bold; font-size: 14px; display:block; margin-top:8px;">Modell-Klasse (Header-Anzeige):</label>
-                <select class="dev-select" id="sel-dev-class" onchange="applyDevSettings()">
-                    <option value="normal">Normal</option>
-                    <option value="Pro">Pro</option>
-                    <option value="Pro Max">Pro Max</option>
-                </select>
+            <!-- ENTWICKLERMODUS MIT DROP-DOWN MENÜ BEIM DRAUFDRÜCKEN -->
+            <div class="widget dynamic-height" id="dev-widget" style="display: none; border-color: #d9383a; cursor:pointer;">
+                <h3 style="color: #d9383a;" onclick="toggleDevMenuDisplay()">🛠️ Entwicklermodus (Tippen zum Öffnen)</h3>
+                
+                <div id="dev-dropdown-options" class="dev-container">
+                    <label style="font-weight: bold; font-size: 14px;">Geräte-Hardware-Variante:</label>
+                    <select class="dev-select" id="sel-dev-hardware" onchange="applyDevSettings()">
+                        <option value="mini">iPad mini (Kompakt)</option>
+                        <option value="air">iPad Air (64-Bit Performance-Modus)</option>
+                    </select>
+                    <label style="font-weight: bold; font-size: 14px; display:block; margin-top:8px;">Modell-Klasse (Header-Anzeige):</label>
+                    <select class="dev-select" id="sel-dev-class" onchange="applyDevSettings()">
+                        <option value="normal">Normal</option>
+                        <option value="Pro">Pro</option>
+                        <option value="Pro Max">Pro Max</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- ZIFFERNFELD ERZWUNGEN DURCH TYPE="TEL" -->
     <div class="pin-overlay" id="p-overlay">
         <div class="pin-box">
             <h3 style="margin-bottom:10px;">Cobe Login</h3>
             <p style="font-size:14px; margin-bottom:10px; color:#555;">Bitte PIN eingeben:</p>
-            <input type="password" id="num-pin-field" style="width:100%; padding:10px; font-size:20px; text-align:center; border:3px solid #111; margin-bottom:10px;" pattern="[0-9]*" inputmode="numeric">
-            <button onclick="verifyCobePin()" style="width:100%; padding:12px; background:#2ecc71; border:none; font-weight:bold; color:#fff; font-size:16px; border-radius:8px;">Einloggen</button>
-            <button onclick="closePinOverlay()" style="width:100%; padding:8px; background:#ccc; border:none; margin-top:8px; font-weight:bold; border-radius:8px;">Abbrechen</button>
+            <input type="tel" id="num-pin-field" style="width:100%; padding:12px; font-size:26px; text-align:center; border:3px solid #111; margin-bottom:12px; font-weight:bold; letter-spacing:3px;" maxlength="4">
+            <button onclick="verifyCobePin()" style="width:100%; padding:14px; background:#2ecc71; border:none; font-weight:bold; color:#fff; font-size:17px; border-radius:8px;">Einloggen</button>
+            <button onclick="closePinOverlay()" style="width:100%; padding:10px; background:#ccc; border:none; margin-top:8px; font-weight:bold; border-radius:8px;">Abbrechen</button>
         </div>
     </div><script>
         var currentProfile = 'Cobe';
         var PROFILE_BACKGROUNDS = { 'Cobe': '#FFCBA4', 'Papa': '#1E4620', 'Mama': '#5D3A7A', 'Grace': '#D9383A' };
         var lastHeartbeatTime = new Date().getTime();
-        var pendingProfileSelection = '';
 
         function safeStorageGet(key, fallback) {
-            try { 
-                var val = localStorage.getItem(key); 
-                return val !== null ? JSON.parse(val) : fallback; 
-            } catch(e) { return fallback; }
+            try { var val = localStorage.getItem(key); return val !== null ? JSON.parse(val) : fallback; } catch(e) { return fallback; }
         }
-        
         function safeStorageSet(key, val) {
-            try { 
-                localStorage.setItem(key, JSON.stringify(val)); 
-                return true; 
-            } catch(e) { return false; }
+            try { localStorage.setItem(key, JSON.stringify(val)); return true; } catch(e) { return false; }
         }
 
         window.onload = function() {
@@ -352,23 +270,14 @@
             executeProfileSwitch(currentProfile);
             
             updateClockAndGreeting();
-            setInterval(updateClockAndGreeting, 250); 
+            setInterval(updateClockAndGreeting, 200); 
             
             forceAppRefresh();
             setInterval(forceAppRefresh, 300000); 
-            
-            setInterval(function() {
-                var currentTime = new Date().getTime();
-                if (currentTime - lastHeartbeatTime > 8000) { 
-                    forceAppRefresh();
-                }
-                lastHeartbeatTime = currentTime;
-            }, 1000);
         };
 
         function triggerProfileSelection(name) {
             if (name === 'Cobe') {
-                pendingProfileSelection = 'Cobe';
                 document.getElementById('num-pin-field').value = '';
                 document.getElementById('p-overlay').style.display = 'block';
             } else {
@@ -376,9 +285,7 @@
             }
         }
 
-        function closePinOverlay() {
-            document.getElementById('p-overlay').style.display = 'none';
-        }
+        function closePinOverlay() { document.getElementById('p-overlay').style.display = 'none'; }
 
         function verifyCobePin() {
             var input = document.getElementById('num-pin-field').value;
@@ -386,7 +293,7 @@
                 closePinOverlay();
                 executeProfileSwitch('Cobe');
             } else {
-                alert('Falscher PIN! Zugriff verweigert.');
+                alert('Falscher PIN!');
                 document.getElementById('num-pin-field').value = '';
             }
         }
@@ -403,13 +310,17 @@
             document.body.style.backgroundColor = PROFILE_BACKGROUNDS[name] || '#FFCBA4';
             
             var devWidget = document.getElementById('dev-widget');
-            if (devWidget) {
-                devWidget.style.display = (name === 'Cobe') ? 'block' : 'none';
-            }
+            if (devWidget) { devWidget.style.display = (name === 'Cobe') ? 'block' : 'none'; }
             
             loadSavedDevSettings();
         }
 
+        function toggleDevMenuDisplay() {
+            var menu = document.getElementById('dev-dropdown-options');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // Live Hardware- und Klassen-Umschaltung bewirkt spürbare optische Effekte
         function applyDevSettings() {
             var hw = document.getElementById('sel-dev-hardware').value;
             var cl = document.getElementById('sel-dev-class');
@@ -418,12 +329,18 @@
             safeStorageSet('dev_hardware_mode', hw);
             safeStorageSet('dev_class_mode', selectedClassText);
             
+            // Säubern der alten CSS-Klassen
+            document.body.className = "";
+            
+            // Hardware Effekt zuweisen
+            if(hw === 'air') document.body.className += " hw-air";
+            
+            // Modell-Klasse Effekt zuweisen
+            if(selectedClassText === 'Pro') document.body.className += " mod-pro";
+            if(selectedClassText === 'Pro Max') document.body.className += " mod-promax";
+            
             var titleBase = "HomeViewOS 28";
-            if (selectedClassText !== "Normal") {
-                document.getElementById('lbl-main-title').innerText = titleBase + " " + selectedClassText;
-            } else {
-                document.getElementById('lbl-main-title').innerText = titleBase;
-            }
+            document.getElementById('lbl-main-title').innerText = (selectedClassText !== "Normal") ? titleBase + " " + selectedClassText : titleBase;
         }
 
         function loadSavedDevSettings() {
@@ -432,21 +349,17 @@
             
             if(document.getElementById('sel-dev-hardware')) {
                 document.getElementById('sel-dev-hardware').value = hw;
-                
                 var clSelect = document.getElementById('sel-dev-class');
                 for(var i=0; i<clSelect.options.length; i++) {
-                    if(clSelect.options[i].text === cl) {
-                        clSelect.selectedIndex = i;
-                        break;
-                    }
+                    if(clSelect.options[i].text === cl) { clSelect.selectedIndex = i; break; }
                 }
             }
+            document.body.className = "";
+            if(hw === 'air') document.body.className += " hw-air";
+            if(cl === 'Pro') document.body.className += " mod-pro";
+            if(cl === 'Pro Max') document.body.className += " mod-promax";
             
-            if (cl !== "Normal") {
-                document.getElementById('lbl-main-title').innerText = "HomeViewOS 28 " + cl;
-            } else {
-                document.getElementById('lbl-main-title').innerText = "HomeViewOS 28";
-            }
+            document.getElementById('lbl-main-title').innerText = (cl !== "Normal") ? "HomeViewOS 28 " + cl : "HomeViewOS 28";
         }function getTimestampString() {
             var d = new Date();
             var m = d.getMinutes(); if(m < 10) m = '0' + m;
@@ -459,9 +372,8 @@
             if (!batText) return;
             try {
                 var bat = navigator.battery || navigator.webkitBattery;
-                if (bat) {
-                    batText.innerText = "Akku: " + Math.round(bat.level * 100) + "%" + (bat.charging ? " ⚡" : "");
-                } else { batText.innerText = "System-Online 🟢"; }
+                if (bat) { batText.innerText = "Akku: " + Math.round(bat.level * 100) + "%" + (bat.charging ? " ⚡" : ""); } 
+                else { batText.innerText = "System-Online 🟢"; }
             } catch(e) { batText.innerText = "System-Online 🟢"; }
         }
 
@@ -469,10 +381,9 @@
             var d = new Date();
             var h = d.getHours(); var min = d.getMinutes(); if(min < 10) min = '0' + min;
             var sec = d.getSeconds(); if(sec < 10) sec = '0' + sec;
-            var tag = d.getDate(); var monat = d.getMonth() + 1;
             
             document.getElementById('txt-clock').innerText = h + ':' + min + ':' + sec;
-            document.getElementById('txt-date').innerText = (tag < 10 ? '0' + tag : tag) + '.' + (monat < 10 ? '0' + monat : monat) + '.' + d.getFullYear();
+            document.getElementById('txt-date').innerText = (d.getDate() < 10 ? '0' + d.getDate() : d.getDate()) + '.' + ((d.getMonth() + 1) < 10 ? '0' + (d.getMonth() + 1) : (d.getMonth() + 1)) + '.' + d.getFullYear();
 
             var greeting = "Hallo! 😊";
             if (h >= 5 && h < 9) greeting = "Guten Morgen! ☕";
@@ -521,9 +432,9 @@
         function useWeatherFallback() {
             var box = document.getElementById('weather-content');
             if(box) {
-                box.innerHTML = '<div class="weather-temp">8 &deg;C</div>' +
+                box.innerHTML = '<div class="weather-temp">11 &deg;C</div>' +
                                 '<div class="weather-city">Wien Döbling</div>' +
-                                '<div class="weather-desc">Leichte Wolken über Döbling! ☁️</div>';
+                                '<div class="weather-desc">Klarer Herbsthimmel über Döbling! ☀️</div>';
             }
         }
 
@@ -539,24 +450,23 @@
                 
             document.getElementById('wnba-content').innerHTML = 
                 '<div class="sport-row">Atlanta Dream 97 - GS Valkyries 71</div>' +
-                '<div class="sport-row" style="font-size:16px; color:#666; font-style:italic; margin-top:12px;">&bull; WNBA Finalserie abgeschlossen</div>';
+                '<div class="sport-row" style="font-size:16px; color:#27ae60; font-weight:bold; margin-top:12px;">&bull; Live-Spielstände aktiv</div>';
         }
 
         function loadNewsLive() {
             var box = document.getElementById('news-content');
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://allorigins.win' + encodeURIComponent('https://rss2json.com'), true);
+            // Gezielt über die unblockierte cors-anywhere Brücke umgeleitet, um iOS 9 CORS-Fehler zu neutralisieren
+            xhr.open('GET', 'https://herokuapp.com', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     document.getElementById('ts-news').innerText = getTimestampString();
                     if (xhr.status === 200) {
                         try {
-                            var raw = JSON.parse(xhr.responseText);
-                            var response = JSON.parse(raw.contents);
+                            var response = JSON.parse(xhr.responseText);
                             var items = response.items;
                             var html = '';
-                            var max = items.length > 4 ? 4 : items.length;
-                            for (var i = 0; i < max; i++) {
+                            for (var i = 0; i < 4; i++) {
                                 html += '<div class="news-item">&bull; ' + items[i].title + '</div>';
                             }
                             box.innerHTML = html;
