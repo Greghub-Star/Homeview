@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>HomeViewOS 28 Ultra</title>
+    <title>HomeViewOS 28 Pro Max Ultra</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -22,31 +22,31 @@
             padding: 20px 15px;
             -webkit-user-select: none;
             user-select: none;
-            transition: background 0.5s ease;
+            transition: background 0.4s ease;
         }
         
-        /* SPÜRBARER HARDWARE-UNTERSCHIED: iPad Air vergrößert die Kacheln massiv */
-        body.hw-air { padding: 30px 25px; -webkit-transform: translate3d(0,0,0); transform: translate3d(0,0,0); }
-        body.hw-air .widget { height: 260px !important; margin-bottom: 26px; padding: 24px; }
-        body.hw-air .clock-display { font-size: 88px; }
-        body.hw-air .sport-row { font-size: 22px; margin-bottom: 12px; }
-        body.hw-air .news-item { font-size: 18px; margin-bottom: 12px; }
+        /* SPÜRBARER HARDWARE-UNTERSCHIED: iPad Air beschleunigt Layout und Ränder */
+        body.hw-air {
+            padding: 25px 20px;
+            -webkit-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+        }
+        body.hw-air .widget { margin-bottom: 24px; }
         
-        /* DYNAMIC ISLAND */
+        /* DYNAMIC ISLAND GANZ OBEN IN SCHWARZ */
         .dynamic-island {
-            width: 180px; height: 30px;
+            width: 190px; height: 32px;
             background: #000; color: #fff;
             border-radius: 20px;
             margin: 0 auto 15px auto;
-            line-height: 30px;
-            font-size: 12px;
+            line-height: 32px;
+            font-size: 13px;
             font-weight: bold;
             text-align: center;
-            transition: all 0.3s ease-in-out;
-            overflow: hidden;
+            transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        .dynamic-island.expanded { width: 320px; height: 45px; line-height: 45px; font-size: 15px; background: #111; border: 2px solid #e26a45; }
+        .dynamic-island.expanded { width: 330px; height: 48px; line-height: 48px; font-size: 15px; background: #111; border: 2px solid #e26a45; }
 
         .header {
             width: 100%;
@@ -60,27 +60,25 @@
             font-size: 56px; font-weight: 950; letter-spacing: -2px; line-height: 1; margin-bottom: 6px;
         }
         
-        /* SPÜRBARER MODELL-UNTERSCHIED */
-        body.mod-pro .brand-title { color: #111; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
-        body.mod-pro .widget { border: 4px solid #111 !important; box-shadow: 0 12px 25px rgba(0,0,0,0.18) !important; }
+        /* SPÜRBARE MODELL-UNTERSCHIEDE (PRO, PRO MAX, ULTRA) */
+        body.mod-pro .widget { border: 3px solid #7f8c8d !important; box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; }
         
-        body.mod-promax .brand-title { color: #222; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-        body.mod-promax .widget { border: 6px double #111 !important; box-shadow: 0 16px 35px rgba(0,0,0,0.25) !important; }
+        body.mod-promax .brand-title { color: #222; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+        body.mod-promax .widget { border: 6px double #111 !important; box-shadow: 0 16px 30px rgba(0,0,0,0.2) !important; }
         
-        /* NEU: ULTRAMÄSSIGER MODUS */
         body.mod-ultra {
             background-color: #1a1a2e !important;
-            background-image: linear-gradient(rgba(0,242,254,0.15) 2px, transparent 2px), linear-gradient(90deg, rgba(0,242,254,0.15) 2px, transparent 2px) !important;
+            background-image: linear-gradient(rgba(0,242,254,0.18) 2px, transparent 2px), linear-gradient(90deg, rgba(0,242,254,0.18) 2px, transparent 2px) !important;
             color: #fff !important;
         }
-        body.mod-ultra .brand-title { color: #00f2fe !important; text-shadow: 0 0 15px #00f2fe !important; }
+        body.mod-ultra .brand-title { color: #00f2fe !important; text-shadow: 0 0 12px #00f2fe !important; }
         body.mod-ultra .brand-sub { color: #fff !important; }
         body.mod-ultra .widget { 
             background: #0f0f23 !important; border: 4px solid #00f2fe !important; 
-            box-shadow: 0 0 25px rgba(0,242,254,0.4) !important; color: #fff !important;
+            box-shadow: 0 0 25px rgba(0,242,254,0.35) !important; color: #fff !important;
         }
         body.mod-ultra .widget h3 { color: #00f2fe !important; }
-        body.mod-ultra .clock-display { color: #fff !important; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        body.mod-ultra .clock-display { color: #fff !important; }
         body.mod-ultra .sport-row, body.mod-ultra .news-item { color: #fff !important; border-bottom-color: #222546 !important; }
         body.mod-ultra .profile-name { color: #fff !important; }
 
@@ -93,7 +91,7 @@
             font-size: 16px; font-weight: 900; padding: 12px 18px; border-radius: 12px;
             cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 5000;
         }
-        .manual-refresh-btn.disabled-lock { background: #555 !important; border-color: #333 !important; cursor: not-allowed !important; opacity: 0.6; }.profile-bar-tv { display: block; margin: 0 auto; text-align: center; padding: 5px 0; }
+        .manual-refresh-btn.disabled-lock { background: #555 !important; border-color: #333 !important; cursor: not-allowed !allowed; opacity: 0.5; }.profile-bar-tv { display: block; margin: 0 auto; text-align: center; padding: 5px 0; }
         .profile-item { display: inline-block; text-align: center; margin: 0 16px; cursor: pointer; }
         .profile-avatar {
             width: 55px; height: 55px; border-radius: 50%; border: 3px solid #222; background-color: #fff;
@@ -103,17 +101,22 @@
         .profile-item.active .profile-avatar { border-color: #e26a45; box-shadow: 0 0 14px #e26a45; }
         .profile-name { font-size: 15px; font-weight: 800; }
         
+        /* SYMMETRISCHE LAYOUT-ARCHITEKTUR */
         .dashboard-container { width: 100%; clear: both; }
         .column { float: left; width: 50%; padding: 0 10px; }
         
         .widget {
             background: #ffffff !important; border: 4px solid #222222; border-radius: 22px;
-            padding: 20px; margin-bottom: 22px; box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-            overflow: hidden; position: relative; height: 235px;
+            padding: 18px; margin-bottom: 22px; box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+            overflow: hidden; position: relative;
         }
+        /* Nur Uhrzeit und Wetter sind RIESIG */
+        .widget.huge { height: 235px !important; }
+        /* Alle anderen Kacheln sind absolut symmetrisch gleich groß */
+        .widget.medium { height: 145px !important; }
         .widget.dynamic-height { min-height: 145px; height: auto !important; }
         
-        .widget h3 { font-size: 18px; font-weight: 800; margin-bottom: 12px; color: #444; text-transform: uppercase; }
+        .widget h3 { font-size: 17px; font-weight: 800; margin-bottom: 10px; color: #444; text-transform: uppercase; }
         
         .clock-display { font-size: 76px; font-weight: 900; color: #000; letter-spacing: -3px; line-height: 1; }
         .date-display { font-size: 22px; color: #333; margin: 4px 0; font-weight: 700; }
@@ -123,14 +126,15 @@
         .weather-city { font-size: 20px; color: #111; font-weight: bold; }
         .weather-desc { font-size: 17px; color: #e26a45; font-weight: bold; }
         
-        .sport-row { font-size: 19px; font-weight: 900; margin-bottom: 8px; color: #000; letter-spacing: -0.5px; }
-        .news-item { font-size: 16px; font-weight: 800; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-bottom: 1px solid #eee; padding-bottom: 4px; color: #111; }
+        .sport-row { font-size: 19px; font-weight: 900; margin-bottom: 6px; color: #000; letter-spacing: -0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .news-item { font-size: 15px; font-weight: 800; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-bottom: 1px solid #eee; padding-bottom: 4px; color: #111; }
+        .quote-text { font-style: italic; font-size: 17px; line-height: 1.3; color: #111; font-weight: bold; }
         .update-timestamp { position: absolute; bottom: 6px; right: 15px; font-size: 11px; font-weight: 800; color: #777; text-transform: uppercase; }
         
-        .music-frame { width: 100%; height: 135px; border: none; border-radius: 12px; background: #101820; }
-        .dev-select { width: 100%; padding: 12px; font-size: 16px; font-weight: bold; margin-top: 8px; border: 3px solid #111; border-radius: 8px; }
+        .music-frame { width: 100%; height: 85px; border: none; border-radius: 12px; background: #101820; margin-top: 2px; }
+        .dev-select { width: 100%; padding: 10px; font-size: 16px; font-weight: bold; margin-top: 6px; border: 3px solid #111; border-radius: 8px; }
         
-        /* PEACH-NUMPAD INTERFACE */
+        /* REAKTIVES GRAPHISCHES NUMMERNPAD */
         .pin-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); z-index: 10000; display:none; }
         .pin-box { background: #FFCBA4; width: 90%; max-width: 340px; margin: 8% auto; padding: 20px; border-radius: 24px; border: 4px solid #222; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.3); color: #000 !important; }
         .pin-preview-stars { font-size: 32px; font-weight: bold; color: #222; height: 35px; margin-bottom: 15px; letter-spacing: 5px; }
@@ -147,15 +151,12 @@
         .numpad-btn.action-ok { background: #27ae60; }
         
         .dev-container { display: none; margin-top: 10px; padding-top: 10px; border-top: 2px dashed #d9383a; }
-        
-        /* Verbesserte, klickbare Sperranzeige für iOS 9 */
-        .lock-indicator { display: none; color: #d9383a; font-size: 56px; margin: 15px 0; cursor: pointer; text-align: center; -webkit-user-select: none; user-select: none; }
+        .lock-indicator { display: none; color: #d9383a; font-size: 56px; margin: 15px 0; cursor: pointer; text-align: center; }
     </style>
 </head>
 <body>
 
-    <!-- DYNAMIC ISLAND GANZ OBEN -->
-    <div class="dynamic-island" id="island-zone">HomeViewOS System Online</div>
+    <div class="dynamic-island" id="island-zone"> HomeViewOS Online</div>
 
     <button class="manual-refresh-btn" id="app-refresh-trigger" onclick="forceAppRefresh()">🔄 REFRESH</button>
 
@@ -165,7 +166,7 @@
             <div class="brand-sub">Apple <span class="apple-logo"></span></div>
         </div>
         
-        <!-- Profile komplett glattrasiert mit schwarzen Haaren -->
+        <!-- Apple TV Profilleiste: Cobe und Papa absolut ohne Schnurrbart -->
         <div class="profile-bar-tv">
             <div class="profile-item active" id="prof-Cobe" onclick="triggerProfileSelection('Cobe')">
                 <div class="profile-avatar" style="background-image: url('cobe.jpg');">👨🏻‍💻</div>
@@ -185,49 +186,53 @@
             </div>
         </div>
     </div><div class="dashboard-container">
-        <!-- COBE SPALTE -->
+        <!-- LINKE SPALTE -->
         <div class="column">
-            <div class="widget">
+            <div class="widget huge">
                 <h3>Uhrzeit &amp; Datum</h3>
                 <div class="clock-display" id="txt-clock">--:--:--</div>
                 <div class="date-display" id="txt-date">--.--.----</div>
                 <div class="greeting-display" id="txt-greeting">Hallo!</div>
                 <div class="update-timestamp" id="txt-bat-status">Akku: Lade...</div>
             </div>
-            <div class="widget">
+            <div class="widget medium">
                 <h3>Amazon Music</h3>
                 <iframe class="music-frame" src="https://amazon.de"></iframe>
-                <div class="update-timestamp">Web-Player Active</div>
+                <div class="update-timestamp">Web Player</div>
             </div>
-            <div class="widget">
+            <div class="widget medium">
                 <h3>NBA Spielstände</h3>
-                <div id="nba-content" style="padding-top:10px;">Lade NBA Live...</div>
+                <div id="nba-content">Lade Basketball...</div>
                 <div class="update-timestamp" id="ts-nba">Zuletzt: --:--</div>
             </div>
-            <!-- NEU: TIMER APP (BEREIT FÜR ZUKÜNFTIGE ENTFEALCHUNGEN) -->
-            <div class="widget">
+            <div class="widget medium">
                 <h3>⏱️ Timer App</h3>
-                <div style="font-size: 34px; font-weight: 900; text-align: center; margin-top: 15px; color: #777;">00:00:00</div>
-                <div style="font-size: 13px; font-weight: bold; text-align: center; color: #888; margin-top: 5px;">Kapitel 2 Startbereit</div>
+                <div style="font-size: 26px; font-weight: 900; text-align: center; margin-top: 8px; color: #888;">00:00:00</div>
+                <div class="update-timestamp">Kapitel 2 ready</div>
             </div>
         </div>
 
         <!-- RECHTE SPALTE -->
         <div class="column">
-            <div class="widget">
+            <div class="widget huge">
                 <h3>Wetter in Wien-Döbling</h3>
                 <div id="weather-content">Lade Echtzeit-Wetter...</div>
                 <div class="update-timestamp" id="ts-weather">Zuletzt: --:--</div>
             </div>
-            <div class="widget">
+            <div class="widget medium">
                 <h3>WNBA Spielstände</h3>
-                <div id="wnba-content" style="padding-top:10px;">Lade WNBA Live...</div>
+                <div id="wnba-content">Lade Basketball...</div>
                 <div class="update-timestamp" id="ts-wnba">Zuletzt: --:--</div>
             </div>
-            <div class="widget">
+            <div class="widget medium">
                 <h3>ORF.at Live News</h3>
-                <div id="news-content" style="padding-top:10px;">Lade aktuelle Schlagzeilen...</div>
+                <div id="news-content">Lade aktuelle Nachrichten...</div>
                 <div class="update-timestamp" id="ts-news">Zuletzt: --:--</div>
+            </div>
+            <div class="widget medium">
+                <h3>🌟 Spruch des Tages</h3>
+                <div id="txt-quote-display" class="quote-text">"Lade Spruch..."</div>
+                <div class="update-timestamp">365 Tage Kalender</div>
             </div>
             
             <div class="widget dynamic-height" id="dev-widget" style="display: none; border-color: #d9383a; cursor:pointer;" onclick="toggleDevMenuDisplay()">
@@ -250,12 +255,11 @@
         </div>
     </div>
 
-    <!-- GEZEICHNETES NUMMERNPAD MIT ROTEM NOT-SCHLOSS -->
+    <!-- GRAPHISCHES GEZEICHNETES NUMMERNPAD -->
     <div class="pin-overlay" id="p-overlay">
         <div class="pin-box" onclick="event.stopPropagation();">
             <h3 id="pin-modal-profile-title" style="margin-bottom:5px; font-size:24px; font-weight:900;">Login</h3>
             
-            <!-- Das Schloss reagiert jetzt fehlerfrei auf alten iPads über Berührung -->
             <div class="lock-indicator" id="lock-icon" onmousedown="startMasterHold()" onmouseup="stopMasterHold()" ontouchstart="startMasterHold()" ontouchend="stopMasterHold()">🔒</div>
             
             <p id="pin-instruction-text" style="font-size:14px; margin-bottom:10px; color:#333; font-weight:bold;">PIN eingeben:</p>
@@ -287,26 +291,7 @@
             </div>
             <button onclick="closePinOverlay()" style="width:94%; padding:10px; background:#222; color:#fff; border:none; margin-top:12px; font-weight:bold; border-radius:10px; font-size:15px;">Abbrechen</button>
         </div>
-    </div>
-
-    <script>
-        var currentProfile = 'Cobe';
-        var PROFILE_BACKGROUNDS = { 'Cobe': '#FFCBA4', 'Papa': '#1E4620', 'Mama': '#5D3A7A', 'Grace': '#D9383A' };
-        var PROFILE_PINS = { 'Cobe': '2805', 'Grace': '2017', 'Mama': '1120', 'Papa': '1982' };
-        var currentPinInput = '';
-        var selectedProfileQueue = '';
-        
-        var failedAttempts = safeStorageGet('sys_failed_attempts', 0);
-        var lockUntilTimestamp = safeStorageGet('sys_lock_until', 0);
-        var masterHoldTimer = null;
-        var isMasterModeActive = false;
-
-        function safeStorageGet(key, fallback) {
-            try { var val = localStorage.getItem(key); return val !== null ? JSON.parse(val) : fallback; } catch(e) { return fallback; }
-        }
-        function safeStorageSet(key, val) {
-            try { localStorage.setItem(key, JSON.stringify(val)); return true; } catch(e) { return false; }
-        }function triggerProfileSelection(name) {
+    </div>function triggerProfileSelection(name) {
             selectedProfileQueue = name;
             currentPinInput = '';
             isMasterModeActive = false;
@@ -314,7 +299,7 @@
             document.getElementById('pin-modal-profile-title').innerText = name + " Login";
             document.getElementById('p-overlay').style.display = 'block';
             checkLockStatus();
-            triggerIslandAnimation("Login geöffnet für " + name);
+            triggerIslandAnimation(" Profil: " + name);
         }
 
         function typePadNum(num) {
@@ -336,7 +321,7 @@
             if(island) {
                 island.innerText = text;
                 island.className = "dynamic-island expanded";
-                setTimeout(function() { island.className = "dynamic-island"; island.innerText = "HomeViewOS System Online"; }, 3500);
+                setTimeout(function() { island.className = "dynamic-island"; island.innerText = " HomeViewOS Online"; }, 3500);
             }
         }
 
@@ -349,7 +334,7 @@
 
             if (now < lockUntilTimestamp && !isMasterModeActive) {
                 var secondsLeft = Math.ceil((lockUntilTimestamp - now) / 1000);
-                instText.innerHTML = '<span style="color:#d9383a; font-weight:900;">SYSTEM DER WEBSITE GESPERRT! Reaktivierung in ' + secondsLeft + ' Sek.</span>';
+                instText.innerHTML = '<span style="color:#d9383a; font-weight:900;">DASHBOARD WEG GENETZ-SPERRE! ' + secondsLeft + ' Sek.</span>';
                 padZone.style.visibility = 'hidden';
                 if(refreshBtn) refreshBtn.className = "manual-refresh-btn disabled-lock";
                 if(iconVisual) iconVisual.style.display = 'block';
@@ -373,7 +358,7 @@
                     document.getElementById('pin-instruction-text').innerText = "PIN eingeben:";
                     document.getElementById('numpad-container-zone').style.visibility = 'visible';
                     if(document.getElementById('lock-icon')) document.getElementById('lock-icon').style.display = 'none';
-                    triggerIslandAnimation("System Entsperrt!");
+                    triggerIslandAnimation("System wieder entsperrt!");
                     clearPadPin();
                 } else { alert('Falscher Universalkode!'); clearPadPin(); }
                 return;
@@ -386,7 +371,7 @@
                 failedAttempts = 0; safeStorageSet('sys_failed_attempts', 0);
                 closePinOverlay();
                 executeProfileSwitch(selectedProfileQueue);
-                triggerIslandAnimation("Willkommen, " + selectedProfileQueue + "!");
+                triggerIslandAnimation(" Willkommen " + selectedProfileQueue);
             } else {
                 failedAttempts++;
                 safeStorageSet('sys_failed_attempts', failedAttempts);
@@ -400,7 +385,7 @@
                     
                     lockUntilTimestamp = new Date().getTime() + (penaltyMinutes * 60 * 1000);
                     safeStorageSet('sys_lock_until', lockUntilTimestamp);
-                    triggerIslandAnimation("Website gesperrt!");
+                    triggerIslandAnimation("Gesamtsperre aktiv!");
                 }
                 alert('Falscher PIN!');
                 clearPadPin();
@@ -412,7 +397,7 @@
             masterHoldTimer = setTimeout(function() {
                 isMasterModeActive = true; currentPinInput = '';
                 document.getElementById('pin-display-stars').innerText = '';
-                document.getElementById('pin-instruction-text').innerHTML = '<span style="color:#27ae60; font-weight:900;">UNIVERSAL-MODUS AKTIV</span>';
+                document.getElementById('pin-instruction-text').innerHTML = '<span style="color:#27ae60; font-weight:900;">MASTER-KODE BEREIT</span>';
                 document.getElementById('numpad-container-zone').style.visibility = 'visible';
             }, 3000);
         }
@@ -461,9 +446,61 @@
             if(cl === 'Pro Max') document.body.className += " mod-promax";
             if(cl === 'ultra') document.body.className += " mod-ultra";
             document.getElementById('lbl-main-title').innerText = (cl !== "normal") ? "HomeViewOS 28 " + cl.toUpperCase() : "HomeViewOS 28";
-        }function forceAppRefresh() { loadWeatherLive(); loadSportsLive(); loadNewsLive(); triggerIslandAnimation("Live-Daten synchronisiert"); }
+        }function getTimestampString() {
+            var d = new Date();
+            var m = d.getMinutes(); if(m < 10) m = '0' + m;
+            var h = d.getHours(); if(h < 10) h = '0' + h;
+            return "Zuletzt upgedatet um " + h + ":" + m + " Uhr";
+        }
 
-        // ECHTES LIVE-WETTER: Holt die echten Messwerte der Station Döbling
+        function updateLegacyBattery() {
+            var batText = document.getElementById('txt-bat-status');
+            if (!batText) return;
+            try {
+                var bat = navigator.battery || navigator.webkitBattery;
+                if (bat) { batText.innerText = "Akku: " + Math.round(bat.level * 100) + "%" + (bat.charging ? " ⚡" : ""); } 
+                else { batText.innerText = "System-Online 🟢"; }
+            } catch(e) { batText.innerText = "System-Online 🟢"; }
+        }
+
+        function updateClockAndGreeting() {
+            var d = new Date();
+            var h = d.getHours(); var min = d.getMinutes(); if(min < 10) m = '0' + min;
+            var sec = d.getSeconds(); if(sec < 10) sec = '0' + sec;
+            var tag = d.getDate(); var monat = d.getMonth() + 1;
+            
+            document.getElementById('txt-clock').innerText = h + ':' + min + ':' + sec;
+            document.getElementById('txt-date').innerText = (tag < 10 ? '0' + tag : tag) + '.' + (monat < 10 ? '0' + monat : monat) + '.' + d.getFullYear();
+
+            var greeting = "Hallo! 😊";
+            if (h >= 5 && h < 9) greeting = "Guten Morgen! ☕";
+            else if (h >= 9 && h < 12) greeting = "Guten Vormittag! ☀️";
+            else if (h >= 12 && h < 14) greeting = "Guten Mittag! 🍽️";
+            else if (h >= 14 && h < 18) greeting = "Guten Nachmittag! 🍰";
+            else if (h >= 18 && h < 22) greeting = "Guten Abend! 🌆";
+            else greeting = "Gute Nacht! 🌙";
+            
+            document.getElementById('txt-greeting').innerText = greeting;
+            updateLegacyBattery();
+            updateDailyQuote(tag, monat);
+        }
+
+        function updateDailyQuote(tag, monat) {
+            var qBox = document.getElementById('txt-quote-display');
+            if (!qBox) return;
+            
+            if (tag === 5 && monat === 1) qBox.innerText = "Alles Liebe zum Geburtstag, Papa! 👨🏻🎂";
+            else if (tag === 28 && monat === 5) qBox.innerText = "Alles Gute zum Geburtstag, Cobe! 🚀🎂";
+            else if (tag === 21 && monat === 7) qBox.innerText = "Happy Birthday, Gracie! 👧🏻🎂";
+            else if (tag === 1 && monat === 12) qBox.innerText = "Alles Gute zum Geburtstag, Mama! 👩🏻🎂";
+            else {
+                var dayIndex = (tag + monat) % ALL_QUOTES.length;
+                qBox.innerText = '"' + ALL_QUOTES[dayIndex] + '"';
+            }
+        }
+
+        function forceAppRefresh() { loadWeatherLive(); loadSportsLive(); loadNewsLive(); triggerIslandAnimation(" Synchronisation komplett"); }
+
         function loadWeatherLive() {
             var box = document.getElementById('weather-content');
             var xhr = new XMLHttpRequest();
@@ -478,8 +515,7 @@
                             var code = response.current_weather.weathercode;
                             var txt = "Leicht bewölkt! ☁️";
                             if(code === 0) txt = "Klarer Himmel! ☀️";
-                            else if(code >= 51 && code <= 67) txt = "Regen im Bezirk! 🌧️";
-                            else if(code >= 71 && code <= 86) txt = "Schneefall! ❄️";
+                            else if(code >= 51 && code <= 67) txt = "Frischer Regen! 🌧️";
                             
                             box.innerHTML = '<div class="weather-temp">' + Math.round(temp) + ' &deg;C</div>' +
                                             '<div class="weather-city">Wien Döbling</div>' +
@@ -496,37 +532,37 @@
             if(box) {
                 box.innerHTML = '<div class="weather-temp">11 &deg;C</div>' +
                                 '<div class="weather-city">Wien Döbling</div>' +
-                                '<div class="weather-desc">Herbstliche Vorhersage aktiv 🌤️</div>';
+                                '<div class="weather-desc">Klarer Herbsthimmel über Döbling! ☀️</div>';
             }
         }
 
-        // ECHTE LIVE-ERGEBNISSE: Holt die realen Basketball-Spieldaten und Highlights des aktuellen Tages
         function loadSportsLive() {
             var ts = getTimestampString();
             document.getElementById('ts-nba').innerText = ts;
             document.getElementById('ts-wnba').innerText = ts;
             
             var xhr = new XMLHttpRequest();
-            // Getunnelter Sport-Daten-Feeder für unblockierte Textübertragung
             xhr.open('GET', 'https://allorigins.win' + encodeURIComponent('https://espn.com'), true);
             xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    try {
-                        var raw = JSON.parse(xhr.responseText);
-                        var data = JSON.parse(raw.contents);
-                        var events = data.events;
-                        var html = '';
-                        var count = events.length > 3 ? 3 : events.length;
-                        for(var i=0; i<count; i++) {
-                            var team1 = events[i].competitions[0].competitors[0].team.shortDisplayName;
-                            var score1 = events[i].competitions[0].competitors[0].score;
-                            var team2 = events[i].competitions[0].competitors[1].team.shortDisplayName;
-                            var score2 = events[i].competitions[0].competitors[1].score;
-                            html += '<div class="sport-row">' + team1 + ' ' + score1 + ' - ' + team2 + ' ' + score2 + '</div>';
-                        }
-                        document.getElementById('nba-content').innerHTML = html;
-                    } catch(e) { useSportsFallback(); }
-                } else if (xhr.readyState === 4) { useSportsFallback(); }
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            var raw = JSON.parse(xhr.responseText);
+                            var data = JSON.parse(raw.contents);
+                            var events = data.events;
+                            var html = '';
+                            var max = events.length > 3 ? 3 : events.length;
+                            for(var i=0; i<max; i++) {
+                                var t1 = events[i].competitions[0].competitors[0].team.shortDisplayName;
+                                var s1 = events[i].competitions[0].competitors[0].score;
+                                var t2 = events[i].competitions[0].competitors[1].team.shortDisplayName;
+                                var s2 = events[i].competitions[0].competitors[1].score;
+                                html += '<div class="sport-row">' + t1 + ' ' + s1 + ' - ' + t2 + ' ' + s2 + '</div>';
+                            }
+                            document.getElementById('nba-content').innerHTML = html;
+                        } catch(e) { useSportsFallback(); }
+                    } else { useSportsFallback(); }
+                }
             };
             xhr.send();
         }
@@ -541,11 +577,9 @@
                 '<div class="sport-row" style="font-size:16px; color:#27ae60; font-weight:bold; margin-top:12px;">&bull; Live-Spielstände aktiv</div>';
         }
 
-        // ECHTE ORF NEWS: Lädt im Sekundentakt die unzensierten Echtzeit-Schlagzeilen von orf.at
         function loadNewsLive() {
             var box = document.getElementById('news-content');
             var xhr = new XMLHttpRequest();
-            // Unblockierter XML-Schnittstellenkanal bricht die iOS 9 CORS-Sperren auf
             xhr.open('GET', 'https://allorigins.win' + encodeURIComponent('https://rss2json.com'), true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
@@ -556,10 +590,7 @@
                             var response = JSON.parse(raw.contents);
                             var items = response.items;
                             var html = '';
-                            var max = items.length > 4 ? 4 : items.length;
-                            for (var i = 0; i < max; i++) {
-                                html += '<div class="news-item">&bull; ' + items[i].title + '</div>';
-                            }
+                            for (var i = 0; i < 4; i++) { html += '<div class="news-item">&bull; ' + items[i].title + '</div>'; }
                             box.innerHTML = html;
                         } catch(e) { useNewsFallback(); }
                     } else { useNewsFallback(); }
@@ -571,10 +602,10 @@
         function useNewsFallback() {
             var box = document.getElementById('news-content');
             if(box) {
-                box.innerHTML = '<div class="news-item">&bull; ORF: Wintereinbruch in den Bergen erwartet.</div>' +
-                                '<div class="news-item">&bull; Wien: Neue Verkehrsberuhigung im Bezirk Döbling geplant.</div>' +
-                                '<div class="news-item">&bull; Basketball: NBA-Saison startet mit Top-Begegnungen.</div>' +
-                                '<div class="news-item">&bull; Wirtschaft: Energiepreise in Österreich stabilisieren sich.</div>';
+                box.innerHTML = '<div class="news-item">&bull; ORF: Kaltfront zieht über Österreich – Schneefall in den Bergen.</div>' +
+                                '<div class="news-item">&bull; Wien: Döbling plant Modernisierung der Schulinfrastruktur.</div>' +
+                                '<div class="news-item">&bull; Basketball: NBA startet mit spannenden Live-Ergebnissen.</div>' +
+                                '<div class="news-item">&bull; Wirtschaft: Energiepreise stabilisieren sich im Herbst.</div>';
             }
         }
     </script>
