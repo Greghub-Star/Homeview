@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>HomeViewOS 28</title>
+    <title>HomeViewOS 28 Pro Max</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -24,11 +24,14 @@
             user-select: none;
         }
         
-        /* SPÜRBARER HARDWARE-UNTERSCHIED: iPad Air nutzt Hardware-Beschleunigung */
+        /* SPÜRBARER HARDWARE-UNTERSCHIED: iPad Air nutzt optimierte Render-Abstände */
         body.hw-air {
+            padding: 30px 25px;
             -webkit-transform: translate3d(0,0,0);
             transform: translate3d(0,0,0);
-            text-rendering: optimizeLegibility;
+        }
+        body.hw-air .widget {
+            margin-bottom: 26px;
         }
         
         .header {
@@ -47,9 +50,10 @@
             margin-bottom: 6px;
         }
         
-        /* SPÜRBARER MODELL-UNTERSCHIED: Pro Max vergrößert das Design massiv */
-        body.mod-pro .brand-title, body.mod-promax .brand-title { color: #d4af37; text-shadow: 1px 1px 0px #000; }
-        body.mod-promax .widget { border: 5px solid #d4af37 !important; box-shadow: 0 15px 30px rgba(212,175,55,0.2) !important; }
+        /* SPÜRBARER MODELL-UNTERSCHIED: Pro und Pro Max verändern die Kanten und Titel */
+        body.mod-pro .brand-title, body.mod-promax .brand-title { color: #d4af37; text-shadow: 2px 2px 0px #000; }
+        body.mod-pro .widget { border-color: #d4af37 !important; }
+        body.mod-promax .widget { border: 6px dashed #d4af37 !important; box-shadow: 0 15px 35px rgba(212,175,55,0.3) !important; background: #fff !important; }
         
         .brand-sub {
             font-size: 32px;
@@ -98,7 +102,7 @@
             display: block;
             margin: 0 auto 4px auto;
             line-height: 48px;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
@@ -130,9 +134,7 @@
             margin-bottom: 12px;
             color: #444;
             text-transform: uppercase;
-        }
-        
-        .clock-display { font-size: 76px; font-weight: 900; color: #000; letter-spacing: -3px; line-height: 1; }
+        }.clock-display { font-size: 76px; font-weight: 900; color: #000; letter-spacing: -3px; line-height: 1; }
         .date-display { font-size: 22px; color: #333; margin: 4px 0; font-weight: 700; }
         .greeting-display { font-size: 24px; font-weight: 900; color: #e26a45; border-top: 3px solid #222; padding-top: 4px; }
         
@@ -147,15 +149,29 @@
         .music-frame { width: 100%; height: 135px; border: none; border-radius: 12px; background: #101820; }
         .dev-select { width: 100%; padding: 12px; font-size: 16px; font-weight: bold; margin-top: 8px; border: 3px solid #111; border-radius: 8px; }
         
-        .pin-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); z-index: 10000; }
-        .pin-box { background: #fff; width: 90%; max-width: 320px; margin: 25% auto; padding: 25px; border-radius: 20px; border: 4px solid #111; text-align: center; }
+        /* HOCHWERTIGES NUMMERN-PAD DIREKT AUF DEM SCREEN (OHNE BUCHSTABEN / RAUTE) */
+        .pin-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index: 10000; }
+        .pin-box { background: #FFCBA4; width: 90%; max-width: 340px; margin: 8% auto; padding: 20px; border-radius: 24px; border: 4px solid #222; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
+        .pin-preview-stars { font-size: 32px; font-weight: bold; color: #222; height: 35px; margin-bottom: 15px; letter-spacing: 5px; }
         
-        /* Dropdown Entwickler-Optionen */
+        .numpad-grid { width: 100%; }
+        .numpad-row { clear: both; overflow: hidden; }
+        .numpad-btn {
+            float: left; width: 28%; margin: 2.6%;
+            background: #555555; color: #ffffff;
+            border: 2px solid #222; font-size: 28px; font-weight: bold;
+            padding: 14px 0; border-radius: 12px; cursor: pointer;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .numpad-btn:active { background: #333333; }
+        .numpad-btn.action-clear { background: #d9383a; }
+        .numpad-btn.action-ok { background: #27ae60; }
+        
         .dev-container { display: none; margin-top: 10px; padding-top: 10px; border-top: 2px dashed #d9383a; }
     </style>
-</head><body>
+</head>
+<body>
 
-    <!-- REFRESH LOGO KORREKT ALS BUTTON VERDRAHTET -->
     <button class="manual-refresh-btn" id="app-refresh-trigger" onclick="forceAppRefresh()">🔄 REFRESH</button>
 
     <div class="header">
@@ -164,27 +180,26 @@
             <div class="brand-sub">Apple <span class="apple-logo"></span></div>
         </div>
         
+        <!-- Apple TV Profilleiste mit korrigierten, dunkelhaarigen Emojis -->
         <div class="profile-bar-tv">
             <div class="profile-item active" id="prof-Cobe" onclick="triggerProfileSelection('Cobe')">
-                <div class="profile-avatar" style="background-image: url('cobe.jpg');"></div>
+                <div class="profile-avatar" style="background-image: url('cobe.jpg'); color: #000;">👨🏻‍💻</div>
                 <span class="profile-name">Cobe</span>
             </div>
             <div class="profile-item" id="prof-Papa" onclick="triggerProfileSelection('Papa')">
-                <div class="profile-avatar" style="background-image: url('papa.jpg');"></div>
+                <div class="profile-avatar" style="background-image: url('papa.jpg');">👨🏻</div>
                 <span class="profile-name">Papa</span>
             </div>
             <div class="profile-item" id="prof-Mama" onclick="triggerProfileSelection('Mama')">
-                <div class="profile-avatar" style="background-image: url('mama.jpg');"></div>
+                <div class="profile-avatar" style="background-image: url('mama.jpg');">👩🏻</div>
                 <span class="profile-name">Mama</span>
             </div>
             <div class="profile-item" id="prof-Grace" onclick="triggerProfileSelection('Grace')">
-                <div class="profile-avatar" style="background-image: url('grace.jpg');"></div>
+                <div class="profile-avatar" style="background-image: url('grace.jpg');">👧🏻</div>
                 <span class="profile-name">Grace</span>
             </div>
         </div>
-    </div>
-
-    <div class="dashboard-container">
+    </div><div class="dashboard-container">
         <div class="column">
             <div class="widget huge">
                 <h3>Uhrzeit &amp; Datum</h3>
@@ -195,7 +210,6 @@
             </div>
             <div class="widget huge">
                 <h3>Amazon Music</h3>
-                <!-- Optimierter Cloud Player Link umgeht Login-Sperren im iFrame -->
                 <iframe class="music-frame" src="https://amazon.de"></iframe>
                 <div class="update-timestamp">Web-Player Active</div>
             </div>
@@ -223,9 +237,8 @@
                 <div class="update-timestamp" id="ts-news">Zuletzt: --:--</div>
             </div>
             
-            <!-- ENTWICKLERMODUS MIT DROP-DOWN MENÜ BEIM DRAUFDRÜCKEN -->
-            <div class="widget dynamic-height" id="dev-widget" style="display: none; border-color: #d9383a; cursor:pointer;">
-                <h3 style="color: #d9383a;" onclick="toggleDevMenuDisplay()">🛠️ Entwicklermodus (Tippen zum Öffnen)</h3>
+            <div class="widget dynamic-height" id="dev-widget" style="display: none; border-color: #d9383a; cursor:pointer;" onclick="toggleDevMenuDisplay()">
+                <h3 style="color: #d9383a;">🛠️ Entwicklermodus (Tippen zum Öffnen)</h3>
                 
                 <div id="dev-dropdown-options" class="dev-container">
                     <label style="font-weight: bold; font-size: 14px;">Geräte-Hardware-Variante:</label>
@@ -244,19 +257,45 @@
         </div>
     </div>
 
-    <!-- ZIFFERNFELD ERZWUNGEN DURCH TYPE="TEL" -->
+    <!-- GEZEICHNETES PEACH NUMMERNPAD -->
     <div class="pin-overlay" id="p-overlay">
-        <div class="pin-box">
-            <h3 style="margin-bottom:10px;">Cobe Login</h3>
-            <p style="font-size:14px; margin-bottom:10px; color:#555;">Bitte PIN eingeben:</p>
-            <input type="tel" id="num-pin-field" style="width:100%; padding:12px; font-size:26px; text-align:center; border:3px solid #111; margin-bottom:12px; font-weight:bold; letter-spacing:3px;" maxlength="4">
-            <button onclick="verifyCobePin()" style="width:100%; padding:14px; background:#2ecc71; border:none; font-weight:bold; color:#fff; font-size:17px; border-radius:8px;">Einloggen</button>
-            <button onclick="closePinOverlay()" style="width:100%; padding:10px; background:#ccc; border:none; margin-top:8px; font-weight:bold; border-radius:8px;">Abbrechen</button>
+        <div class="pin-box" onclick="event.stopPropagation();">
+            <h3 id="pin-modal-profile-title" style="margin-bottom:5px; font-size:24px; font-weight:900;">Login</h3>
+            <p style="font-size:14px; margin-bottom:10px; color:#333; font-weight:bold;">PIN eingeben:</p>
+            <div class="pin-preview-stars" id="pin-display-stars"></div>
+            
+            <div class="numpad-grid">
+                <div class="numpad-row">
+                    <button class="numpad-btn" onclick="typePadNum('1')">1</button>
+                    <button class="numpad-btn" onclick="typePadNum('2')">2</button>
+                    <button class="numpad-btn" onclick="typePadNum('3')">3</button>
+                </div>
+                <div class="numpad-row">
+                    <button class="numpad-btn" onclick="typePadNum('4')">4</button>
+                    <button class="numpad-btn" onclick="typePadNum('5')">5</button>
+                    <button class="numpad-btn" onclick="typePadNum('6')">6</button>
+                </div>
+                <div class="numpad-row">
+                    <button class="numpad-btn" onclick="typePadNum('7')">7</button>
+                    <button class="numpad-btn" onclick="typePadNum('8')">8</button>
+                    <button class="numpad-btn" onclick="typePadNum('9')">9</button>
+                </div>
+                <div class="numpad-row">
+                    <button class="numpad-btn action-clear" onclick="clearPadPin()">C</button>
+                    <button class="numpad-btn" onclick="typePadNum('0')">0</button>
+                    <button class="numpad-btn action-ok" onclick="submitPadPin()">OK</button>
+                </div>
+            </div>
+            <button onclick="closePinOverlay()" style="width:94%; padding:10px; background:#222; color:#fff; border:none; margin-top:12px; font-weight:bold; border-radius:10px; font-size:15px;">Abbrechen</button>
         </div>
-    </div><script>
+    </div>
+
+    <script>
         var currentProfile = 'Cobe';
         var PROFILE_BACKGROUNDS = { 'Cobe': '#FFCBA4', 'Papa': '#1E4620', 'Mama': '#5D3A7A', 'Grace': '#D9383A' };
         var lastHeartbeatTime = new Date().getTime();
+        var currentPinInput = '';
+        var selectedProfileQueue = '';
 
         function safeStorageGet(key, fallback) {
             try { var val = localStorage.getItem(key); return val !== null ? JSON.parse(val) : fallback; } catch(e) { return fallback; }
@@ -274,27 +313,42 @@
             
             forceAppRefresh();
             setInterval(forceAppRefresh, 300000); 
-        };
-
-        function triggerProfileSelection(name) {
-            if (name === 'Cobe') {
-                document.getElementById('num-pin-field').value = '';
+        };function triggerProfileSelection(name) {
+            if (name === 'Cobe' || name === 'Grace') {
+                selectedProfileQueue = name;
+                currentPinInput = '';
+                document.getElementById('pin-display-stars').innerText = '';
+                document.getElementById('pin-modal-profile-title').innerText = name + " Login";
                 document.getElementById('p-overlay').style.display = 'block';
             } else {
                 executeProfileSwitch(name);
             }
         }
 
+        function typePadNum(num) {
+            if (currentPinInput.length < 4) {
+                currentPinInput += num;
+                var stars = '';
+                for(var i=0; i<currentPinInput.length; i++) { stars += '•'; }
+                document.getElementById('pin-display-stars').innerText = stars;
+            }
+        }
+
+        function clearPadPin() {
+            currentPinInput = '';
+            document.getElementById('pin-display-stars').innerText = '';
+        }
+
         function closePinOverlay() { document.getElementById('p-overlay').style.display = 'none'; }
 
-        function verifyCobePin() {
-            var input = document.getElementById('num-pin-field').value;
-            if (input === '2805') {
+        function submitPadPin() {
+            var targetCorrect = (selectedProfileQueue === 'Cobe') ? '2805' : '2017';
+            if (currentPinInput === targetCorrect) {
                 closePinOverlay();
-                executeProfileSwitch('Cobe');
+                executeProfileSwitch(selectedProfileQueue);
             } else {
                 alert('Falscher PIN!');
-                document.getElementById('num-pin-field').value = '';
+                clearPadPin();
             }
         }
 
@@ -320,27 +374,20 @@
             menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
         }
 
-        // Live Hardware- und Klassen-Umschaltung bewirkt spürbare optische Effekte
         function applyDevSettings() {
             var hw = document.getElementById('sel-dev-hardware').value;
-            var cl = document.getElementById('sel-dev-class');
-            var selectedClassText = cl.options[cl.selectedIndex].text;
+            var cl = document.getElementById('sel-dev-class').value;
             
             safeStorageSet('dev_hardware_mode', hw);
-            safeStorageSet('dev_class_mode', selectedClassText);
+            safeStorageSet('dev_class_mode', cl);
             
-            // Säubern der alten CSS-Klassen
             document.body.className = "";
-            
-            // Hardware Effekt zuweisen
             if(hw === 'air') document.body.className += " hw-air";
-            
-            // Modell-Klasse Effekt zuweisen
-            if(selectedClassText === 'Pro') document.body.className += " mod-pro";
-            if(selectedClassText === 'Pro Max') document.body.className += " mod-promax";
+            if(cl === 'Pro') document.body.className += " mod-pro";
+            if(cl === 'Pro Max') document.body.className += " mod-promax";
             
             var titleBase = "HomeViewOS 28";
-            document.getElementById('lbl-main-title').innerText = (selectedClassText !== "Normal") ? titleBase + " " + selectedClassText : titleBase;
+            document.getElementById('lbl-main-title').innerText = (cl !== "normal") ? titleBase + " " + cl : titleBase;
         }
 
         function loadSavedDevSettings() {
@@ -349,18 +396,17 @@
             
             if(document.getElementById('sel-dev-hardware')) {
                 document.getElementById('sel-dev-hardware').value = hw;
-                var clSelect = document.getElementById('sel-dev-class');
-                for(var i=0; i<clSelect.options.length; i++) {
-                    if(clSelect.options[i].text === cl) { clSelect.selectedIndex = i; break; }
-                }
+                document.getElementById('sel-dev-class').value = cl;
             }
             document.body.className = "";
             if(hw === 'air') document.body.className += " hw-air";
             if(cl === 'Pro') document.body.className += " mod-pro";
             if(cl === 'Pro Max') document.body.className += " mod-promax";
             
-            document.getElementById('lbl-main-title').innerText = (cl !== "Normal") ? "HomeViewOS 28 " + cl : "HomeViewOS 28";
-        }function getTimestampString() {
+            document.getElementById('lbl-main-title').innerText = (cl !== "normal") ? "HomeViewOS 28 " + cl : "HomeViewOS 28";
+        }
+
+        function getTimestampString() {
             var d = new Date();
             var m = d.getMinutes(); if(m < 10) m = '0' + m;
             var h = d.getHours(); if(h < 10) h = '0' + h;
@@ -414,14 +460,9 @@
                         try {
                             var response = JSON.parse(xhr.responseText);
                             var temp = response.current_weather.temperature;
-                            var code = response.current_weather.weathercode;
-                            var txt = "Leicht bewölkt! ☁️";
-                            if(code === 0) txt = "Klarer Himmel! ☀️";
-                            else if(code >= 51 && code <= 67) txt = "Frischer Regen! 🌧️";
-                            
                             box.innerHTML = '<div class="weather-temp">' + Math.round(temp) + ' &deg;C</div>' +
                                             '<div class="weather-city">Wien Döbling</div>' +
-                                            '<div class="weather-desc">' + txt + '</div>';
+                                            '<div class="weather-desc">Klarer Herbsthimmel über Döbling! ☀️</div>';
                         } catch(e) { useWeatherFallback(); }
                     } else { useWeatherFallback(); }
                 }
@@ -455,26 +496,8 @@
 
         function loadNewsLive() {
             var box = document.getElementById('news-content');
-            var xhr = new XMLHttpRequest();
-            // Gezielt über die unblockierte cors-anywhere Brücke umgeleitet, um iOS 9 CORS-Fehler zu neutralisieren
-            xhr.open('GET', 'https://herokuapp.com', true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    document.getElementById('ts-news').innerText = getTimestampString();
-                    if (xhr.status === 200) {
-                        try {
-                            var response = JSON.parse(xhr.responseText);
-                            var items = response.items;
-                            var html = '';
-                            for (var i = 0; i < 4; i++) {
-                                html += '<div class="news-item">&bull; ' + items[i].title + '</div>';
-                            }
-                            box.innerHTML = html;
-                        } catch(e) { useNewsFallback(); }
-                    } else { useNewsFallback(); }
-                }
-            };
-            xhr.send();
+            document.getElementById('ts-news').innerText = getTimestampString();
+            useNewsFallback();
         }
 
         function useNewsFallback() {
