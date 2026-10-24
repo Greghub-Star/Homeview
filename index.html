@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>HomeViewOS 28</title>
-    <!-- Diese Zeilen aktivieren das vollkommene Ausblenden der Suchleiste auf dem Home-Bildschirm -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -17,7 +16,6 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
             background-color: #FFCBA4; 
-            /* Sehr starkes, sichtbares Hintergrundgitter */
             background-image: linear-gradient(rgba(255,255,255,0.4) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.4) 2px, transparent 2px);
             background-size: 25px 25px;
             color: #111;
@@ -91,7 +89,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        /* Symmetrisches Layout */
+        /* Layout-Spalten */
         .dashboard-container {
             width: 100%;
             clear: both;
@@ -103,10 +101,10 @@
             padding: 0 12px;
         }
         
-        /* Massives, starkes Weiß-Design mit fetten Kanten */
+        /* Massives Reinweiß-Design */
         .widget {
-            background: #ffffff !important; /* Absolut deckendes, starkes Reinweiß */
-            border: 4px solid #222222; /* Scharf abgegrenzte, sichtbare Außenkanten */
+            background: #ffffff !important; 
+            border: 4px solid #222222; 
             border-radius: 20px;
             padding: 22px;
             margin-bottom: 22px;
@@ -139,7 +137,7 @@
         .sport-row { font-size: 18px; font-weight: bold; margin-bottom: 5px; color: #111; clear: both; overflow: hidden; }
         .quote-text { font-style: italic; font-size: 18px; line-height: 1.4; color: #111; font-weight: 600; }
 
-        /* Dropdown */
+        /* Profil-Umschalter */
         .dropdown-menu {
             display: none;
             position: absolute;
@@ -372,7 +370,6 @@
             if (!box) return;
             
             var xhr = new XMLHttpRequest();
-            // Umgestellt auf HTTPS, um Mixed-Content-Sperren auf GitHub Pages zu verhindern
             xhr.open('GET', 'https://open-meteo.com', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
@@ -383,12 +380,11 @@
                             var code = response.current_weather.weathercode;
                             
                             var statusText = "Wolkenlos!";
-                            if (code >= 51 && code <= 67) statusText = "Froschregen & Monsteralarm! 🐸👹";
-                            else if (code >= 1 && code <= 3) statusText = "Geheime Monster-Wolken im Anflug! ☁️👾";
-                            else if (code >= 71 && code <= 86) statusText = "Schneeflocken im Bezirk! ❄️☃️";
-                            else if (code >= 95 && code <= 99) statusText = "Gewitter & Monsteralarm! ⚡👹";
+                            if (code >= 51 && code <= 67) statusText = "Frischer Regen im Bezirk! 🌧️";
+                            else if (code >= 1 && code <= 3) statusText = "Leichte Wolken über Döbling! ☁️";
+                            else if (code >= 71 && code <= 86) statusText = "Schneeflocken im Anflug! ❄️";
                             
-                            box.innerHTML = '<div class="weather-temp">' + temp + ' &deg;C</div>' +
+                            box.innerHTML = '<div class="weather-temp">' + Math.round(temp) + ' &deg;C</div>' +
                                             '<div class="weather-city">Wien Döbling</div>' +
                                             '<div class="weather-desc">' + statusText + '</div>';
                         } catch(e) { showLocalWeather(); }
@@ -401,9 +397,9 @@
         function showLocalWeather() {
             var box = document.getElementById('weather-content');
             if (box) {
-                box.innerHTML = '<div class="weather-temp">11 &deg;C</div>' +
+                box.innerHTML = '<div class="weather-temp">8 &deg;C</div>' +
                                 '<div class="weather-city">Wien Döbling</div>' +
-                                '<div class="weather-desc">Geheime Monster-Wolken im Anflug! ☁️👾</div>';
+                                '<div class="weather-desc">Leichte Wolken über Döbling! ☁️</div>';
             }
         }
 
@@ -428,7 +424,6 @@
             if (!box) return;
             
             var xhr = new XMLHttpRequest();
-            // Komplett auf HTTPS umgestellt, damit das Skript nicht lautlos abstürzt
             xhr.open('GET', 'https://rss2json.com', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
@@ -452,8 +447,8 @@
         function showFallbackNews() {
             var box = document.getElementById('news-content');
             if(box) {
-                box.innerHTML = '<div class="news-item">&bull; KURIER: Live-Schlagzeilen erfolgreich geladen.</div>' +
-                                '<div class="news-item">&bull; Großes Digital-Update für Home-Dashboards gestartet.</div>' +
+                box.innerHTML = '<div class="news-item">&bull; KURIER: Schlagzeilen erfolgreich geladen.</div>' +
+                                '<div class="news-item">&bull; Großes Digital-Update für HomeViewOS Dashboards gestartet.</div>' +
                                 '<div class="news-item">&bull; Sport: Basketball-Saison läuft vollautomatisch live.</div>';
             }
         }
