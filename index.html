@@ -1,514 +1,1134 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>HomeView OS 28 Pro Max Ultra</title>
-<style>
-  /* Globales Apple-Design & Hintergrund-Raster */
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-  
-  body { 
-    background-color: #FFCBA4; 
-    background-image: linear-gradient(rgba(0,0,0,0.05) 2px, transparent 2px), linear-gradient(90deg, rgba(0,0,0,0.05) 2px, transparent 2px);
-    background-size: 20px 20px;
-    padding: 30px 20px; 
-    transition: background 0.4s ease-in-out; 
-  }
-  
-  /* Dynamische Profil-Farbwelten mit Raster */
-  body.user-papa { 
-    background-color: #1b4d3e !important; 
-    background-image: linear-gradient(rgba(255,255,255,0.05) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.05) 2px, transparent 2px);
-  }
-  body.user-mama { 
-    background-color: #4a2c5a !important; 
-    background-image: linear-gradient(rgba(255,255,255,0.05) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.05) 2px, transparent 2px);
-  }
-  body.user-grace { 
-    background-color: #a62626 !important; 
-    background-image: linear-gradient(rgba(255,255,255,0.05) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.05) 2px, transparent 2px);
-  }
-  body.user-cobe { 
-    background-color: #111111 !important; 
-    background-image: linear-gradient(rgba(0,242,254,0.07) 2px, transparent 2px), linear-gradient(90deg, rgba(0,242,254,0.07) 2px, transparent 2px);
-  }
+    <meta charset="utf-8">
+    <title>HOMEVIEWOS 28 PRO MAX ULTRA</title>
+    <style>
+        /* Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
 
-  /* Entwickler-Modi für die Kacheln */
-  body.mode-normal .widget { background: #ffffff; border: 4px solid #222; box-shadow: none; color: #111; }
-  body.mode-pro .widget { background: #ffffff; border: 4px solid #7f8c8d; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color: #111; }
-  body.mode-pro .widget h2 { color: #2980b9; }
-  body.mode-promax .widget { background: #ffffff; border: 8px double #111; box-shadow: 0 12px 25px rgba(0,0,0,0.2); color: #111; }
-  body.mode-ultra .widget { background: #16162a; border: 3px solid #00f2fe; box-shadow: 0 0 20px #00f2fe; color: #fff; }
-  body.mode-ultra .widget h2 { color: #00f2fe; text-shadow: 0 0 8px #00f2fe; }
-  body.mode-ultra .timestamp { color: #00f2fe; }
-  body.mode-ultra #main-title { color: #00f2fe; text-shadow: 0 0 10px #00f2fe; }
-  body.mode-ultra #apple-sub { color: #00f2fe; }
+        body {
+            background-color: #FFCBA4;
+            background-image: linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #1d1d1f;
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.3s ease;
+        }
 
-  /* Hardware-Air-Skalierung (Merkt sich den Zustand im Speicher) */
-  body.hardware-air .widget.huge { height: 280px !important; }
-  body.hardware-air .widget.medium { height: 200px !important; }
-  body.hardware-air .widget { -webkit-transform: translate3d(0,0,0); transform: translate3d(0,0,0); font-size: 1.3em; }
+        /* Profile Background Themes */
+        body.theme-cobe {
+            background-color: #FFCBA4;
+            background-image: linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+        }
+        body.theme-grace {
+            background-color: #e57373;
+            background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+        }
+        body.theme-mama {
+            background-color: #ba68c8;
+            background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+        }
+        body.theme-papa {
+            background-color: #2e7d32;
+            background-image: linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+        }
 
-  /* Kopfzeile & Apple-Branding */
-  #header-zone { text-align: center; margin-bottom: 25px; position: relative; }
-  #main-title { font-size: 38px; font-weight: 900; color: #222; letter-spacing: -1px; transition: color 0.3s; }
-  #apple-sub { font-size: 16px; font-weight: 600; color: #555; margin-top: 4px; transition: color 0.3s; }
-  body:not(.mode-ultra).user-papa #main-title, body:not(.mode-ultra).user-papa #apple-sub,
-  body:not(.mode-ultra).user-mama #main-title, body:not(.mode-ultra).user-mama #apple-sub,
-  body:not(.mode-ultra).user-grace #main-title, body:not(.mode-ultra).user-grace #apple-sub,
-  body:not(.mode-ultra).user-cobe #main-title, body:not(.mode-ultra).user-cobe #apple-sub { color: #ffffff; }
+        /* Design Modes */
+        body.mode-normal .widget {
+            border: 4px solid #333333;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        body.mode-pro .widget {
+            border: 3px solid #6c757d;
+            background: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        body.mode-pro-max .widget {
+            border: 6px double #1a1a1a;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+        }
+        body.mode-ultra .widget {
+            background-color: #1a1a2e !important;
+            color: #00f2fe !important;
+            border: 2px solid #00f2fe;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+        body.mode-ultra {
+            background-color: #0f0f1a !important;
+        }
+        body.mode-ultra .widget h2, 
+        body.mode-ultra .widget h3, 
+        body.mode-ultra .widget p, 
+        body.mode-ultra .widget span {
+            color: #00f2fe !important;
+        }
 
-  /* Apple Dynamic Island (Nur für Live-Statusmeldungen) */
-  #dynamic-island { width: 150px; height: 30px; background: #000000; margin: 0 auto 20px auto; border-radius: 20px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); color: #fff; text-align: center; line-height: 30px; font-size: 11px; overflow: hidden; font-weight: bold; }
-  #dynamic-island.expanded { width: 340px; height: 45px; line-height: 45px; border-radius: 22px; font-size: 15px; background: #050505; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        /* Dynamic Island Status Bar */
+        #dynamic-island {
+            width: 220px;
+            height: 32px;
+            background: #000;
+            color: #fff;
+            border-radius: 16px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            padding: 0 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
 
-  /* Runde rote Refresh-Taste */
-  #refresh-btn { position: absolute; top: 5px; right: 20px; width: 60px; height: 60px; background: #ff3b30; color: #fff; border: 4px solid #222; border-radius: 50%; font-size: 22px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.15); transition: transform 0.1s; }
-  #refresh-btn:active { transform: scale(0.92); }
-  #refresh-btn.locked { background: #8b0000 !important; cursor: not-allowed; }
-</style>
+        /* Profile Selection Bar */
+        #profile-bar {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .profile-btn {
+            background: #ffffff;
+            border: 2px solid #333;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
+        }
+        .profile-btn:active {
+            transform: scale(0.95);
+        }
+        .profile-btn.active {
+            background: #333;
+            color: #fff;
+        }
+
+        /* Main Dashboard Container */
+        #dashboard-container {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+
+        /* Two-Column Grid Layout */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        .col-left, .col-right {
+            float: left;
+            width: 49%;
+        }
+        .col-left {
+            margin-right: 2%;
+        }
+
+        /* Widget Base */
+        .widget {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .widget-top {
+            min-height: 235px;
+        }
+        .widget-mid {
+            min-height: 160px;
+        }
+
+        .widget h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Specific Widget Elements */
+        .time-display {
+            font-size: 38px;
+            font-weight: bold;
+            letter-spacing: -1px;
+        }
+        .date-display {
+            font-size: 15px;
+            color: #555;
+            margin-top: 4px;
+        }
+        .greeting-display {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px;
+            color: #0066cc;
+        }
+        .birthday-banner {
+            background: #ffeb3b;
+            color: #333;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 8px;
+            display: inline-block;
+        }
+
+        /* Weather */
+        .weather-info {
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        /* Scores & News lists */
+        .scroll-list {
+            max-height: 110px;
+            overflow-y: auto;
+            font-size: 13px;
+        }
+        .score-item, .news-item {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .news-item a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .news-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Timer Widget */
+        .timer-display {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+            font-variant-numeric: tabular-nums;
+        }
+        .timer-controls {
+            text-align: center;
+        }
+        .timer-btn {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+            margin: 0 3px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .timer-btn:hover {
+            background: #e0e0e0;
+        }
+        .timer-inputs {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .timer-inputs input {
+            width: 45px;
+            text-align: center;
+            font-size: 14px;
+            padding: 3px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Action Buttons */
+        .btn-action {
+            background: #007aff;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .btn-action:hover {
+            background: #005bb5;
+        }
+
+        /* Modals (PIN, Settings, Alarm) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
+        }
+        .modal-box {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .modal-box h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .pin-dots {
+            font-size: 24px;
+            letter-spacing: 8px;
+            margin: 15px 0;
+            min-height: 32px;
+        }
+        .pin-pad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .pin-key {
+            background: #f2f2f7;
+            border: none;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .pin-key:active {
+            background: #d1d1d6;
+        }
+        .error-msg {
+            color: #ff3b30;
+            font-size: 13px;
+            margin-top: 8px;
+            min-height: 18px;
+        }
+
+        /* Settings Form */
+        .settings-form label {
+            display: block;
+            text-align: left;
+            font-size: 13px;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+        .settings-form input, .settings-form select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        /* Responsive fallback for very small widths */
+        @media (max-width: 768px) {
+            .col-left, .col-right {
+                float: none;
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
 </head>
-<body class="mode-normal"><style>
-  /* Premium-Profilleiste im iOS-Stil */
-  #profile-bar { background: rgba(255, 255, 255, 0.8); max-width: 600px; margin: 0 auto 30px auto; padding: 10px; border-radius: 20px; border: 4px solid #222; text-align: center; box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
-  .profile-btn { display: inline-block; background: none; border: none; margin: 0 15px; cursor: pointer; text-align: center; font-size: 15px; font-weight: bold; color: #111; transition: transform 0.1s; }
-  .profile-btn:active { transform: scale(0.92); }
-  .profile-avatar { font-size: 44px; display: block; margin-bottom: 2px; }
+<body class="theme-cobe mode-normal">
 
-  /* Mathematisch exakte Symmetrie-Architektur */
-  #container { width: 100%; max-width: 1120px; margin: 0 auto; overflow: hidden; }
-  .column { width: 50%; float: left; padding: 0 12px; }
-  
-  /* Vergrößertes Kachel-Fundament */
-  .widget { background: #ffffff; border: 4px solid #222; border-radius: 16px; margin-bottom: 24px; padding: 18px; position: relative; overflow: hidden; display: block; width: 100%; }
-  .widget h2 { font-size: 18px; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; color: #222; }
-  
-  /* Höhen-Vorgabe für Symmetrie */
-  .widget.huge { height: 260px; }
-  .widget.medium { height: 165px; }
-  
-  /* Ausfüllende Raum-Anatomie */
-  .widget-content { font-size: 16px; font-weight: 800; line-height: 1.4; width: 100%; height: 82%; }
-  .timestamp { font-size: 11px; color: #555; font-weight: bold; position: absolute; bottom: 8px; left: 18px; }
+    <!-- Dynamic Island Status Bar -->
+    <div id="dynamic-island" onclick="openSettings()">HOMEVIEWOS 28 PRO MAX ULTRA</div>
 
-  /* Numpad & Sperre Overlays */
-  #numpad-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; }
-  #numpad-box { width: 290px; background: #FFCBA4; margin: 8% auto; padding: 20px; border-radius: 20px; border: 4px solid #222; text-align: center; }
-  #numpad-screen { width: 100%; height: 50px; background: #fff; border: 4px solid #222; margin-bottom: 15px; border-radius: 10px; font-size: 26px; line-height: 50px; font-weight: bold; letter-spacing: 5px; }
-  .numpad-grid { overflow: hidden; }
-  .numpad-btn { width: 66px; height: 66px; float: left; background: #555555; color: #ffffff; border: 3px solid #222; font-size: 24px; font-weight: bold; margin: 6px; border-radius: 12px; cursor: pointer; }
-  .numpad-btn:active { background: #111; }
-
-  #lock-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ff3b30; color: #fff; z-index: 10000; text-align: center; padding-top: 12%; font-weight: bold; }
-</style>
-
-<!-- Haupt-Gerüst-Körper -->
-<div id="header-zone">
-  <div id="main-title">HomeView OS 28</div>
-  <div id="apple-sub"> Apple</div>
-  <button id="refresh-btn" onclick="triggerRefresh()">🔄</button>
-</div>
-
-<div id="dynamic-island"></div>
-
-<div id="profile-bar">
-  <button class="profile-btn" onclick="openNumpad('Cobe')"><span class="profile-avatar">👨🏻‍💻</span>Cobe</button>
-  <button class="profile-btn" onclick="openNumpad('Grace')"><span class="profile-avatar">👧🏻</span>Grace</button>
-  <button class="profile-btn" onclick="openNumpad('Mama')"><span class="profile-avatar">👩🏻</span>Mama</button>
-  <button class="profile-btn" onclick="openNumpad('Papa')"><span class="profile-avatar">👨🏻</span>Papa</button>
-</div>
-
-<div id="container">
-  
-  <!-- LINKE SPALTE -->
-  <div class="column">
-    <!-- Huge: Uhrzeit, Datum & Live-Gruß -->
-    <div class="widget huge" id="widget-clock">
-      <div id="live-time" style="font-size: 60px; font-weight: 900; margin-top: 5px; letter-spacing: -2px;">00:00:00</div>
-      <div id="live-date" style="font-size: 20px; font-weight: 800; color: #111; margin-top: 5px;">Samstag, 24. Oktober 2026</div>
-      <div id="live-greeting" style="font-size: 24px; font-weight: 900; color: #ff3b30; margin-top: 8px;">Lade...</div>
-      <div class="timestamp">Zuletzt upgedatet um --:-- Uhr</div>
-    </div>
-    
-    <!-- Medium: Amazon Music -->
-    <div class="widget medium">
-      <h2>Amazon Music</h2>
-      <div class="widget-content" id="music-content" style="font-size: 18px; padding-top: 5px;">Verbindung aktiv • Stream läuft sauber...</div>
-      <div class="timestamp">Zuletzt upgedatet um --:-- Uhr</div>
+    <!-- Profile Selection Bar -->
+    <div id="profile-bar">
+        <button class="profile-btn active" onclick="requestProfile('Cobe')">Cobe (Dev)</button>
+        <button class="profile-btn" onclick="requestProfile('Grace')">Grace</button>
+        <button class="profile-btn" onclick="requestProfile('Mama')">Mama</button>
+        <button class="profile-btn" onclick="requestProfile('Papa')">Papa</button>
+        <button class="profile-btn" onclick="openSettings()" style="background:#e5e5ea;">⚙️</button>
     </div>
 
-    <!-- Medium: NBA Spielstände -->
-    <div class="widget medium">
-      <h2>NBA Scores</h2>
-      <div class="widget-content" id="nba-content" style="font-size: 16px; padding-top: 2px;">Lade Live-Daten...</div>
-      <div class="timestamp">Zuletzt upgedatet um --:-- Uhr</div>
+    <!-- Main Dashboard Container -->
+    <div id="dashboard-container" class="clearfix">
+        
+        <!-- Top Row Left: Time, Date & Greeting -->
+        <div class="col-left">
+            <div class="widget widget-top">
+                <h2>Uhrzeit & Begrüßung</h2>
+                <div id="time-el" class="time-display">00:00:00</div>
+                <div id="date-el" class="date-display">Lade Datum...</div>
+                <div id="greeting-el" class="greeting-display">Guten Tag</div>
+                <div id="birthday-el" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- Top Row Right: Weather -->
+        <div class="col-right">
+            <div class="widget widget-top">
+                <h2>
+                    Wien-Döbling Wetter
+                    <button class="btn-action" style="font-size:11px; padding:3px 8px;" onclick="fetchWeather()">Aktualisieren</button>
+                </h2>
+                <div id="weather-el" class="weather-info">Lade Wetterdaten...</div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!-- Middle Row Left: NBA Scores -->
+        <div class="col-left">
+            <div class="widget widget-mid">
+                <h2>
+                    NBA Live Scores
+                    <button class="btn-action" style="font-size:11px; padding:3px 8px;" onclick="fetchNBA()">Aktualisieren</button>
+                </h2>
+                <div id="nba-el" class="scroll-list">Lade NBA Spiele...</div>
+            </div>
+        </div>
+
+        <!-- Middle Row Right: WNBA Scores -->
+        <div class="col-right">
+            <div class="widget widget-mid">
+                <h2>
+                    WNBA Live Scores
+                    <button class="btn-action" style="font-size:11px; padding:3px 8px;" onclick="fetchWNBA()">Aktualisieren</button>
+                </h2>
+                <div id="wnba-el" class="scroll-list">Lade WNBA Spiele...</div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!-- Lower Row Left: ORF.at News -->
+        <div class="col-left">
+            <div class="widget widget-mid">
+                <h2>
+                    ORF.at Nachrichten
+                    <button class="btn-action" style="font-size:11px; padding:3px 8px;" onclick="fetchNews()">Aktualisieren</button>
+                </h2>
+                <div id="news-el" class="scroll-list">Lade Nachrichten...</div>
+            </div>
+        </div>
+
+        <!-- Lower Row Right: Amazon Music -->
+        <div class="col-right">
+            <div class="widget widget-mid">
+                <h2>Amazon Music</h2>
+                <p style="font-size:14px; margin-bottom:12px; color:#555;">Direkter Zugriff auf deine Musikbibliothek und Playlists.</p>
+                <a href="https://music.amazon.de/" target="_blank" style="text-decoration:none;">
+                    <button class="btn-action" style="width:100%; padding:10px;">Amazon Music öffnen 🎵</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!-- Bottom Row Left: Timer -->
+        <div class="col-left">
+            <div class="widget widget-mid">
+                <h2>Countdown Timer</h2>
+                <div class="timer-inputs" id="timer-inputs-container">
+                    H: <input type="number" id="t-hours" value="0" min="0" max="23">
+                    M: <input type="number" id="t-mins" value="25" min="0" max="59">
+                    S: <input type="number" id="t-secs" value="0" min="0" max="59">
+                </div>
+                <div id="timer-display" class="timer-display">00:25:00</div>
+                <div class="timer-controls">
+                    <button class="timer-btn" onclick="startTimer()">Start</button>
+                    <button class="timer-btn" onclick="pauseTimer()">Pause</button>
+                    <button class="timer-btn" onclick="resetTimer()">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Row Right: Daily Thought & Dev Info -->
+        <div class="col-right">
+            <div class="widget widget-mid">
+                <h2>Gedanke des Tages</h2>
+                <div id="quote-el" style="font-size:14px; font-style:italic; line-height:1.4; margin-top:10px;">Lade Spruch...</div>
+                <div id="dev-status-el" style="font-size:11px; color:#777; margin-top:15px;">Hardware: iPad mini 1 (iOS 9.3.5)</div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Medium: Timer App -->
-    <div class="widget medium">
-      <h2>Timer App</h2>
-      <div class="widget-content" style="font-size: 18px; color: #555; padding-top: 5px;">[ System-Wacht schläft - Keine aktiven Timer ]</div>
-      <div class="timestamp">Zuletzt upgedatet um --:-- Uhr</div>
-    </div>
-    
-    <!-- Exklusives, geheimes Entwickler-Widget (Nur für Cobe) -->
-    <div class="widget medium" id="dev-widget" style="display: none; height: auto; background: #fff3f3; border: 4px dashed #ff3b30;">
-      <h2 style="color: #ff3b30;">Cobe's OS Control-Center</h2>
-      <div style="margin-bottom: 12px;">
-        <label style="font-size: 13px; font-weight: 900; display: block; margin-bottom: 4px;">HARDWARE SPEICHER:</label>
-        <select id="hw-select" onchange="changeHwTarget()" style="padding: 6px; font-size: 13px; width: 100%; font-weight: bold; border: 3px solid #222; border-radius: 8px;">
-          <option value="mini">iPad Mini 1 (Kompakt-Modus)</option>
-          <option value="air">iPad Air 1 (Skaliert & Beschleunigt)</option>
-        </select>
-      </div>
-      <div>
-        <label style="font-size: 13px; font-weight: 900; display: block; margin-bottom: 4px;">SYSTEM-OBERFLÄCHE:</label>
-        <select id="style-select" onchange="changeDevMode()" style="padding: 6px; font-size: 13px; width: 100%; font-weight: bold; border: 3px solid #222; border-radius: 8px;">
-          <option value="normal">Normal-Modus</option>
-          <option value="pro">HomeView OS Pro</option>
-          <option value="promax">Pro Max Look</option>
-          <option value="ultra">Ultra-Modus</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <!-- RECHTE SPALTE -->
-  <div class="column">
-    <!-- Huge: Wetter Döbling -->
-    <div class="widget huge" id="widget-weather">
-      <h2>Wetter Döbling</h2>
-      <div id="weather-display" style="font-size: 52px; font-weight: 900; margin-top: 15px; color: #111;">11 °C</div>
-      <div id="weather-desc" style="font-size: 22px; color: #333; font-weight: 800; margin-top: 5px;">Klares Herbstwetter</div>
-      <div class="timestamp">Zuletzt upgedatet um --:-- Uhr</div>
+    <!-- PIN Modal -->
+    <div id="pin-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 id="pin-modal-title">PIN eingeben</h3>
+            <div id="pin-dots" class="pin-dots">----</div>
+            <div class="pin-pad">
+                <button class="pin-key" onclick="pressPin('1')">1</button>
+                <button class="pin-key" onclick="pressPin('2')">2</button>
+                <button class="pin-key" onclick="pressPin('3')">3</button>
+                <button class="pin-key" onclick="pressPin('4')">4</button>
+                <button class="pin-key" onclick="pressPin('5')">5</button>
+                <button class="pin-key" onclick="pressPin('6')">6</button>
+                <button class="pin-key" onclick="pressPin('7')">7</button>
+                <button class="pin-key" onclick="pressPin('8')">8</button>
+                <button class="pin-key" onclick="pressPin('9')">9</button>
+                <button class="pin-key" onclick="closePinModal()" style="font-size:13px; background:#ff3b30; color:#fff;">Abbruch</button>
+                <button class="pin-key" onclick="pressPin('0')">0</button>
+                <button class="pin-key" onclick="clearPin()" style="font-size:13px; background:#ffcc00;">C</button>
+            </div>
+            <div id="pin-error" class="error-msg"></div>
+        </div>
     </div>
 
-    <!-- Medium: WNBA Spielstände -->
-    <div class="widget medium">
-      <h2>WNBA Finals</h2>
-      <div class="widget-content" id="wnba-content" style="font-size: 16px; padding-top: 4px;">
-        Atlanta Dream 97 - GS Valkyries 71<br>
-        <span style="color: #ff3b30; font-size: 13px; font-weight: 900;">★ FINALES ENDERGEBNIS (SPIELFREI) ★</span>
-      </div>
-      <div class="timestamp">Zuletzt upgedatet um --:-- Uhr</div>
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal-overlay">
+        <div class="modal-box" style="width: 360px; max-height: 90vh; overflow-y: auto;">
+            <h3>Einstellungen</h3>
+            <div class="settings-form">
+                <label>Mastercode (4-12 Ziffern)</label>
+                <input type="password" id="set-master" maxlength="12">
+
+                <label>Cobe PIN</label>
+                <input type="password" id="set-pin-cobe" maxlength="12">
+
+                <label>Grace PIN</label>
+                <input type="password" id="set-pin-grace" maxlength="12">
+
+                <label>Mama PIN</label>
+                <input type="password" id="set-pin-mama" maxlength="12">
+
+                <label>Papa PIN</label>
+                <input type="password" id="set-pin-papa" maxlength="12">
+
+                <label>Designmodus</label>
+                <select id="set-design">
+                    <option value="normal">Normal</option>
+                    <option value="pro">Pro</option>
+                    <option value="pro-max">Pro Max</option>
+                    <option value="ultra">Ultra (Cyber)</option>
+                </select>
+
+                <label>Hardwarevariante</label>
+                <select id="set-hardware">
+                    <option value="mini1">iPad mini 1 (A5, 512MB)</option>
+                    <option value="air1">iPad Air 1 (A7, 1GB)</option>
+                </select>
+
+                <div style="margin-top: 15px; display: flex; justify-content: space-between;">
+                    <button class="btn-action" style="background:#8e8e93;" onclick="closeSettings()">Abbrechen</button>
+                    <button class="btn-action" onclick="saveSettings()">Speichern</button>
+                </div>
+                <div id="settings-error" class="error-msg"></div>
+            </div>
+        </div>
     </div>
 
-    <!-- Medium: ORF.at Live News -->
-    <div class="widget medium" style="height: 200px;">
-      <h2>ORF.at Live News</h2>
-      <div class="widget-content" id="news-content" style="font-size: 14px; line-height: 1.4; color: #111; overflow: hidden;">Stream wird aufgebaut...</div>
-      <div class="timestamp">Zuletzt upgedatet um --:-- Uhr</div>
+    <!-- Timer Alarm Modal -->
+    <div id="alarm-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>⏰ Timer beendet!</h3>
+            <p style="margin: 15px 0; font-size:15px;">Die Zeit ist abgelaufen.</p>
+            <button class="btn-action" style="background:#ff3b30; width:100%; padding:10px;" onclick="stopAlarm()">Ton stoppen</button>
+        </div>
     </div>
 
-    <!-- Medium: Spruch-Widget -->
-    <div class="widget medium">
-      <h2>Spruch des Tages</h2>
-      <div class="widget-content" id="quote-content" style="font-size: 15px; font-style: italic; color: #222; padding-top: 4px;">Kalkuliere...</div>
-      <div class="timestamp">Zuletzt upgedatet um --:-- Uhr</div>
-    </div>
-  </div>
+    <script>
+        // ES5 Compatible JavaScript Core Logic
+        var config = {
+            masterCode: "1111",
+            pins: {
+                "Cobe": "2805",
+                "Grace": "2017",
+                "Mama": "1120",
+                "Papa": "1982"
+            },
+            birthdays: {
+                "Grace": { month: 6, day: 21 }, // July is 6 (0-indexed)
+                "Cobe": { month: 4, day: 28 },  // May is 4
+                "Mama": { month: 11, day: 1 },  // December is 11
+                "Papa": { month: 0, day: 5 }    // January is 0
+            },
+            designMode: "normal",
+            hardware: "mini1"
+        };
 
-</div><!-- Peach-Nummernpad Modul -->
-<div id="numpad-overlay">
-  <div id="numpad-box">
-    <div style="font-weight: 900; font-size: 16px; margin-bottom: 10px;" id="numpad-title">PIN eingeben</div>
-    <div id="numpad-screen"></div>
-    <div class="numpad-grid">
-      <button class="numpad-btn" onclick="pressNum('1')">1</button>
-      <button class="numpad-btn" onclick="pressNum('2')">2</button>
-      <button class="numpad-btn" onclick="pressNum('3')">3</button>
-      <button class="numpad-btn" onclick="pressNum('4')">4</button>
-      <button class="numpad-btn" onclick="pressNum('5')">5</button>
-      <button class="numpad-btn" onclick="pressNum('6')">6</button>
-      <button class="numpad-btn" onclick="pressNum('7')">7</button>
-      <button class="numpad-btn" onclick="pressNum('8')">8</button>
-      <button class="numpad-btn" onclick="pressNum('9')">9</button>
-      <button class="numpad-btn" onclick="pressNum('C')">C</button>
-      <button class="numpad-btn" onclick="pressNum('0')">0</button>
-      <button class="numpad-btn" onclick="pressNum('OK')">OK</button>
-    </div>
-  </div>
-</div>
+        var currentProfile = "Cobe";
+        var targetProfileRequest = null;
+        var currentPinInput = "";
+        var failedAttempts = {};
+        var lockoutTimers = {};
 
-<!-- Anti-Cheat Gesamtsperre -->
-<div id="lock-screen">
-  <div id="lock-icon" style="font-size: 90px; cursor: pointer;" onmousedown="startMasterUnlock()" onmouseup="endMasterUnlock()" ontouchstart="startMasterUnlock()" ontouchend="endMasterUnlock()">🔒</div>
-  <div style="font-size: 26px; margin-top: 25px;" id="lock-message">ANTI-CHEAT LOCKDOWN TRIGGERED!</div>
-  <div style="font-size: 50px; margin-top: 15px;" id="lock-timer">01:00</div>
-  <div id="master-input-box" style="display: none; margin-top: 25px;">
-    <input type="password" id="master-code" placeholder="MASTER CODE" style="font-size: 26px; width: 180px; text-align: center; border: 4px solid #000; padding: 6px; border-radius: 8px;">
-    <br><br>
-    <button onclick="checkMasterCode()" style="padding: 8px 20px; font-weight: 900; font-size: 16px; border-radius: 8px; cursor: pointer;">RESCUE CORE</button>
-  </div>
-</div>
+        // Timer Variables
+        var timerInterval = null;
+        var timerRemainingSeconds = 1500; // 25 mins
+        var timerRunning = false;
+        var audioCtx = null;
+        var alarmInterval = null;
 
-<script>
-// ========================================================================
-// CORE ENGINE VARIABLES & CONFIGURATION (STRICT ES5)
-// ========================================================================
-var currentProfile = "";
-var currentInput = "";
-var failedAttempts = 0;
-var isSystemLocked = false;
-var lockTimeRemaining = 0;
-var lockInterval = null;
-var masterHoldTimer = null;
+        // Load Settings from localStorage safely
+        function loadStoredSettings() {
+            try {
+                var stored = localStorage.getItem("homeviewos_config");
+                if (stored) {
+                    var parsed = JSON.parse(stored);
+                    if (parsed.masterCode) config.masterCode = parsed.masterCode;
+                    if (parsed.pins) config.pins = parsed.pins;
+                    if (parsed.designMode) config.designMode = parsed.designMode;
+                    if (parsed.hardware) config.hardware = parsed.hardware;
+                }
+            } catch (e) {
+                console.log("Localstorage error:", e);
+            }
+            applyDesignAndHardware();
+        }
 
-var profilePins = { "Cobe": "2805", "Grace": "2017", "Mama": "1120", "Papa": "1982" };
+        function saveStoredSettings() {
+            try {
+                localStorage.setItem("homeviewos_config", JSON.stringify(config));
+            } catch (e) {
+                console.log("Localstorage save error:", e);
+            }
+        }
 
-// ========================================================================
-// REAKTIVE PEACH-TASTATUR-LOGIK
-// ========================================================================
-function openNumpad(profile) {
-  if (isSystemLocked) return;
-  currentProfile = profile;
-  currentInput = "";
-  document.getElementById("numpad-title").innerHTML = "PIN für " + profile + " verifizieren";
-  document.getElementById("numpad-screen").innerHTML = "";
-  document.getElementById("numpad-overlay").style.display = "block";
-}
+        function applyDesignAndHardware() {
+            document.body.className = "theme-" + currentProfile.toLowerCase() + " mode-" + config.designMode;
+            var hwText = config.hardware === "air1" ? "iPad Air 1 (A7, 1GB)" : "iPad mini 1 (A5, 512MB)";
+            var devEl = document.getElementById("dev-status-el");
+            if (devEl) {
+                devEl.innerHTML = "Profil: " + currentProfile + " | Hardware: " + hwText;
+            }
+        }
 
-function closeNumpad() {
-  document.getElementById("numpad-overlay").style.display = "none";
-}
+        // Initialization on Load
+        window.onload = function() {
+            loadStoredSettings();
+            updateClockAndCalendar();
+            setInterval(updateClockAndCalendar, 1000);
+            
+            fetchWeather();
+            fetchNBA();
+            fetchWNBA();
+            fetchNews();
+            loadDailyQuote();
 
-function pressNum(val) {
-  var screen = document.getElementById("numpad-screen");
-  if (val === "C") {
-    currentInput = "";
-    screen.innerHTML = "";
-  } else if (val === "OK") {
-    validatePin();
-  } else {
-    if (currentInput.length < 4) {
-      currentInput += val;
-      screen.innerHTML += "*";
-    }
-  }
-}
+            // Switch default view
+            switchProfileDirect("Cobe");
+        };
 
-function validatePin() {
-  closeNumpad();
-  if (currentInput === profilePins[currentProfile]) {
-    // Profil-Klassen für Hintergrund-Raster-Umschaltung injizieren
-    document.body.className = document.body.className.replace(/\buser-\w+\b/g, "");
-    document.body.className += " user-" + currentProfile.toLowerCase();
-    
-    triggerDynamicIsland("Willkommen, " + currentProfile + "!");
-    
-    // Dev-Widget-Freischaltung exklusiv für Cobe
-    if (currentProfile === "Cobe") {
-      document.getElementById("dev-widget").style.display = "block";
-    } else {
-      document.getElementById("dev-widget").style.display = "none";
-    }
-  } else {
-    failedAttempts++;
-    triggerDynamicIsland("ZUGRIFF VERWEIGERT!");
-    if (failedAttempts >= 3) {
-      activateSystemLock();
-    }
-  }
-}
+        // Clock, Date & Greeting
+        function updateClockAndCalendar() {
+            var now = new Date();
+            var hours = now.getHours();
+            var mins = now.getMinutes();
+            var secs = now.getSeconds();
 
-// ========================================================================
-// DYNAMISCHE BEGRÜSSUNGS-ENGINE
-// ========================================================================
-function updateGreeting() {
-  var now = new Date();
-  var hours = now.getHours();
-  var greeting = "";
-  
-  if (hours >= 5 && hours < 9) greeting = "Guten Morgen 🌅";
-  else if (hours >= 9 && hours < 12) greeting = "Guten Vormittag ☀️";
-  else if (hours >= 12 && hours < 14) greeting = "Guten Mittag 🍽️";
-  else if (hours >= 14 && hours < 18) greeting = "Guten Nachmittag ☕";
-  else if (hours >= 18 && hours < 22) greeting = "Guten Abend 🌆";
-  else greeting = "Gute Nacht 🌙";
-  
-  document.getElementById("live-greeting").innerHTML = greeting;
-}
-</script><script>
-// ========================================================================
-// ANTI-CHEAT LOCKOUT MECHANISMUS
-// ========================================================================
-function activateSystemLock() {
-  isSystemLocked = true;
-  document.getElementById("lock-screen").style.display = "block";
-  var refBtn = document.getElementById("refresh-btn");
-  refBtn.className = "locked";
-  refBtn.disabled = true;
+            var timeStr = (hours < 10 ? "0" : "") + hours + ":" + 
+                          (mins < 10 ? "0" : "") + mins + ":" + 
+                          (secs < 10 ? "0" : "") + secs;
+            
+            var timeEl = document.getElementById("time-el");
+            if (timeEl) timeEl.innerHTML = timeStr;
 
-  if (failedAttempts === 3) lockTimeRemaining = 60;
-  else if (failedAttempts === 4) lockTimeRemaining = 300;
-  else if (failedAttempts === 5) lockTimeRemaining = 900;
-  else if (failedAttempts === 6) lockTimeRemaining = 1800;
-  else lockTimeRemaining = 3600;
+            var weekdays = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+            var months = ["Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+            
+            var wd = weekdays[now.getDay()];
+            var d = now.getDate();
+            var m = months[now.getMonth()];
+            var y = now.getFullYear();
 
-  updateLockTimerDisplay();
-  if (lockInterval) clearInterval(lockInterval);
-  lockInterval = setInterval(function() {
-    lockTimeRemaining--;
-    updateLockTimerDisplay();
-    if (lockTimeRemaining <= 0) {
-      document.getElementById("master-input-box").style.display = "block";
-    }
-  }, 1000);
-}
+            var dateStr = wd + ", " + d + ". " + m + " " + y;
+            var dateEl = document.getElementById("date-el");
+            if (dateEl) dateEl.innerHTML = dateStr;
 
-function updateLockTimerDisplay() {
-  var mins = Math.floor(lockTimeRemaining / 60);
-  var secs = lockTimeRemaining % 60;
-  if (mins < 10) mins = "0" + mins;
-  if (secs < 10) secs = "0" + secs;
-  document.getElementById("lock-timer").innerHTML = mins + ":" + secs;
-}
+            // Greeting
+            var greeting = "Guten Tag";
+            if (hours < 11) greeting = "Guten Morgen";
+            else if (hours >= 18) greeting = "Guten Abend";
 
-function startMasterUnlock() {
-  masterHoldTimer = setTimeout(function() {
-    document.getElementById("master-input-box").style.display = "block";
-  }, 3000);
-}
+            var greetingEl = document.getElementById("greeting-el");
+            if (greetingEl) greetingEl.innerHTML = greeting + ", " + currentProfile + "!";
 
-function endMasterUnlock() { 
-  if (masterHoldTimer) clearTimeout(masterHoldTimer); 
-}
+            // Birthday check
+            checkBirthday(now);
+        }
 
-function checkMasterCode() {
-  if (document.getElementById("master-code").value === "1111") {
-    isSystemLocked = false;
-    failedAttempts = 0;
-    clearInterval(lockInterval);
-    document.getElementById("lock-screen").style.display = "none";
-    document.getElementById("master-input-box").style.display = "none";
-    document.getElementById("master-code").value = "";
-    var refBtn = document.getElementById("refresh-btn");
-    refBtn.className = "";
-    refBtn.disabled = false;
-    triggerDynamicIsland("Kern vollständig wiederhergestellt!");
-  }
-}
+        function checkBirthday(now) {
+            var bday = config.birthdays[currentProfile];
+            var bdayEl = document.getElementById("birthday-el");
+            if (!bdayEl) return;
 
-// ========================================================================
-// DYNAMIC ISLAND ENGINE (STATUS LOGS ONLY)
-// ========================================================================
-function triggerDynamicIsland(text) {
-  var island = document.getElementById("dynamic-island");
-  island.innerHTML = text;
-  island.className = "expanded";
-  setTimeout(function() {
-    island.className = "";
-    island.innerHTML = "";
-  }, 3000);
-}
+            if (bday && now.getMonth() === bday.month && now.getDate() === bday.day) {
+                bdayEl.style.display = "inline-block";
+                bdayEl.innerHTML = "🎉 Alles Gute zum Geburtstag, " + currentProfile + "!";
+            } else {
+                bdayEl.style.display = "none";
+            }
+        }
 
-// ========================================================================
-// REAKTIVE LIVE-UHREN-TAKTUNG (1/4 SEKUNDE)
-// ========================================================================
-function startClockEngine() {
-  setInterval(function() {
-    var now = new Date();
-    var hh = now.getHours(), mm = now.getMinutes(), ss = now.getSeconds();
-    if (hh < 10) hh = "0" + hh; if (mm < 10) mm = "0" + mm; if (ss < 10) ss = "0" + ss;
-    document.getElementById("live-time").innerHTML = hh + ":" + mm + ":" + ss;
-    updateGreeting();
-  }, 250);
-}
+        // Robust XHR Wrapper with Fallbacks & Timeouts
+        function robustXHR(urls, successCallback, errorCallback) {
+            var index = 0;
+            function tryNext() {
+                if (index >= urls.length) {
+                    errorCallback("All endpoints failed");
+                    return;
+                }
+                var currentUrl = urls[index];
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", currentUrl, true);
+                xhr.timeout = 8000;
+                
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            successCallback(xhr.responseText);
+                        } else {
+                            index++;
+                            tryNext();
+                        }
+                    }
+                };
+                xhr.ontimeout = function() {
+                    index++;
+                    tryNext();
+                };
+                xhr.onerror = function() {
+                    index++;
+                    tryNext();
+                };
+                try {
+                    xhr.send();
+                } catch (e) {
+                    index++;
+                    tryNext();
+                }
+            }
+            tryNext();
+        }
 
-// ========================================================================
-// 365-TAGE-SPRÜCHE & GEBURTSTAGE
-// ========================================================================
-function loadDailyQuote() {
-  var now = new Date();
-  var m = now.getMonth() + 1, d = now.getDate();
-  var q = document.getElementById("quote-content");
-  if (d === 5 && m === 1) { q.innerHTML = "🎂 Happy Birthday, Papa! Alles Liebe zum Geburtstag! 🥳 (Geboren 1982)"; return; }
-  if (d === 28 && m === 5) { q.innerHTML = "🎂 Happy Birthday, Cobe! Alles Gute zum Geburtstag, Meister! 💻"; return; }
-  if (d === 21 && m === 7) { q.innerHTML = "🎂 Happy Birthday, Grace! Alles Liebe für dich! 👧🏻"; return; }
-  if (d === 1 && m === 12) { q.innerHTML = "🎂 Happy Birthday, Mama! Schön, dass es dich gibt! ❤️"; return; }
-  
-  var dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
-  var list = [
-    "Das Geheimnis des Erfolgs ist anzufangen.",
-    "Jeder Tag ist eine neue Chance, das Beste zu geben.",
-    "Nussdorf in Döbling ist der schönste Ort für Innovation.",
-    "Einfachheit ist die höchste Stufe der Vollendung.",
-    "Design ist nicht nur, wie es aussieht, sondern wie es funktioniert.",
-    "Bleib hungrig, bleib unverfälscht."
-  ];
-  q.innerHTML = list[dayOfYear % list.length];
-}
+        // Weather for Wien-Döbling
+        function fetchWeather() {
+            var weatherEl = document.getElementById("weather-el");
+            if (weatherEl) weatherEl.innerHTML = "Lade Wetter...";
 
-// ========================================================================
-// API NETZWERK-STREAMS (WETTER DÖBLING & REAL ORF FEED)
-// ========================================================================
-function triggerRefresh() {
-  if (isSystemLocked) return;
-  triggerDynamicIsland("Synchronisation komplett");
-  var now = new Date();
-  var hh = now.getHours(), mm = now.getMinutes();
-  if (hh < 10) hh = "0" + hh; if (mm < 10) mm = "0" + mm;
-  var ts = "Zuletzt upgedatet um " + hh + ":" + mm + " Uhr";
+            var url = "https://api.open-meteo.com/v1/forecast?latitude=48.25&longitude=16.30&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=Europe%2FVienna";
+            
+            robustXHR([url], function(resp) {
+                try {
+                    var data = JSON.parse(resp);
+                    if (data && data.current) {
+                        var temp = data.current.temperature_2m;
+                        var wind = data.current.wind_speed_10m;
+                        var hum = data.current.relative_humidity_2m;
+                        var code = data.current.weather_code;
+                        
+                        var desc = getWeatherDescription(code);
 
-  var stamps = document.getElementsByClassName("timestamp");
-  for (var i = 0; i < stamps.length; i++) stamps[i].innerHTML = ts;
+                        var html = "<div style='font-size:26px; font-weight:bold; margin-bottom:5px;'>" + temp + "°C</div>" +
+                                   "<div style='font-size:15px; font-weight:600;'>" + desc + "</div>" +
+                                   "<div style='font-size:13px; color:#555; margin-top:8px;'>Wind: " + wind + " km/h | Feuchtigkeit: " + hum + "%</div>";
+                        if (weatherEl) weatherEl.innerHTML = html;
+                        setIslandStatus("Wetter aktualisiert");
+                    } else {
+                        if (weatherEl) weatherEl.innerHTML = "Keine Wetterdaten verfügbar.";
+                    }
+                } catch (e) {
+                    if (weatherEl) weatherEl.innerHTML = "Fehler beim Verarbeiten der Wetterdaten.";
+                }
+            }, function(err) {
+                if (weatherEl) weatherEl.innerHTML = "Wetterdienst zur Zeit nicht erreichbar.";
+            });
+        }
 
-  // 1. Open-Meteo Döbling Live Station
-  var wXhr = new XMLHttpRequest();
-  wXhr.open("GET", "https://open-meteo.com", true);
-  wXhr.onreadystatechange = function() {
-    if (wXhr.readyState === 4 && wXhr.status === 200) {
-      var res = JSON.parse(wXhr.responseText);
-      document.getElementById("weather-display").innerHTML = Math.round(res.current_weather.temperature) + " °C";
-    }
-  };
-  wXhr.send();
+        function getWeatherDescription(code) {
+            if (code === 0) return "☀️ Klarer Himmel";
+            if (code >= 1 && code <= 3) return "⛅ Leicht bewölkt";
+            if (code >= 45 && code <= 48) return "🌫️ Nebelig";
+            if (code >= 51 && code <= 67) return "🌧️ Regen";
+            if (code >= 71 && code <= 77) return "❄️ Schneefall";
+            if (code >= 95) return "⛈️ Gewitter";
+            return "☁️ Bewölkt";
+        }
 
-  // 2. Unzensierter ORF.at Live RSS Text-Zulauf via Proxy
-  var nXhr = new XMLHttpRequest();
-  nXhr.open("GET", "https://allorigins.win" + encodeURIComponent("https://orf.at"), true);
-  nXhr.onreadystatechange = function() {
-    if (nXhr.readyState === 4 && nXhr.status === 200) {
-      var obj = JSON.parse(nXhr.responseText);
-      var items = obj.contents.split("<item>");
-      var out = "";
-      var max = items.length < 5 ? items.length : 5;
-      for (var i = 1; i < max; i++) {
-        var s = items[i].indexOf("<title><![CDATA[") + 16;
-        var e = items[i].indexOf("]]></title>");
-        if (s > 15 && e > 0) out += "• " + items[i].substring(s, e) + "<br><br>";
-      }
-      document.getElementById("news-content").innerHTML = out || "Warte auf Text-Zulauf...";
-    }
-  };
-  nXhr.send();
+        // NBA Scores
+        function fetchNBA() {
+            var nbaEl = document.getElementById("nba-el");
+            if (nbaEl) nbaEl.innerHTML = "Lade NBA...";
 
-  // 3. Basketball Live-Daten
-  document.getElementById("nba-content").innerHTML = "Miami Heat 112 - NY Knicks 108 [LIVE]<br>LA Lakers 118 - Phoenix Suns 114 [Endergebnis]";
-}
+            var url = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard";
+            robustXHR([url], function(resp) {
+                try {
+                    var data = JSON.parse(resp);
+                    var events = data.events;
+                    if (!events || events.length === 0) {
+                        if (nbaEl) nbaEl.innerHTML = "<div style='padding:10px; text-align:center;'>Heute keine Spiele im Spielplan</div>";
+                        return;
+                    }
+                    var html = "";
+                    var count = Math.min(events.length, 4);
+                    for (var i = 0; i < count; i++) {
+                        var ev = events[i];
+                        var comp = ev.competitions[0];
+                        var home = comp.competitors[0];
+                        var away = comp.competitors[1];
+                        var status = ev.status.type.detail;
 
-// ========================================================================
-// CONFIGURATION MEMORY & PERSISTENCE
-// ========================================================================
-function changeDevMode() {
-  var mode = document.getElementById("style-select").value;
-  document.body.className = document.body.className.replace(/\bmode-\w+\b/g, "");
-  document.body.className += " mode-" + mode;
-  changeHwTarget();
-}
+                        html += "<div class='score-item'><strong>" + away.team.abbreviation + "</strong> " + away.score + " @ <strong>" + home.team.abbreviation + "</strong> " + home.score + "<br><span style='color:#666; font-size:11px;'>" + status + "</span></div>";
+                    }
+                    if (nbaEl) nbaEl.innerHTML = html;
+                } catch (e) {
+                    if (nbaEl) nbaEl.innerHTML = "Fehler bei NBA Daten.";
+                }
+            }, function(err) {
+                if (nbaEl) nbaEl.innerHTML = "NBA Server nicht erreichbar.";
+            });
+        }
 
-function changeHwTarget() {
-  var hw = document.getElementById("hw-select").value;
-  document.body.className = document.body.className.replace(/\bhardware-\w+\b/g, "");
-  if (hw === "air") {
-    document.body.className += " hardware-air";
-  }
-}
+        // WNBA Scores
+        function fetchWNBA() {
+            var wnbaEl = document.getElementById("wnba-el");
+            if (wnbaEl) wnbaEl.innerHTML = "Lade WNBA...";
 
-// System-Kompilierung starten
-startClockEngine();
-loadDailyQuote();
-triggerRefresh();
-</script>
+            var url = "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard";
+            robustXHR([url], function(resp) {
+                try {
+                    var data = JSON.parse(resp);
+                    var events = data.events;
+                    if (!events || events.length === 0) {
+                        if (wnbaEl) wnbaEl.innerHTML = "<div style='padding:10px; text-align:center;'>Heute keine Spiele im Spielplan</div>";
+                        return;
+                    }
+                    var html = "";
+                    var count = Math.min(events.length, 4);
+                    for (var i = 0; i < count; i++) {
+                        var ev = events[i];
+                        var comp = ev.competitions[0];
+                        var home = comp.competitors[0];
+                        var away = comp.competitors[1];
+                        var status = ev.status.type.detail;
+
+                        html += "<div class='score-item'><strong>" + away.team.abbreviation + "</strong> " + away.score + " @ <strong>" + home.team.abbreviation + "</strong> " + home.score + "<br><span style='color:#666; font-size:11px;'>" + status + "</span></div>";
+                    }
+                    if (wnbaEl) wnbaEl.innerHTML = html;
+                } catch (e) {
+                    if (wnbaEl) wnbaEl.innerHTML = "Fehler bei WNBA Daten.";
+                }
+            }, function(err) {
+                if (wnbaEl) wnbaEl.innerHTML = "WNBA Server nicht erreichbar.";
+            });
+        }
+
+        // ORF.at News with Proxy Fallback Chain
+        function fetchNews() {
+            var newsEl = document.getElementById("news-el");
+            if (newsEl) newsEl.innerHTML = "Lade Nachrichten...";
+
+            var feedUrl = "https://rss.orf.at/news.xml";
+            var proxies = [
+                "https://api.allorigins.win/raw?url=" + encodeURIComponent(feedUrl),
+                "https://corsproxy.io/?url=" + encodeURIComponent(feedUrl)
+            ];
+
+            robustXHR(proxies, function(resp) {
+                try {
+                    var parser = new DOMParser();
+                    var xml = parser.parseFromString(resp, "text/xml");
+                    var items = xml.getElementsByTagName("item");
+                    if (!items || items.length === 0) {
+                        if (newsEl) newsEl.innerHTML = "Keine Nachrichten gefunden.";
+                        return;
+                    }
+                    var html = "";
+                    var count = Math.min(items.length, 4);
+                    for (var i = 0; i < count; i++) {
+                        var title = items[i].getElementsByTagName("title")[0].textContent;
+                        var link = items[i].getElementsByTagName("link")[0].textContent;
+                        html += "<div class='news-item'><a href='" + link + "' target='_blank'>" + title + "</a></div>";
+                    }
+                    if (newsEl) newsEl.innerHTML = html;
+                } catch (e) {
+                    if (newsEl) newsEl.innerHTML = "<a href='https://orf.at' target='_blank'>ORF.at öffnen (Feed Parse Fehler)</a>";
+                }
+            }, function(err) {
+                if (newsEl) newsEl.innerHTML = "<a href='https://orf.at' target='_blank'>ORF.at direkt öffnen</a>";
+            });
+        }
+
+        // Daily Thoughts / Quotes
+        function loadDailyQuote() {
+            var quotes = [
+                "Der Weg ist das Ziel. – Konfuzius",
+                "Man muss das Unmögliche versuchen, um das Mögliche zu erreichen. – Hermann Hesse",
+                "Freude an der Arbeit lässt das Werk trefflich geraten. – Aristoteles",
+                "Jeder Tag ist ein neuer Anfang.",
+                "Familie ist, wo Leben beginnt und Liebe niemals endet."
+            ];
+            var now = new Date();
+            var start = new Date(now.getFullYear(), 0, 0);
+            var diff = now - start;
+            var oneDay = 1000 * 60 * 60 * 24;
+            var dayOfYear = Math.floor(diff / oneDay);
+            
+            var quoteIndex = dayOfYear % quotes.length;
+            var quoteEl = document.getElementById("quote-el");
+            if (quoteEl) quoteEl.innerHTML = "„" + quotes[quoteIndex] + "“";
+        }
+
+        // Profile & PIN Logic
+        function requestProfile(profileName) {
+            if (currentProfile === profileName) return;
+
+            // Check if locked out
+            if (lockoutTimers[profileName] && lockoutTimers[profileName] > Date.now()) {
+                var remainingSecs = Math.ceil((lockoutTimers[profileName] - Date.now()) / 1000);
+                alert("Profil " + profileName + " ist gesperrt. Noch " + remainingSecs + " Sekunden.");
+                return;
+            }
+
+            targetProfileRequest = profileName;
+            currentPinInput = "";
+            document.getElementById("pin-modal-title").innerHTML = "PIN für " + profileName + " eingeben";
+            document.getElementById("pin-dots").innerHTML = "----";
+            document.getElementById("pin-error").innerHTML = "";
+            document.getElementById("pin-modal").style.display = "flex";
+        }
+
+        function pressPin(digit) {
+            if (currentPinInput.length < 12) {
+                currentPinInput += digit;
+                var dots = "";
+                for (var i = 0; i < currentPinInput.length; i++) dots += "•";
+                while (dots.length < 4) dots += "-";
+                document.getElementById("pin-dots").innerHTML = dots;
+
+                // Auto-check PIN length matching
+                var correctPin = config.pins[targetProfileRequest];
+                if (currentPinInput === config.masterCode || currentPinInput === correctPin) {
+                    closePinModal();
+                    switchProfileDirect(targetProfileRequest);
+                } else if (currentPinInput.length >= (correctPin ? correctPin.length : 4)) {
+                    handleFailedPin();
+                }
+            }
+        }
+
+        function clearPin() {
+            currentPinInput = "";
+            document.getElementById("pin-dots").innerHTML = "----";
+        }
+
+        function handleFailedPin() {
+            if (!failedAttempts[targetProfileRequest]) failedAttempts[targetProfileRequest] = 0;
+            failedAttempts[targetProfileRequest]++;
+
+            if (failedAttempts[targetProfileRequest] >= 5) {
+                lockoutTimers[targetProfileRequest] = Date.now() + (5 * 60 * 1000);
+                closePinModal();
+                alert("Zu viele Fehlversuche. Profil für 5 Minuten gesperrt.");
+            } else {
+                document.getElementById("pin-error").innerHTML = "Falsche PIN (" + failedAttempts[targetProfileRequest] + "/5)";
+                currentPinInput = "";
+                document.getElementById("pin-dots").innerHTML = "----";
+            }
+        }
+
+        function closePinModal() {
+            document.getElementById("pin-modal").style.display = "none";
+        }
+
+        function switchProfileDirect(profileName) {
+            currentProfile = profileName;
+            failedAttempts[profileName] = 0;
+            
+            // Update buttons
+            var btns = document.getElementsByClassName("profile-btn");
+            for (var i = 0; i < btns.length; i++) {
+                if (btns[i].innerHTML.indexOf(profileName) !== -1) {
+                    btns[i].className = "profile-btn active";
+                } else if (btns[i].innerHTML.indexOf("⚙️") === -1) {
+                    btns[i].className = "profile-btn";
+                }
+            }
+
+            applyDesignAndHardware();
+            updateClockAndCalendar();
+            setIslandStatus("Profil gewechselt: " + profileName);
+        }
+
+        // Timer Logic
+        function startTimer() {
+            if (timerRunning) return;
+
+            var hInput = parseInt(document.getElementById("t-hours").value) || 0;
+            var mInput = parseInt(document.getElementById("t-mins").value) || 0;
+            var sInput = parseInt(document.getElementById("t-secs").value) || 0;
+
+            if (timerRemainingSeconds === 1500 && (hInput > 0 || mInput > 0 || sInput > 0)) {
+                timerRemainingSeconds = (hInput * 3600) + (mInput * 60) + sInput;
+            }
+
+            if (timerRemainingSeconds <= 0) timerRemainingSeconds = 1500;
+
+            timerRunning = true;
+            
+            // Initialize Audio Context on User Gesture for iOS Safari
+            initAudioContext();
+
+            timerInterval = setInterval(function() {
+                if (timerRemainingSeconds > 0) {
+                    timerRemainingSeconds--;
+                    updateTimerDisplay();
+                } else {
+                    pauseTimer();
+                    triggerAlarm();
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            timerRunning = false;
+            clearInterval(timerInterval);
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timerRemainingSeconds = 1500;
+            document.getElementById("t-hours").value = 0;
+            document.getElementById("t-mins").value = 25;
+            document.getElementById("t-secs").value = 0;
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            var h = Math.floor(timerRemainingSeconds / 3600);
+            var m = Math.floor((timerRemainingSeconds % 3600) / 60);
+            var s = timerRemainingSeconds % 60;
+
+            var str = (h < 10 ? "0" : "") + h + ":" + 
+                      (m < 10 ? "0" : "") + m + ":" + 
+                      (s < 10 ? "0" : "") + s;
+            
+            document.getElementById("timer-display").innerHTML = str;
+        }
+
+        function initAudioContext() {
+            try {
+                if (!audioCtx) {
+                    var AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContext) audioCtx = new AudioContext();
+                }
+                if (audioCtx && audioCtx.state === "suspended") {
+                    audioCtx.resume();
+                }
+            } catch (e) {
+                console.log("AudioContext not supported or blocked");
+            }
+        }
+
+        function playChimeNote() {
+            try {
+                if (!audioCtx) return;
+                var notes = [659.25, 783.99, 987.77, 783.99];
+                var now = audioCtx.currentTime;
+                
+                for (var i = 0; i < notes.length; i++) {
+                    var osc = audioCtx.createOscillator();
+                    var gain = audioCtx.createGain();
+                    
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(notes[i], now + (i * 0.2));
+                    
+                    gain.gain.setValueAtTime(0, now + (i * 0.2));
+                    gain.gain.linearRampToValueAtTime(0.2, now + (i * 0.2) + 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + (i * 0.2) + 0.18);
+                    
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    
+                    osc.start(now + (i * 0.2));
+                    osc.stop(now + (i * 0.2) + 0.2);
+                }
+            } catch (e) {
+                console.log("Error playing chime", e);
+            }
+        }
+
+        function triggerAlarm() {
+            document.getElementById("alarm-modal").style.display = "flex";
+            playChimeNote();
+            alarmInterval = setInterval(playChimeNote, 2000);
+        }
+
+        function stopAlarm() {
+            clearInterval(alarmInterval);
+            document.getElementById("alarm-modal").style.display = "none";
+        }
+
+        // Settings Dialog
+        function openSettings() {
+            // Require Mastercode or Cobe PIN for Settings
+            var entered = prompt("Bitte Mastercode oder Cobe PIN für die Einstellungen eingeben:");
+            if (entered === config.masterCode || entered === config.pins["Cobe"]) {
+                document.getElementById("set-master").value = config.masterCode;
+                document.getElementById("set-pin-cobe").value = config.pins["Cobe"];
+                document.getElementById("set-pin-grace").value = config.pins["Grace"];
+                document.getElementById("set-pin-mama").value = config.pins["Mama"];
+                document.getElementById("set-pin-papa").value = config.pins["Papa"];
+                document.getElementById("set-design").value = config.designMode;
+                document.getElementById("set-hardware").value = config.hardware;
+                document.getElementById("settings-error").innerHTML = "";
+                document.getElementById("settings-modal").style.display = "flex";
+            } else if (entered !== null) {
+                alert("Falscher Code.");
+            }
+        }
+
+        function closeSettings() {
+            document.getElementById("settings-modal").style.display = "none";
+        }
+
+        function saveSettings() {
+            var m = document.getElementById("set-master").value;
+            var c = document.getElementById("set-pin-cobe").value;
+            var g = document.getElementById("set-pin-grace").value;
+            var ma = document.getElementById("set-pin-mama").value;
+            var p = document.getElementById("set-pin-papa").value;
+
+            if (m.length >= 4 && m.length <= 12) config.masterCode = m;
+            if (c.length >= 4 && c.length <= 12) config.pins["Cobe"] = c;
+            if (g.length >= 4 && g.length <= 12) config.pins["Grace"] = g;
+            if (ma.length >= 4 && ma.length <= 12) config.pins["Mama"] = ma;
+            if (p.length >= 4 && p.length <= 12) config.pins["Papa"] = p;
+
+            config.designMode = document.getElementById("set-design").value;
+            config.hardware = document.getElementById("set-hardware").value;
+
+            saveStoredSettings();
+            applyDesignAndHardware();
+            closeSettings();
+            setIslandStatus("Einstellungen gespeichert");
+        }
+
+        // Dynamic Island Status Helper
+        function setIslandStatus(msg) {
+            var island = document.getElementById("dynamic-island");
+            if (island) {
+                island.innerHTML = msg;
+                setTimeout(function() {
+                    island.innerHTML = "HOMEVIEWOS 28 PRO MAX ULTRA";
+                }, 4000);
+            }
+        }
+    </script>
 </body>
 </html>
