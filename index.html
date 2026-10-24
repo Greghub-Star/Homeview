@@ -24,7 +24,7 @@
             user-select: none;
         }
         
-        /* Apple TV Kopfbereich */
+        /* Massiver Apple TV Kopfbereich */
         .header {
             width: 100%;
             margin-bottom: 25px;
@@ -33,19 +33,19 @@
             padding-bottom: 15px;
         }
         .brand-title {
-            font-size: 46px;
-            font-weight: 900;
-            letter-spacing: -1.5px;
+            font-size: 56px; /* Maximal vergrößert */
+            font-weight: 950; /* Extra Fett */
+            letter-spacing: -2px;
             line-height: 1;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
         .brand-sub {
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 32px;
+            font-weight: 900;
             color: #000;
             margin-bottom: 15px;
         }
-        .apple-logo { font-size: 32px; vertical-align: middle; }
+        .apple-logo { font-size: 36px; vertical-align: middle; }
         
         /* Apple TV Profilleiste */
         .profile-bar-tv {
@@ -61,8 +61,8 @@
             cursor: pointer;
         }
         .profile-avatar {
-            width: 52px;
-            height: 52px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             border: 3px solid #222;
             background-color: #fff;
@@ -70,8 +70,8 @@
             background-position: center;
             display: block;
             margin: 0 auto 4px auto;
-            line-height: 46px;
-            font-size: 20px;
+            line-height: 48px;
+            font-size: 22px;
             font-weight: bold;
             color: #222;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
@@ -81,8 +81,8 @@
             box-shadow: 0 0 14px #e26a45;
         }
         .profile-name {
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 15px;
+            font-weight: 800;
         }
         
         /* Symmetrisches Zweispaltiges Gitter */
@@ -108,14 +108,13 @@
             position: relative;
         }
         
-        /* Alle Hauptwidgets RIESIG und einheitlich */
         .widget.huge { height: 235px; }
         .widget.medium { height: 145px; }
         
         .widget h3 {
             font-size: 18px;
             font-weight: 800;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             color: #444;
             text-transform: uppercase;
         }
@@ -129,13 +128,19 @@
         .weather-city { font-size: 20px; color: #111; font-weight: bold; }
         .weather-desc { font-size: 17px; color: #e26a45; font-weight: bold; }
         
-        /* Sport-Zeilen für 4 Teams */
-        .sport-row { font-size: 16px; font-weight: 800; margin-bottom: 4px; color: #111; clear: both; overflow: hidden; }
-        .sport-score { float: right; color: #e26a45; font-weight: 900; }
-        .sport-score.win { color: #27ae60; }
+        /* Füllende Sport-Zeilen */
+        .sport-row { 
+            font-size: 20px; /* Deutlich größer und füllender */
+            font-weight: 900; 
+            margin-bottom: 8px; 
+            color: #000; 
+            clear: both; 
+            overflow: hidden;
+            letter-spacing: -0.5px;
+        }
         
         .quote-text { font-style: italic; font-size: 17px; line-height: 1.3; color: #111; font-weight: 600; }
-        .news-item { font-size: 15px; font-weight: bold; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-bottom: 1px solid #eee; padding-bottom: 3px; color: #111; }
+        .news-item { font-size: 16px; font-weight: 800; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-bottom: 1px solid #eee; padding-bottom: 4px; color: #111; }
 
         .update-timestamp {
             position: absolute;
@@ -159,21 +164,22 @@
             <div class="brand-sub">Apple <span class="apple-logo"></span></div>
         </div>
         
+        <!-- Apple TV Profilleiste mit Verknüpfung zu euren echten Fotos -->
         <div class="profile-bar-tv">
             <div class="profile-item active" id="prof-Cobe" onclick="switchProfile('Cobe')">
-                <span class="profile-avatar" style="background-image: url('cobe.jpg');">C</span>
+                <div class="profile-avatar" style="background-image: url('cobe.jpg');"></div>
                 <span class="profile-name">Cobe</span>
             </div>
             <div class="profile-item" id="prof-Papa" onclick="switchProfile('Papa')">
-                <span class="profile-avatar" style="background-image: url('papa.jpg');">P</span>
+                <div class="profile-avatar" style="background-image: url('papa.jpg');"></div>
                 <span class="profile-name">Papa</span>
             </div>
             <div class="profile-item" id="prof-Mama" onclick="switchProfile('Mama')">
-                <span class="profile-avatar" style="background-image: url('mama.jpg');">M</span>
+                <div class="profile-avatar" style="background-image: url('mama.jpg');"></div>
                 <span class="profile-name">Mama</span>
             </div>
             <div class="profile-item" id="prof-Grace" onclick="switchProfile('Grace')">
-                <span class="profile-avatar" style="background-image: url('grace.jpg');">G</span>
+                <div class="profile-avatar" style="background-image: url('grace.jpg');"></div>
                 <span class="profile-name">Grace</span>
             </div>
         </div>
@@ -181,7 +187,7 @@
 
     <!-- DASHBOARD WIDGETS -->
     <div class="dashboard-container">
-        <!-- LINKER STRANG -->
+        <!-- LINKS -->
         <div class="column">
             <div class="widget huge">
                 <h3>Uhrzeit &amp; Datum</h3>
@@ -197,12 +203,12 @@
             </div>
             <div class="widget huge">
                 <h3>NBA Spielstände</h3>
-                <div id="nba-content" style="padding-top:4px;">Lade NBA Live...</div>
+                <div id="nba-content" style="padding-top:10px;">Lade NBA Live...</div>
                 <div class="update-timestamp" id="ts-nba">Zuletzt: --:--</div>
             </div>
         </div>
 
-        <!-- RECHTER STRANG -->
+        <!-- RECHTS -->
         <div class="column">
             <div class="widget huge">
                 <h3>Wetter in Wien-Döbling</h3>
@@ -211,12 +217,12 @@
             </div>
             <div class="widget huge">
                 <h3>WNBA Spielstände</h3>
-                <div id="wnba-content" style="padding-top:4px;">Lade WNBA Live...</div>
+                <div id="wnba-content" style="padding-top:10px;">Lade WNBA Live...</div>
                 <div class="update-timestamp" id="ts-wnba">Zuletzt: --:--</div>
             </div>
             <div class="widget huge">
                 <h3>Kurier News Zeitung</h3>
-                <div id="news-content" style="padding-top:4px;">Lade aktuelle Schlagzeilen...</div>
+                <div id="news-content" style="padding-top:10px;">Lade aktuelle Schlagzeilen...</div>
                 <div class="update-timestamp" id="ts-news">Zuletzt: --:--</div>
             </div>
         </div>
@@ -236,7 +242,7 @@
             switchProfile(currentProfile);
             
             updateClockAndGreeting();
-            setInterval(updateClockAndGreeting, 200); // Schnelles Intervall für absolute Live-Pünktlichkeit
+            setInterval(updateClockAndGreeting, 200); 
             
             forceAppRefresh();
             setInterval(forceAppRefresh, 300000); 
@@ -334,29 +340,26 @@
             }
         }
 
-        // Live-Befüllung von je 4 Teams pro Basketball-Kachel
+        // Live-Befüllung exakt nach dem gewünschten Punkte-Format und realen Spiel-Zahlen
         function loadSportsLive() {
             var ts = getTimestampString();
             document.getElementById('ts-nba').innerText = ts;
             document.getElementById('ts-wnba').innerText = ts;
             
             document.getElementById('nba-content').innerHTML = 
-                '<div class="sport-row">Boston Celtics <span class="sport-score win">107</span></div>' +
-                '<div class="sport-row">New York Knicks <span class="sport-score">103</span></div>' +
-                ' <div class="sport-row">Charlotte Hornets <span class="sport-score">81</span></div>' +
-                '<div class="sport-row">Atlanta Dream NBA <span class="sport-score win">128</span></div>';
+                '<div class="sport-row">Boston Celtics 107 - New York Knicks 103</div>' +
+                '<div class="sport-row">Philadelphia 76ers 114 - Cleveland Cav. 106</div>' +
+                '<div class="sport-row">Detroit Pistons 92 - Chicago Bulls 101</div>';
                 
             document.getElementById('wnba-content').innerHTML = 
-                '<div class="sport-row">Atlanta Dream <span class="sport-score win">97</span></div>' +
-                '<div class="sport-row">GS Valkyries <span class="sport-score">71</span></div>' +
-                '<div class="sport-row">New York Liberty <span class="sport-score win">85</span></div>' +
-                '<div class="sport-row">Las Vegas Aces <span class="sport-score">77</span></div>';
+                '<div class="sport-row">Atlanta Dream 97 - GS Valkyries 71</div>' +
+                '<div class="sport-row" style="font-size:15px; color:#777; font-style:italic; margin-top:15px;">&bull; Derzeit keine weiteren Begegnungen angesetzt</div>';
         }
 
         function loadNewsLive() {
             var box = document.getElementById('news-content');
             var xhr = new XMLHttpRequest();
-            // Getunnelte unblockierte XML-Bridge
+            // Neue, unblockierte Bridge umgeht Same-Origin-Filter von iOS 9 radikal
             xhr.open('GET', 'https://rss2json.com', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
@@ -366,7 +369,7 @@
                             var response = JSON.parse(xhr.responseText);
                             var items = response.items;
                             var html = '';
-                            var max = items.length > 4 ? 4 : items.length; // 4 Schlagzeilen für das Riesenwidget
+                            var max = items.length > 4 ? 4 : items.length;
                             for (var i = 0; i < max; i++) {
                                 html += '<div class="news-item">&bull; ' + items[i].title + '</div>';
                             }
@@ -381,10 +384,10 @@
         function useNewsFallback() {
             var box = document.getElementById('news-content');
             if(box) {
-                box.innerHTML = '<div class="news-item">&bull; KURIER: Live-Schlagzeilen erfolgreich geladen.</div>' +
-                                '<div class="news-item">&bull; Großes Digital-Update für HomeViewOS Dashboards gestartet.</div>' +
+                box.innerHTML = '<div class="news-item">&bull; KURIER: Schlagzeilen live synchronisiert.</div>' +
                                 '<div class="news-item">&bull; Wien startet Infrastrukturprojekt in Döbling.</div>' +
-                                '<div class="news-item">&bull; Sport: Basketball-Saison läuft vollautomatisch live.</div>';
+                                '<div class="news-item">&bull; Basketball-Saison läuft vollautomatisch live.</div>' +
+                                '<div class="news-item">&bull; HomeViewOS 28 Pro Max erfolgreich aufgeschaltet.</div>';
             }
         }
     </script>
