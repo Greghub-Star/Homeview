@@ -1,1134 +1,600 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-    <meta charset="utf-8">
-    <title>HOMEVIEWOS 28 PRO MAX ULTRA</title>
-    <style>
-        /* Reset & Base Styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        body {
-            background-color: #FFCBA4;
-            background-image: linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: #1d1d1f;
-            min-height: 100vh;
-            padding: 20px;
-            transition: background 0.3s ease;
-        }
-
-        /* Profile Background Themes */
-        body.theme-cobe {
-            background-color: #FFCBA4;
-            background-image: linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
-        }
-        body.theme-grace {
-            background-color: #e57373;
-            background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
-        }
-        body.theme-mama {
-            background-color: #ba68c8;
-            background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
-        }
-        body.theme-papa {
-            background-color: #2e7d32;
-            background-image: linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-        }
-
-        /* Design Modes */
-        body.mode-normal .widget {
-            border: 4px solid #333333;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        body.mode-pro .widget {
-            border: 3px solid #6c757d;
-            background: #f8f9fa;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-        }
-        body.mode-pro-max .widget {
-            border: 6px double #1a1a1a;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-        }
-        body.mode-ultra .widget {
-            background-color: #1a1a2e !important;
-            color: #00f2fe !important;
-            border: 2px solid #00f2fe;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
-        }
-        body.mode-ultra {
-            background-color: #0f0f1a !important;
-        }
-        body.mode-ultra .widget h2, 
-        body.mode-ultra .widget h3, 
-        body.mode-ultra .widget p, 
-        body.mode-ultra .widget span {
-            color: #00f2fe !important;
-        }
-
-        /* Dynamic Island Status Bar */
-        #dynamic-island {
-            width: 220px;
-            height: 32px;
-            background: #000;
-            color: #fff;
-            border-radius: 16px;
-            margin: 0 auto 20px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: 500;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            padding: 0 10px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-
-        /* Profile Selection Bar */
-        #profile-bar {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        .profile-btn {
-            background: #ffffff;
-            border: 2px solid #333;
-            padding: 8px 16px;
-            margin: 0 5px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.1s;
-        }
-        .profile-btn:active {
-            transform: scale(0.95);
-        }
-        .profile-btn.active {
-            background: #333;
-            color: #fff;
-        }
-
-        /* Main Dashboard Container */
-        #dashboard-container {
-            max-width: 1024px;
-            margin: 0 auto;
-        }
-
-        /* Two-Column Grid Layout */
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-        .col-left, .col-right {
-            float: left;
-            width: 49%;
-        }
-        .col-left {
-            margin-right: 2%;
-        }
-
-        /* Widget Base */
-        .widget {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            position: relative;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-        .widget-top {
-            min-height: 235px;
-        }
-        .widget-mid {
-            min-height: 160px;
-        }
-
-        .widget h2 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            padding-bottom: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Specific Widget Elements */
-        .time-display {
-            font-size: 38px;
-            font-weight: bold;
-            letter-spacing: -1px;
-        }
-        .date-display {
-            font-size: 15px;
-            color: #555;
-            margin-top: 4px;
-        }
-        .greeting-display {
-            font-size: 16px;
-            font-weight: 600;
-            margin-top: 10px;
-            color: #0066cc;
-        }
-        .birthday-banner {
-            background: #ffeb3b;
-            color: #333;
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: bold;
-            margin-top: 8px;
-            display: inline-block;
-        }
-
-        /* Weather */
-        .weather-info {
-            font-size: 15px;
-            line-height: 1.5;
-        }
-
-        /* Scores & News lists */
-        .scroll-list {
-            max-height: 110px;
-            overflow-y: auto;
-            font-size: 13px;
-        }
-        .score-item, .news-item {
-            padding: 6px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-        .news-item a {
-            color: #0066cc;
-            text-decoration: none;
-        }
-        .news-item a:hover {
-            text-decoration: underline;
-        }
-
-        /* Timer Widget */
-        .timer-display {
-            font-size: 32px;
-            font-weight: bold;
-            text-align: center;
-            margin: 10px 0;
-            font-variant-numeric: tabular-nums;
-        }
-        .timer-controls {
-            text-align: center;
-        }
-        .timer-btn {
-            background: #f0f0f0;
-            border: 1px solid #ccc;
-            padding: 6px 12px;
-            margin: 0 3px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 13px;
-        }
-        .timer-btn:hover {
-            background: #e0e0e0;
-        }
-        .timer-inputs {
-            text-align: center;
-            margin-bottom: 8px;
-        }
-        .timer-inputs input {
-            width: 45px;
-            text-align: center;
-            font-size: 14px;
-            padding: 3px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        /* Action Buttons */
-        .btn-action {
-            background: #007aff;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-        .btn-action:hover {
-            background: #005bb5;
-        }
-
-        /* Modals (PIN, Settings, Alarm) */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            display: none;
-        }
-        .modal-box {
-            background: #fff;
-            padding: 25px;
-            border-radius: 12px;
-            width: 320px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        }
-        .modal-box h3 {
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-        .pin-dots {
-            font-size: 24px;
-            letter-spacing: 8px;
-            margin: 15px 0;
-            min-height: 32px;
-        }
-        .pin-pad {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .pin-key {
-            background: #f2f2f7;
-            border: none;
-            padding: 12px;
-            font-size: 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .pin-key:active {
-            background: #d1d1d6;
-        }
-        .error-msg {
-            color: #ff3b30;
-            font-size: 13px;
-            margin-top: 8px;
-            min-height: 18px;
-        }
-
-        /* Settings Form */
-        .settings-form label {
-            display: block;
-            text-align: left;
-            font-size: 13px;
-            margin-top: 8px;
-            font-weight: 600;
-        }
-        .settings-form input, .settings-form select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 4px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        /* Responsive fallback for very small widths */
-        @media (max-width: 768px) {
-            .col-left, .col-right {
-                float: none;
-                width: 100%;
-                margin-right: 0;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Home View OS 28</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;color:#202124}
+body{background:#FFCBA4;transition:background .25s,color .25s}
+button,input{font:inherit}
+button{cursor:pointer}
+#app{max-width:1100px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.brand{display:flex;align-items:center;gap:10px;font-size:clamp(24px,5vw,42px);font-weight:800;letter-spacing:-1.5px}
+.apple{font-size:34px;line-height:1}
+.headerButtons{display:flex;gap:8px}
+.iconButton{border:1px solid rgba(0,0,0,.18);background:rgba(255,255,255,.55);border-radius:14px;padding:10px 13px;font-size:20px}
+#profileBar{display:flex;gap:8px;flex-wrap:wrap;padding:12px 0;border-bottom:2px solid rgba(0,0,0,.15);margin-bottom:14px}
+.profileButton{flex:1;min-width:100px;border:2px solid rgba(0,0,0,.18);border-radius:14px;padding:10px 12px;font-weight:700;font-size:15px;color:#222}
+.profileButton.active{outline:3px solid rgba(255,255,255,.95);outline-offset:-5px}
+.profileButton[data-profile="Cobe"]{background:#FFCBA4}
+.profileButton[data-profile="Grace"]{background:#F28B9B}
+.profileButton[data-profile="Mama"]{background:#C7A4F5}
+.profileButton[data-profile="Papa"]{background:#377A54;color:#fff}
+.avatar{display:inline-flex;align-items:center;justify-content:center;width:35px;height:35px;border-radius:50%;background:rgba(255,255,255,.55);font-size:25px;vertical-align:middle;margin-right:5px}
+#topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:8px 2px 14px}
+#greeting{font-size:clamp(22px,4vw,30px);font-weight:800}
+#dateLine{opacity:.8;font-size:14px;margin-top:4px}
+#dayGreeting{font-size:16px;font-weight:700;margin-top:5px}
+#specialBanner{display:none;background:rgba(255,255,255,.88);border:2px solid rgba(0,0,0,.12);border-radius:15px;padding:13px 15px;margin-bottom:14px;font-weight:800;font-size:18px}
+.dashboardGrid{display:flex;flex-wrap:wrap;gap:14px}
+.widget{flex:1 1 calc(50% - 14px);min-width:0;background:rgba(255,255,255,.9);border:2px solid rgba(35,35,35,.22);border-radius:20px;padding:16px;box-shadow:0 5px 14px rgba(0,0,0,.10);overflow:hidden}
+.widget h2{font-size:18px;margin:0 0 12px;font-weight:800}
+.bigTime{font-size:clamp(34px,8vw,54px);font-weight:750;letter-spacing:-2px;line-height:1.1}
+.weatherTemp{font-size:38px;font-weight:750}
+.muted{font-size:13px;opacity:.72}
+.newsItem{padding:9px 0;border-bottom:1px solid rgba(0,0,0,.12);line-height:1.35}
+.newsItem:last-child{border-bottom:0}
+.newsItem a{color:inherit;text-decoration:none}
+#quoteText{font-size:20px;line-height:1.4;font-weight:600}
+#quoteAuthor{margin-top:10px;font-size:13px;opacity:.7}
+.scoreRow{padding:9px 0;border-bottom:1px solid rgba(0,0,0,.12);font-size:14px;line-height:1.5}
+.scoreRow:last-child{border-bottom:0}
+.winner{color:#16813b;font-weight:800}
+.loser{opacity:.78}
+.liveLabel{color:#c62828;font-weight:800}
+.actionButton{border:0;border-radius:12px;background:#242424;color:white;padding:10px 14px;margin-top:10px}
+.smallButton{border:1px solid rgba(0,0,0,.2);border-radius:10px;background:rgba(255,255,255,.6);padding:8px 10px}
+#lockScreen{position:fixed;z-index:1000;inset:0;display:none;overflow:auto;background:#FFCBA4;padding:22px;text-align:center;color:#222}
+#lockScreen.visible{display:block}
+.lockTop{display:flex;justify-content:flex-end;max-width:700px;margin:0 auto}
+#lockClock{font-size:clamp(48px,12vw,90px);font-weight:750;letter-spacing:-3px;margin-top:5vh}
+#lockDate{font-size:20px;margin-bottom:30px}
+.lockProfiles{display:flex;flex-wrap:wrap;gap:12px;max-width:700px;margin:0 auto;justify-content:center}
+.lockProfile{width:calc(50% - 8px);max-width:280px;min-height:105px;border:2px solid rgba(0,0,0,.15);border-radius:20px;font-size:22px;font-weight:750}
+.lockProfile[data-profile="Cobe"]{background:#FFCBA4}
+.lockProfile[data-profile="Grace"]{background:#F28B9B}
+.lockProfile[data-profile="Mama"]{background:#C7A4F5}
+.lockProfile[data-profile="Papa"]{background:#377A54;color:white}
+.lockAvatar{display:block;font-size:32px;margin-bottom:5px}
+#pinPanel{display:none;max-width:320px;margin:22px auto 0;background:rgba(255,255,255,.75);border-radius:22px;padding:18px}
+#pinTitle{font-size:22px;font-weight:750;margin-bottom:12px}
+#pinDots{font-size:30px;letter-spacing:8px;height:42px}
+#pinError{min-height:22px;font-size:13px;color:#a00020}
+.keypad{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.keypad button{width:calc(33.333% - 6px);height:53px;border:0;border-radius:13px;background:#dedede;font-size:23px;font-weight:650}
+.keypad button:last-child{background:#333;color:white}
+#masterPanel{display:none;max-width:320px;margin:18px auto;background:rgba(255,255,255,.9);padding:18px;border-radius:20px}
+#masterInput{width:100%;padding:12px;border:1px solid #aaa;border-radius:10px;text-align:center;font-size:22px;letter-spacing:5px}
+#masterError{color:#a00020;font-size:13px;min-height:20px}
+body.mode-pro-max{background:linear-gradient(135deg,#101114,#303039 45%,#080809);color:#f5f5f5}
+body.mode-pro-max .widget{background:linear-gradient(145deg,rgba(40,40,46,.97),rgba(12,12,15,.97));color:#fff;border:3px double #c6a85d;border-radius:18px;box-shadow:0 12px 30px rgba(0,0,0,.6)}
+body.device-mini #app{max-width:850px;padding:12px}
+body.device-mini .widget{padding:13px}
+body.device-mini .brand{font-size:28px}
+body.device-mini .widget h2{font-size:16px}
+body.device-mini .profileButton{font-size:14px}
+@media(max-width:560px){#app{padding:10px}.widget{flex-basis:100%}.brand{font-size:25px}.iconButton{padding:8px 10px}.profileButton{min-width:calc(50% - 8px)}}
+</style>
 </head>
-<body class="theme-cobe mode-normal">
+<body class="mode-pro-max device-mini" data-profile-theme="cobe">
+<div id="app">
+<header>
+  <div class="brand"><span class="apple"></span><span>Home View OS 28</span></div>
+  <div class="headerButtons">
+    <button class="iconButton" id="lockToggle" aria-label="Sperren">🔒</button>
+  </div>
+</header>
 
-    <!-- Dynamic Island Status Bar -->
-    <div id="dynamic-island" onclick="openSettings()">HOMEVIEWOS 28 PRO MAX ULTRA</div>
+<div id="profileBar">
+  <button class="profileButton active" data-profile="Cobe"><span class="avatar">👦🏻</span>Cobe</button>
+  <button class="profileButton" data-profile="Grace"><span class="avatar">👧🏻</span>Grace</button>
+  <button class="profileButton" data-profile="Mama"><span class="avatar">👩🏻</span>Mama</button>
+  <button class="profileButton" data-profile="Papa"><span class="avatar">👨🏻</span>Papa</button>
+</div>
 
-    <!-- Profile Selection Bar -->
-    <div id="profile-bar">
-        <button class="profile-btn active" onclick="requestProfile('Cobe')">Cobe (Dev)</button>
-        <button class="profile-btn" onclick="requestProfile('Grace')">Grace</button>
-        <button class="profile-btn" onclick="requestProfile('Mama')">Mama</button>
-        <button class="profile-btn" onclick="requestProfile('Papa')">Papa</button>
-        <button class="profile-btn" onclick="openSettings()" style="background:#e5e5ea;">⚙️</button>
+<div id="topline">
+  <div>
+    <div id="greeting">Guten Morgen!</div>
+    <div id="dayGreeting">☀️ Guten Morgen</div>
+    <div id="dateLine"></div>
+  </div>
+  <div class="muted" id="activeProfileLabel">Profil: Cobe</div>
+</div>
+<div id="specialBanner"></div>
+
+<div class="dashboardGrid">
+  <section class="widget">
+    <h2>Uhrzeit</h2>
+    <div class="bigTime" id="clock">--:--</div>
+    <div id="clockDate" class="muted"></div>
+  </section>
+
+  <section class="widget">
+    <h2>Wetter · Wien-Döbling</h2>
+    <div id="weather">
+      <div class="weatherTemp">—°</div>
+      <div class="muted">Wetter wird geladen …</div>
     </div>
+  </section>
 
-    <!-- Main Dashboard Container -->
-    <div id="dashboard-container" class="clearfix">
-        
-        <!-- Top Row Left: Time, Date & Greeting -->
-        <div class="col-left">
-            <div class="widget widget-top">
-                <h2>Uhrzeit & Begrüßung</h2>
-                <div id="time-el" class="time-display">00:00:00</div>
-                <div id="date-el" class="date-display">Lade Datum...</div>
-                <div id="greeting-el" class="greeting-display">Guten Tag</div>
-                <div id="birthday-el" style="display:none;"></div>
-            </div>
-        </div>
+  <section class="widget">
+    <h2>NBA · Ergebnisse</h2>
+    <div id="nbaScores">NBA-Ergebnisse werden geladen …</div>
+  </section>
 
-        <!-- Top Row Right: Weather -->
-        <div class="col-right">
-            <div class="widget widget-top">
-                <h2>
-                    Wien-Döbling Wetter
-                    <button class="btn-action" style="font-size:11px; padding:3px 8px;" onclick="fetchWeather()">Aktualisieren</button>
-                </h2>
-                <div id="weather-el" class="weather-info">Lade Wetterdaten...</div>
-            </div>
-        </div>
+  <section class="widget">
+    <h2>WNBA · Ergebnisse</h2>
+    <div id="wnbaScores">WNBA-Ergebnisse werden geladen …</div>
+  </section>
 
-        <div class="clearfix"></div>
+  <section class="widget">
+    <h2>ORF · Aktuelle Nachrichten</h2>
+    <div id="orfNews">ORF-Nachrichten werden geladen …</div>
+  </section>
 
-        <!-- Middle Row Left: NBA Scores -->
-        <div class="col-left">
-            <div class="widget widget-mid">
-                <h2>
-                    NBA Live Scores
-                    <button class="btn-action" style="font-size:11px; padding:3px 8px;" onclick="fetchNBA()">Aktualisieren</button>
-                </h2>
-                <div id="nba-el" class="scroll-list">Lade NBA Spiele...</div>
-            </div>
-        </div>
+  <section class="widget">
+    <h2>Zitat des Tages</h2>
+    <div id="quoteText"></div>
+    <div id="quoteAuthor"></div>
+    <button class="smallButton" id="quoteNext">Anderes Zitat</button>
+  </section>
+</div>
+</div>
 
-        <!-- Middle Row Right: WNBA Scores -->
-        <div class="col-right">
-            <div class="widget widget-mid">
-                <h2>
-                    WNBA Live Scores
-                    <button class="btn-action" style="font-size:11px; padding:3px 8px;" onclick="fetchWNBA()">Aktualisieren</button>
-                </h2>
-                <div id="wnba-el" class="scroll-list">Lade WNBA Spiele...</div>
-            </div>
-        </div>
-
-        <div class="clearfix"></div>
-
-        <!-- Lower Row Left: ORF.at News -->
-        <div class="col-left">
-            <div class="widget widget-mid">
-                <h2>
-                    ORF.at Nachrichten
-                    <button class="btn-action" style="font-size:11px; padding:3px 8px;" onclick="fetchNews()">Aktualisieren</button>
-                </h2>
-                <div id="news-el" class="scroll-list">Lade Nachrichten...</div>
-            </div>
-        </div>
-
-        <!-- Lower Row Right: Amazon Music -->
-        <div class="col-right">
-            <div class="widget widget-mid">
-                <h2>Amazon Music</h2>
-                <p style="font-size:14px; margin-bottom:12px; color:#555;">Direkter Zugriff auf deine Musikbibliothek und Playlists.</p>
-                <a href="https://music.amazon.de/" target="_blank" style="text-decoration:none;">
-                    <button class="btn-action" style="width:100%; padding:10px;">Amazon Music öffnen 🎵</button>
-                </a>
-            </div>
-        </div>
-
-        <div class="clearfix"></div>
-
-        <!-- Bottom Row Left: Timer -->
-        <div class="col-left">
-            <div class="widget widget-mid">
-                <h2>Countdown Timer</h2>
-                <div class="timer-inputs" id="timer-inputs-container">
-                    H: <input type="number" id="t-hours" value="0" min="0" max="23">
-                    M: <input type="number" id="t-mins" value="25" min="0" max="59">
-                    S: <input type="number" id="t-secs" value="0" min="0" max="59">
-                </div>
-                <div id="timer-display" class="timer-display">00:25:00</div>
-                <div class="timer-controls">
-                    <button class="timer-btn" onclick="startTimer()">Start</button>
-                    <button class="timer-btn" onclick="pauseTimer()">Pause</button>
-                    <button class="timer-btn" onclick="resetTimer()">Reset</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom Row Right: Daily Thought & Dev Info -->
-        <div class="col-right">
-            <div class="widget widget-mid">
-                <h2>Gedanke des Tages</h2>
-                <div id="quote-el" style="font-size:14px; font-style:italic; line-height:1.4; margin-top:10px;">Lade Spruch...</div>
-                <div id="dev-status-el" style="font-size:11px; color:#777; margin-top:15px;">Hardware: iPad mini 1 (iOS 9.3.5)</div>
-            </div>
-        </div>
-
+<div id="lockScreen">
+  <div class="lockTop"><button class="iconButton" id="lockClose">✕</button></div>
+  <div id="lockClock">--:--</div>
+  <div id="lockDate"></div>
+  <div style="font-size:18px;font-weight:700;margin-bottom:16px">Profil auswählen</div>
+  <div class="lockProfiles">
+    <button class="lockProfile" data-profile="Cobe"><span class="lockAvatar">👦🏻</span>Cobe</button>
+    <button class="lockProfile" data-profile="Grace"><span class="lockAvatar">👧🏻</span>Grace</button>
+    <button class="lockProfile" data-profile="Mama"><span class="lockAvatar">👩🏻</span>Mama</button>
+    <button class="lockProfile" data-profile="Papa"><span class="lockAvatar">👨🏻</span>Papa</button>
+  </div>
+  <div id="pinPanel">
+    <div id="pinTitle">PIN eingeben</div>
+    <div id="pinDots">○ ○ ○ ○</div>
+    <div id="pinError"></div>
+    <div class="keypad">
+      <button data-key="1">1</button><button data-key="2">2</button><button data-key="3">3</button>
+      <button data-key="4">4</button><button data-key="5">5</button><button data-key="6">6</button>
+      <button data-key="7">7</button><button data-key="8">8</button><button data-key="9">9</button>
+      <button data-key="C">C</button><button data-key="0">0</button><button data-key="OK">OK</button>
     </div>
+    <button class="smallButton" id="pinCancel">Abbrechen</button>
+  </div>
+  <div style="margin-top:24px"><button class="actionButton" id="masterOpen">Mastercode eingeben</button></div>
+  <div id="masterPanel">
+    <div style="font-weight:750;margin-bottom:10px">Mastercode</div>
+    <input id="masterInput" type="password" inputmode="none" maxlength="4" autocomplete="off" placeholder="••••">
+    <div id="masterError"></div>
+    <button class="actionButton" id="masterSubmit">Entsperren</button>
+    <button class="smallButton" id="masterCancel">Abbrechen</button>
+  </div>
+</div>
 
-    <!-- PIN Modal -->
-    <div id="pin-modal" class="modal-overlay">
-        <div class="modal-box">
-            <h3 id="pin-modal-title">PIN eingeben</h3>
-            <div id="pin-dots" class="pin-dots">----</div>
-            <div class="pin-pad">
-                <button class="pin-key" onclick="pressPin('1')">1</button>
-                <button class="pin-key" onclick="pressPin('2')">2</button>
-                <button class="pin-key" onclick="pressPin('3')">3</button>
-                <button class="pin-key" onclick="pressPin('4')">4</button>
-                <button class="pin-key" onclick="pressPin('5')">5</button>
-                <button class="pin-key" onclick="pressPin('6')">6</button>
-                <button class="pin-key" onclick="pressPin('7')">7</button>
-                <button class="pin-key" onclick="pressPin('8')">8</button>
-                <button class="pin-key" onclick="pressPin('9')">9</button>
-                <button class="pin-key" onclick="closePinModal()" style="font-size:13px; background:#ff3b30; color:#fff;">Abbruch</button>
-                <button class="pin-key" onclick="pressPin('0')">0</button>
-                <button class="pin-key" onclick="clearPin()" style="font-size:13px; background:#ffcc00;">C</button>
-            </div>
-            <div id="pin-error" class="error-msg"></div>
-        </div>
-    </div>
+<script>
+(function () {
+"use strict";
 
-    <!-- Settings Modal -->
-    <div id="settings-modal" class="modal-overlay">
-        <div class="modal-box" style="width: 360px; max-height: 90vh; overflow-y: auto;">
-            <h3>Einstellungen</h3>
-            <div class="settings-form">
-                <label>Mastercode (4-12 Ziffern)</label>
-                <input type="password" id="set-master" maxlength="12">
+var profiles = {
+  Cobe:{pin:"2805",birthday:"28.05.",theme:"cobe"},
+  Grace:{pin:"2017",birthday:"21.07.",theme:"grace"},
+  Mama:{pin:"1120",birthday:"01.12.",theme:"mama"},
+  Papa:{pin:"1982",birthday:"05.01.",theme:"papa"}
+};
 
-                <label>Cobe PIN</label>
-                <input type="password" id="set-pin-cobe" maxlength="12">
+var activeProfile="Cobe";
+var selectedProfile="Cobe";
+var enteredPin="";
+var failedAttempts=0;
+var lockedUntil=0;
+var longTriggered=false;
+var lockTimer=null;
+var quoteIndex=-1;
+var orfRequestId=0;
+var quotes=[
+["Great things are done by a series of small things brought together.","Vincent van Gogh"],
+["It always seems impossible until it’s done.","Nelson Mandela"],
+["The secret of getting ahead is getting started.","Mark Twain"],
+["Success is the sum of small efforts, repeated day in and day out.","Robert Collier"],
+["You miss 100% of the shots you don’t take.","Wayne Gretzky"],
+["Hard work beats talent when talent doesn’t work hard.","Tim Notke"],
+["Do what you can, with what you have, where you are.","Theodore Roosevelt"],
+["It does not matter how slowly you go as long as you do not stop.","Confucius"],
+["The only way to do great work is to love what you do.","Steve Jobs"]
+];
 
-                <label>Grace PIN</label>
-                <input type="password" id="set-pin-grace" maxlength="12">
+function byId(id){return document.getElementById(id);}
+function pad(n){return n<10?"0"+n:String(n);}
+function text(id,value){if(byId(id))byId(id).textContent=value;}
 
-                <label>Mama PIN</label>
-                <input type="password" id="set-pin-mama" maxlength="12">
+function getGreeting(hour){
+  if(hour>=5&&hour<9)return {text:"Guten Morgen",emoji:"🌅"};
+  if(hour>=9&&hour<11)return {text:"Guten Vormittag",emoji:"☀️"};
+  if(hour>=11&&hour<13)return {text:"Guten Mittag",emoji:"🍽️"};
+  if(hour>=13&&hour<17)return {text:"Guten Nachmittag",emoji:"🌤️"};
+  if(hour>=17&&hour<21)return {text:"Guten Abend",emoji:"🌇"};
+  return {text:"Gute Nacht",emoji:"🌙"};
+}
 
-                <label>Papa PIN</label>
-                <input type="password" id="set-pin-papa" maxlength="12">
+function easterSunday(year){
+  var a=year%19,b=Math.floor(year/100),c=year%100;
+  var d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25);
+  var g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30;
+  var i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7;
+  var m=Math.floor((a+11*h+22*l)/451);
+  var month=Math.floor((h+l-7*m+114)/31);
+  var day=((h+l-7*m+114)%31)+1;
+  return new Date(year,month-1,day);
+}
 
-                <label>Designmodus</label>
-                <select id="set-design">
-                    <option value="normal">Normal</option>
-                    <option value="pro">Pro</option>
-                    <option value="pro-max">Pro Max</option>
-                    <option value="ultra">Ultra (Cyber)</option>
-                </select>
+function getSpecialMessage(now){
+  var d=now.getDate(),m=now.getMonth()+1;
+  var key=pad(d)+"."+pad(m)+".";
+  var bday=profiles[activeProfile].birthday;
+  if(key===bday)return "🎉🎂 Happy Birthday, "+activeProfile+"! 🎁🥳";
+  if(key==="24.12.")return "🎄✨ Frohe Weihnachten! Genießt den Heiligen Abend! 🎁";
+  if(key==="25.12.")return "🎄🎅 Frohe Weihnachten! 🎁❤️";
+  if(key==="26.12.")return "🎄❤️ Schöne Weihnachtsfeiertage!";
+  if(key==="31.12.")return "🎆🥳 Guten Rutsch! Heute ist Silvester! 🥂";
+  if(key==="01.01.")return "🎉✨ Frohes neues Jahr! 🥳";
+  if(key==="31.10.")return "🎃👻 Happy Halloween! 🕸️🍬";
+  if(key==="06.12.")return "🎅🍫 Einen schönen Nikolaustag!";
+  if(key==="14.02.")return "❤️🌹 Happy Valentine's Day!";
+  if(key==="01.05.")return "🌷☀️ Schönen 1. Mai!";
+  if(key==="06.01.")return "⭐👑 Einen schönen Dreikönigstag!";
+  var easter=easterSunday(now.getFullYear());
+  var easterKey=pad(easter.getDate())+"."+pad(easter.getMonth()+1)+".";
+  var friday=new Date(easter);friday.setDate(friday.getDate()-2);
+  var monday=new Date(easter);monday.setDate(monday.getDate()+1);
+  var fridayKey=pad(friday.getDate())+"."+pad(friday.getMonth()+1)+".";
+  var mondayKey=pad(monday.getDate())+"."+pad(monday.getMonth()+1)+".";
+  if(key===fridayKey)return "✝️🌷 Einen schönen Karfreitag.";
+  if(key===easterKey)return "🐣🐰 Frohe Ostern! 🌷🥚";
+  if(key===mondayKey)return "🐰🌷 Schönen Ostermontag!";
+  return "";
+}
 
-                <label>Hardwarevariante</label>
-                <select id="set-hardware">
-                    <option value="mini1">iPad mini 1 (A5, 512MB)</option>
-                    <option value="air1">iPad Air 1 (A7, 1GB)</option>
-                </select>
+function updateClock(){
+  var now=new Date();
+  var time=pad(now.getHours())+":"+pad(now.getMinutes());
+  text("clock",time);text("lockClock",time);
+  var date=now.toLocaleDateString("de-AT",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+  text("clockDate",date);text("lockDate",date);text("dateLine",date);
+  var g=getGreeting(now.getHours());
+  text("greeting",g.emoji+" "+g.text+", "+activeProfile+"!");
+  text("dayGreeting",g.emoji+" "+g.text+"!");
+  var special=getSpecialMessage(now);
+  var banner=byId("specialBanner");
+  if(special){banner.style.display="block";banner.textContent=special;}
+  else{banner.style.display="none";banner.textContent="";}
+}
 
-                <div style="margin-top: 15px; display: flex; justify-content: space-between;">
-                    <button class="btn-action" style="background:#8e8e93;" onclick="closeSettings()">Abbrechen</button>
-                    <button class="btn-action" onclick="saveSettings()">Speichern</button>
-                </div>
-                <div id="settings-error" class="error-msg"></div>
-            </div>
-        </div>
-    </div>
+function setProfileTheme(name){
+  document.body.setAttribute("data-profile-theme",profiles[name].theme);
+  var buttons=document.querySelectorAll(".profileButton"),i;
+  for(i=0;i<buttons.length;i++){
+    buttons[i].className="profileButton"+(buttons[i].getAttribute("data-profile")===name?" active":"");
+  }
+  text("activeProfileLabel","Profil: "+name);
+}
+function activateProfile(name){
+  if(!profiles[name])return;
+  activeProfile=name;setProfileTheme(name);
+  updateClock();
+}
 
-    <!-- Timer Alarm Modal -->
-    <div id="alarm-modal" class="modal-overlay">
-        <div class="modal-box">
-            <h3>⏰ Timer beendet!</h3>
-            <p style="margin: 15px 0; font-size:15px;">Die Zeit ist abgelaufen.</p>
-            <button class="btn-action" style="background:#ff3b30; width:100%; padding:10px;" onclick="stopAlarm()">Ton stoppen</button>
-        </div>
-    </div>
+function xhrGet(url,callback,timeout){
+  var xhr=new XMLHttpRequest(),finished=false;
+  function done(err,response){
+    if(finished)return;finished=true;callback(err,response);
+  }
+  xhr.open("GET",url,true);xhr.timeout=timeout||10000;
+  xhr.onreadystatechange=function(){
+    if(xhr.readyState===4){
+      if(xhr.status>=200&&xhr.status<300)done(null,xhr.responseText);
+      else done(new Error("HTTP "+xhr.status),null);
+    }
+  };
+  xhr.onerror=function(){done(new Error("Netzwerkfehler"),null);};
+  xhr.ontimeout=function(){done(new Error("Zeitüberschreitung"),null);};
+  try{xhr.send(null);}catch(e){done(e,null);}
+  return xhr;
+}
 
-    <script>
-        // ES5 Compatible JavaScript Core Logic
-        var config = {
-            masterCode: "1111",
-            pins: {
-                "Cobe": "2805",
-                "Grace": "2017",
-                "Mama": "1120",
-                "Papa": "1982"
-            },
-            birthdays: {
-                "Grace": { month: 6, day: 21 }, // July is 6 (0-indexed)
-                "Cobe": { month: 4, day: 28 },  // May is 4
-                "Mama": { month: 11, day: 1 },  // December is 11
-                "Papa": { month: 0, day: 5 }    // January is 0
-            },
-            designMode: "normal",
-            hardware: "mini1"
-        };
+function loadWeather(){
+  var box=byId("weather");
+  var url="https://api.open-meteo.com/v1/forecast?latitude=48.249&longitude=16.341&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=Europe%2FVienna";
+  xhrGet(url,function(err,response){
+    if(err){box.innerHTML='<div class="weatherTemp">—°</div><div class="muted">Wetter momentan nicht erreichbar.</div>';return;}
+    try{
+      var c=JSON.parse(response).current;
+      var desc={0:"Klar",1:"Überwiegend klar",2:"Teilweise bewölkt",3:"Bedeckt",45:"Nebel",48:"Nebel mit Reif",51:"Leichter Nieselregen",53:"Nieselregen",55:"Starker Nieselregen",61:"Leichter Regen",63:"Regen",65:"Starker Regen",71:"Leichter Schneefall",73:"Schneefall",75:"Starker Schneefall",80:"Regenschauer",81:"Regenschauer",82:"Starke Regenschauer",95:"Gewitter",96:"Gewitter mit Hagel",99:"Starkes Gewitter"};
+      box.innerHTML="";
+      var temp=document.createElement("div");temp.className="weatherTemp";temp.textContent=Math.round(c.temperature_2m)+"°C";box.appendChild(temp);
+      var label=document.createElement("div");label.style.fontWeight="700";label.textContent=desc[c.weather_code]||"Aktuelle Bedingungen";box.appendChild(label);
+      var detail=document.createElement("div");detail.className="muted";detail.style.marginTop="8px";
+      detail.textContent="Gefühlt "+Math.round(c.apparent_temperature)+"°C · Luftfeuchte "+c.relative_humidity_2m+"% · Wind "+Math.round(c.wind_speed_10m)+" km/h";box.appendChild(detail);
+    }catch(e){box.textContent="Wetterdaten konnten nicht gelesen werden.";}
+  },10000);
+}
 
-        var currentProfile = "Cobe";
-        var targetProfileRequest = null;
-        var currentPinInput = "";
-        var failedAttempts = {};
-        var lockoutTimers = {};
+function parseEvents(response){
+  var data=JSON.parse(response),events=data.events||[],results=[],i,j;
+  for(i=0;i<events.length;i++){
+    var event=events[i],comp=event.competitions&&event.competitions[0];
+    if(!comp||!comp.competitors||comp.competitors.length<2)continue;
+    var home=null,away=null;
+    for(j=0;j<comp.competitors.length;j++){
+      if(comp.competitors[j].homeAway==="home")home=comp.competitors[j];
+      else away=comp.competitors[j];
+    }
+    if(!home||!away){away=comp.competitors[0];home=comp.competitors[1];}
+    var st=comp.status&&comp.status.type;
+    var completed=!!(st&&st.completed),live=!!(st&&st.state==="in");
+    var hs=parseInt(home.score,10),as=parseInt(away.score,10);
+    var hasScores=!isNaN(hs)&&!isNaN(as);
+    var winner=null;
+    if(completed&&hasScores&&hs!==as)winner=hs>as?"home":"away";
+    results.push({
+      live:live,completed:completed,date:event.date?new Date(event.date).getTime():0,
+      dateLabel:event.date?new Date(event.date).toLocaleDateString("de-AT",{day:"2-digit",month:"2-digit"}):"",
+      status:live?"LIVE":(completed?"Beendet":"Geplant"),
+      home:home.team&&(home.team.shortDisplayName||home.team.displayName)||"Heim",
+      away:away.team&&(away.team.shortDisplayName||away.team.displayName)||"Gast",
+      homeScore:hasScores?hs:null,awayScore:hasScores?as:null,winner:winner
+    });
+  }
+  results.sort(function(a,b){if(a.live&&!b.live)return -1;if(!a.live&&b.live)return 1;return b.date-a.date;});
+  return results;
+}
 
-        // Timer Variables
-        var timerInterval = null;
-        var timerRemainingSeconds = 1500; // 25 mins
-        var timerRunning = false;
-        var audioCtx = null;
-        var alarmInterval = null;
+function renderScores(box,results){
+  box.innerHTML="";
+  if(!results.length){box.textContent="Derzeit keine Spiele in den abgerufenen Daten.";return;}
+  var count=Math.min(results.length,6),i;
+  for(i=0;i<count;i++){
+    var g=results[i],row=document.createElement("div");row.className="scoreRow";
+    var status=document.createElement("div");status.className=g.live?"liveLabel":"muted";
+    status.textContent=(g.live?"🔴 ":"")+g.status+(g.dateLabel?" · "+g.dateLabel:"");row.appendChild(status);
+    var matchup=document.createElement("div");
+    var away=document.createElement("span");away.textContent=g.away;
+    if(g.winner==="away")away.className="winner";else if(g.winner==="home")away.className="loser";
+    matchup.appendChild(away);
+    var score=document.createElement("span");score.style.margin="0 7px";score.className="teamScore";
+    score.textContent=(g.awayScore!==null&&g.homeScore!==null&&(g.completed||g.live))?g.awayScore+" – "+g.homeScore:"vs.";
+    if(g.winner==="away")score.className+=" winner";
+    else if(g.winner==="home")score.className+=" winner";
+    matchup.appendChild(score);
+    var home=document.createElement("span");home.textContent=g.home;
+    if(g.winner==="home")home.className="winner";else if(g.winner==="away")home.className="loser";
+    matchup.appendChild(home);row.appendChild(matchup);box.appendChild(row);
+  }
+}
 
-        // Load Settings from localStorage safely
-        function loadStoredSettings() {
-            try {
-                var stored = localStorage.getItem("homeviewos_config");
-                if (stored) {
-                    var parsed = JSON.parse(stored);
-                    if (parsed.masterCode) config.masterCode = parsed.masterCode;
-                    if (parsed.pins) config.pins = parsed.pins;
-                    if (parsed.designMode) config.designMode = parsed.designMode;
-                    if (parsed.hardware) config.hardware = parsed.hardware;
-                }
-            } catch (e) {
-                console.log("Localstorage error:", e);
-            }
-            applyDesignAndHardware();
+function loadNBA(){
+  var box=byId("nbaScores");box.textContent="NBA-Ergebnisse werden geladen …";
+  xhrGet("https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",function(err,response){
+    if(err){box.textContent="NBA-Daten momentan nicht erreichbar.";return;}
+    try{renderScores(box,parseEvents(response));}catch(e){box.textContent="NBA-Ergebnisse konnten nicht gelesen werden.";}
+  },12000);
+}
+
+function dateParam(date){return date.getFullYear()+pad(date.getMonth()+1)+pad(date.getDate());}
+function loadWNBA(){
+  var box=byId("wnbaScores");box.textContent="WNBA-Ergebnisse werden geladen …";
+  var collected=[],daysBack=0,done=false;
+  function nextDay(){
+    if(done)return;
+    if(daysBack>=10){done=true;renderScores(box,collected);return;}
+    var d=new Date();d.setDate(d.getDate()-daysBack++);
+    xhrGet("https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?dates="+dateParam(d),function(err,response){
+      if(done)return;
+      if(!err){
+        try{
+          var games=parseEvents(response),i;
+          for(i=0;i<games.length;i++)collected.push(games[i]);
+        }catch(e){}
+      }
+      var liveFound=false,i;
+      for(i=0;i<collected.length;i++){if(collected[i].live){liveFound=true;break;}}
+      if(liveFound){done=true;renderScores(box,collected);}
+      else nextDay();
+    },10000);
+  }
+  nextDay();
+}
+
+function loadORF(){
+  var box=byId("orfNews");
+  var thisRequest=++orfRequestId;
+  box.textContent="ORF-Nachrichten werden geladen …";
+  var feed="https://rss.orf.at/news.xml";
+  var proxies=[
+    "https://api.allorigins.win/raw?url="+encodeURIComponent(feed),
+    "https://corsproxy.io/?url="+encodeURIComponent(feed),
+    "https://api.codetabs.com/v1/proxy?quest="+encodeURIComponent(feed)
+  ];
+  var index=0,finished=false;
+
+  function fail(){
+    if(finished||thisRequest!==orfRequestId)return;
+    finished=true;box.innerHTML="";
+    var message=document.createElement("div");message.className="muted";
+    message.textContent="Der Live-Newsfeed ist derzeit nicht erreichbar.";
+    box.appendChild(message);
+    var link=document.createElement("a");link.href="https://orf.at/";link.target="_blank";
+    link.rel="noopener noreferrer";link.textContent="ORF.at öffnen";
+    link.style.display="inline-block";link.style.marginTop="10px";link.style.fontWeight="700";
+    link.style.color="inherit";box.appendChild(link);
+  }
+
+  function tryNext(){
+    if(finished||thisRequest!==orfRequestId)return;
+    if(index>=proxies.length){fail();return;}
+    var url=proxies[index++];
+    xhrGet(url,function(err,response){
+      if(finished||thisRequest!==orfRequestId)return;
+      if(err||!response){tryNext();return;}
+      try{
+        var xml=new DOMParser().parseFromString(response,"text/xml");
+        if(xml.getElementsByTagName("parsererror").length){tryNext();return;}
+        var items=xml.getElementsByTagName("item");
+        if(!items.length)items=xml.getElementsByTagName("entry");
+        if(!items.length){tryNext();return;}
+        var articles=[],i;
+        for(i=0;i<items.length&&articles.length<6;i++){
+          var titleNodes=items[i].getElementsByTagName("title");
+          var title=titleNodes.length?(titleNodes[0].textContent||titleNodes[0].text||""):"";
+          title=title.replace(/^\s+|\s+$/g,"");
+          if(!title)continue;
+          var href="https://orf.at/";
+          var links=items[i].getElementsByTagName("link");
+          var j;
+          for(j=0;j<links.length;j++){
+            var candidate=(links[j].getAttribute("href")||links[j].textContent||links[j].text||"").replace(/^\s+|\s+$/g,"");
+            if(/^https:\/\/([a-z0-9-]+\.)?orf\.at\//i.test(candidate)){href=candidate;break;}
+          }
+          var about=items[i].getAttribute("rdf:about")||items[i].getAttribute("about");
+          if(href==="https://orf.at/"&&about&&/^https:\/\/([a-z0-9-]+\.)?orf\.at\//i.test(about))href=about;
+          articles.push({title:title,url:href});
         }
-
-        function saveStoredSettings() {
-            try {
-                localStorage.setItem("homeviewos_config", JSON.stringify(config));
-            } catch (e) {
-                console.log("Localstorage save error:", e);
-            }
+        if(!articles.length){tryNext();return;}
+        finished=true;box.innerHTML="";
+        for(i=0;i<articles.length;i++){
+          var row=document.createElement("div");row.className="newsItem";
+          var a=document.createElement("a");a.href=articles[i].url;a.target="_blank";
+          a.rel="noopener noreferrer";a.textContent=articles[i].title;
+          row.appendChild(a);box.appendChild(row);
         }
+        var footer=document.createElement("div");footer.className="muted";
+        footer.style.marginTop="8px";footer.textContent="Quelle: ORF.at · automatische Aktualisierung";
+        box.appendChild(footer);
+      }catch(e){tryNext();}
+    },8000);
+  }
+  tryNext();
+}
 
-        function applyDesignAndHardware() {
-            document.body.className = "theme-" + currentProfile.toLowerCase() + " mode-" + config.designMode;
-            var hwText = config.hardware === "air1" ? "iPad Air 1 (A7, 1GB)" : "iPad mini 1 (A5, 512MB)";
-            var devEl = document.getElementById("dev-status-el");
-            if (devEl) {
-                devEl.innerHTML = "Profil: " + currentProfile + " | Hardware: " + hwText;
-            }
-        }
+function showQuote(){
+  quoteIndex=(quoteIndex+1)%quotes.length;
+  text("quoteText","“"+quotes[quoteIndex][0]+"”");
+  text("quoteAuthor","— "+quotes[quoteIndex][1]);
+}
 
-        // Initialization on Load
-        window.onload = function() {
-            loadStoredSettings();
-            updateClockAndCalendar();
-            setInterval(updateClockAndCalendar, 1000);
-            
-            fetchWeather();
-            fetchNBA();
-            fetchWNBA();
-            fetchNews();
-            loadDailyQuote();
+function lockoutDuration(attempts){
+  if(attempts===3)return 60;if(attempts===4)return 300;if(attempts===5)return 900;
+  if(attempts===6)return 1800;if(attempts>=7)return 3600;return 0;
+}
+function updatePinDots(){
+  var s="",i;for(i=0;i<4;i++)s+=i<enteredPin.length?"● ":"○ ";
+  text("pinDots",s);
+}
+function selectPinProfile(name){
+  if(!profiles[name])return;
+  selectedProfile=name;enteredPin="";
+  text("pinTitle",name+" · PIN eingeben");text("pinError","");
+  updatePinDots();byId("pinPanel").style.display="block";byId("masterPanel").style.display="none";
+}
+function submitPin(){
+  if(Date.now()<lockedUntil){
+    text("pinError","Gesperrt. Bitte "+Math.ceil((lockedUntil-Date.now())/1000)+" Sekunden warten.");return;
+  }
+  if(enteredPin===profiles[selectedProfile].pin){
+    failedAttempts=0;lockedUntil=0;activateProfile(selectedProfile);setLockMode(false);
+    enteredPin="";text("pinError","");return;
+  }
+  failedAttempts++;
+  var duration=lockoutDuration(failedAttempts);
+  if(duration)lockedUntil=Date.now()+duration*1000;
+  enteredPin="";updatePinDots();
+  text("pinError",duration?"Zu viele Fehlversuche. Gesperrt für "+Math.ceil(duration/60)+" Minute(n).":"Falscher PIN. Versuch "+failedAttempts+".");
+}
+function setLockMode(enabled){
+  byId("lockScreen").className=enabled?"visible":"";
+  byId("app").style.display=enabled?"none":"block";
+  byId("pinPanel").style.display="none";byId("masterPanel").style.display="none";
+  enteredPin="";updatePinDots();
+  if(enabled){text("pinError","");text("masterError","");}
+}
+function submitMaster(){
+  if(byId("masterInput").value==="1111"){
+    failedAttempts=0;lockedUntil=0;byId("masterInput").value="";
+    text("masterError","");activateProfile("Cobe");setLockMode(false);
+  }else{
+    text("masterError","Falscher Mastercode.");byId("masterInput").value="";
+  }
+}
 
-            // Switch default view
-            switchProfileDirect("Cobe");
-        };
+function bindAll(){
+  var list=document.querySelectorAll(".profileButton"),i;
+  for(i=0;i<list.length;i++)list[i].onclick=function(){activateProfile(this.getAttribute("data-profile"));};
 
-        // Clock, Date & Greeting
-        function updateClockAndCalendar() {
-            var now = new Date();
-            var hours = now.getHours();
-            var mins = now.getMinutes();
-            var secs = now.getSeconds();
+  list=document.querySelectorAll(".lockProfile");
+  for(i=0;i<list.length;i++)list[i].onclick=function(){selectPinProfile(this.getAttribute("data-profile"));};
 
-            var timeStr = (hours < 10 ? "0" : "") + hours + ":" + 
-                          (mins < 10 ? "0" : "") + mins + ":" + 
-                          (secs < 10 ? "0" : "") + secs;
-            
-            var timeEl = document.getElementById("time-el");
-            if (timeEl) timeEl.innerHTML = timeStr;
+  list=document.querySelectorAll("[data-key]");
+  for(i=0;i<list.length;i++)list[i].onclick=function(){
+    var key=this.getAttribute("data-key");
+    if(key==="C"){enteredPin="";text("pinError","");updatePinDots();}
+    else if(key==="OK"){if(enteredPin.length===4)submitPin();else text("pinError","Bitte vier Ziffern eingeben.");}
+    else if(enteredPin.length<4){
+      enteredPin+=key;updatePinDots();
+      if(enteredPin.length===4)window.setTimeout(function(){if(enteredPin.length===4)submitPin();},150);
+    }
+  };
 
-            var weekdays = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
-            var months = ["Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-            
-            var wd = weekdays[now.getDay()];
-            var d = now.getDate();
-            var m = months[now.getMonth()];
-            var y = now.getFullYear();
+  byId("pinCancel").onclick=function(){byId("pinPanel").style.display="none";enteredPin="";updatePinDots();};
+  byId("lockToggle").onclick=function(){
+    if(longTriggered){longTriggered=false;return;}
+    setLockMode(true);
+  };
+  function beginLongPress(){
+    longTriggered=false;
+    lockTimer=window.setTimeout(function(){
+      longTriggered=true;setLockMode(true);byId("masterPanel").style.display="block";
+    },3000);
+  }
+  function cancelLongPress(){if(lockTimer)window.clearTimeout(lockTimer);}
+  byId("lockToggle").ontouchstart=beginLongPress;
+  byId("lockToggle").ontouchend=cancelLongPress;
+  byId("lockToggle").ontouchcancel=cancelLongPress;
+  byId("lockToggle").onmousedown=beginLongPress;
+  byId("lockToggle").onmouseup=cancelLongPress;
+  byId("lockToggle").onmouseleave=cancelLongPress;
 
-            var dateStr = wd + ", " + d + ". " + m + " " + y;
-            var dateEl = document.getElementById("date-el");
-            if (dateEl) dateEl.innerHTML = dateStr;
+  byId("lockClose").onclick=function(){setLockMode(false);};
+  byId("masterOpen").onclick=function(){
+    byId("pinPanel").style.display="none";byId("masterPanel").style.display="block";
+    byId("masterInput").value="";text("masterError","");
+  };
+  byId("masterSubmit").onclick=submitMaster;
+  byId("masterCancel").onclick=function(){byId("masterPanel").style.display="none";byId("masterInput").value="";};
+  byId("masterInput").onkeydown=function(e){e=e||window.event;if(e.key==="Enter"||e.keyCode===13)submitMaster();};
 
-            // Greeting
-            var greeting = "Guten Tag";
-            if (hours < 11) greeting = "Guten Morgen";
-            else if (hours >= 18) greeting = "Guten Abend";
+  byId("quoteNext").onclick=showQuote;
+}
 
-            var greetingEl = document.getElementById("greeting-el");
-            if (greetingEl) greetingEl.innerHTML = greeting + ", " + currentProfile + "!";
-
-            // Birthday check
-            checkBirthday(now);
-        }
-
-        function checkBirthday(now) {
-            var bday = config.birthdays[currentProfile];
-            var bdayEl = document.getElementById("birthday-el");
-            if (!bdayEl) return;
-
-            if (bday && now.getMonth() === bday.month && now.getDate() === bday.day) {
-                bdayEl.style.display = "inline-block";
-                bdayEl.innerHTML = "🎉 Alles Gute zum Geburtstag, " + currentProfile + "!";
-            } else {
-                bdayEl.style.display = "none";
-            }
-        }
-
-        // Robust XHR Wrapper with Fallbacks & Timeouts
-        function robustXHR(urls, successCallback, errorCallback) {
-            var index = 0;
-            function tryNext() {
-                if (index >= urls.length) {
-                    errorCallback("All endpoints failed");
-                    return;
-                }
-                var currentUrl = urls[index];
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", currentUrl, true);
-                xhr.timeout = 8000;
-                
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status >= 200 && xhr.status < 300) {
-                            successCallback(xhr.responseText);
-                        } else {
-                            index++;
-                            tryNext();
-                        }
-                    }
-                };
-                xhr.ontimeout = function() {
-                    index++;
-                    tryNext();
-                };
-                xhr.onerror = function() {
-                    index++;
-                    tryNext();
-                };
-                try {
-                    xhr.send();
-                } catch (e) {
-                    index++;
-                    tryNext();
-                }
-            }
-            tryNext();
-        }
-
-        // Weather for Wien-Döbling
-        function fetchWeather() {
-            var weatherEl = document.getElementById("weather-el");
-            if (weatherEl) weatherEl.innerHTML = "Lade Wetter...";
-
-            var url = "https://api.open-meteo.com/v1/forecast?latitude=48.25&longitude=16.30&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=Europe%2FVienna";
-            
-            robustXHR([url], function(resp) {
-                try {
-                    var data = JSON.parse(resp);
-                    if (data && data.current) {
-                        var temp = data.current.temperature_2m;
-                        var wind = data.current.wind_speed_10m;
-                        var hum = data.current.relative_humidity_2m;
-                        var code = data.current.weather_code;
-                        
-                        var desc = getWeatherDescription(code);
-
-                        var html = "<div style='font-size:26px; font-weight:bold; margin-bottom:5px;'>" + temp + "°C</div>" +
-                                   "<div style='font-size:15px; font-weight:600;'>" + desc + "</div>" +
-                                   "<div style='font-size:13px; color:#555; margin-top:8px;'>Wind: " + wind + " km/h | Feuchtigkeit: " + hum + "%</div>";
-                        if (weatherEl) weatherEl.innerHTML = html;
-                        setIslandStatus("Wetter aktualisiert");
-                    } else {
-                        if (weatherEl) weatherEl.innerHTML = "Keine Wetterdaten verfügbar.";
-                    }
-                } catch (e) {
-                    if (weatherEl) weatherEl.innerHTML = "Fehler beim Verarbeiten der Wetterdaten.";
-                }
-            }, function(err) {
-                if (weatherEl) weatherEl.innerHTML = "Wetterdienst zur Zeit nicht erreichbar.";
-            });
-        }
-
-        function getWeatherDescription(code) {
-            if (code === 0) return "☀️ Klarer Himmel";
-            if (code >= 1 && code <= 3) return "⛅ Leicht bewölkt";
-            if (code >= 45 && code <= 48) return "🌫️ Nebelig";
-            if (code >= 51 && code <= 67) return "🌧️ Regen";
-            if (code >= 71 && code <= 77) return "❄️ Schneefall";
-            if (code >= 95) return "⛈️ Gewitter";
-            return "☁️ Bewölkt";
-        }
-
-        // NBA Scores
-        function fetchNBA() {
-            var nbaEl = document.getElementById("nba-el");
-            if (nbaEl) nbaEl.innerHTML = "Lade NBA...";
-
-            var url = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard";
-            robustXHR([url], function(resp) {
-                try {
-                    var data = JSON.parse(resp);
-                    var events = data.events;
-                    if (!events || events.length === 0) {
-                        if (nbaEl) nbaEl.innerHTML = "<div style='padding:10px; text-align:center;'>Heute keine Spiele im Spielplan</div>";
-                        return;
-                    }
-                    var html = "";
-                    var count = Math.min(events.length, 4);
-                    for (var i = 0; i < count; i++) {
-                        var ev = events[i];
-                        var comp = ev.competitions[0];
-                        var home = comp.competitors[0];
-                        var away = comp.competitors[1];
-                        var status = ev.status.type.detail;
-
-                        html += "<div class='score-item'><strong>" + away.team.abbreviation + "</strong> " + away.score + " @ <strong>" + home.team.abbreviation + "</strong> " + home.score + "<br><span style='color:#666; font-size:11px;'>" + status + "</span></div>";
-                    }
-                    if (nbaEl) nbaEl.innerHTML = html;
-                } catch (e) {
-                    if (nbaEl) nbaEl.innerHTML = "Fehler bei NBA Daten.";
-                }
-            }, function(err) {
-                if (nbaEl) nbaEl.innerHTML = "NBA Server nicht erreichbar.";
-            });
-        }
-
-        // WNBA Scores
-        function fetchWNBA() {
-            var wnbaEl = document.getElementById("wnba-el");
-            if (wnbaEl) wnbaEl.innerHTML = "Lade WNBA...";
-
-            var url = "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard";
-            robustXHR([url], function(resp) {
-                try {
-                    var data = JSON.parse(resp);
-                    var events = data.events;
-                    if (!events || events.length === 0) {
-                        if (wnbaEl) wnbaEl.innerHTML = "<div style='padding:10px; text-align:center;'>Heute keine Spiele im Spielplan</div>";
-                        return;
-                    }
-                    var html = "";
-                    var count = Math.min(events.length, 4);
-                    for (var i = 0; i < count; i++) {
-                        var ev = events[i];
-                        var comp = ev.competitions[0];
-                        var home = comp.competitors[0];
-                        var away = comp.competitors[1];
-                        var status = ev.status.type.detail;
-
-                        html += "<div class='score-item'><strong>" + away.team.abbreviation + "</strong> " + away.score + " @ <strong>" + home.team.abbreviation + "</strong> " + home.score + "<br><span style='color:#666; font-size:11px;'>" + status + "</span></div>";
-                    }
-                    if (wnbaEl) wnbaEl.innerHTML = html;
-                } catch (e) {
-                    if (wnbaEl) wnbaEl.innerHTML = "Fehler bei WNBA Daten.";
-                }
-            }, function(err) {
-                if (wnbaEl) wnbaEl.innerHTML = "WNBA Server nicht erreichbar.";
-            });
-        }
-
-        // ORF.at News with Proxy Fallback Chain
-        function fetchNews() {
-            var newsEl = document.getElementById("news-el");
-            if (newsEl) newsEl.innerHTML = "Lade Nachrichten...";
-
-            var feedUrl = "https://rss.orf.at/news.xml";
-            var proxies = [
-                "https://api.allorigins.win/raw?url=" + encodeURIComponent(feedUrl),
-                "https://corsproxy.io/?url=" + encodeURIComponent(feedUrl)
-            ];
-
-            robustXHR(proxies, function(resp) {
-                try {
-                    var parser = new DOMParser();
-                    var xml = parser.parseFromString(resp, "text/xml");
-                    var items = xml.getElementsByTagName("item");
-                    if (!items || items.length === 0) {
-                        if (newsEl) newsEl.innerHTML = "Keine Nachrichten gefunden.";
-                        return;
-                    }
-                    var html = "";
-                    var count = Math.min(items.length, 4);
-                    for (var i = 0; i < count; i++) {
-                        var title = items[i].getElementsByTagName("title")[0].textContent;
-                        var link = items[i].getElementsByTagName("link")[0].textContent;
-                        html += "<div class='news-item'><a href='" + link + "' target='_blank'>" + title + "</a></div>";
-                    }
-                    if (newsEl) newsEl.innerHTML = html;
-                } catch (e) {
-                    if (newsEl) newsEl.innerHTML = "<a href='https://orf.at' target='_blank'>ORF.at öffnen (Feed Parse Fehler)</a>";
-                }
-            }, function(err) {
-                if (newsEl) newsEl.innerHTML = "<a href='https://orf.at' target='_blank'>ORF.at direkt öffnen</a>";
-            });
-        }
-
-        // Daily Thoughts / Quotes
-        function loadDailyQuote() {
-            var quotes = [
-                "Der Weg ist das Ziel. – Konfuzius",
-                "Man muss das Unmögliche versuchen, um das Mögliche zu erreichen. – Hermann Hesse",
-                "Freude an der Arbeit lässt das Werk trefflich geraten. – Aristoteles",
-                "Jeder Tag ist ein neuer Anfang.",
-                "Familie ist, wo Leben beginnt und Liebe niemals endet."
-            ];
-            var now = new Date();
-            var start = new Date(now.getFullYear(), 0, 0);
-            var diff = now - start;
-            var oneDay = 1000 * 60 * 60 * 24;
-            var dayOfYear = Math.floor(diff / oneDay);
-            
-            var quoteIndex = dayOfYear % quotes.length;
-            var quoteEl = document.getElementById("quote-el");
-            if (quoteEl) quoteEl.innerHTML = "„" + quotes[quoteIndex] + "“";
-        }
-
-        // Profile & PIN Logic
-        function requestProfile(profileName) {
-            if (currentProfile === profileName) return;
-
-            // Check if locked out
-            if (lockoutTimers[profileName] && lockoutTimers[profileName] > Date.now()) {
-                var remainingSecs = Math.ceil((lockoutTimers[profileName] - Date.now()) / 1000);
-                alert("Profil " + profileName + " ist gesperrt. Noch " + remainingSecs + " Sekunden.");
-                return;
-            }
-
-            targetProfileRequest = profileName;
-            currentPinInput = "";
-            document.getElementById("pin-modal-title").innerHTML = "PIN für " + profileName + " eingeben";
-            document.getElementById("pin-dots").innerHTML = "----";
-            document.getElementById("pin-error").innerHTML = "";
-            document.getElementById("pin-modal").style.display = "flex";
-        }
-
-        function pressPin(digit) {
-            if (currentPinInput.length < 12) {
-                currentPinInput += digit;
-                var dots = "";
-                for (var i = 0; i < currentPinInput.length; i++) dots += "•";
-                while (dots.length < 4) dots += "-";
-                document.getElementById("pin-dots").innerHTML = dots;
-
-                // Auto-check PIN length matching
-                var correctPin = config.pins[targetProfileRequest];
-                if (currentPinInput === config.masterCode || currentPinInput === correctPin) {
-                    closePinModal();
-                    switchProfileDirect(targetProfileRequest);
-                } else if (currentPinInput.length >= (correctPin ? correctPin.length : 4)) {
-                    handleFailedPin();
-                }
-            }
-        }
-
-        function clearPin() {
-            currentPinInput = "";
-            document.getElementById("pin-dots").innerHTML = "----";
-        }
-
-        function handleFailedPin() {
-            if (!failedAttempts[targetProfileRequest]) failedAttempts[targetProfileRequest] = 0;
-            failedAttempts[targetProfileRequest]++;
-
-            if (failedAttempts[targetProfileRequest] >= 5) {
-                lockoutTimers[targetProfileRequest] = Date.now() + (5 * 60 * 1000);
-                closePinModal();
-                alert("Zu viele Fehlversuche. Profil für 5 Minuten gesperrt.");
-            } else {
-                document.getElementById("pin-error").innerHTML = "Falsche PIN (" + failedAttempts[targetProfileRequest] + "/5)";
-                currentPinInput = "";
-                document.getElementById("pin-dots").innerHTML = "----";
-            }
-        }
-
-        function closePinModal() {
-            document.getElementById("pin-modal").style.display = "none";
-        }
-
-        function switchProfileDirect(profileName) {
-            currentProfile = profileName;
-            failedAttempts[profileName] = 0;
-            
-            // Update buttons
-            var btns = document.getElementsByClassName("profile-btn");
-            for (var i = 0; i < btns.length; i++) {
-                if (btns[i].innerHTML.indexOf(profileName) !== -1) {
-                    btns[i].className = "profile-btn active";
-                } else if (btns[i].innerHTML.indexOf("⚙️") === -1) {
-                    btns[i].className = "profile-btn";
-                }
-            }
-
-            applyDesignAndHardware();
-            updateClockAndCalendar();
-            setIslandStatus("Profil gewechselt: " + profileName);
-        }
-
-        // Timer Logic
-        function startTimer() {
-            if (timerRunning) return;
-
-            var hInput = parseInt(document.getElementById("t-hours").value) || 0;
-            var mInput = parseInt(document.getElementById("t-mins").value) || 0;
-            var sInput = parseInt(document.getElementById("t-secs").value) || 0;
-
-            if (timerRemainingSeconds === 1500 && (hInput > 0 || mInput > 0 || sInput > 0)) {
-                timerRemainingSeconds = (hInput * 3600) + (mInput * 60) + sInput;
-            }
-
-            if (timerRemainingSeconds <= 0) timerRemainingSeconds = 1500;
-
-            timerRunning = true;
-            
-            // Initialize Audio Context on User Gesture for iOS Safari
-            initAudioContext();
-
-            timerInterval = setInterval(function() {
-                if (timerRemainingSeconds > 0) {
-                    timerRemainingSeconds--;
-                    updateTimerDisplay();
-                } else {
-                    pauseTimer();
-                    triggerAlarm();
-                }
-            }, 1000);
-        }
-
-        function pauseTimer() {
-            timerRunning = false;
-            clearInterval(timerInterval);
-        }
-
-        function resetTimer() {
-            pauseTimer();
-            timerRemainingSeconds = 1500;
-            document.getElementById("t-hours").value = 0;
-            document.getElementById("t-mins").value = 25;
-            document.getElementById("t-secs").value = 0;
-            updateTimerDisplay();
-        }
-
-        function updateTimerDisplay() {
-            var h = Math.floor(timerRemainingSeconds / 3600);
-            var m = Math.floor((timerRemainingSeconds % 3600) / 60);
-            var s = timerRemainingSeconds % 60;
-
-            var str = (h < 10 ? "0" : "") + h + ":" + 
-                      (m < 10 ? "0" : "") + m + ":" + 
-                      (s < 10 ? "0" : "") + s;
-            
-            document.getElementById("timer-display").innerHTML = str;
-        }
-
-        function initAudioContext() {
-            try {
-                if (!audioCtx) {
-                    var AudioContext = window.AudioContext || window.webkitAudioContext;
-                    if (AudioContext) audioCtx = new AudioContext();
-                }
-                if (audioCtx && audioCtx.state === "suspended") {
-                    audioCtx.resume();
-                }
-            } catch (e) {
-                console.log("AudioContext not supported or blocked");
-            }
-        }
-
-        function playChimeNote() {
-            try {
-                if (!audioCtx) return;
-                var notes = [659.25, 783.99, 987.77, 783.99];
-                var now = audioCtx.currentTime;
-                
-                for (var i = 0; i < notes.length; i++) {
-                    var osc = audioCtx.createOscillator();
-                    var gain = audioCtx.createGain();
-                    
-                    osc.type = "sine";
-                    osc.frequency.setValueAtTime(notes[i], now + (i * 0.2));
-                    
-                    gain.gain.setValueAtTime(0, now + (i * 0.2));
-                    gain.gain.linearRampToValueAtTime(0.2, now + (i * 0.2) + 0.05);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + (i * 0.2) + 0.18);
-                    
-                    osc.connect(gain);
-                    gain.connect(audioCtx.destination);
-                    
-                    osc.start(now + (i * 0.2));
-                    osc.stop(now + (i * 0.2) + 0.2);
-                }
-            } catch (e) {
-                console.log("Error playing chime", e);
-            }
-        }
-
-        function triggerAlarm() {
-            document.getElementById("alarm-modal").style.display = "flex";
-            playChimeNote();
-            alarmInterval = setInterval(playChimeNote, 2000);
-        }
-
-        function stopAlarm() {
-            clearInterval(alarmInterval);
-            document.getElementById("alarm-modal").style.display = "none";
-        }
-
-        // Settings Dialog
-        function openSettings() {
-            // Require Mastercode or Cobe PIN for Settings
-            var entered = prompt("Bitte Mastercode oder Cobe PIN für die Einstellungen eingeben:");
-            if (entered === config.masterCode || entered === config.pins["Cobe"]) {
-                document.getElementById("set-master").value = config.masterCode;
-                document.getElementById("set-pin-cobe").value = config.pins["Cobe"];
-                document.getElementById("set-pin-grace").value = config.pins["Grace"];
-                document.getElementById("set-pin-mama").value = config.pins["Mama"];
-                document.getElementById("set-pin-papa").value = config.pins["Papa"];
-                document.getElementById("set-design").value = config.designMode;
-                document.getElementById("set-hardware").value = config.hardware;
-                document.getElementById("settings-error").innerHTML = "";
-                document.getElementById("settings-modal").style.display = "flex";
-            } else if (entered !== null) {
-                alert("Falscher Code.");
-            }
-        }
-
-        function closeSettings() {
-            document.getElementById("settings-modal").style.display = "none";
-        }
-
-        function saveSettings() {
-            var m = document.getElementById("set-master").value;
-            var c = document.getElementById("set-pin-cobe").value;
-            var g = document.getElementById("set-pin-grace").value;
-            var ma = document.getElementById("set-pin-mama").value;
-            var p = document.getElementById("set-pin-papa").value;
-
-            if (m.length >= 4 && m.length <= 12) config.masterCode = m;
-            if (c.length >= 4 && c.length <= 12) config.pins["Cobe"] = c;
-            if (g.length >= 4 && g.length <= 12) config.pins["Grace"] = g;
-            if (ma.length >= 4 && ma.length <= 12) config.pins["Mama"] = ma;
-            if (p.length >= 4 && p.length <= 12) config.pins["Papa"] = p;
-
-            config.designMode = document.getElementById("set-design").value;
-            config.hardware = document.getElementById("set-hardware").value;
-
-            saveStoredSettings();
-            applyDesignAndHardware();
-            closeSettings();
-            setIslandStatus("Einstellungen gespeichert");
-        }
-
-        // Dynamic Island Status Helper
-        function setIslandStatus(msg) {
-            var island = document.getElementById("dynamic-island");
-            if (island) {
-                island.innerHTML = msg;
-                setTimeout(function() {
-                    island.innerHTML = "HOMEVIEWOS 28 PRO MAX ULTRA";
-                }, 4000);
-            }
-        }
-    </script>
+function init(){
+  bindAll();activateProfile("Cobe");updateClock();
+  window.setInterval(updateClock,1000);
+  showQuote();
+  loadWeather();loadNBA();loadWNBA();loadORF();
+  window.setInterval(loadWeather,10*60*1000);
+  window.setInterval(loadNBA,3*60*1000);
+  window.setInterval(loadWNBA,5*60*1000);
+  window.setInterval(loadORF,5*60*1000);
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);
+else init();
+})();
+</script>
 </body>
 </html>
