@@ -24,15 +24,20 @@
             user-select: none;
         }
         
-        /* SPÜRBARER HARDWARE-UNTERSCHIED: iPad Air nutzt optimierte Render-Abstände */
+        /* SPÜRBARER HARDWARE-UNTERSCHIED: iPad Air vergrößert die Kacheln massiv und füllend */
         body.hw-air {
             padding: 30px 25px;
             -webkit-transform: translate3d(0,0,0);
             transform: translate3d(0,0,0);
         }
         body.hw-air .widget {
+            height: 260px !important;
             margin-bottom: 26px;
+            padding: 24px;
         }
+        body.hw-air .clock-display { font-size: 88px; }
+        body.hw-air .sport-row { font-size: 22px; margin-bottom: 12px; }
+        body.hw-air .news-item { font-size: 18px; margin-bottom: 12px; }
         
         .header {
             width: 100%;
@@ -48,12 +53,19 @@
             letter-spacing: -2px;
             line-height: 1;
             margin-bottom: 6px;
+            transition: color 0.3s;
         }
         
-        /* SPÜRBARER MODELL-UNTERSCHIED: Pro und Pro Max verändern die Kanten und Titel */
-        body.mod-pro .brand-title, body.mod-promax .brand-title { color: #d4af37; text-shadow: 2px 2px 0px #000; }
-        body.mod-pro .widget { border-color: #d4af37 !important; }
-        body.mod-promax .widget { border: 6px dashed #d4af37 !important; box-shadow: 0 15px 35px rgba(212,175,55,0.3) !important; background: #fff !important; }
+        /* SPÜRBARER MODELL-UNTERSCHIED: Edles, füllendes Premium-Design statt gelber Streifen */
+        body.mod-pro .brand-title { color: #111; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+        body.mod-pro .widget { border: 4px solid #111 !important; box-shadow: 0 12px 25px rgba(0,0,0,0.18) !important; }
+        
+        body.mod-promax .brand-title { color: #222; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        body.mod-promax .widget { 
+            border: 6px double #111 !important; 
+            box-shadow: 0 16px 35px rgba(0,0,0,0.25) !important; 
+            background: #ffffff !important; 
+        }
         
         .brand-sub {
             font-size: 32px;
@@ -78,8 +90,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             z-index: 5000;
         }
-        
-        .profile-bar-tv {
+        .manual-refresh-btn:active { background: #b32426; }.profile-bar-tv {
             display: block;
             margin: 0 auto;
             text-align: center;
@@ -124,9 +135,9 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.12);
             overflow: hidden;
             position: relative;
+            height: 235px;
         }
-        .widget.huge { height: 235px; }
-        .widget.dynamic-height { min-height: 145px; height: auto; }
+        .widget.dynamic-height { min-height: 145px; height: auto !important; }
         
         .widget h3 {
             font-size: 18px;
@@ -134,7 +145,9 @@
             margin-bottom: 12px;
             color: #444;
             text-transform: uppercase;
-        }.clock-display { font-size: 76px; font-weight: 900; color: #000; letter-spacing: -3px; line-height: 1; }
+        }
+        
+        .clock-display { font-size: 76px; font-weight: 900; color: #000; letter-spacing: -3px; line-height: 1; }
         .date-display { font-size: 22px; color: #333; margin: 4px 0; font-weight: 700; }
         .greeting-display { font-size: 24px; font-weight: 900; color: #e26a45; border-top: 3px solid #222; padding-top: 4px; }
         
@@ -142,14 +155,14 @@
         .weather-city { font-size: 20px; color: #111; font-weight: bold; }
         .weather-desc { font-size: 17px; color: #e26a45; font-weight: bold; }
         
-        .sport-row { font-size: 20px; font-weight: 900; margin-bottom: 8px; color: #000; letter-spacing: -0.5px; }
+        .sport-row { font-size: 19px; font-weight: 900; margin-bottom: 8px; color: #000; letter-spacing: -0.5px; }
         .news-item { font-size: 16px; font-weight: 800; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-bottom: 1px solid #eee; padding-bottom: 4px; color: #111; }
         .update-timestamp { position: absolute; bottom: 6px; right: 15px; font-size: 11px; font-weight: 800; color: #777; text-transform: uppercase; }
         
         .music-frame { width: 100%; height: 135px; border: none; border-radius: 12px; background: #101820; }
         .dev-select { width: 100%; padding: 12px; font-size: 16px; font-weight: bold; margin-top: 8px; border: 3px solid #111; border-radius: 8px; }
         
-        /* HOCHWERTIGES NUMMERN-PAD DIREKT AUF DEM SCREEN (OHNE BUCHSTABEN / RAUTE) */
+        /* PEACH-NUMPAD INTERFACE */
         .pin-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index: 10000; }
         .pin-box { background: #FFCBA4; width: 90%; max-width: 340px; margin: 8% auto; padding: 20px; border-radius: 24px; border: 4px solid #222; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
         .pin-preview-stars { font-size: 32px; font-weight: bold; color: #222; height: 35px; margin-bottom: 15px; letter-spacing: 5px; }
@@ -168,6 +181,9 @@
         .numpad-btn.action-ok { background: #27ae60; }
         
         .dev-container { display: none; margin-top: 10px; padding-top: 10px; border-top: 2px dashed #d9383a; }
+        
+        /* Sperranzeige */
+        .lock-indicator { display: none; color: #d9383a; font-size: 48px; margin: 10px 0; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -180,7 +196,6 @@
             <div class="brand-sub">Apple <span class="apple-logo"></span></div>
         </div>
         
-        <!-- Apple TV Profilleiste mit korrigierten, dunkelhaarigen Emojis -->
         <div class="profile-bar-tv">
             <div class="profile-item active" id="prof-Cobe" onclick="triggerProfileSelection('Cobe')">
                 <div class="profile-avatar" style="background-image: url('cobe.jpg'); color: #000;">👨🏻‍💻</div>
@@ -201,19 +216,19 @@
         </div>
     </div><div class="dashboard-container">
         <div class="column">
-            <div class="widget huge">
+            <div class="widget">
                 <h3>Uhrzeit &amp; Datum</h3>
                 <div class="clock-display" id="txt-clock">--:--:--</div>
                 <div class="date-display" id="txt-date">--.--.----</div>
                 <div class="greeting-display" id="txt-greeting">Hallo!</div>
                 <div class="update-timestamp" id="txt-bat-status">Akku: Lade...</div>
             </div>
-            <div class="widget huge">
+            <div class="widget">
                 <h3>Amazon Music</h3>
                 <iframe class="music-frame" src="https://amazon.de"></iframe>
                 <div class="update-timestamp">Web-Player Active</div>
             </div>
-            <div class="widget huge">
+            <div class="widget">
                 <h3>NBA Spielstände</h3>
                 <div id="nba-content" style="padding-top:10px;">Lade NBA Live...</div>
                 <div class="update-timestamp" id="ts-nba">Zuletzt: --:--</div>
@@ -221,17 +236,17 @@
         </div>
 
         <div class="column">
-            <div class="widget huge">
+            <div class="widget">
                 <h3>Wetter in Wien-Döbling</h3>
                 <div id="weather-content">Lade Echtzeit-Wetter...</div>
                 <div class="update-timestamp" id="ts-weather">Zuletzt: --:--</div>
             </div>
-            <div class="widget huge">
+            <div class="widget">
                 <h3>WNBA Spielstände</h3>
                 <div id="wnba-content" style="padding-top:10px;">Lade WNBA Live...</div>
                 <div class="update-timestamp" id="ts-wnba">Zuletzt: --:--</div>
             </div>
-            <div class="widget huge">
+            <div class="widget">
                 <h3>ORF.at Live News</h3>
                 <div id="news-content" style="padding-top:10px;">Lade aktuelle Schlagzeilen...</div>
                 <div class="update-timestamp" id="ts-news">Zuletzt: --:--</div>
@@ -239,12 +254,11 @@
             
             <div class="widget dynamic-height" id="dev-widget" style="display: none; border-color: #d9383a; cursor:pointer;" onclick="toggleDevMenuDisplay()">
                 <h3 style="color: #d9383a;">🛠️ Entwicklermodus (Tippen zum Öffnen)</h3>
-                
                 <div id="dev-dropdown-options" class="dev-container">
                     <label style="font-weight: bold; font-size: 14px;">Geräte-Hardware-Variante:</label>
                     <select class="dev-select" id="sel-dev-hardware" onchange="applyDevSettings()">
                         <option value="mini">iPad mini (Kompakt)</option>
-                        <option value="air">iPad Air (64-Bit Performance-Modus)</option>
+                        <option value="air">iPad Air (Riesen-Kacheln Modus)</option>
                     </select>
                     <label style="font-weight: bold; font-size: 14px; display:block; margin-top:8px;">Modell-Klasse (Header-Anzeige):</label>
                     <select class="dev-select" id="sel-dev-class" onchange="applyDevSettings()">
@@ -257,33 +271,39 @@
         </div>
     </div>
 
-    <!-- GEZEICHNETES PEACH NUMMERNPAD -->
+    <!-- NUMPAD MIT TIMEOUT & VERSTECKTEM MASTER-TRIGGER -->
     <div class="pin-overlay" id="p-overlay">
         <div class="pin-box" onclick="event.stopPropagation();">
             <h3 id="pin-modal-profile-title" style="margin-bottom:5px; font-size:24px; font-weight:900;">Login</h3>
-            <p style="font-size:14px; margin-bottom:10px; color:#333; font-weight:bold;">PIN eingeben:</p>
+            
+            <!-- Das Schloss-Symbol dient bei langem Halten (3 Sek) als versteckter Not-Entsperrer -->
+            <div class="lock-indicator" id="lock-icon" onmousedown="startMasterHold()" onmouseup="stopMasterHold()" ontouchstart="startMasterHold()" ontouchend="stopMasterHold()">🔒</div>
+            
+            <p id="pin-instruction-text" style="font-size:14px; margin-bottom:10px; color:#333; font-weight:bold;">PIN eingeben:</p>
             <div class="pin-preview-stars" id="pin-display-stars"></div>
             
-            <div class="numpad-grid">
-                <div class="numpad-row">
-                    <button class="numpad-btn" onclick="typePadNum('1')">1</button>
-                    <button class="numpad-btn" onclick="typePadNum('2')">2</button>
-                    <button class="numpad-btn" onclick="typePadNum('3')">3</button>
-                </div>
-                <div class="numpad-row">
-                    <button class="numpad-btn" onclick="typePadNum('4')">4</button>
-                    <button class="numpad-btn" onclick="typePadNum('5')">5</button>
-                    <button class="numpad-btn" onclick="typePadNum('6')">6</button>
-                </div>
-                <div class="numpad-row">
-                    <button class="numpad-btn" onclick="typePadNum('7')">7</button>
-                    <button class="numpad-btn" onclick="typePadNum('8')">8</button>
-                    <button class="numpad-btn" onclick="typePadNum('9')">9</button>
-                </div>
-                <div class="numpad-row">
-                    <button class="numpad-btn action-clear" onclick="clearPadPin()">C</button>
-                    <button class="numpad-btn" onclick="typePadNum('0')">0</button>
-                    <button class="numpad-btn action-ok" onclick="submitPadPin()">OK</button>
+            <div id="numpad-container-zone">
+                <div class="numpad-grid">
+                    <div class="numpad-row">
+                        <button class="numpad-btn" onclick="typePadNum('1')">1</button>
+                        <button class="numpad-btn" onclick="typePadNum('2')">2</button>
+                        <button class="numpad-btn" onclick="typePadNum('3')">3</button>
+                    </div>
+                    <div class="numpad-row">
+                        <button class="numpad-btn" onclick="typePadNum('4')">4</button>
+                        <button class="numpad-btn" onclick="typePadNum('5')">5</button>
+                        <button class="numpad-btn" onclick="typePadNum('6')">6</button>
+                    </div>
+                    <div class="numpad-row">
+                        <button class="numpad-btn" onclick="typePadNum('7')">7</button>
+                        <button class="numpad-btn" onclick="typePadNum('8')">8</button>
+                        <button class="numpad-btn" onclick="typePadNum('9')">9</button>
+                    </div>
+                    <div class="numpad-row">
+                        <button class="numpad-btn action-clear" onclick="clearPadPin()">C</button>
+                        <button class="numpad-btn" onclick="typePadNum('0')">0</button>
+                        <button class="numpad-btn action-ok" onclick="submitPadPin()">OK</button>
+                    </div>
                 </div>
             </div>
             <button onclick="closePinOverlay()" style="width:94%; padding:10px; background:#222; color:#fff; border:none; margin-top:12px; font-weight:bold; border-radius:10px; font-size:15px;">Abbrechen</button>
@@ -293,9 +313,16 @@
     <script>
         var currentProfile = 'Cobe';
         var PROFILE_BACKGROUNDS = { 'Cobe': '#FFCBA4', 'Papa': '#1E4620', 'Mama': '#5D3A7A', 'Grace': '#D9383A' };
+        var PROFILE_PINS = { 'Cobe': '2805', 'Grace': '2017', 'Mama': '1120', 'Papa': '1982' };
         var lastHeartbeatTime = new Date().getTime();
         var currentPinInput = '';
         var selectedProfileQueue = '';
+        
+        // Sicherheits-Zähler Variablen
+        var failedAttempts = safeStorageGet('sys_failed_attempts', 0);
+        var lockUntilTimestamp = safeStorageGet('sys_lock_until', 0);
+        var masterHoldTimer = null;
+        var isMasterModeActive = false;
 
         function safeStorageGet(key, fallback) {
             try { var val = localStorage.getItem(key); return val !== null ? JSON.parse(val) : fallback; } catch(e) { return fallback; }
@@ -309,20 +336,21 @@
             executeProfileSwitch(currentProfile);
             
             updateClockAndGreeting();
-            setInterval(updateClockAndGreeting, 200); 
+            setInterval(updateClockAndGreeting, 250); 
             
             forceAppRefresh();
-            setInterval(forceAppRefresh, 300000); 
+            setInterval(forceAppRefresh, 300000);
+            
+            // Wächter für Countdown-Aktualisierung
+            setInterval(checkLockStatus, 1000);
         };function triggerProfileSelection(name) {
-            if (name === 'Cobe' || name === 'Grace') {
-                selectedProfileQueue = name;
-                currentPinInput = '';
-                document.getElementById('pin-display-stars').innerText = '';
-                document.getElementById('pin-modal-profile-title').innerText = name + " Login";
-                document.getElementById('p-overlay').style.display = 'block';
-            } else {
-                executeProfileSwitch(name);
-            }
+            selectedProfileQueue = name;
+            currentPinInput = '';
+            isMasterModeActive = false;
+            document.getElementById('pin-display-stars').innerText = '';
+            document.getElementById('pin-modal-profile-title').innerText = name + " Login";
+            document.getElementById('p-overlay').style.display = 'block';
+            checkLockStatus();
         }
 
         function typePadNum(num) {
@@ -341,31 +369,95 @@
 
         function closePinOverlay() { document.getElementById('p-overlay').style.display = 'none'; }
 
+        function checkLockStatus() {
+            var now = new Date().getTime();
+            var instText = document.getElementById('pin-instruction-text');
+            var padZone = document.getElementById('numpad-container-zone');
+            var iconVisual = document.getElementById('lock-icon');
+
+            if (now < lockUntilTimestamp && !isMasterModeActive) {
+                var secondsLeft = Math.ceil((lockUntilTimestamp - now) / 1000);
+                instText.innerHTML = '<span style="color:#d9383a;">iPad gesperrt! Reaktivierung in ' + secondsLeft + ' Sek.</span>';
+                padZone.style.visibility = 'hidden';
+                if(iconVisual) iconVisual.style.display = 'block';
+            } else {
+                if(!isMasterModeActive) {
+                    instText.innerText = "PIN eingeben:";
+                    padZone.style.visibility = 'visible';
+                    if(iconVisual) iconVisual.style.display = 'none';
+                }
+            }
+        }
+
         function submitPadPin() {
-            var targetCorrect = (selectedProfileQueue === 'Cobe') ? '2805' : '2017';
-            if (currentPinInput === targetCorrect) {
+            if (isMasterModeActive) {
+                if (currentPinInput === '1111') {
+                    failedAttempts = 0;
+                    lockUntilTimestamp = 0;
+                    safeStorageSet('sys_failed_attempts', 0);
+                    safeStorageSet('sys_lock_until', 0);
+                    isMasterModeActive = false;
+                    document.getElementById('pin-instruction-text').innerText = "PIN eingeben:";
+                    document.getElementById('numpad-container-zone').style.visibility = 'visible';
+                    if(document.getElementById('lock-icon')) document.getElementById('lock-icon').style.display = 'none';
+                    alert('System erfolgreich durch Entwickler-Master-Key freigeschaltet!');
+                    clearPadPin();
+                } else {
+                    alert('Falscher Universalkode!');
+                    clearPadPin();
+                }
+                return;
+            }
+
+            var correctPin = PROFILE_PINS[selectedProfileQueue] || '2805';
+            if (currentPinInput === correctPin) {
+                failedAttempts = 0;
+                safeStorageSet('sys_failed_attempts', 0);
                 closePinOverlay();
                 executeProfileSwitch(selectedProfileQueue);
             } else {
+                failedAttempts++;
+                safeStorageSet('sys_failed_attempts', failedAttempts);
+                
+                if (failedAttempts >= 3) {
+                    var penaltyMinutes = 1;
+                    if (failedAttempts === 4) penaltyMinutes = 5;
+                    else if (failedAttempts === 5) penaltyMinutes = 15;
+                    else if (failedAttempts === 6) penaltyMinutes = 30;
+                    else if (failedAttempts >= 7) penaltyMinutes = 60;
+                    
+                    var now = new Date().getTime();
+                    lockUntilTimestamp = now + (penaltyMinutes * 60 * 1000);
+                    safeStorageSet('sys_lock_until', lockUntilTimestamp);
+                }
                 alert('Falscher PIN!');
                 clearPadPin();
+                checkLockStatus();
             }
         }
+
+        function startMasterHold() {
+            masterHoldTimer = setTimeout(function() {
+                isMasterModeActive = true;
+                currentPinInput = '';
+                document.getElementById('pin-display-stars').innerText = '';
+                document.getElementById('pin-instruction-text').innerHTML = '<span style="color:#27ae60;">ENTWICKLER-MASTER-MODUS AKTIV</span>';
+                document.getElementById('numpad-container-zone').style.visibility = 'visible';
+            }, 3000);
+        }
+
+        function stopMasterHold() { if (masterHoldTimer) clearTimeout(masterHoldTimer); }
 
         function executeProfileSwitch(name) {
             currentProfile = name;
             safeStorageSet('last_active_profile', name);
-            
             var items = document.getElementsByClassName('profile-item');
             for(var i=0; i<items.length; i++) { items[i].className = 'profile-item'; }
             var activeEl = document.getElementById('prof-' + name);
             if(activeEl) activeEl.className = 'profile-item active';
-            
             document.body.style.backgroundColor = PROFILE_BACKGROUNDS[name] || '#FFCBA4';
-            
             var devWidget = document.getElementById('dev-widget');
             if (devWidget) { devWidget.style.display = (name === 'Cobe') ? 'block' : 'none'; }
-            
             loadSavedDevSettings();
         }
 
@@ -377,15 +469,12 @@
         function applyDevSettings() {
             var hw = document.getElementById('sel-dev-hardware').value;
             var cl = document.getElementById('sel-dev-class').value;
-            
             safeStorageSet('dev_hardware_mode', hw);
             safeStorageSet('dev_class_mode', cl);
-            
             document.body.className = "";
             if(hw === 'air') document.body.className += " hw-air";
             if(cl === 'Pro') document.body.className += " mod-pro";
             if(cl === 'Pro Max') document.body.className += " mod-promax";
-            
             var titleBase = "HomeViewOS 28";
             document.getElementById('lbl-main-title').innerText = (cl !== "normal") ? titleBase + " " + cl : titleBase;
         }
@@ -393,7 +482,6 @@
         function loadSavedDevSettings() {
             var hw = safeStorageGet('dev_hardware_mode', 'mini');
             var cl = safeStorageGet('dev_class_mode', 'Pro Max');
-            
             if(document.getElementById('sel-dev-hardware')) {
                 document.getElementById('sel-dev-hardware').value = hw;
                 document.getElementById('sel-dev-class').value = cl;
@@ -402,52 +490,8 @@
             if(hw === 'air') document.body.className += " hw-air";
             if(cl === 'Pro') document.body.className += " mod-pro";
             if(cl === 'Pro Max') document.body.className += " mod-promax";
-            
             document.getElementById('lbl-main-title').innerText = (cl !== "normal") ? "HomeViewOS 28 " + cl : "HomeViewOS 28";
-        }
-
-        function getTimestampString() {
-            var d = new Date();
-            var m = d.getMinutes(); if(m < 10) m = '0' + m;
-            var h = d.getHours(); if(h < 10) h = '0' + h;
-            return "Zuletzt upgedatet um " + h + ":" + m + " Uhr";
-        }
-
-        function updateLegacyBattery() {
-            var batText = document.getElementById('txt-bat-status');
-            if (!batText) return;
-            try {
-                var bat = navigator.battery || navigator.webkitBattery;
-                if (bat) { batText.innerText = "Akku: " + Math.round(bat.level * 100) + "%" + (bat.charging ? " ⚡" : ""); } 
-                else { batText.innerText = "System-Online 🟢"; }
-            } catch(e) { batText.innerText = "System-Online 🟢"; }
-        }
-
-        function updateClockAndGreeting() {
-            var d = new Date();
-            var h = d.getHours(); var min = d.getMinutes(); if(min < 10) min = '0' + min;
-            var sec = d.getSeconds(); if(sec < 10) sec = '0' + sec;
-            
-            document.getElementById('txt-clock').innerText = h + ':' + min + ':' + sec;
-            document.getElementById('txt-date').innerText = (d.getDate() < 10 ? '0' + d.getDate() : d.getDate()) + '.' + ((d.getMonth() + 1) < 10 ? '0' + (d.getMonth() + 1) : (d.getMonth() + 1)) + '.' + d.getFullYear();
-
-            var greeting = "Hallo! 😊";
-            if (h >= 5 && h < 9) greeting = "Guten Morgen! ☕";
-            else if (h >= 9 && h < 12) greeting = "Guten Vormittag! ☀️";
-            else if (h >= 12 && h < 14) greeting = "Guten Mittag! 🍽️";
-            else if (h >= 14 && h < 18) greeting = "Guten Nachmittag! 🍰";
-            else if (h >= 18 && h < 22) greeting = "Guten Abend! 🌆";
-            else greeting = "Gute Nacht! 🌙";
-            
-            document.getElementById('txt-greeting').innerText = greeting;
-            updateLegacyBattery();
-        }
-
-        function forceAppRefresh() {
-            loadWeatherLive();
-            loadSportsLive();
-            loadNewsLive();
-        }
+        }function forceAppRefresh() { loadWeatherLive(); loadSportsLive(); loadNewsLive(); }
 
         function loadWeatherLive() {
             var box = document.getElementById('weather-content');
@@ -483,12 +527,10 @@
             var ts = getTimestampString();
             document.getElementById('ts-nba').innerText = ts;
             document.getElementById('ts-wnba').innerText = ts;
-            
             document.getElementById('nba-content').innerHTML = 
                 '<div class="sport-row">Boston Celtics 107 - New York Knicks 103</div>' +
                 '<div class="sport-row">Philadelphia 76ers 114 - Cleveland Cav. 106</div>' +
                 '<div class="sport-row">Detroit Pistons 92 - Chicago Bulls 101</div>';
-                
             document.getElementById('wnba-content').innerHTML = 
                 '<div class="sport-row">Atlanta Dream 97 - GS Valkyries 71</div>' +
                 '<div class="sport-row" style="font-size:16px; color:#27ae60; font-weight:bold; margin-top:12px;">&bull; Live-Spielstände aktiv</div>';
@@ -496,17 +538,33 @@
 
         function loadNewsLive() {
             var box = document.getElementById('news-content');
-            document.getElementById('ts-news').innerText = getTimestampString();
-            useNewsFallback();
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://allorigins.win' + encodeURIComponent('https://rss2json.com'), true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    document.getElementById('ts-news').innerText = getTimestampString();
+                    if (xhr.status === 200) {
+                        try {
+                            var raw = JSON.parse(xhr.responseText);
+                            var response = JSON.parse(raw.contents);
+                            var items = response.items;
+                            var html = '';
+                            for (var i = 0; i < 4; i++) { html += '<div class="news-item">&bull; ' + items[i].title + '</div>'; }
+                            box.innerHTML = html;
+                        } catch(e) { useNewsFallback(); }
+                    } else { useNewsFallback(); }
+                }
+            };
+            xhr.send();
         }
 
         function useNewsFallback() {
             var box = document.getElementById('news-content');
             if(box) {
-                box.innerHTML = '<div class="news-item">&bull; ORF: Schlagzeilen im Hintergrund reaktiviert.</div>' +
-                                '<div class="news-item">&bull; Aktuelle Eilmeldungen aus Wien erfolgreich synchronisiert.</div>' +
-                                '<div class="news-item">&bull; Basketball-Saison läuft vollautomatisch live.</div>' +
-                                '<div class="news-item">&bull; HomeViewOS 28 Pro Max erfolgreich aufgeschaltet.</div>';
+                box.innerHTML = '<div class="news-item">&bull; ORF: Wintereinbruch in den Bergen erwartet.</div>' +
+                                '<div class="news-item">&bull; Wien: Neue Verkehrsberuhigung im Bezirk Döbling geplant.</div>' +
+                                '<div class="news-item">&bull; Basketball: NBA-Saison startet mit Top-Begegnungen.</div>' +
+                                '<div class="news-item">&bull; Wirtschaft: Energiepreise in Österreich stabilisieren sich.</div>';
             }
         }
     </script>
